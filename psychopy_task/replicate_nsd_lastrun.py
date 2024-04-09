@@ -2,11 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-<<<<<<< HEAD
-    on Tue Apr  9 12:49:58 2024
-=======
-    on Mon Apr  8 15:15:06 2024
->>>>>>> 9cb0c3178debd9c48b97b5c5fe9359669d83a497
+    on Tue Apr  9 13:57:34 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -112,7 +108,7 @@ def setupData(expInfo, dataDir=None):
     thisExp = data.ExperimentHandler(
         name=expName, version='',
         extraInfo=expInfo, runtimeInfo=None,
-        originPath='/Users/rosskempner/Desktop/Documents/Research/compmem/rt_mindEye2/psychopy_task/replicate_nsd_lastrun.py',
+        originPath='/Users/rosskempner/Desktop/Documents/Research/compmem/real_time_mindEye2/psychopy_task/replicate_nsd_lastrun.py',
         savePickle=True, saveWideText=True,
         dataFileName=dataDir + os.sep + filename, sortColumns='time'
     )
@@ -163,7 +159,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1792, 1120], fullscr=True, screen=0,
+            size=[1792, 1120], fullscr=False, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -180,11 +176,7 @@ def setupWindow(expInfo=None, win=None):
         win.backgroundImage = ''
         win.backgroundFit = 'none'
         win.units = 'deg'
-<<<<<<< HEAD
     win.mouseVisible = True
-=======
-    win.mouseVisible = False
->>>>>>> 9cb0c3178debd9c48b97b5c5fe9359669d83a497
     win.hideMessage()
     return win
 
@@ -327,7 +319,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=-1.0);
     
-<<<<<<< HEAD
     # --- Initialize components for Routine "set_skips" ---
     # Run 'Begin Experiment' code from trial_routine_set_up
     is_blank_trial_or_before_starting_run = False
@@ -335,9 +326,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     is_not_blank_trial_or_before_starting_run = False
     # Run 'Begin Experiment' code from between_round_screens_skip_set_up_2
     is_not_new_run_or_before_starting_run = False
-=======
-    # --- Initialize components for Routine "set_up" ---
->>>>>>> 9cb0c3178debd9c48b97b5c5fe9359669d83a497
     
     # --- Initialize components for Routine "trial" ---
     image = visual.ImageStim(
@@ -365,18 +353,10 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         lineWidth=3.0,     colorSpace='rgb',  lineColor=[-1.0000, -1.0000, -1.0000], fillColor=[1.0000, -1.0000, -1.0000],
         opacity=0.3, depth=-1.0, interpolate=True)
     
-<<<<<<< HEAD
     # --- Initialize components for Routine "run_wait2" ---
     key_resp_5 = keyboard.Keyboard()
     text_5 = visual.TextStim(win=win, name='text_5',
         text='Good job! Please press any button when you are ready to continue.',
-=======
-    # --- Initialize components for Routine "block" ---
-    # Run 'Begin Experiment' code from code_3
-    is_not_new_run = True
-    text_2 = visual.TextStim(win=win, name='text_2',
-        text='waiting.',
->>>>>>> 9cb0c3178debd9c48b97b5c5fe9359669d83a497
         font='Open Sans',
         units='deg', pos=(0, 0), height=0.5, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
@@ -465,7 +445,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     # the Routine "set_up" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
-<<<<<<< HEAD
     # --- Prepare to start Routine "waiting_fmri" ---
     continueRoutine = True
     # update component parameters for each repeat
@@ -582,8 +561,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     # the Routine "waiting_fmri" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
-=======
->>>>>>> 9cb0c3178debd9c48b97b5c5fe9359669d83a497
     # set up handler to look after randomisation of conditions etc
     loop_all_images = data.TrialHandler(nReps=1.0, method='sequential', 
         extraInfo=expInfo, originPath=-1,
@@ -623,11 +600,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         else:
             is_blank_trial_or_before_starting_run = False
         
-        print("trial")
-        print("starting_run: ", starting_run)
-        print("run_num: ", run_num)
-        print("is_blank_trial: ", is_blank_trial)
-        print("is_blank_trial_or_before_starting_run: ", is_blank_trial_or_before_starting_run)
+        
         # Run 'Begin Routine' code from blank_trial_set_up
         if not is_blank_trial or run_num < starting_run:
             is_not_blank_trial_or_before_starting_run = True
@@ -638,10 +611,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             is_not_new_run_or_before_starting_run = True
         else:
             is_not_new_run_or_before_starting_run = False
-        print("run_wait2")
-        print("is_new_run: ", is_new_run)
-        print("run_num: ", run_num)
-        print("is_not_new_run_or_before_starting_run: ", is_not_new_run_or_before_starting_run)
+        
         # keep track of which components have finished
         set_skipsComponents = []
         for thisComponent in set_skipsComponents:
@@ -1048,13 +1018,8 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             # *key_resp_5* updates
             waitOnFlip = False
             
-<<<<<<< HEAD
             # if key_resp_5 is starting this frame...
             if key_resp_5.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
-=======
-            # if text_2 is starting this frame...
-            if text_2.status == NOT_STARTED and frameN >= 0:
->>>>>>> 9cb0c3178debd9c48b97b5c5fe9359669d83a497
                 # keep track of start time/frame for later
                 key_resp_5.frameNStart = frameN  # exact frame index
                 key_resp_5.tStart = t  # local t and not account for scr refresh
@@ -1098,7 +1063,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 # update params
                 pass
             
-<<<<<<< HEAD
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
                 thisExp.status = FINISHED
@@ -1215,19 +1179,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             if text_4.status == STARTED:
                 # update params
                 pass
-=======
-            # if text_2 is stopping this frame...
-            if text_2.status == STARTED:
-                if frameN >= (text_2.frameNStart + 300):
-                    # keep track of stop time/frame for later
-                    text_2.tStop = t  # not accounting for scr refresh
-                    text_2.frameNStop = frameN  # exact frame index
-                    # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'text_2.stopped')
-                    # update status
-                    text_2.status = FINISHED
-                    text_2.setAutoDraw(False)
->>>>>>> 9cb0c3178debd9c48b97b5c5fe9359669d83a497
             
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
@@ -1254,7 +1205,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         for thisComponent in waiting_fmri_2Components:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
-<<<<<<< HEAD
         thisExp.addData('waiting_fmri_2.stopped', globalClock.getTime())
         # check responses
         if key_resp_4.keys in ['', [], None]:  # No response was made
@@ -1264,10 +1214,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             loop_all_images.addData('key_resp_4.rt', key_resp_4.rt)
             loop_all_images.addData('key_resp_4.duration', key_resp_4.duration)
         # the Routine "waiting_fmri_2" was not non-slip safe, so reset the non-slip timer
-=======
-        thisExp.addData('block.stopped', globalClock.getTime())
-        # the Routine "block" was not non-slip safe, so reset the non-slip timer
->>>>>>> 9cb0c3178debd9c48b97b5c5fe9359669d83a497
         routineTimer.reset()
         thisExp.nextEntry()
         

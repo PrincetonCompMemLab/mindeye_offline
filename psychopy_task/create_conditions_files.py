@@ -84,7 +84,7 @@ for p_id in range(n_participants):
             run_num_list.append(run_num)
             all_blanks_list_list.append(blank_trial_indices)
             trial_index_list.append(trial_index)
-            if trial_index == (trials_per_run - 1):
+            if trial_index == (trials_per_run - 1) and run_num != (num_runs - 1):
                 is_new_run_list.append(1)
             else:
                 is_new_run_list.append(0)
