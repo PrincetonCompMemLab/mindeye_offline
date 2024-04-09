@@ -1,0 +1,37 @@
+8.2057 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, backgroundFit=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fcdffd63190>, backgroundImage=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fcdffd63130>, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fcdffd02130>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7fcdffeb0e50>, multiSample=False, name='window1', numSamples=2, pos=(448, 280), screen=0, size=array([3584, 2240]), stencilBits=0, stereo=False, title='PsychoPy', units='height', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+8.2059 	EXP 	window1: mouseVisible = True
+8.2059 	EXP 	window1: backgroundImage = ''
+8.2059 	EXP 	window1: backgroundFit = 'none'
+8.2089 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+8.2089 	EXP 	window1: recordFrameIntervals = False
+8.3718 	EXP 	window1: recordFrameIntervals = True
+8.5552 	EXP 	Screen (0) actual frame rate measured at 60.04Hz
+8.5553 	EXP 	window1: recordFrameIntervals = False
+8.5554 	EXP 	window1: mouseVisible = True
+11.9647 	EXP 	replicate_nsd: status = STARTED
+11.9651 	EXP 	window1: mouseVisible = True
+12.0231 	EXP 	Created text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text=str(...), units='height', win=Window(...), wrapWidth=1)
+12.0232 	EXP 	window1: mouseVisible = True
+12.0535 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, image='default.png', interpolate=True, mask=None, maskParams=None, name='image', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), texRes=128.0, units='height', win=Window(...))
+12.6291 	EXP 	window1: mouseVisible = True
+12.6326 	EXP 	Created text_2 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-2.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text_2', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='please take break', units='height', win=Window(...), wrapWidth=1)
+0.0078 	DATA 	Mouse: Left button down, pos=(591,874)
+0.0081 	DATA 	Mouse:  Left button up, pos=(591,874)
+0.0486 	EXP 	text: autoDraw = True
+5.7622 	DATA 	Keypress: space
+6.4739 	DATA 	Mouse: Left button down, pos=(804,635)
+6.6745 	DATA 	Mouse:  Left button up, pos=(804,635)
+7.4766 	DATA 	Keypress: space
+8.3254 	DATA 	Keypress: space
+9.0407 	DATA 	Mouse: Left button down, pos=(804,635)
+9.2247 	DATA 	Mouse:  Left button up, pos=(804,635)
+9.5584 	DATA 	Keypress: space
+9.7570 	DATA 	Keypress: space
+10.2772 	DATA 	Keypress: lctrl
+27.3908 	DATA 	Mouse: Left button down, pos=(134,946)
+27.5245 	DATA 	Mouse:  Left button up, pos=(134,946)
+27.7238 	DATA 	Keypress: escape
+27.8387 	EXP 	replicate_nsd: status = STOPPED
+27.8552 	EXP 	text: autoDraw = False
+27.8553 	EXP 	replicate_nsd: status = STOPPED
+27.8778 	EXP 	window1: mouseVisible = True

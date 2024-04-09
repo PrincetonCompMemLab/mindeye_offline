@@ -1,0 +1,28 @@
+8.2753 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, backgroundFit=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fec2e0ca4c0>, backgroundImage=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fec2e0ca460>, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fec2e0ca2e0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7fec2e1ec070>, multiSample=False, name='window1', numSamples=2, pos=(448, 280), screen=0, size=array([3584, 2240]), stencilBits=0, stereo=False, title='PsychoPy', units='height', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+8.2755 	EXP 	window1: mouseVisible = True
+8.2756 	EXP 	window1: backgroundImage = ''
+8.2756 	EXP 	window1: backgroundFit = 'none'
+8.2784 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+8.2784 	EXP 	window1: recordFrameIntervals = False
+8.4412 	EXP 	window1: recordFrameIntervals = True
+8.6250 	EXP 	Screen (0) actual frame rate measured at 59.80Hz
+8.6251 	EXP 	window1: recordFrameIntervals = False
+8.6253 	EXP 	window1: mouseVisible = True
+12.0442 	EXP 	replicate_nsd: status = STARTED
+12.0446 	EXP 	window1: mouseVisible = True
+12.1010 	EXP 	Created text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text=str(...), units='height', win=Window(...), wrapWidth=1)
+12.6850 	EXP 	window1: mouseVisible = True
+12.7101 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, image='default.png', interpolate=True, mask=None, maskParams=None, name='image', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), texRes=128.0, units='height', win=Window(...))
+13.2870 	EXP 	window1: mouseVisible = True
+13.2904 	EXP 	Created text_2 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-2.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text_2', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='please take break', units='height', win=Window(...), wrapWidth=1)
+0.0420 	EXP 	text: autoDraw = True
+0.8692 	DATA 	Mouse: Left button down, pos=(869,739)
+1.0031 	DATA 	Mouse:  Left button up, pos=(869,739)
+1.1421 	EXP 	Imported conditions_files/participant1_.csv as conditions, 82 conditions, 2 params
+1.1429 	EXP 	Created sequence: sequential, trialTypes=82, nReps=1, seed=None
+1.1431 	EXP 	New trial (rep=0, index=0): OrderedDict([('current_image', 'face_triangles/17_28.jpg'), ('is_repeat', 0)])
+1.1531 	DATA 	Keypress: space
+1.1576 	EXP 	text: autoDraw = False
+1.1576 	EXP 	image: image = 'face_triangles/17_28.jpg'
+2.1330 	EXP 	image: autoDraw = True
+5.1253 	EXP 	window1: mouseVisible = True

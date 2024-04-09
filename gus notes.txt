@@ -1,0 +1,29 @@
+Gus 3/26/24 meeting:
+
+1) how do I get the confounds?
+2) what masks do I use? 
+3) how to use the events file?
+4) Is LSA or LSM better efficiency?
+5) if I am making design matrix I need the values of each voxel at each of the TR's corresponding to the events.tsv with the bold signal? How to go from events onsets to the values in the bold signal file?
+6) how to convert this to bids to follow the unlearn docs?
+7) are we doing each voxel modeling activity to stimulus?
+8) how do I find out what are in these files and use the events and bold to create the design matrix, or convert to full bids to use the first level from bids function (nilearn.glm.first_level.first_level_from_bids)
+9) if an event goes from multiple TR's how do I figure that out?
+
+
+Gus notes
+- have events file before you display and write script that goes through that and generates labels. Pseudocode: take onset and figure out which TR that is. TR length (1.6), for each row in events file get onset and duration and what that is
+- you need TR by TR labels
+-GLM analysis averages activity across trial types
+-LSA, each image gets own regressor. Nilearn assumes we average across multiple trial types. trial_type should be unique. made that model, now we need to get the 
+- fit once with LSA and get value for this column, expected value for this trial
+-nilearn you give it a string with your trial_type
+- what the real-time pipeline will look like and run those steps offline?
+- will need to figure out
+
+4/3
+what to do about the mask
+
+do i assume tr starts at 0 and from there generate labels for each tr
+
+confounds

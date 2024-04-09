@@ -1,0 +1,62 @@
+9.6508 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, backgroundFit=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fde864f8040>, backgroundImage=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fde8649c940>, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fde8649ce80>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7fde86615bb0>, multiSample=False, name='window1', numSamples=2, pos=(448, 280), screen=0, size=array([3584, 2240]), stencilBits=0, stereo=False, title='PsychoPy', units='height', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+9.6509 	EXP 	window1: mouseVisible = True
+9.6509 	EXP 	window1: backgroundImage = ''
+9.6510 	EXP 	window1: backgroundFit = 'none'
+9.6528 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+9.6528 	EXP 	window1: recordFrameIntervals = False
+9.8178 	EXP 	window1: recordFrameIntervals = True
+10.0009 	EXP 	Screen (0) actual frame rate measured at 60.07Hz
+10.0009 	EXP 	window1: recordFrameIntervals = False
+10.0011 	EXP 	window1: mouseVisible = True
+13.6432 	EXP 	replicate_nsd: status = STARTED
+14.2244 	EXP 	window1: mouseVisible = True
+14.2648 	EXP 	Created text_3 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text_3', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='waiting for scanner…', units='height', win=Window(...), wrapWidth=1)
+14.2650 	EXP 	window1: mouseVisible = True
+14.2842 	EXP 	Created text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text=str(...), units='height', win=Window(...), wrapWidth=1)
+14.8624 	EXP 	window1: mouseVisible = True
+14.8892 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, image='default.png', interpolate=True, mask=None, maskParams=None, name='image', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), texRes=128.0, units='height', win=Window(...))
+15.4709 	EXP 	window1: mouseVisible = True
+15.4781 	EXP 	Created polygon = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-3.0, draggable=False, fillColor=array([ 1, -1, -1]), fillColorSpace='rgb', fillRGB=array([ 1, -1, -1]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1, -1, -1]), lineWidth=1.0, name='polygon', opacity=0.3, ori=0.0, pos=array([0., 0.]), size=array([0.5, 0.5]), units='height', vertices=ndarray(...), win=Window(...), windingRule=None)
+15.4783 	EXP 	window1: mouseVisible = True
+15.4819 	EXP 	Created text_2 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-2.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text_2', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='please take break', units='height', win=Window(...), wrapWidth=1)
+0.0073 	DATA 	Mouse: Left button down, pos=(940,715)
+0.0077 	DATA 	Mouse:  Left button up, pos=(940,715)
+0.0080 	DATA 	Mouse: Left button down, pos=(940,715)
+0.0084 	DATA 	Mouse:  Left button up, pos=(940,715)
+0.0409 	EXP 	text_3: autoDraw = True
+0.6202 	DATA 	Mouse: Left button down, pos=(940,715)
+0.7863 	DATA 	Mouse:  Left button up, pos=(940,715)
+3.8721 	DATA 	Mouse: Left button down, pos=(940,715)
+4.0701 	DATA 	Mouse:  Left button up, pos=(940,715)
+4.7060 	DATA 	Keypress: space
+5.4398 	DATA 	Keypress: space
+10.4876 	DATA 	Keypress: space
+14.0556 	DATA 	Mouse: Left button down, pos=(945,718)
+14.2886 	DATA 	Mouse:  Left button up, pos=(945,718)
+15.1382 	DATA 	Keypress: 5
+15.1529 	EXP 	text_3: autoDraw = False
+15.1529 	EXP 	text: autoDraw = True
+17.0888 	DATA 	Mouse: Left button down, pos=(945,718)
+17.2386 	DATA 	Mouse:  Left button up, pos=(945,718)
+17.9631 	EXP 	Imported conditions_files/participant1_.csv as conditions, 82 conditions, 2 params
+17.9639 	EXP 	Created sequence: sequential, trialTypes=82, nReps=1, seed=None
+17.9641 	EXP 	New trial (rep=0, index=0): OrderedDict([('current_image', 'face_triangles/17_28.jpg'), ('is_repeat', 0)])
+17.9849 	DATA 	Keypress: space
+17.9907 	EXP 	text: autoDraw = False
+17.9907 	EXP 	image: image = 'face_triangles/17_28.jpg'
+17.9907 	EXP 	polygon: autoDraw = True
+18.9529 	EXP 	image: autoDraw = True
+21.9531 	EXP 	image: autoDraw = False
+21.9708 	EXP 	New trial (rep=0, index=1): OrderedDict([('current_image', 'face_triangles/16_28.jpg'), ('is_repeat', 0)])
+21.9861 	EXP 	image: autoDraw = False
+21.9861 	EXP 	polygon: autoDraw = False
+21.9861 	EXP 	text_2: autoDraw = False
+21.9861 	EXP 	image: image = 'face_triangles/16_28.jpg'
+21.9861 	EXP 	polygon: autoDraw = True
+22.9867 	EXP 	image: autoDraw = True
+23.8047 	DATA 	Keypress: escape
+23.9361 	EXP 	replicate_nsd: status = STOPPED
+23.9555 	EXP 	image: autoDraw = False
+23.9555 	EXP 	polygon: autoDraw = False
+23.9556 	EXP 	replicate_nsd: status = STOPPED
+23.9758 	EXP 	window1: mouseVisible = True

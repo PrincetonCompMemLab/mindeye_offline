@@ -1,0 +1,3 @@
+﻿loop_all_images.thisRepN,loop_all_images.thisTrialN,loop_all_images.thisN,loop_all_images.thisIndex,current_image,is_repeat,trial_index,is_blank_trial,is_new_run,run_num,all_blanks_list,thisRow.t,notes,set_up.started,set_up.stopped,waiting_fmri.started,key_resp_2.started,text_3.started,waiting_fmri.stopped,key_resp_2.keys,key_resp_2.rt,key_resp_2.duration,trial.started,participant,session,starting_run,date,expName,psychopyVersion,frameRate,expStart,
+,,,,,,,,,,,,,0.022868770989589393,0.023056637990521267,0.023075981007423252,0.03360597699065693,0.03360597699065693,2.9426076959935017,5,2.9032578020123765,None,,1,001,0,2024-04-09_12h18.00.835,replicate_nsd,2023.2.3,60.10857652646631,2024-04-09 12h18.13.177209 -0400,
+,,,,,,,,,,,,,,,,,,,,,,3.0477369079890195,,,,,,,,,

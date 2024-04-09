@@ -1,0 +1,52 @@
+train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
+
+model, optimizer, *train_dls, lr_scheduler = accelerator.prepare(model, optimizer, *train_dls, lr_scheduler)
+# leaving out test_dl since we will only have local_rank 0 device do evals
+
+Error message:
+
+
+
+Installed CUDA version 12.3 does not match the version torch was compiled with 12.1 but since the APIs are compatible, accepting this combination
+Using /home/rk1593/.cache/torch_extensions/py311_cu121 as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /home/rk1593/.cache/torch_extensions/py311_cu121/cpu_adam/build.ninja...
+Building extension module cpu_adam...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+[1/4] /usr/local/cuda/bin/nvcc  -DTORCH_EXTENSION_NAME=cpu_adam -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -I/home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/deepspeed/ops/csrc/includes -I/usr/local/cuda/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include/torch/csrc/api/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include/TH -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include/THC -isystem /usr/local/cuda/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/include/python3.11 -D_GLIBCXX_USE_CXX11_ABI=0 -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_BFLOAT16_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr -gencode=arch=compute_80,code=compute_80 -gencode=arch=compute_80,code=sm_80 --compiler-options '-fPIC' -O3 --use_fast_math -std=c++17 -U__CUDA_NO_HALF_OPERATORS__ -U__CUDA_NO_HALF_CONVERSIONS__ -U__CUDA_NO_HALF2_OPERATORS__ -gencode=arch=compute_80,code=sm_80 -gencode=arch=compute_80,code=compute_80 -DBF16_AVAILABLE -U__CUDA_NO_BFLOAT16_OPERATORS__ -U__CUDA_NO_BFLOAT162_OPERATORS__ -c /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/deepspeed/ops/csrc/common/custom_cuda_kernel.cu -o custom_cuda_kernel.cuda.o 
+[2/4] c++ -MMD -MF cpu_adam.o.d -DTORCH_EXTENSION_NAME=cpu_adam -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -I/home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/deepspeed/ops/csrc/includes -I/usr/local/cuda/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include/torch/csrc/api/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include/TH -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include/THC -isystem /usr/local/cuda/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/include/python3.11 -D_GLIBCXX_USE_CXX11_ABI=0 -fPIC -std=c++17 -O3 -std=c++17 -g -Wno-reorder -L/usr/local/cuda/lib64 -lcudart -lcublas -g -march=native -fopenmp -D__AVX512__ -D__ENABLE_CUDA__ -DBF16_AVAILABLE -c /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/deepspeed/ops/csrc/adam/cpu_adam.cpp -o cpu_adam.o 
+[3/4] c++ -MMD -MF cpu_adam_impl.o.d -DTORCH_EXTENSION_NAME=cpu_adam -DTORCH_API_INCLUDE_EXTENSION_H -DPYBIND11_COMPILER_TYPE=\"_gcc\" -DPYBIND11_STDLIB=\"_libstdcpp\" -DPYBIND11_BUILD_ABI=\"_cxxabi1011\" -I/home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/deepspeed/ops/csrc/includes -I/usr/local/cuda/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include/torch/csrc/api/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include/TH -isystem /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/include/THC -isystem /usr/local/cuda/include -isystem /home/rk1593/.conda/envs/rt_mindEye2/include/python3.11 -D_GLIBCXX_USE_CXX11_ABI=0 -fPIC -std=c++17 -O3 -std=c++17 -g -Wno-reorder -L/usr/local/cuda/lib64 -lcudart -lcublas -g -march=native -fopenmp -D__AVX512__ -D__ENABLE_CUDA__ -DBF16_AVAILABLE -c /home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/deepspeed/ops/csrc/adam/cpu_adam_impl.cpp -o cpu_adam_impl.o 
+[4/4] c++ cpu_adam.o cpu_adam_impl.o custom_cuda_kernel.cuda.o -shared -lcurand -L/home/rk1593/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/torch/lib -lc10 -lc10_cuda -ltorch_cpu -ltorch_cuda -ltorch -ltorch_python -L/usr/local/cuda/lib64 -lcudart -o cpu_adam.so
+Time to load cpu_adam op: 52.03002691268921 seconds
+Loading extension module cpu_adam...
+---------------------------------------------------------------------------
+RuntimeError                              Traceback (most recent call last)
+Cell In[25], line 3
+      1 train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
+----> 3 model, optimizer, *train_dls, lr_scheduler = accelerator.prepare(model, optimizer, *train_dls, lr_scheduler)
+      4 # leaving out test_dl since we will only have local_rank 0 device do evals
+
+File ~/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/accelerate/accelerator.py:1284, in Accelerator.prepare(self, device_placement, *args)
+   1282         args = self._prepare_ipex(*args)
+   1283 if self.distributed_type == DistributedType.DEEPSPEED:
+-> 1284     result = self._prepare_deepspeed(*args)
+   1285 elif self.distributed_type == DistributedType.MEGATRON_LM:
+   1286     result = self._prepare_megatron_lm(*args)
+
+File ~/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/accelerate/accelerator.py:1657, in Accelerator._prepare_deepspeed(self, *args)
+   1654     from deepspeed.ops.adam import DeepSpeedCPUAdam
+   1656     defaults = {k: v for k, v in optimizer.defaults.items() if k in ["lr", "weight_decay"]}
+-> 1657     optimizer = DeepSpeedCPUAdam(optimizer.param_groups, **defaults)
+   1658 kwargs["optimizer"] = optimizer
+   1659 if scheduler is not None:
+
+File ~/.conda/envs/rt_mindEye2/lib/python3.11/site-packages/deepspeed/ops/adam/cpu_adam.py:96, in DeepSpeedCPUAdam.__init__(self, model_params, lr, bias_correction, betas, eps, weight_decay, amsgrad, adamw_mode, fp32_optimizer_states)
+     93 self.fp32_optimizer_states = fp32_optimizer_states
+     94 self.ds_opt_adam = CPUAdamBuilder().load()
+---> 96 self.ds_opt_adam.create_adam(self.opt_id, lr, betas[0], betas[1], eps, weight_decay, adamw_mode,
+     97                              should_log_le("info"))
+
+RuntimeError: CUDA error: out of memory
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.

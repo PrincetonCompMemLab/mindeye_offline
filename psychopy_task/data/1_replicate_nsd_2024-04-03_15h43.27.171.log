@@ -1,0 +1,1970 @@
+7.9412 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, backgroundFit=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fd4a57a41f0>, backgroundImage=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fd4a57a4190>, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fd4a5743b50>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7fd4a586aee0>, multiSample=False, name='window1', numSamples=2, pos=(448, 280), screen=0, size=array([3584, 2240]), stencilBits=0, stereo=False, title='PsychoPy', units='deg', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+7.9414 	EXP 	window1: mouseVisible = True
+7.9414 	EXP 	window1: backgroundImage = ''
+7.9414 	EXP 	window1: backgroundFit = 'none'
+7.9443 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+7.9443 	EXP 	window1: recordFrameIntervals = False
+8.1075 	EXP 	window1: recordFrameIntervals = True
+8.1771 	WARNING 	t of last frame was 20.24ms (=1/49)
+8.3577 	EXP 	Screen (0) actual frame rate measured at 59.67Hz
+8.3577 	EXP 	window1: recordFrameIntervals = False
+8.3579 	EXP 	window1: mouseVisible = True
+11.7848 	EXP 	replicate_nsd: status = STARTED
+12.3617 	EXP 	window1: mouseVisible = True
+12.4073 	EXP 	Created text_3 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text_3', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='waiting for scanner…', units='deg', win=Window(...), wrapWidth=15.0)
+12.4075 	EXP 	window1: mouseVisible = True
+12.4144 	EXP 	Created text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='put instructions here. press spacebar.', units='deg', win=Window(...), wrapWidth=15.0)
+13.0060 	EXP 	window1: mouseVisible = True
+13.0345 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, image='default.png', interpolate=True, mask=None, maskParams=None, name='image', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([8.4, 8.4]), texRes=128.0, units='deg', win=Window(...))
+13.6220 	EXP 	window1: mouseVisible = True
+13.6251 	EXP 	Created polygon = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-3.0, draggable=False, fillColor=array([ 1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([ 1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=3.0, name='polygon', opacity=0.3, ori=0.0, pos=array([0., 0.]), size=array([0.2, 0.2]), units='deg', vertices=ndarray(...), win=Window(...), windingRule=None)
+14.2017 	EXP 	window1: mouseVisible = True
+14.2047 	EXP 	Created polygon_2 = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-1.0, draggable=False, fillColor=array([ 1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([ 1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=3.0, name='polygon_2', opacity=0.3, ori=0.0, pos=array([0., 0.]), size=array([0.2, 0.2]), units='deg', vertices=ndarray(...), win=Window(...), windingRule=None)
+14.2048 	EXP 	window1: mouseVisible = True
+14.2092 	EXP 	Created text_2 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-2.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text_2', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='end of run. take a break.', units='deg', win=Window(...), wrapWidth=15.0)
+0.0084 	DATA 	Mouse: Left button down, pos=(830,803)
+0.0087 	DATA 	Mouse:  Left button up, pos=(830,803)
+0.0408 	EXP 	text_3: autoDraw = True
+5.9040 	DATA 	Keypress: space
+6.3508 	DATA 	Mouse: Left button down, pos=(933,625)
+6.5009 	DATA 	Mouse:  Left button up, pos=(933,626)
+7.1696 	DATA 	Keypress: space
+8.9347 	DATA 	Keypress: lctrl
+28.3005 	DATA 	Keypress: space
+28.6004 	DATA 	Mouse: Left button down, pos=(1009,617)
+28.7345 	DATA 	Mouse:  Left button up, pos=(1009,617)
+28.8670 	DATA 	Keypress: space
+29.1005 	DATA 	Keypress: space
+32.4672 	DATA 	Mouse: Left button down, pos=(1074,298)
+32.5839 	DATA 	Mouse:  Left button up, pos=(1074,298)
+32.8168 	DATA 	Keypress: space
+33.0847 	DATA 	Keypress: space
+33.3515 	DATA 	Keypress: space
+33.5836 	DATA 	Keypress: space
+33.8499 	DATA 	Keypress: space
+34.3510 	DATA 	Mouse: Left button down, pos=(859,544)
+34.4494 	DATA 	Mouse:  Left button up, pos=(859,544)
+34.6851 	DATA 	Keypress: space
+34.8835 	DATA 	Keypress: space
+134.1771 	EXP 	text_3: autoDraw = False
+134.1771 	EXP 	text: autoDraw = True
+134.9412 	EXP 	Imported conditions_files/participant1_.csv as conditions, 900 conditions, 6 params
+134.9454 	EXP 	Created sequence: sequential, trialTypes=900, nReps=1, seed=None
+134.9456 	EXP 	New trial (rep=0, index=0): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 0), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+134.9758 	EXP 	text: autoDraw = False
+134.9758 	EXP 	image: image = 'images/blank.jpg'
+134.9758 	EXP 	image: autoDraw = False
+134.9758 	EXP 	polygon: autoDraw = False
+134.9758 	EXP 	polygon_2: autoDraw = True
+135.7580 	EXP 	New trial (rep=0, index=1): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 1), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+135.7636 	EXP 	polygon_2: autoDraw = False
+135.7636 	EXP 	polygon_2: autoDraw = False
+135.7636 	EXP 	text_2: autoDraw = False
+135.7636 	EXP 	image: image = 'images/blank.jpg'
+135.7636 	EXP 	image: autoDraw = False
+135.7636 	EXP 	polygon: autoDraw = False
+135.7636 	EXP 	polygon_2: autoDraw = True
+136.5315 	EXP 	New trial (rep=0, index=2): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 2), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+136.5365 	EXP 	polygon_2: autoDraw = False
+136.5365 	EXP 	polygon_2: autoDraw = False
+136.5365 	EXP 	text_2: autoDraw = False
+136.5365 	EXP 	image: image = 'images/blank.jpg'
+136.5365 	EXP 	image: autoDraw = False
+136.5365 	EXP 	polygon: autoDraw = False
+136.5365 	EXP 	polygon_2: autoDraw = True
+137.3049 	EXP 	New trial (rep=0, index=3): OrderedDict([('current_image', 'images/11_12.jpg'), ('is_repeat', 0), ('trial_index', 3), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+137.3120 	EXP 	polygon_2: autoDraw = False
+137.3120 	EXP 	polygon_2: autoDraw = False
+137.3120 	EXP 	text_2: autoDraw = False
+137.3120 	EXP 	image: image = 'images/11_12.jpg'
+137.3120 	EXP 	polygon: autoDraw = True
+137.5165 	EXP 	image: autoDraw = True
+138.1733 	EXP 	New trial (rep=0, index=4): OrderedDict([('current_image', 'images/23_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 4), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+138.1803 	EXP 	image: autoDraw = False
+138.1803 	EXP 	polygon: autoDraw = False
+138.1803 	EXP 	image: autoDraw = False
+138.1803 	EXP 	polygon: autoDraw = False
+138.1803 	EXP 	polygon_2: autoDraw = False
+138.1803 	EXP 	text_2: autoDraw = False
+138.1803 	EXP 	image: image = 'images/23_12 copy 3.jpg'
+138.1803 	EXP 	polygon: autoDraw = True
+138.3722 	EXP 	image: autoDraw = True
+138.9979 	EXP 	New trial (rep=0, index=5): OrderedDict([('current_image', 'images/14_40 copy.jpg'), ('is_repeat', 0), ('trial_index', 5), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+139.0042 	EXP 	image: autoDraw = False
+139.0042 	EXP 	polygon: autoDraw = False
+139.0042 	EXP 	image: autoDraw = False
+139.0042 	EXP 	polygon: autoDraw = False
+139.0042 	EXP 	polygon_2: autoDraw = False
+139.0042 	EXP 	text_2: autoDraw = False
+139.0042 	EXP 	image: image = 'images/14_40 copy.jpg'
+139.0042 	EXP 	polygon: autoDraw = True
+139.1944 	EXP 	image: autoDraw = True
+139.8221 	EXP 	New trial (rep=0, index=6): OrderedDict([('current_image', 'images/12_40 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 6), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+139.8286 	EXP 	image: autoDraw = False
+139.8286 	EXP 	polygon: autoDraw = False
+139.8286 	EXP 	image: autoDraw = False
+139.8286 	EXP 	polygon: autoDraw = False
+139.8286 	EXP 	polygon_2: autoDraw = False
+139.8286 	EXP 	text_2: autoDraw = False
+139.8286 	EXP 	image: image = 'images/12_40 copy 3.jpg'
+139.8286 	EXP 	polygon: autoDraw = True
+140.0207 	EXP 	image: autoDraw = True
+140.6641 	EXP 	New trial (rep=0, index=7): OrderedDict([('current_image', 'images/17_40 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 7), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+140.6710 	EXP 	image: autoDraw = False
+140.6710 	EXP 	polygon: autoDraw = False
+140.6710 	EXP 	image: autoDraw = False
+140.6710 	EXP 	polygon: autoDraw = False
+140.6710 	EXP 	polygon_2: autoDraw = False
+140.6710 	EXP 	text_2: autoDraw = False
+140.6710 	EXP 	image: image = 'images/17_40 copy 2.jpg'
+140.6710 	EXP 	polygon: autoDraw = True
+140.8600 	EXP 	image: autoDraw = True
+141.4989 	EXP 	New trial (rep=0, index=8): OrderedDict([('current_image', 'images/pair09 copy.jpg'), ('is_repeat', 0), ('trial_index', 8), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+141.5096 	EXP 	image: autoDraw = False
+141.5096 	EXP 	polygon: autoDraw = False
+141.5096 	EXP 	image: autoDraw = False
+141.5096 	EXP 	polygon: autoDraw = False
+141.5096 	EXP 	polygon_2: autoDraw = False
+141.5096 	EXP 	text_2: autoDraw = False
+141.5096 	EXP 	image: image = 'images/pair09 copy.jpg'
+141.5096 	EXP 	polygon: autoDraw = True
+141.8349 	EXP 	image: autoDraw = True
+142.4586 	EXP 	New trial (rep=0, index=9): OrderedDict([('current_image', 'images/23_28 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 9), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+142.4667 	EXP 	image: autoDraw = False
+142.4667 	EXP 	polygon: autoDraw = False
+142.4667 	EXP 	image: autoDraw = False
+142.4667 	EXP 	polygon: autoDraw = False
+142.4667 	EXP 	polygon_2: autoDraw = False
+142.4667 	EXP 	text_2: autoDraw = False
+142.4667 	EXP 	image: image = 'images/23_28 copy 3.jpg'
+142.4667 	EXP 	polygon: autoDraw = True
+142.6546 	EXP 	image: autoDraw = True
+143.3036 	EXP 	New trial (rep=0, index=10): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 10), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+143.3097 	EXP 	image: autoDraw = False
+143.3097 	EXP 	polygon: autoDraw = False
+143.3097 	EXP 	image: autoDraw = False
+143.3097 	EXP 	polygon: autoDraw = False
+143.3097 	EXP 	polygon_2: autoDraw = False
+143.3097 	EXP 	text_2: autoDraw = False
+143.3097 	EXP 	image: image = 'images/blank.jpg'
+143.3097 	EXP 	image: autoDraw = False
+143.3097 	EXP 	polygon: autoDraw = False
+143.3097 	EXP 	polygon_2: autoDraw = True
+144.0702 	EXP 	New trial (rep=0, index=11): OrderedDict([('current_image', 'images/18_0 copy.jpg'), ('is_repeat', 0), ('trial_index', 11), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+144.0764 	EXP 	polygon_2: autoDraw = False
+144.0764 	EXP 	polygon_2: autoDraw = False
+144.0764 	EXP 	text_2: autoDraw = False
+144.0764 	EXP 	image: image = 'images/18_0 copy.jpg'
+144.0764 	EXP 	polygon: autoDraw = True
+144.2696 	EXP 	image: autoDraw = True
+144.9217 	EXP 	New trial (rep=0, index=12): OrderedDict([('current_image', 'images/16_40 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 12), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+144.9279 	EXP 	image: autoDraw = False
+144.9279 	EXP 	polygon: autoDraw = False
+144.9279 	EXP 	image: autoDraw = False
+144.9279 	EXP 	polygon: autoDraw = False
+144.9279 	EXP 	polygon_2: autoDraw = False
+144.9279 	EXP 	text_2: autoDraw = False
+144.9279 	EXP 	image: image = 'images/16_40 copy 2.jpg'
+144.9279 	EXP 	polygon: autoDraw = True
+145.1132 	EXP 	image: autoDraw = True
+145.7702 	EXP 	New trial (rep=0, index=13): OrderedDict([('current_image', 'images/pair05 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 13), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+145.7776 	EXP 	image: autoDraw = False
+145.7776 	EXP 	polygon: autoDraw = False
+145.7776 	EXP 	image: autoDraw = False
+145.7776 	EXP 	polygon: autoDraw = False
+145.7776 	EXP 	polygon_2: autoDraw = False
+145.7776 	EXP 	text_2: autoDraw = False
+145.7776 	EXP 	image: image = 'images/pair05 copy 4.jpg'
+145.7776 	EXP 	polygon: autoDraw = True
+145.9736 	EXP 	image: autoDraw = True
+146.6228 	EXP 	New trial (rep=0, index=14): OrderedDict([('current_image', 'images/23_28 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 14), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+146.6286 	EXP 	image: autoDraw = False
+146.6286 	EXP 	polygon: autoDraw = False
+146.6286 	EXP 	image: autoDraw = False
+146.6286 	EXP 	polygon: autoDraw = False
+146.6286 	EXP 	polygon_2: autoDraw = False
+146.6286 	EXP 	text_2: autoDraw = False
+146.6286 	EXP 	image: image = 'images/23_28 copy 3.jpg'
+146.6286 	EXP 	polygon: autoDraw = True
+146.8194 	EXP 	image: autoDraw = True
+147.4351 	EXP 	New trial (rep=0, index=15): OrderedDict([('current_image', 'images/23_28 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 15), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+147.4400 	EXP 	image: autoDraw = False
+147.4400 	EXP 	polygon: autoDraw = False
+147.4400 	EXP 	image: autoDraw = False
+147.4400 	EXP 	polygon: autoDraw = False
+147.4400 	EXP 	polygon_2: autoDraw = False
+147.4400 	EXP 	text_2: autoDraw = False
+147.4400 	EXP 	image: image = 'images/23_28 copy 3.jpg'
+147.4400 	EXP 	polygon: autoDraw = True
+147.6327 	EXP 	image: autoDraw = True
+148.3159 	EXP 	New trial (rep=0, index=16): OrderedDict([('current_image', 'images/20_28 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 16), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+148.3231 	EXP 	image: autoDraw = False
+148.3231 	EXP 	polygon: autoDraw = False
+148.3231 	EXP 	image: autoDraw = False
+148.3231 	EXP 	polygon: autoDraw = False
+148.3231 	EXP 	polygon_2: autoDraw = False
+148.3231 	EXP 	text_2: autoDraw = False
+148.3231 	EXP 	image: image = 'images/20_28 copy 5.jpg'
+148.3231 	EXP 	polygon: autoDraw = True
+148.5136 	EXP 	image: autoDraw = True
+149.1598 	EXP 	New trial (rep=0, index=17): OrderedDict([('current_image', 'images/5_40 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 17), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+149.1698 	EXP 	image: autoDraw = False
+149.1698 	EXP 	polygon: autoDraw = False
+149.1698 	EXP 	image: autoDraw = False
+149.1698 	EXP 	polygon: autoDraw = False
+149.1698 	EXP 	polygon_2: autoDraw = False
+149.1698 	EXP 	text_2: autoDraw = False
+149.1698 	EXP 	image: image = 'images/5_40 copy 5.jpg'
+149.1698 	EXP 	polygon: autoDraw = True
+149.3678 	EXP 	image: autoDraw = True
+150.0575 	EXP 	New trial (rep=0, index=18): OrderedDict([('current_image', 'images/13_28 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 18), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+150.0659 	EXP 	image: autoDraw = False
+150.0659 	EXP 	polygon: autoDraw = False
+150.0659 	EXP 	image: autoDraw = False
+150.0659 	EXP 	polygon: autoDraw = False
+150.0659 	EXP 	polygon_2: autoDraw = False
+150.0659 	EXP 	text_2: autoDraw = False
+150.0659 	EXP 	image: image = 'images/13_28 copy 5.jpg'
+150.0659 	EXP 	polygon: autoDraw = True
+150.2850 	EXP 	image: autoDraw = True
+150.8779 	EXP 	New trial (rep=0, index=19): OrderedDict([('current_image', 'images/6_12 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 19), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+150.8842 	EXP 	image: autoDraw = False
+150.8842 	EXP 	polygon: autoDraw = False
+150.8842 	EXP 	image: autoDraw = False
+150.8842 	EXP 	polygon: autoDraw = False
+150.8842 	EXP 	polygon_2: autoDraw = False
+150.8842 	EXP 	text_2: autoDraw = False
+150.8842 	EXP 	image: image = 'images/6_12 copy 2.jpg'
+150.8842 	EXP 	polygon: autoDraw = True
+151.0668 	EXP 	image: autoDraw = True
+151.6558 	EXP 	New trial (rep=0, index=20): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 20), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+151.6615 	EXP 	image: autoDraw = False
+151.6615 	EXP 	polygon: autoDraw = False
+151.6615 	EXP 	image: autoDraw = False
+151.6615 	EXP 	polygon: autoDraw = False
+151.6615 	EXP 	polygon_2: autoDraw = False
+151.6615 	EXP 	text_2: autoDraw = False
+151.6615 	EXP 	image: image = 'images/blank.jpg'
+151.6615 	EXP 	image: autoDraw = False
+151.6615 	EXP 	polygon: autoDraw = False
+151.6615 	EXP 	polygon_2: autoDraw = True
+152.4466 	EXP 	New trial (rep=0, index=21): OrderedDict([('current_image', 'images/14_28 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 21), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+152.4531 	EXP 	polygon_2: autoDraw = False
+152.4531 	EXP 	polygon_2: autoDraw = False
+152.4531 	EXP 	text_2: autoDraw = False
+152.4531 	EXP 	image: image = 'images/14_28 copy 6.jpg'
+152.4531 	EXP 	polygon: autoDraw = True
+152.6377 	EXP 	image: autoDraw = True
+153.3044 	EXP 	New trial (rep=0, index=22): OrderedDict([('current_image', 'images/8_0 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 22), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+153.3116 	EXP 	image: autoDraw = False
+153.3116 	EXP 	polygon: autoDraw = False
+153.3116 	EXP 	image: autoDraw = False
+153.3116 	EXP 	polygon: autoDraw = False
+153.3116 	EXP 	polygon_2: autoDraw = False
+153.3116 	EXP 	text_2: autoDraw = False
+153.3116 	EXP 	image: image = 'images/8_0 copy 6.jpg'
+153.3116 	EXP 	polygon: autoDraw = True
+153.5050 	EXP 	image: autoDraw = True
+154.2119 	EXP 	New trial (rep=0, index=23): OrderedDict([('current_image', 'images/24_28 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 23), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+154.2181 	EXP 	image: autoDraw = False
+154.2181 	EXP 	polygon: autoDraw = False
+154.2181 	EXP 	image: autoDraw = False
+154.2181 	EXP 	polygon: autoDraw = False
+154.2181 	EXP 	polygon_2: autoDraw = False
+154.2181 	EXP 	text_2: autoDraw = False
+154.2181 	EXP 	image: image = 'images/24_28 copy 6.jpg'
+154.2181 	EXP 	polygon: autoDraw = True
+154.4206 	EXP 	image: autoDraw = True
+155.0562 	EXP 	New trial (rep=0, index=24): OrderedDict([('current_image', 'images/pair18 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 24), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+155.0642 	EXP 	image: autoDraw = False
+155.0642 	EXP 	polygon: autoDraw = False
+155.0642 	EXP 	image: autoDraw = False
+155.0642 	EXP 	polygon: autoDraw = False
+155.0642 	EXP 	polygon_2: autoDraw = False
+155.0642 	EXP 	text_2: autoDraw = False
+155.0642 	EXP 	image: image = 'images/pair18 copy 4.jpg'
+155.0642 	EXP 	polygon: autoDraw = True
+155.2513 	EXP 	image: autoDraw = True
+155.9349 	EXP 	New trial (rep=0, index=25): OrderedDict([('current_image', 'images/pair15 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 25), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+155.9424 	EXP 	image: autoDraw = False
+155.9424 	EXP 	polygon: autoDraw = False
+155.9424 	EXP 	image: autoDraw = False
+155.9424 	EXP 	polygon: autoDraw = False
+155.9424 	EXP 	polygon_2: autoDraw = False
+155.9424 	EXP 	text_2: autoDraw = False
+155.9424 	EXP 	image: image = 'images/pair15 copy 2.jpg'
+155.9424 	EXP 	polygon: autoDraw = True
+156.1338 	EXP 	image: autoDraw = True
+156.7661 	EXP 	New trial (rep=0, index=26): OrderedDict([('current_image', 'images/pair08 copy.jpg'), ('is_repeat', 0), ('trial_index', 26), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+156.7738 	EXP 	image: autoDraw = False
+156.7738 	EXP 	polygon: autoDraw = False
+156.7738 	EXP 	image: autoDraw = False
+156.7738 	EXP 	polygon: autoDraw = False
+156.7738 	EXP 	polygon_2: autoDraw = False
+156.7738 	EXP 	text_2: autoDraw = False
+156.7738 	EXP 	image: image = 'images/pair08 copy.jpg'
+156.7738 	EXP 	polygon: autoDraw = True
+156.9635 	EXP 	image: autoDraw = True
+157.5980 	EXP 	New trial (rep=0, index=27): OrderedDict([('current_image', 'images/16_40 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 27), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+157.6034 	EXP 	image: autoDraw = False
+157.6034 	EXP 	polygon: autoDraw = False
+157.6034 	EXP 	image: autoDraw = False
+157.6034 	EXP 	polygon: autoDraw = False
+157.6034 	EXP 	polygon_2: autoDraw = False
+157.6034 	EXP 	text_2: autoDraw = False
+157.6034 	EXP 	image: image = 'images/16_40 copy 2.jpg'
+157.6034 	EXP 	polygon: autoDraw = True
+157.7918 	EXP 	image: autoDraw = True
+158.4245 	EXP 	New trial (rep=0, index=28): OrderedDict([('current_image', 'images/21_40 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 28), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+158.4336 	EXP 	image: autoDraw = False
+158.4336 	EXP 	polygon: autoDraw = False
+158.4336 	EXP 	image: autoDraw = False
+158.4336 	EXP 	polygon: autoDraw = False
+158.4336 	EXP 	polygon_2: autoDraw = False
+158.4336 	EXP 	text_2: autoDraw = False
+158.4336 	EXP 	image: image = 'images/21_40 copy 2.jpg'
+158.4336 	EXP 	polygon: autoDraw = True
+158.6265 	EXP 	image: autoDraw = True
+159.2425 	EXP 	New trial (rep=0, index=29): OrderedDict([('current_image', 'images/pair01 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 29), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+159.2515 	EXP 	image: autoDraw = False
+159.2515 	EXP 	polygon: autoDraw = False
+159.2515 	EXP 	image: autoDraw = False
+159.2515 	EXP 	polygon: autoDraw = False
+159.2515 	EXP 	polygon_2: autoDraw = False
+159.2515 	EXP 	text_2: autoDraw = False
+159.2515 	EXP 	image: image = 'images/pair01 copy 4.jpg'
+159.2515 	EXP 	polygon: autoDraw = True
+159.4428 	EXP 	image: autoDraw = True
+160.0857 	EXP 	New trial (rep=0, index=30): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 30), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+160.0917 	EXP 	image: autoDraw = False
+160.0917 	EXP 	polygon: autoDraw = False
+160.0917 	EXP 	image: autoDraw = False
+160.0917 	EXP 	polygon: autoDraw = False
+160.0917 	EXP 	polygon_2: autoDraw = False
+160.0917 	EXP 	text_2: autoDraw = False
+160.0917 	EXP 	image: image = 'images/blank.jpg'
+160.0917 	EXP 	image: autoDraw = False
+160.0917 	EXP 	polygon: autoDraw = False
+160.0917 	EXP 	polygon_2: autoDraw = True
+160.8866 	EXP 	New trial (rep=0, index=31): OrderedDict([('current_image', 'images/21_28.jpg'), ('is_repeat', 0), ('trial_index', 31), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+160.8926 	EXP 	polygon_2: autoDraw = False
+160.8926 	EXP 	polygon_2: autoDraw = False
+160.8926 	EXP 	text_2: autoDraw = False
+160.8926 	EXP 	image: image = 'images/21_28.jpg'
+160.8926 	EXP 	polygon: autoDraw = True
+161.0884 	EXP 	image: autoDraw = True
+161.7164 	EXP 	New trial (rep=0, index=32): OrderedDict([('current_image', 'images/pair05 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 32), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+161.7232 	EXP 	image: autoDraw = False
+161.7232 	EXP 	polygon: autoDraw = False
+161.7232 	EXP 	image: autoDraw = False
+161.7232 	EXP 	polygon: autoDraw = False
+161.7232 	EXP 	polygon_2: autoDraw = False
+161.7232 	EXP 	text_2: autoDraw = False
+161.7232 	EXP 	image: image = 'images/pair05 copy 7.jpg'
+161.7232 	EXP 	polygon: autoDraw = True
+161.9107 	EXP 	image: autoDraw = True
+162.5479 	EXP 	New trial (rep=0, index=33): OrderedDict([('current_image', 'images/20_40 copy.jpg'), ('is_repeat', 0), ('trial_index', 33), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+162.5567 	EXP 	image: autoDraw = False
+162.5567 	EXP 	polygon: autoDraw = False
+162.5567 	EXP 	image: autoDraw = False
+162.5567 	EXP 	polygon: autoDraw = False
+162.5567 	EXP 	polygon_2: autoDraw = False
+162.5567 	EXP 	text_2: autoDraw = False
+162.5567 	EXP 	image: image = 'images/20_40 copy.jpg'
+162.5567 	EXP 	polygon: autoDraw = True
+162.7550 	EXP 	image: autoDraw = True
+163.4355 	EXP 	New trial (rep=0, index=34): OrderedDict([('current_image', 'images/16_12 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 34), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+163.4415 	EXP 	image: autoDraw = False
+163.4415 	EXP 	polygon: autoDraw = False
+163.4415 	EXP 	image: autoDraw = False
+163.4415 	EXP 	polygon: autoDraw = False
+163.4415 	EXP 	polygon_2: autoDraw = False
+163.4415 	EXP 	text_2: autoDraw = False
+163.4415 	EXP 	image: image = 'images/16_12 copy 2.jpg'
+163.4415 	EXP 	polygon: autoDraw = True
+163.6313 	EXP 	image: autoDraw = True
+164.2919 	EXP 	New trial (rep=0, index=35): OrderedDict([('current_image', 'images/11_0 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 35), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+164.2979 	EXP 	image: autoDraw = False
+164.2979 	EXP 	polygon: autoDraw = False
+164.2979 	EXP 	image: autoDraw = False
+164.2979 	EXP 	polygon: autoDraw = False
+164.2979 	EXP 	polygon_2: autoDraw = False
+164.2979 	EXP 	text_2: autoDraw = False
+164.2979 	EXP 	image: image = 'images/11_0 copy 6.jpg'
+164.2979 	EXP 	polygon: autoDraw = True
+164.4887 	EXP 	image: autoDraw = True
+165.1156 	EXP 	New trial (rep=0, index=36): OrderedDict([('current_image', 'images/11_0 copy.jpg'), ('is_repeat', 0), ('trial_index', 36), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+165.1212 	EXP 	image: autoDraw = False
+165.1212 	EXP 	polygon: autoDraw = False
+165.1212 	EXP 	image: autoDraw = False
+165.1212 	EXP 	polygon: autoDraw = False
+165.1212 	EXP 	polygon_2: autoDraw = False
+165.1212 	EXP 	text_2: autoDraw = False
+165.1212 	EXP 	image: image = 'images/11_0 copy.jpg'
+165.1212 	EXP 	polygon: autoDraw = True
+165.3133 	EXP 	image: autoDraw = True
+165.9428 	EXP 	New trial (rep=0, index=37): OrderedDict([('current_image', 'images/10_0 copy.jpg'), ('is_repeat', 0), ('trial_index', 37), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+165.9497 	EXP 	image: autoDraw = False
+165.9497 	EXP 	polygon: autoDraw = False
+165.9497 	EXP 	image: autoDraw = False
+165.9497 	EXP 	polygon: autoDraw = False
+165.9497 	EXP 	polygon_2: autoDraw = False
+165.9497 	EXP 	text_2: autoDraw = False
+165.9497 	EXP 	image: image = 'images/10_0 copy.jpg'
+165.9497 	EXP 	polygon: autoDraw = True
+166.1378 	EXP 	image: autoDraw = True
+166.8567 	EXP 	New trial (rep=0, index=38): OrderedDict([('current_image', 'images/pair09 copy.jpg'), ('is_repeat', 0), ('trial_index', 38), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+166.8645 	EXP 	image: autoDraw = False
+166.8645 	EXP 	polygon: autoDraw = False
+166.8645 	EXP 	image: autoDraw = False
+166.8645 	EXP 	polygon: autoDraw = False
+166.8645 	EXP 	polygon_2: autoDraw = False
+166.8645 	EXP 	text_2: autoDraw = False
+166.8645 	EXP 	image: image = 'images/pair09 copy.jpg'
+166.8645 	EXP 	polygon: autoDraw = True
+167.0695 	EXP 	image: autoDraw = True
+167.7747 	EXP 	New trial (rep=0, index=39): OrderedDict([('current_image', 'images/18_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 39), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+167.7840 	EXP 	image: autoDraw = False
+167.7840 	EXP 	polygon: autoDraw = False
+167.7840 	EXP 	image: autoDraw = False
+167.7840 	EXP 	polygon: autoDraw = False
+167.7840 	EXP 	polygon_2: autoDraw = False
+167.7840 	EXP 	text_2: autoDraw = False
+167.7840 	EXP 	image: image = 'images/18_12 copy 3.jpg'
+167.7840 	EXP 	polygon: autoDraw = True
+168.0077 	EXP 	image: autoDraw = True
+168.6894 	EXP 	New trial (rep=0, index=40): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 40), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+168.6944 	EXP 	image: autoDraw = False
+168.6944 	EXP 	polygon: autoDraw = False
+168.6944 	EXP 	image: autoDraw = False
+168.6944 	EXP 	polygon: autoDraw = False
+168.6944 	EXP 	polygon_2: autoDraw = False
+168.6944 	EXP 	text_2: autoDraw = False
+168.6944 	EXP 	image: image = 'images/blank.jpg'
+168.6944 	EXP 	image: autoDraw = False
+168.6944 	EXP 	polygon: autoDraw = False
+168.6944 	EXP 	polygon_2: autoDraw = True
+169.4300 	EXP 	New trial (rep=0, index=41): OrderedDict([('current_image', 'images/15_40 copy.jpg'), ('is_repeat', 0), ('trial_index', 41), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+169.4359 	EXP 	polygon_2: autoDraw = False
+169.4359 	EXP 	polygon_2: autoDraw = False
+169.4359 	EXP 	text_2: autoDraw = False
+169.4359 	EXP 	image: image = 'images/15_40 copy.jpg'
+169.4359 	EXP 	polygon: autoDraw = True
+169.6194 	EXP 	image: autoDraw = True
+170.2585 	EXP 	New trial (rep=0, index=42): OrderedDict([('current_image', 'images/17_40 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 42), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+170.2663 	EXP 	image: autoDraw = False
+170.2663 	EXP 	polygon: autoDraw = False
+170.2663 	EXP 	image: autoDraw = False
+170.2663 	EXP 	polygon: autoDraw = False
+170.2663 	EXP 	polygon_2: autoDraw = False
+170.2663 	EXP 	text_2: autoDraw = False
+170.2663 	EXP 	image: image = 'images/17_40 copy 5.jpg'
+170.2663 	EXP 	polygon: autoDraw = True
+170.4861 	EXP 	image: autoDraw = True
+171.2191 	EXP 	New trial (rep=0, index=43): OrderedDict([('current_image', 'images/13_28 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 43), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+171.2260 	EXP 	image: autoDraw = False
+171.2260 	EXP 	polygon: autoDraw = False
+171.2260 	EXP 	image: autoDraw = False
+171.2260 	EXP 	polygon: autoDraw = False
+171.2260 	EXP 	polygon_2: autoDraw = False
+171.2260 	EXP 	text_2: autoDraw = False
+171.2260 	EXP 	image: image = 'images/13_28 copy 7.jpg'
+171.2260 	EXP 	polygon: autoDraw = True
+171.4500 	EXP 	image: autoDraw = True
+172.1158 	EXP 	New trial (rep=0, index=44): OrderedDict([('current_image', 'images/pair11 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 44), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+172.1228 	EXP 	image: autoDraw = False
+172.1228 	EXP 	polygon: autoDraw = False
+172.1228 	EXP 	image: autoDraw = False
+172.1228 	EXP 	polygon: autoDraw = False
+172.1228 	EXP 	polygon_2: autoDraw = False
+172.1228 	EXP 	text_2: autoDraw = False
+172.1228 	EXP 	image: image = 'images/pair11 copy 4.jpg'
+172.1228 	EXP 	polygon: autoDraw = True
+172.3106 	EXP 	image: autoDraw = True
+172.9246 	EXP 	New trial (rep=0, index=45): OrderedDict([('current_image', 'images/14_28 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 45), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+172.9311 	EXP 	image: autoDraw = False
+172.9311 	EXP 	polygon: autoDraw = False
+172.9311 	EXP 	image: autoDraw = False
+172.9311 	EXP 	polygon: autoDraw = False
+172.9311 	EXP 	polygon_2: autoDraw = False
+172.9311 	EXP 	text_2: autoDraw = False
+172.9311 	EXP 	image: image = 'images/14_28 copy 4.jpg'
+172.9311 	EXP 	polygon: autoDraw = True
+173.1235 	EXP 	image: autoDraw = True
+173.7482 	EXP 	New trial (rep=0, index=46): OrderedDict([('current_image', 'images/23_28 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 46), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+173.7537 	EXP 	image: autoDraw = False
+173.7537 	EXP 	polygon: autoDraw = False
+173.7537 	EXP 	image: autoDraw = False
+173.7537 	EXP 	polygon: autoDraw = False
+173.7537 	EXP 	polygon_2: autoDraw = False
+173.7537 	EXP 	text_2: autoDraw = False
+173.7537 	EXP 	image: image = 'images/23_28 copy 6.jpg'
+173.7537 	EXP 	polygon: autoDraw = True
+173.9416 	EXP 	image: autoDraw = True
+174.5736 	EXP 	New trial (rep=0, index=47): OrderedDict([('current_image', 'images/19_28 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 47), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+174.5805 	EXP 	image: autoDraw = False
+174.5805 	EXP 	polygon: autoDraw = False
+174.5805 	EXP 	image: autoDraw = False
+174.5805 	EXP 	polygon: autoDraw = False
+174.5805 	EXP 	polygon_2: autoDraw = False
+174.5805 	EXP 	text_2: autoDraw = False
+174.5805 	EXP 	image: image = 'images/19_28 copy 5.jpg'
+174.5805 	EXP 	polygon: autoDraw = True
+174.7703 	EXP 	image: autoDraw = True
+175.4184 	EXP 	New trial (rep=0, index=48): OrderedDict([('current_image', 'images/pair04.jpg'), ('is_repeat', 0), ('trial_index', 48), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+175.4256 	EXP 	image: autoDraw = False
+175.4256 	EXP 	polygon: autoDraw = False
+175.4256 	EXP 	image: autoDraw = False
+175.4256 	EXP 	polygon: autoDraw = False
+175.4256 	EXP 	polygon_2: autoDraw = False
+175.4256 	EXP 	text_2: autoDraw = False
+175.4256 	EXP 	image: image = 'images/pair04.jpg'
+175.4256 	EXP 	polygon: autoDraw = True
+175.6136 	EXP 	image: autoDraw = True
+176.2236 	EXP 	New trial (rep=0, index=49): OrderedDict([('current_image', 'images/pair18 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 49), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+176.2294 	EXP 	image: autoDraw = False
+176.2294 	EXP 	polygon: autoDraw = False
+176.2294 	EXP 	image: autoDraw = False
+176.2294 	EXP 	polygon: autoDraw = False
+176.2294 	EXP 	polygon_2: autoDraw = False
+176.2294 	EXP 	text_2: autoDraw = False
+176.2294 	EXP 	image: image = 'images/pair18 copy 4.jpg'
+176.2294 	EXP 	polygon: autoDraw = True
+176.4144 	EXP 	image: autoDraw = True
+177.0601 	EXP 	New trial (rep=0, index=50): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 50), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+177.0667 	EXP 	image: autoDraw = False
+177.0667 	EXP 	polygon: autoDraw = False
+177.0667 	EXP 	image: autoDraw = False
+177.0667 	EXP 	polygon: autoDraw = False
+177.0667 	EXP 	polygon_2: autoDraw = False
+177.0667 	EXP 	text_2: autoDraw = False
+177.0667 	EXP 	image: image = 'images/blank.jpg'
+177.0667 	EXP 	image: autoDraw = False
+177.0667 	EXP 	polygon: autoDraw = False
+177.0667 	EXP 	polygon_2: autoDraw = True
+177.8321 	EXP 	New trial (rep=0, index=51): OrderedDict([('current_image', 'images/13_0 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 51), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+177.8384 	EXP 	polygon_2: autoDraw = False
+177.8384 	EXP 	polygon_2: autoDraw = False
+177.8384 	EXP 	text_2: autoDraw = False
+177.8384 	EXP 	image: image = 'images/13_0 copy 3.jpg'
+177.8384 	EXP 	polygon: autoDraw = True
+178.0344 	EXP 	image: autoDraw = True
+178.6596 	EXP 	New trial (rep=0, index=52): OrderedDict([('current_image', 'images/5_28 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 52), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+178.6658 	EXP 	image: autoDraw = False
+178.6658 	EXP 	polygon: autoDraw = False
+178.6658 	EXP 	image: autoDraw = False
+178.6658 	EXP 	polygon: autoDraw = False
+178.6658 	EXP 	polygon_2: autoDraw = False
+178.6658 	EXP 	text_2: autoDraw = False
+178.6658 	EXP 	image: image = 'images/5_28 copy 7.jpg'
+178.6658 	EXP 	polygon: autoDraw = True
+178.8536 	EXP 	image: autoDraw = True
+179.4848 	EXP 	New trial (rep=0, index=53): OrderedDict([('current_image', 'images/pair05 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 53), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+179.4911 	EXP 	image: autoDraw = False
+179.4911 	EXP 	polygon: autoDraw = False
+179.4911 	EXP 	image: autoDraw = False
+179.4911 	EXP 	polygon: autoDraw = False
+179.4911 	EXP 	polygon_2: autoDraw = False
+179.4911 	EXP 	text_2: autoDraw = False
+179.4911 	EXP 	image: image = 'images/pair05 copy 4.jpg'
+179.4911 	EXP 	polygon: autoDraw = True
+179.6820 	EXP 	image: autoDraw = True
+180.3083 	EXP 	New trial (rep=0, index=54): OrderedDict([('current_image', 'images/20_28 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 54), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+180.3140 	EXP 	image: autoDraw = False
+180.3140 	EXP 	polygon: autoDraw = False
+180.3140 	EXP 	image: autoDraw = False
+180.3140 	EXP 	polygon: autoDraw = False
+180.3140 	EXP 	polygon_2: autoDraw = False
+180.3140 	EXP 	text_2: autoDraw = False
+180.3140 	EXP 	image: image = 'images/20_28 copy 5.jpg'
+180.3140 	EXP 	polygon: autoDraw = True
+180.5063 	EXP 	image: autoDraw = True
+181.1385 	EXP 	New trial (rep=0, index=55): OrderedDict([('current_image', 'images/pair08 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 55), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+181.1456 	EXP 	image: autoDraw = False
+181.1456 	EXP 	polygon: autoDraw = False
+181.1456 	EXP 	image: autoDraw = False
+181.1456 	EXP 	polygon: autoDraw = False
+181.1456 	EXP 	polygon_2: autoDraw = False
+181.1456 	EXP 	text_2: autoDraw = False
+181.1456 	EXP 	image: image = 'images/pair08 copy 3.jpg'
+181.1456 	EXP 	polygon: autoDraw = True
+181.3455 	EXP 	image: autoDraw = True
+181.9778 	EXP 	New trial (rep=0, index=56): OrderedDict([('current_image', 'images/17_40 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 56), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+181.9832 	EXP 	image: autoDraw = False
+181.9832 	EXP 	polygon: autoDraw = False
+181.9832 	EXP 	image: autoDraw = False
+181.9832 	EXP 	polygon: autoDraw = False
+181.9832 	EXP 	polygon_2: autoDraw = False
+181.9832 	EXP 	text_2: autoDraw = False
+181.9832 	EXP 	image: image = 'images/17_40 copy 5.jpg'
+181.9832 	EXP 	polygon: autoDraw = True
+182.1691 	EXP 	image: autoDraw = True
+182.8231 	EXP 	New trial (rep=0, index=57): OrderedDict([('current_image', 'images/24_0.jpg'), ('is_repeat', 0), ('trial_index', 57), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+182.8302 	EXP 	image: autoDraw = False
+182.8302 	EXP 	polygon: autoDraw = False
+182.8302 	EXP 	image: autoDraw = False
+182.8302 	EXP 	polygon: autoDraw = False
+182.8302 	EXP 	polygon_2: autoDraw = False
+182.8302 	EXP 	text_2: autoDraw = False
+182.8302 	EXP 	image: image = 'images/24_0.jpg'
+182.8302 	EXP 	polygon: autoDraw = True
+183.0277 	EXP 	image: autoDraw = True
+183.7397 	EXP 	New trial (rep=0, index=58): OrderedDict([('current_image', 'images/10_28.jpg'), ('is_repeat', 0), ('trial_index', 58), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+183.7458 	EXP 	image: autoDraw = False
+183.7458 	EXP 	polygon: autoDraw = False
+183.7458 	EXP 	image: autoDraw = False
+183.7458 	EXP 	polygon: autoDraw = False
+183.7458 	EXP 	polygon_2: autoDraw = False
+183.7458 	EXP 	text_2: autoDraw = False
+183.7458 	EXP 	image: image = 'images/10_28.jpg'
+183.7458 	EXP 	polygon: autoDraw = True
+183.9322 	EXP 	image: autoDraw = True
+184.5983 	EXP 	New trial (rep=0, index=59): OrderedDict([('current_image', 'images/14_28 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 59), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+184.6047 	EXP 	image: autoDraw = False
+184.6047 	EXP 	polygon: autoDraw = False
+184.6047 	EXP 	image: autoDraw = False
+184.6047 	EXP 	polygon: autoDraw = False
+184.6047 	EXP 	polygon_2: autoDraw = False
+184.6047 	EXP 	text_2: autoDraw = False
+184.6047 	EXP 	image: image = 'images/14_28 copy 3.jpg'
+184.6047 	EXP 	polygon: autoDraw = True
+184.7987 	EXP 	image: autoDraw = True
+185.5181 	EXP 	New trial (rep=0, index=60): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 60), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+185.5236 	EXP 	image: autoDraw = False
+185.5236 	EXP 	polygon: autoDraw = False
+185.5236 	EXP 	image: autoDraw = False
+185.5236 	EXP 	polygon: autoDraw = False
+185.5236 	EXP 	polygon_2: autoDraw = False
+185.5236 	EXP 	text_2: autoDraw = False
+185.5236 	EXP 	image: image = 'images/blank.jpg'
+185.5236 	EXP 	image: autoDraw = False
+185.5236 	EXP 	polygon: autoDraw = False
+185.5236 	EXP 	polygon_2: autoDraw = True
+186.3296 	EXP 	New trial (rep=0, index=61): OrderedDict([('current_image', 'images/15_40 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 61), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+186.3360 	EXP 	polygon_2: autoDraw = False
+186.3360 	EXP 	polygon_2: autoDraw = False
+186.3360 	EXP 	text_2: autoDraw = False
+186.3360 	EXP 	image: image = 'images/15_40 copy 5.jpg'
+186.3360 	EXP 	polygon: autoDraw = True
+186.5268 	EXP 	image: autoDraw = True
+187.1457 	EXP 	New trial (rep=0, index=62): OrderedDict([('current_image', 'images/5_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 62), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+187.1522 	EXP 	image: autoDraw = False
+187.1522 	EXP 	polygon: autoDraw = False
+187.1522 	EXP 	image: autoDraw = False
+187.1522 	EXP 	polygon: autoDraw = False
+187.1522 	EXP 	polygon_2: autoDraw = False
+187.1522 	EXP 	text_2: autoDraw = False
+187.1522 	EXP 	image: image = 'images/5_12 copy 3.jpg'
+187.1522 	EXP 	polygon: autoDraw = True
+187.3417 	EXP 	image: autoDraw = True
+187.9754 	EXP 	New trial (rep=0, index=63): OrderedDict([('current_image', 'images/pair08 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 63), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+187.9834 	EXP 	image: autoDraw = False
+187.9834 	EXP 	polygon: autoDraw = False
+187.9834 	EXP 	image: autoDraw = False
+187.9834 	EXP 	polygon: autoDraw = False
+187.9834 	EXP 	polygon_2: autoDraw = False
+187.9834 	EXP 	text_2: autoDraw = False
+187.9834 	EXP 	image: image = 'images/pair08 copy 6.jpg'
+187.9834 	EXP 	polygon: autoDraw = True
+188.1811 	EXP 	image: autoDraw = True
+188.8000 	EXP 	New trial (rep=0, index=64): OrderedDict([('current_image', 'images/pair09.jpg'), ('is_repeat', 0), ('trial_index', 64), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+188.8062 	EXP 	image: autoDraw = False
+188.8062 	EXP 	polygon: autoDraw = False
+188.8062 	EXP 	image: autoDraw = False
+188.8062 	EXP 	polygon: autoDraw = False
+188.8062 	EXP 	polygon_2: autoDraw = False
+188.8062 	EXP 	text_2: autoDraw = False
+188.8062 	EXP 	image: image = 'images/pair09.jpg'
+188.8062 	EXP 	polygon: autoDraw = True
+188.9977 	EXP 	image: autoDraw = True
+189.6181 	EXP 	New trial (rep=0, index=65): OrderedDict([('current_image', 'images/pair05 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 65), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+189.6238 	EXP 	image: autoDraw = False
+189.6238 	EXP 	polygon: autoDraw = False
+189.6238 	EXP 	image: autoDraw = False
+189.6238 	EXP 	polygon: autoDraw = False
+189.6238 	EXP 	polygon_2: autoDraw = False
+189.6238 	EXP 	text_2: autoDraw = False
+189.6238 	EXP 	image: image = 'images/pair05 copy 7.jpg'
+189.6238 	EXP 	polygon: autoDraw = True
+189.8138 	EXP 	image: autoDraw = True
+190.4455 	EXP 	New trial (rep=0, index=66): OrderedDict([('current_image', 'images/10_0 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 66), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+190.4514 	EXP 	image: autoDraw = False
+190.4514 	EXP 	polygon: autoDraw = False
+190.4514 	EXP 	image: autoDraw = False
+190.4514 	EXP 	polygon: autoDraw = False
+190.4514 	EXP 	polygon_2: autoDraw = False
+190.4514 	EXP 	text_2: autoDraw = False
+190.4514 	EXP 	image: image = 'images/10_0 copy 3.jpg'
+190.4514 	EXP 	polygon: autoDraw = True
+190.6426 	EXP 	image: autoDraw = True
+191.2641 	EXP 	New trial (rep=0, index=67): OrderedDict([('current_image', 'images/14_28 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 67), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+191.2692 	EXP 	image: autoDraw = False
+191.2692 	EXP 	polygon: autoDraw = False
+191.2692 	EXP 	image: autoDraw = False
+191.2692 	EXP 	polygon: autoDraw = False
+191.2692 	EXP 	polygon_2: autoDraw = False
+191.2692 	EXP 	text_2: autoDraw = False
+191.2692 	EXP 	image: image = 'images/14_28 copy 6.jpg'
+191.2692 	EXP 	polygon: autoDraw = True
+191.4684 	EXP 	image: autoDraw = True
+192.0822 	EXP 	New trial (rep=0, index=68): OrderedDict([('current_image', 'images/16_12 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 68), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+192.0877 	EXP 	image: autoDraw = False
+192.0877 	EXP 	polygon: autoDraw = False
+192.0877 	EXP 	image: autoDraw = False
+192.0877 	EXP 	polygon: autoDraw = False
+192.0877 	EXP 	polygon_2: autoDraw = False
+192.0877 	EXP 	text_2: autoDraw = False
+192.0877 	EXP 	image: image = 'images/16_12 copy 2.jpg'
+192.0877 	EXP 	polygon: autoDraw = True
+192.2759 	EXP 	image: autoDraw = True
+192.9020 	EXP 	New trial (rep=0, index=69): OrderedDict([('current_image', 'images/9_0 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 69), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+192.9091 	EXP 	image: autoDraw = False
+192.9091 	EXP 	polygon: autoDraw = False
+192.9091 	EXP 	image: autoDraw = False
+192.9091 	EXP 	polygon: autoDraw = False
+192.9091 	EXP 	polygon_2: autoDraw = False
+192.9091 	EXP 	text_2: autoDraw = False
+192.9091 	EXP 	image: image = 'images/9_0 copy 7.jpg'
+192.9091 	EXP 	polygon: autoDraw = True
+193.1335 	EXP 	image: autoDraw = True
+193.7850 	EXP 	New trial (rep=0, index=70): OrderedDict([('current_image', 'images/21_0 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 70), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0)])
+193.7916 	EXP 	image: autoDraw = False
+193.7916 	EXP 	polygon: autoDraw = False
+193.7916 	EXP 	image: autoDraw = False
+193.7916 	EXP 	polygon: autoDraw = False
+193.7916 	EXP 	polygon_2: autoDraw = False
+193.7916 	EXP 	text_2: autoDraw = False
+193.7916 	EXP 	image: image = 'images/21_0 copy 6.jpg'
+193.7916 	EXP 	polygon: autoDraw = True
+193.9897 	EXP 	image: autoDraw = True
+194.6520 	EXP 	New trial (rep=0, index=71): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 71), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+194.6577 	EXP 	image: autoDraw = False
+194.6577 	EXP 	polygon: autoDraw = False
+194.6577 	EXP 	image: autoDraw = False
+194.6577 	EXP 	polygon: autoDraw = False
+194.6577 	EXP 	polygon_2: autoDraw = False
+194.6577 	EXP 	text_2: autoDraw = False
+194.6577 	EXP 	image: image = 'images/blank.jpg'
+194.6577 	EXP 	image: autoDraw = False
+194.6577 	EXP 	polygon: autoDraw = False
+194.6577 	EXP 	polygon_2: autoDraw = True
+195.4390 	EXP 	New trial (rep=0, index=72): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 72), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+195.4439 	EXP 	polygon_2: autoDraw = False
+195.4439 	EXP 	polygon_2: autoDraw = False
+195.4439 	EXP 	text_2: autoDraw = False
+195.4439 	EXP 	image: image = 'images/blank.jpg'
+195.4439 	EXP 	image: autoDraw = False
+195.4439 	EXP 	polygon: autoDraw = False
+195.4439 	EXP 	polygon_2: autoDraw = True
+196.2057 	EXP 	New trial (rep=0, index=73): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 73), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0)])
+196.2108 	EXP 	polygon_2: autoDraw = False
+196.2108 	EXP 	polygon_2: autoDraw = False
+196.2108 	EXP 	text_2: autoDraw = False
+196.2108 	EXP 	image: image = 'images/blank.jpg'
+196.2108 	EXP 	image: autoDraw = False
+196.2108 	EXP 	polygon: autoDraw = False
+196.2108 	EXP 	polygon_2: autoDraw = True
+197.0141 	EXP 	New trial (rep=0, index=74): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 74), ('is_blank_trial', 1), ('is_new_run', 1), ('run_num', 0)])
+197.0189 	EXP 	polygon_2: autoDraw = False
+197.0189 	EXP 	polygon_2: autoDraw = False
+197.0189 	EXP 	text_2: autoDraw = False
+197.0189 	EXP 	image: image = 'images/blank.jpg'
+197.0189 	EXP 	image: autoDraw = False
+197.0189 	EXP 	polygon: autoDraw = False
+197.0189 	EXP 	polygon_2: autoDraw = True
+197.7768 	EXP 	New trial (rep=0, index=75): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 0), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+197.7819 	EXP 	polygon_2: autoDraw = False
+197.7819 	EXP 	polygon_2: autoDraw = False
+197.7819 	EXP 	text_2: autoDraw = False
+197.7819 	EXP 	image: image = 'images/blank.jpg'
+197.7819 	EXP 	image: autoDraw = False
+197.7819 	EXP 	polygon: autoDraw = False
+197.7819 	EXP 	polygon_2: autoDraw = True
+198.5645 	EXP 	polygon_2: autoDraw = False
+198.5645 	EXP 	polygon_2: autoDraw = False
+198.5645 	EXP 	text_2: autoDraw = True
+199.6739 	EXP 	New trial (rep=0, index=76): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 1), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+199.6789 	EXP 	text_2: autoDraw = False
+199.6789 	EXP 	text_2: autoDraw = False
+199.6789 	EXP 	image: image = 'images/blank.jpg'
+199.6789 	EXP 	image: autoDraw = False
+199.6789 	EXP 	polygon: autoDraw = False
+199.6789 	EXP 	polygon_2: autoDraw = True
+200.4840 	EXP 	New trial (rep=0, index=77): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 2), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+200.4893 	EXP 	polygon_2: autoDraw = False
+200.4893 	EXP 	polygon_2: autoDraw = False
+200.4893 	EXP 	text_2: autoDraw = False
+200.4893 	EXP 	image: image = 'images/blank.jpg'
+200.4893 	EXP 	image: autoDraw = False
+200.4893 	EXP 	polygon: autoDraw = False
+200.4893 	EXP 	polygon_2: autoDraw = True
+201.3098 	EXP 	New trial (rep=0, index=78): OrderedDict([('current_image', 'images/pair14.jpg'), ('is_repeat', 0), ('trial_index', 3), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+201.3169 	EXP 	polygon_2: autoDraw = False
+201.3169 	EXP 	polygon_2: autoDraw = False
+201.3169 	EXP 	text_2: autoDraw = False
+201.3169 	EXP 	image: image = 'images/pair14.jpg'
+201.3169 	EXP 	polygon: autoDraw = True
+201.5092 	EXP 	image: autoDraw = True
+202.1186 	EXP 	New trial (rep=0, index=79): OrderedDict([('current_image', 'images/10_28 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 4), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+202.1251 	EXP 	image: autoDraw = False
+202.1251 	EXP 	polygon: autoDraw = False
+202.1251 	EXP 	image: autoDraw = False
+202.1251 	EXP 	polygon: autoDraw = False
+202.1251 	EXP 	polygon_2: autoDraw = False
+202.1251 	EXP 	text_2: autoDraw = False
+202.1251 	EXP 	image: image = 'images/10_28 copy 7.jpg'
+202.1251 	EXP 	polygon: autoDraw = True
+202.3212 	EXP 	image: autoDraw = True
+202.9930 	EXP 	New trial (rep=0, index=80): OrderedDict([('current_image', 'images/11_40 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 5), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+202.9994 	EXP 	image: autoDraw = False
+202.9994 	EXP 	polygon: autoDraw = False
+202.9994 	EXP 	image: autoDraw = False
+202.9994 	EXP 	polygon: autoDraw = False
+202.9994 	EXP 	polygon_2: autoDraw = False
+202.9994 	EXP 	text_2: autoDraw = False
+202.9994 	EXP 	image: image = 'images/11_40 copy 6.jpg'
+202.9994 	EXP 	polygon: autoDraw = True
+203.1908 	EXP 	image: autoDraw = True
+203.8136 	EXP 	New trial (rep=0, index=81): OrderedDict([('current_image', 'images/23_40 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 6), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+203.8197 	EXP 	image: autoDraw = False
+203.8197 	EXP 	polygon: autoDraw = False
+203.8197 	EXP 	image: autoDraw = False
+203.8197 	EXP 	polygon: autoDraw = False
+203.8197 	EXP 	polygon_2: autoDraw = False
+203.8197 	EXP 	text_2: autoDraw = False
+203.8197 	EXP 	image: image = 'images/23_40 copy 6.jpg'
+203.8197 	EXP 	polygon: autoDraw = True
+204.0038 	EXP 	image: autoDraw = True
+204.6244 	EXP 	New trial (rep=0, index=82): OrderedDict([('current_image', 'images/11_28 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 7), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+204.6299 	EXP 	image: autoDraw = False
+204.6299 	EXP 	polygon: autoDraw = False
+204.6299 	EXP 	image: autoDraw = False
+204.6299 	EXP 	polygon: autoDraw = False
+204.6299 	EXP 	polygon_2: autoDraw = False
+204.6299 	EXP 	text_2: autoDraw = False
+204.6299 	EXP 	image: image = 'images/11_28 copy 4.jpg'
+204.6299 	EXP 	polygon: autoDraw = True
+204.8171 	EXP 	image: autoDraw = True
+205.4330 	EXP 	New trial (rep=0, index=83): OrderedDict([('current_image', 'images/15_12 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 8), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+205.4389 	EXP 	image: autoDraw = False
+205.4389 	EXP 	polygon: autoDraw = False
+205.4389 	EXP 	image: autoDraw = False
+205.4389 	EXP 	polygon: autoDraw = False
+205.4389 	EXP 	polygon_2: autoDraw = False
+205.4389 	EXP 	text_2: autoDraw = False
+205.4389 	EXP 	image: image = 'images/15_12 copy 6.jpg'
+205.4389 	EXP 	polygon: autoDraw = True
+205.6294 	EXP 	image: autoDraw = True
+206.2715 	EXP 	New trial (rep=0, index=84): OrderedDict([('current_image', 'images/12_28 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 9), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+206.2775 	EXP 	image: autoDraw = False
+206.2775 	EXP 	polygon: autoDraw = False
+206.2775 	EXP 	image: autoDraw = False
+206.2775 	EXP 	polygon: autoDraw = False
+206.2775 	EXP 	polygon_2: autoDraw = False
+206.2775 	EXP 	text_2: autoDraw = False
+206.2775 	EXP 	image: image = 'images/12_28 copy 4.jpg'
+206.2775 	EXP 	polygon: autoDraw = True
+206.4601 	EXP 	image: autoDraw = True
+207.1434 	EXP 	New trial (rep=0, index=85): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 10), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+207.1508 	EXP 	image: autoDraw = False
+207.1508 	EXP 	polygon: autoDraw = False
+207.1508 	EXP 	image: autoDraw = False
+207.1508 	EXP 	polygon: autoDraw = False
+207.1508 	EXP 	polygon_2: autoDraw = False
+207.1508 	EXP 	text_2: autoDraw = False
+207.1508 	EXP 	image: image = 'images/blank.jpg'
+207.1508 	EXP 	image: autoDraw = False
+207.1508 	EXP 	polygon: autoDraw = False
+207.1508 	EXP 	polygon_2: autoDraw = True
+207.9844 	EXP 	New trial (rep=0, index=86): OrderedDict([('current_image', 'images/21_40 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 11), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+207.9910 	EXP 	polygon_2: autoDraw = False
+207.9910 	EXP 	polygon_2: autoDraw = False
+207.9910 	EXP 	text_2: autoDraw = False
+207.9910 	EXP 	image: image = 'images/21_40 copy 5.jpg'
+207.9910 	EXP 	polygon: autoDraw = True
+208.2012 	EXP 	image: autoDraw = True
+208.8599 	EXP 	New trial (rep=0, index=87): OrderedDict([('current_image', 'images/6_40 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 12), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+208.8663 	EXP 	image: autoDraw = False
+208.8663 	EXP 	polygon: autoDraw = False
+208.8663 	EXP 	image: autoDraw = False
+208.8663 	EXP 	polygon: autoDraw = False
+208.8663 	EXP 	polygon_2: autoDraw = False
+208.8663 	EXP 	text_2: autoDraw = False
+208.8663 	EXP 	image: image = 'images/6_40 copy 6.jpg'
+208.8663 	EXP 	polygon: autoDraw = True
+209.0518 	EXP 	image: autoDraw = True
+209.6617 	EXP 	New trial (rep=0, index=88): OrderedDict([('current_image', 'images/20_28 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 13), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+209.6674 	EXP 	image: autoDraw = False
+209.6674 	EXP 	polygon: autoDraw = False
+209.6674 	EXP 	image: autoDraw = False
+209.6674 	EXP 	polygon: autoDraw = False
+209.6674 	EXP 	polygon_2: autoDraw = False
+209.6674 	EXP 	text_2: autoDraw = False
+209.6674 	EXP 	image: image = 'images/20_28 copy 4.jpg'
+209.6674 	EXP 	polygon: autoDraw = True
+209.8604 	EXP 	image: autoDraw = True
+210.4870 	EXP 	New trial (rep=0, index=89): OrderedDict([('current_image', 'images/14_12 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 14), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+210.4929 	EXP 	image: autoDraw = False
+210.4929 	EXP 	polygon: autoDraw = False
+210.4929 	EXP 	image: autoDraw = False
+210.4929 	EXP 	polygon: autoDraw = False
+210.4929 	EXP 	polygon_2: autoDraw = False
+210.4929 	EXP 	text_2: autoDraw = False
+210.4929 	EXP 	image: image = 'images/14_12 copy 6.jpg'
+210.4929 	EXP 	polygon: autoDraw = True
+210.7085 	EXP 	image: autoDraw = True
+211.4047 	EXP 	New trial (rep=0, index=90): OrderedDict([('current_image', 'images/19_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 15), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+211.4115 	EXP 	image: autoDraw = False
+211.4115 	EXP 	polygon: autoDraw = False
+211.4115 	EXP 	image: autoDraw = False
+211.4115 	EXP 	polygon: autoDraw = False
+211.4115 	EXP 	polygon_2: autoDraw = False
+211.4115 	EXP 	text_2: autoDraw = False
+211.4115 	EXP 	image: image = 'images/19_12 copy 3.jpg'
+211.4115 	EXP 	polygon: autoDraw = True
+211.6026 	EXP 	image: autoDraw = True
+212.2408 	EXP 	New trial (rep=0, index=91): OrderedDict([('current_image', 'images/20_12 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 16), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+212.2497 	EXP 	image: autoDraw = False
+212.2497 	EXP 	polygon: autoDraw = False
+212.2497 	EXP 	image: autoDraw = False
+212.2497 	EXP 	polygon: autoDraw = False
+212.2497 	EXP 	polygon_2: autoDraw = False
+212.2497 	EXP 	text_2: autoDraw = False
+212.2497 	EXP 	image: image = 'images/20_12 copy 5.jpg'
+212.2497 	EXP 	polygon: autoDraw = True
+212.4396 	EXP 	image: autoDraw = True
+213.0695 	EXP 	New trial (rep=0, index=92): OrderedDict([('current_image', 'images/10_28 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 17), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+213.0752 	EXP 	image: autoDraw = False
+213.0752 	EXP 	polygon: autoDraw = False
+213.0752 	EXP 	image: autoDraw = False
+213.0752 	EXP 	polygon: autoDraw = False
+213.0752 	EXP 	polygon_2: autoDraw = False
+213.0752 	EXP 	text_2: autoDraw = False
+213.0752 	EXP 	image: image = 'images/10_28 copy 5.jpg'
+213.0752 	EXP 	polygon: autoDraw = True
+213.2607 	EXP 	image: autoDraw = True
+213.8801 	EXP 	New trial (rep=0, index=93): OrderedDict([('current_image', 'images/pair12 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 18), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+213.8873 	EXP 	image: autoDraw = False
+213.8873 	EXP 	polygon: autoDraw = False
+213.8873 	EXP 	image: autoDraw = False
+213.8873 	EXP 	polygon: autoDraw = False
+213.8873 	EXP 	polygon_2: autoDraw = False
+213.8873 	EXP 	text_2: autoDraw = False
+213.8873 	EXP 	image: image = 'images/pair12 copy 5.jpg'
+213.8873 	EXP 	polygon: autoDraw = True
+214.0755 	EXP 	image: autoDraw = True
+214.6990 	EXP 	New trial (rep=0, index=94): OrderedDict([('current_image', 'images/5_0 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 19), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+214.7077 	EXP 	image: autoDraw = False
+214.7077 	EXP 	polygon: autoDraw = False
+214.7077 	EXP 	image: autoDraw = False
+214.7077 	EXP 	polygon: autoDraw = False
+214.7077 	EXP 	polygon_2: autoDraw = False
+214.7077 	EXP 	text_2: autoDraw = False
+214.7077 	EXP 	image: image = 'images/5_0 copy 3.jpg'
+214.7077 	EXP 	polygon: autoDraw = True
+214.9002 	EXP 	image: autoDraw = True
+215.5110 	EXP 	New trial (rep=0, index=95): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 20), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+215.5161 	EXP 	image: autoDraw = False
+215.5161 	EXP 	polygon: autoDraw = False
+215.5161 	EXP 	image: autoDraw = False
+215.5161 	EXP 	polygon: autoDraw = False
+215.5161 	EXP 	polygon_2: autoDraw = False
+215.5161 	EXP 	text_2: autoDraw = False
+215.5161 	EXP 	image: image = 'images/blank.jpg'
+215.5161 	EXP 	image: autoDraw = False
+215.5161 	EXP 	polygon: autoDraw = False
+215.5161 	EXP 	polygon_2: autoDraw = True
+216.2708 	EXP 	New trial (rep=0, index=96): OrderedDict([('current_image', 'images/15_40 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 21), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+216.2757 	EXP 	polygon_2: autoDraw = False
+216.2757 	EXP 	polygon_2: autoDraw = False
+216.2757 	EXP 	text_2: autoDraw = False
+216.2757 	EXP 	image: image = 'images/15_40 copy 5.jpg'
+216.2757 	EXP 	polygon: autoDraw = True
+216.4657 	EXP 	image: autoDraw = True
+217.0745 	EXP 	New trial (rep=0, index=97): OrderedDict([('current_image', 'images/10_0.jpg'), ('is_repeat', 0), ('trial_index', 22), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+217.0801 	EXP 	image: autoDraw = False
+217.0801 	EXP 	polygon: autoDraw = False
+217.0801 	EXP 	image: autoDraw = False
+217.0801 	EXP 	polygon: autoDraw = False
+217.0801 	EXP 	polygon_2: autoDraw = False
+217.0801 	EXP 	text_2: autoDraw = False
+217.0801 	EXP 	image: image = 'images/10_0.jpg'
+217.0801 	EXP 	polygon: autoDraw = True
+217.2752 	EXP 	image: autoDraw = True
+217.8847 	EXP 	New trial (rep=0, index=98): OrderedDict([('current_image', 'images/10_28 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 23), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+217.8899 	EXP 	image: autoDraw = False
+217.8899 	EXP 	polygon: autoDraw = False
+217.8899 	EXP 	image: autoDraw = False
+217.8899 	EXP 	polygon: autoDraw = False
+217.8899 	EXP 	polygon_2: autoDraw = False
+217.8899 	EXP 	text_2: autoDraw = False
+217.8899 	EXP 	image: image = 'images/10_28 copy 5.jpg'
+217.8899 	EXP 	polygon: autoDraw = True
+218.0752 	EXP 	image: autoDraw = True
+218.6871 	EXP 	New trial (rep=0, index=99): OrderedDict([('current_image', 'images/8_0 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 24), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+218.6923 	EXP 	image: autoDraw = False
+218.6923 	EXP 	polygon: autoDraw = False
+218.6923 	EXP 	image: autoDraw = False
+218.6923 	EXP 	polygon: autoDraw = False
+218.6923 	EXP 	polygon_2: autoDraw = False
+218.6923 	EXP 	text_2: autoDraw = False
+218.6923 	EXP 	image: image = 'images/8_0 copy 6.jpg'
+218.6923 	EXP 	polygon: autoDraw = True
+218.8752 	EXP 	image: autoDraw = True
+219.5131 	EXP 	New trial (rep=0, index=100): OrderedDict([('current_image', 'images/pair18 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 25), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+219.5204 	EXP 	image: autoDraw = False
+219.5204 	EXP 	polygon: autoDraw = False
+219.5204 	EXP 	image: autoDraw = False
+219.5204 	EXP 	polygon: autoDraw = False
+219.5204 	EXP 	polygon_2: autoDraw = False
+219.5204 	EXP 	text_2: autoDraw = False
+219.5204 	EXP 	image: image = 'images/pair18 copy 4.jpg'
+219.5204 	EXP 	polygon: autoDraw = True
+219.7058 	EXP 	image: autoDraw = True
+220.3124 	EXP 	New trial (rep=0, index=101): OrderedDict([('current_image', 'images/12_28.jpg'), ('is_repeat', 0), ('trial_index', 26), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+220.3275 	EXP 	image: autoDraw = False
+220.3275 	EXP 	polygon: autoDraw = False
+220.3275 	EXP 	image: autoDraw = False
+220.3275 	EXP 	polygon: autoDraw = False
+220.3275 	EXP 	polygon_2: autoDraw = False
+220.3275 	EXP 	text_2: autoDraw = False
+220.3275 	EXP 	image: image = 'images/12_28.jpg'
+220.3275 	EXP 	polygon: autoDraw = True
+220.5204 	EXP 	image: autoDraw = True
+221.1412 	EXP 	New trial (rep=0, index=102): OrderedDict([('current_image', 'images/10_0 copy.jpg'), ('is_repeat', 0), ('trial_index', 27), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+221.1463 	EXP 	image: autoDraw = False
+221.1463 	EXP 	polygon: autoDraw = False
+221.1463 	EXP 	image: autoDraw = False
+221.1463 	EXP 	polygon: autoDraw = False
+221.1463 	EXP 	polygon_2: autoDraw = False
+221.1463 	EXP 	text_2: autoDraw = False
+221.1463 	EXP 	image: image = 'images/10_0 copy.jpg'
+221.1463 	EXP 	polygon: autoDraw = True
+221.3315 	EXP 	image: autoDraw = True
+221.9545 	EXP 	New trial (rep=0, index=103): OrderedDict([('current_image', 'images/pair02 copy.jpg'), ('is_repeat', 0), ('trial_index', 28), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+221.9621 	EXP 	image: autoDraw = False
+221.9621 	EXP 	polygon: autoDraw = False
+221.9621 	EXP 	image: autoDraw = False
+221.9621 	EXP 	polygon: autoDraw = False
+221.9621 	EXP 	polygon_2: autoDraw = False
+221.9621 	EXP 	text_2: autoDraw = False
+221.9621 	EXP 	image: image = 'images/pair02 copy.jpg'
+221.9621 	EXP 	polygon: autoDraw = True
+222.1584 	EXP 	image: autoDraw = True
+222.7679 	EXP 	New trial (rep=0, index=104): OrderedDict([('current_image', 'images/pair08 copy.jpg'), ('is_repeat', 0), ('trial_index', 29), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+222.7737 	EXP 	image: autoDraw = False
+222.7737 	EXP 	polygon: autoDraw = False
+222.7737 	EXP 	image: autoDraw = False
+222.7737 	EXP 	polygon: autoDraw = False
+222.7737 	EXP 	polygon_2: autoDraw = False
+222.7737 	EXP 	text_2: autoDraw = False
+222.7737 	EXP 	image: image = 'images/pair08 copy.jpg'
+222.7737 	EXP 	polygon: autoDraw = True
+222.9614 	EXP 	image: autoDraw = True
+223.5683 	EXP 	New trial (rep=0, index=105): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 30), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+223.5739 	EXP 	image: autoDraw = False
+223.5739 	EXP 	polygon: autoDraw = False
+223.5739 	EXP 	image: autoDraw = False
+223.5739 	EXP 	polygon: autoDraw = False
+223.5739 	EXP 	polygon_2: autoDraw = False
+223.5739 	EXP 	text_2: autoDraw = False
+223.5739 	EXP 	image: image = 'images/blank.jpg'
+223.5739 	EXP 	image: autoDraw = False
+223.5739 	EXP 	polygon: autoDraw = False
+223.5739 	EXP 	polygon_2: autoDraw = True
+224.3258 	EXP 	New trial (rep=0, index=106): OrderedDict([('current_image', 'images/16_28 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 31), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+224.3317 	EXP 	polygon_2: autoDraw = False
+224.3317 	EXP 	polygon_2: autoDraw = False
+224.3317 	EXP 	text_2: autoDraw = False
+224.3317 	EXP 	image: image = 'images/16_28 copy 7.jpg'
+224.3317 	EXP 	polygon: autoDraw = True
+224.5153 	EXP 	image: autoDraw = True
+225.1232 	EXP 	New trial (rep=0, index=107): OrderedDict([('current_image', 'images/15_0 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 32), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+225.1291 	EXP 	image: autoDraw = False
+225.1291 	EXP 	polygon: autoDraw = False
+225.1291 	EXP 	image: autoDraw = False
+225.1291 	EXP 	polygon: autoDraw = False
+225.1291 	EXP 	polygon_2: autoDraw = False
+225.1291 	EXP 	text_2: autoDraw = False
+225.1291 	EXP 	image: image = 'images/15_0 copy 2.jpg'
+225.1291 	EXP 	polygon: autoDraw = True
+225.3154 	EXP 	image: autoDraw = True
+225.9444 	EXP 	New trial (rep=0, index=108): OrderedDict([('current_image', 'images/22_12.jpg'), ('is_repeat', 0), ('trial_index', 33), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+225.9503 	EXP 	image: autoDraw = False
+225.9503 	EXP 	polygon: autoDraw = False
+225.9503 	EXP 	image: autoDraw = False
+225.9503 	EXP 	polygon: autoDraw = False
+225.9503 	EXP 	polygon_2: autoDraw = False
+225.9503 	EXP 	text_2: autoDraw = False
+225.9503 	EXP 	image: image = 'images/22_12.jpg'
+225.9503 	EXP 	polygon: autoDraw = True
+226.1505 	EXP 	image: autoDraw = True
+226.7840 	EXP 	New trial (rep=0, index=109): OrderedDict([('current_image', 'images/10_28 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 34), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+226.7890 	EXP 	image: autoDraw = False
+226.7890 	EXP 	polygon: autoDraw = False
+226.7890 	EXP 	image: autoDraw = False
+226.7890 	EXP 	polygon: autoDraw = False
+226.7890 	EXP 	polygon_2: autoDraw = False
+226.7890 	EXP 	text_2: autoDraw = False
+226.7890 	EXP 	image: image = 'images/10_28 copy 5.jpg'
+226.7890 	EXP 	polygon: autoDraw = True
+226.9793 	EXP 	image: autoDraw = True
+227.6238 	EXP 	New trial (rep=0, index=110): OrderedDict([('current_image', 'images/10_0 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 35), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+227.6296 	EXP 	image: autoDraw = False
+227.6296 	EXP 	polygon: autoDraw = False
+227.6296 	EXP 	image: autoDraw = False
+227.6296 	EXP 	polygon: autoDraw = False
+227.6296 	EXP 	polygon_2: autoDraw = False
+227.6296 	EXP 	text_2: autoDraw = False
+227.6296 	EXP 	image: image = 'images/10_0 copy 7.jpg'
+227.6296 	EXP 	polygon: autoDraw = True
+227.8226 	EXP 	image: autoDraw = True
+228.4901 	EXP 	New trial (rep=0, index=111): OrderedDict([('current_image', 'images/10_0 copy.jpg'), ('is_repeat', 0), ('trial_index', 36), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+228.4950 	EXP 	image: autoDraw = False
+228.4950 	EXP 	polygon: autoDraw = False
+228.4950 	EXP 	image: autoDraw = False
+228.4950 	EXP 	polygon: autoDraw = False
+228.4950 	EXP 	polygon_2: autoDraw = False
+228.4950 	EXP 	text_2: autoDraw = False
+228.4950 	EXP 	image: image = 'images/10_0 copy.jpg'
+228.4950 	EXP 	polygon: autoDraw = True
+228.6776 	EXP 	image: autoDraw = True
+229.3340 	EXP 	New trial (rep=0, index=112): OrderedDict([('current_image', 'images/pair01 copy.jpg'), ('is_repeat', 0), ('trial_index', 37), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+229.3411 	EXP 	image: autoDraw = False
+229.3411 	EXP 	polygon: autoDraw = False
+229.3411 	EXP 	image: autoDraw = False
+229.3411 	EXP 	polygon: autoDraw = False
+229.3411 	EXP 	polygon_2: autoDraw = False
+229.3411 	EXP 	text_2: autoDraw = False
+229.3411 	EXP 	image: image = 'images/pair01 copy.jpg'
+229.3411 	EXP 	polygon: autoDraw = True
+229.5286 	EXP 	image: autoDraw = True
+230.1893 	EXP 	New trial (rep=0, index=113): OrderedDict([('current_image', 'images/20_40 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 38), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+230.1974 	EXP 	image: autoDraw = False
+230.1974 	EXP 	polygon: autoDraw = False
+230.1974 	EXP 	image: autoDraw = False
+230.1974 	EXP 	polygon: autoDraw = False
+230.1974 	EXP 	polygon_2: autoDraw = False
+230.1974 	EXP 	text_2: autoDraw = False
+230.1974 	EXP 	image: image = 'images/20_40 copy 2.jpg'
+230.1974 	EXP 	polygon: autoDraw = True
+230.3948 	EXP 	image: autoDraw = True
+231.0444 	EXP 	New trial (rep=0, index=114): OrderedDict([('current_image', 'images/20_40 copy.jpg'), ('is_repeat', 0), ('trial_index', 39), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+231.0500 	EXP 	image: autoDraw = False
+231.0500 	EXP 	polygon: autoDraw = False
+231.0500 	EXP 	image: autoDraw = False
+231.0500 	EXP 	polygon: autoDraw = False
+231.0500 	EXP 	polygon_2: autoDraw = False
+231.0500 	EXP 	text_2: autoDraw = False
+231.0500 	EXP 	image: image = 'images/20_40 copy.jpg'
+231.0500 	EXP 	polygon: autoDraw = True
+231.2377 	EXP 	image: autoDraw = True
+231.9066 	EXP 	New trial (rep=0, index=115): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 40), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+231.9133 	EXP 	image: autoDraw = False
+231.9133 	EXP 	polygon: autoDraw = False
+231.9133 	EXP 	image: autoDraw = False
+231.9133 	EXP 	polygon: autoDraw = False
+231.9133 	EXP 	polygon_2: autoDraw = False
+231.9133 	EXP 	text_2: autoDraw = False
+231.9133 	EXP 	image: image = 'images/blank.jpg'
+231.9133 	EXP 	image: autoDraw = False
+231.9133 	EXP 	polygon: autoDraw = False
+231.9133 	EXP 	polygon_2: autoDraw = True
+232.6711 	EXP 	New trial (rep=0, index=116): OrderedDict([('current_image', 'images/6_28 copy.jpg'), ('is_repeat', 0), ('trial_index', 41), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+232.6771 	EXP 	polygon_2: autoDraw = False
+232.6771 	EXP 	polygon_2: autoDraw = False
+232.6771 	EXP 	text_2: autoDraw = False
+232.6771 	EXP 	image: image = 'images/6_28 copy.jpg'
+232.6771 	EXP 	polygon: autoDraw = True
+232.8723 	EXP 	image: autoDraw = True
+233.4746 	EXP 	New trial (rep=0, index=117): OrderedDict([('current_image', 'images/21_40 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 42), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+233.4799 	EXP 	image: autoDraw = False
+233.4799 	EXP 	polygon: autoDraw = False
+233.4799 	EXP 	image: autoDraw = False
+233.4799 	EXP 	polygon: autoDraw = False
+233.4799 	EXP 	polygon_2: autoDraw = False
+233.4799 	EXP 	text_2: autoDraw = False
+233.4799 	EXP 	image: image = 'images/21_40 copy 2.jpg'
+233.4799 	EXP 	polygon: autoDraw = True
+233.6732 	EXP 	image: autoDraw = True
+234.2965 	EXP 	New trial (rep=0, index=118): OrderedDict([('current_image', 'images/17_40 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 43), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+234.3036 	EXP 	image: autoDraw = False
+234.3036 	EXP 	polygon: autoDraw = False
+234.3036 	EXP 	image: autoDraw = False
+234.3036 	EXP 	polygon: autoDraw = False
+234.3036 	EXP 	polygon_2: autoDraw = False
+234.3036 	EXP 	text_2: autoDraw = False
+234.3036 	EXP 	image: image = 'images/17_40 copy 5.jpg'
+234.3036 	EXP 	polygon: autoDraw = True
+234.5044 	EXP 	image: autoDraw = True
+235.1057 	EXP 	New trial (rep=0, index=119): OrderedDict([('current_image', 'images/21_12 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 44), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+235.1115 	EXP 	image: autoDraw = False
+235.1115 	EXP 	polygon: autoDraw = False
+235.1115 	EXP 	image: autoDraw = False
+235.1115 	EXP 	polygon: autoDraw = False
+235.1115 	EXP 	polygon_2: autoDraw = False
+235.1115 	EXP 	text_2: autoDraw = False
+235.1115 	EXP 	image: image = 'images/21_12 copy 5.jpg'
+235.1115 	EXP 	polygon: autoDraw = True
+235.3014 	EXP 	image: autoDraw = True
+235.9200 	EXP 	New trial (rep=0, index=120): OrderedDict([('current_image', 'images/9_12 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 45), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+235.9273 	EXP 	image: autoDraw = False
+235.9273 	EXP 	polygon: autoDraw = False
+235.9273 	EXP 	image: autoDraw = False
+235.9273 	EXP 	polygon: autoDraw = False
+235.9273 	EXP 	polygon_2: autoDraw = False
+235.9273 	EXP 	text_2: autoDraw = False
+235.9273 	EXP 	image: image = 'images/9_12 copy 7.jpg'
+235.9273 	EXP 	polygon: autoDraw = True
+236.1328 	EXP 	image: autoDraw = True
+236.7475 	EXP 	New trial (rep=0, index=121): OrderedDict([('current_image', 'images/pair02 copy.jpg'), ('is_repeat', 0), ('trial_index', 46), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+236.7538 	EXP 	image: autoDraw = False
+236.7538 	EXP 	polygon: autoDraw = False
+236.7538 	EXP 	image: autoDraw = False
+236.7538 	EXP 	polygon: autoDraw = False
+236.7538 	EXP 	polygon_2: autoDraw = False
+236.7538 	EXP 	text_2: autoDraw = False
+236.7538 	EXP 	image: image = 'images/pair02 copy.jpg'
+236.7538 	EXP 	polygon: autoDraw = True
+236.9372 	EXP 	image: autoDraw = True
+237.5662 	EXP 	New trial (rep=0, index=122): OrderedDict([('current_image', 'images/20_0 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 47), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+237.5740 	EXP 	image: autoDraw = False
+237.5740 	EXP 	polygon: autoDraw = False
+237.5740 	EXP 	image: autoDraw = False
+237.5740 	EXP 	polygon: autoDraw = False
+237.5740 	EXP 	polygon_2: autoDraw = False
+237.5740 	EXP 	text_2: autoDraw = False
+237.5740 	EXP 	image: image = 'images/20_0 copy 5.jpg'
+237.5740 	EXP 	polygon: autoDraw = True
+237.7665 	EXP 	image: autoDraw = True
+238.3819 	EXP 	New trial (rep=0, index=123): OrderedDict([('current_image', 'images/19_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 48), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+238.3883 	EXP 	image: autoDraw = False
+238.3883 	EXP 	polygon: autoDraw = False
+238.3883 	EXP 	image: autoDraw = False
+238.3883 	EXP 	polygon: autoDraw = False
+238.3883 	EXP 	polygon_2: autoDraw = False
+238.3883 	EXP 	text_2: autoDraw = False
+238.3883 	EXP 	image: image = 'images/19_12 copy 3.jpg'
+238.3883 	EXP 	polygon: autoDraw = True
+238.5807 	EXP 	image: autoDraw = True
+239.2029 	EXP 	New trial (rep=0, index=124): OrderedDict([('current_image', 'images/22_12 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 49), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+239.2087 	EXP 	image: autoDraw = False
+239.2087 	EXP 	polygon: autoDraw = False
+239.2087 	EXP 	image: autoDraw = False
+239.2087 	EXP 	polygon: autoDraw = False
+239.2087 	EXP 	polygon_2: autoDraw = False
+239.2087 	EXP 	text_2: autoDraw = False
+239.2087 	EXP 	image: image = 'images/22_12 copy 7.jpg'
+239.2087 	EXP 	polygon: autoDraw = True
+239.3974 	EXP 	image: autoDraw = True
+240.0152 	EXP 	New trial (rep=0, index=125): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 50), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+240.0203 	EXP 	image: autoDraw = False
+240.0203 	EXP 	polygon: autoDraw = False
+240.0203 	EXP 	image: autoDraw = False
+240.0203 	EXP 	polygon: autoDraw = False
+240.0203 	EXP 	polygon_2: autoDraw = False
+240.0203 	EXP 	text_2: autoDraw = False
+240.0203 	EXP 	image: image = 'images/blank.jpg'
+240.0203 	EXP 	image: autoDraw = False
+240.0203 	EXP 	polygon: autoDraw = False
+240.0203 	EXP 	polygon_2: autoDraw = True
+240.7871 	EXP 	New trial (rep=0, index=126): OrderedDict([('current_image', 'images/pair08 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 51), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+240.7937 	EXP 	polygon_2: autoDraw = False
+240.7937 	EXP 	polygon_2: autoDraw = False
+240.7937 	EXP 	text_2: autoDraw = False
+240.7937 	EXP 	image: image = 'images/pair08 copy 7.jpg'
+240.7937 	EXP 	polygon: autoDraw = True
+240.9847 	EXP 	image: autoDraw = True
+241.5990 	EXP 	New trial (rep=0, index=127): OrderedDict([('current_image', 'images/23_40 copy.jpg'), ('is_repeat', 0), ('trial_index', 52), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+241.6050 	EXP 	image: autoDraw = False
+241.6050 	EXP 	polygon: autoDraw = False
+241.6050 	EXP 	image: autoDraw = False
+241.6050 	EXP 	polygon: autoDraw = False
+241.6050 	EXP 	polygon_2: autoDraw = False
+241.6050 	EXP 	text_2: autoDraw = False
+241.6050 	EXP 	image: image = 'images/23_40 copy.jpg'
+241.6050 	EXP 	polygon: autoDraw = True
+241.7985 	EXP 	image: autoDraw = True
+242.4335 	EXP 	New trial (rep=0, index=128): OrderedDict([('current_image', 'images/pair18 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 53), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+242.4399 	EXP 	image: autoDraw = False
+242.4399 	EXP 	polygon: autoDraw = False
+242.4399 	EXP 	image: autoDraw = False
+242.4399 	EXP 	polygon: autoDraw = False
+242.4399 	EXP 	polygon_2: autoDraw = False
+242.4399 	EXP 	text_2: autoDraw = False
+242.4399 	EXP 	image: image = 'images/pair18 copy 4.jpg'
+242.4399 	EXP 	polygon: autoDraw = True
+242.6297 	EXP 	image: autoDraw = True
+243.2684 	EXP 	New trial (rep=0, index=129): OrderedDict([('current_image', 'images/13_0 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 54), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+243.2758 	EXP 	image: autoDraw = False
+243.2758 	EXP 	polygon: autoDraw = False
+243.2758 	EXP 	image: autoDraw = False
+243.2758 	EXP 	polygon: autoDraw = False
+243.2758 	EXP 	polygon_2: autoDraw = False
+243.2758 	EXP 	text_2: autoDraw = False
+243.2758 	EXP 	image: image = 'images/13_0 copy 3.jpg'
+243.2758 	EXP 	polygon: autoDraw = True
+243.4758 	EXP 	image: autoDraw = True
+244.0897 	EXP 	New trial (rep=0, index=130): OrderedDict([('current_image', 'images/23_28.jpg'), ('is_repeat', 0), ('trial_index', 55), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+244.0954 	EXP 	image: autoDraw = False
+244.0954 	EXP 	polygon: autoDraw = False
+244.0954 	EXP 	image: autoDraw = False
+244.0954 	EXP 	polygon: autoDraw = False
+244.0954 	EXP 	polygon_2: autoDraw = False
+244.0954 	EXP 	text_2: autoDraw = False
+244.0954 	EXP 	image: image = 'images/23_28.jpg'
+244.0954 	EXP 	polygon: autoDraw = True
+244.2836 	EXP 	image: autoDraw = True
+244.8918 	EXP 	New trial (rep=0, index=131): OrderedDict([('current_image', 'images/21_28.jpg'), ('is_repeat', 0), ('trial_index', 56), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+244.8967 	EXP 	image: autoDraw = False
+244.8967 	EXP 	polygon: autoDraw = False
+244.8967 	EXP 	image: autoDraw = False
+244.8967 	EXP 	polygon: autoDraw = False
+244.8967 	EXP 	polygon_2: autoDraw = False
+244.8967 	EXP 	text_2: autoDraw = False
+244.8967 	EXP 	image: image = 'images/21_28.jpg'
+244.8967 	EXP 	polygon: autoDraw = True
+245.0957 	EXP 	image: autoDraw = True
+245.7128 	EXP 	New trial (rep=0, index=132): OrderedDict([('current_image', 'images/15_0 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 57), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+245.7182 	EXP 	image: autoDraw = False
+245.7182 	EXP 	polygon: autoDraw = False
+245.7182 	EXP 	image: autoDraw = False
+245.7182 	EXP 	polygon: autoDraw = False
+245.7182 	EXP 	polygon_2: autoDraw = False
+245.7182 	EXP 	text_2: autoDraw = False
+245.7182 	EXP 	image: image = 'images/15_0 copy 2.jpg'
+245.7182 	EXP 	polygon: autoDraw = True
+245.9258 	EXP 	image: autoDraw = True
+246.5435 	EXP 	New trial (rep=0, index=133): OrderedDict([('current_image', 'images/7_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 58), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+246.5501 	EXP 	image: autoDraw = False
+246.5501 	EXP 	polygon: autoDraw = False
+246.5501 	EXP 	image: autoDraw = False
+246.5501 	EXP 	polygon: autoDraw = False
+246.5501 	EXP 	polygon_2: autoDraw = False
+246.5501 	EXP 	text_2: autoDraw = False
+246.5501 	EXP 	image: image = 'images/7_12 copy 3.jpg'
+246.5501 	EXP 	polygon: autoDraw = True
+246.7391 	EXP 	image: autoDraw = True
+247.3634 	EXP 	New trial (rep=0, index=134): OrderedDict([('current_image', 'images/22_40 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 59), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+247.3695 	EXP 	image: autoDraw = False
+247.3695 	EXP 	polygon: autoDraw = False
+247.3695 	EXP 	image: autoDraw = False
+247.3695 	EXP 	polygon: autoDraw = False
+247.3695 	EXP 	polygon_2: autoDraw = False
+247.3695 	EXP 	text_2: autoDraw = False
+247.3695 	EXP 	image: image = 'images/22_40 copy 7.jpg'
+247.3695 	EXP 	polygon: autoDraw = True
+247.5792 	EXP 	image: autoDraw = True
+248.2361 	EXP 	New trial (rep=0, index=135): OrderedDict([('current_image', 'images/10_12.jpg'), ('is_repeat', 0), ('trial_index', 60), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+248.2420 	EXP 	image: autoDraw = False
+248.2420 	EXP 	polygon: autoDraw = False
+248.2420 	EXP 	image: autoDraw = False
+248.2420 	EXP 	polygon: autoDraw = False
+248.2420 	EXP 	polygon_2: autoDraw = False
+248.2420 	EXP 	text_2: autoDraw = False
+248.2420 	EXP 	image: image = 'images/10_12.jpg'
+248.2420 	EXP 	polygon: autoDraw = True
+248.4284 	EXP 	image: autoDraw = True
+249.0727 	EXP 	New trial (rep=0, index=136): OrderedDict([('current_image', 'images/24_28 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 61), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+249.0778 	EXP 	image: autoDraw = False
+249.0778 	EXP 	polygon: autoDraw = False
+249.0778 	EXP 	image: autoDraw = False
+249.0778 	EXP 	polygon: autoDraw = False
+249.0778 	EXP 	polygon_2: autoDraw = False
+249.0778 	EXP 	text_2: autoDraw = False
+249.0778 	EXP 	image: image = 'images/24_28 copy 6.jpg'
+249.0778 	EXP 	polygon: autoDraw = True
+249.2679 	EXP 	image: autoDraw = True
+249.8733 	EXP 	New trial (rep=0, index=137): OrderedDict([('current_image', 'images/6_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 62), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+249.8793 	EXP 	image: autoDraw = False
+249.8793 	EXP 	polygon: autoDraw = False
+249.8793 	EXP 	image: autoDraw = False
+249.8793 	EXP 	polygon: autoDraw = False
+249.8793 	EXP 	polygon_2: autoDraw = False
+249.8793 	EXP 	text_2: autoDraw = False
+249.8793 	EXP 	image: image = 'images/6_12 copy 3.jpg'
+249.8793 	EXP 	polygon: autoDraw = True
+250.0840 	EXP 	image: autoDraw = True
+250.7602 	EXP 	New trial (rep=0, index=138): OrderedDict([('current_image', 'images/pair04 copy.jpg'), ('is_repeat', 0), ('trial_index', 63), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+250.7688 	EXP 	image: autoDraw = False
+250.7688 	EXP 	polygon: autoDraw = False
+250.7688 	EXP 	image: autoDraw = False
+250.7688 	EXP 	polygon: autoDraw = False
+250.7688 	EXP 	polygon_2: autoDraw = False
+250.7688 	EXP 	text_2: autoDraw = False
+250.7688 	EXP 	image: image = 'images/pair04 copy.jpg'
+250.7688 	EXP 	polygon: autoDraw = True
+250.9665 	EXP 	image: autoDraw = True
+251.6082 	EXP 	New trial (rep=0, index=139): OrderedDict([('current_image', 'images/18_0 copy.jpg'), ('is_repeat', 0), ('trial_index', 64), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+251.6140 	EXP 	image: autoDraw = False
+251.6140 	EXP 	polygon: autoDraw = False
+251.6140 	EXP 	image: autoDraw = False
+251.6140 	EXP 	polygon: autoDraw = False
+251.6140 	EXP 	polygon_2: autoDraw = False
+251.6140 	EXP 	text_2: autoDraw = False
+251.6140 	EXP 	image: image = 'images/18_0 copy.jpg'
+251.6140 	EXP 	polygon: autoDraw = True
+251.8143 	EXP 	image: autoDraw = True
+252.4546 	EXP 	New trial (rep=0, index=140): OrderedDict([('current_image', 'images/20_40 copy.jpg'), ('is_repeat', 0), ('trial_index', 65), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+252.4600 	EXP 	image: autoDraw = False
+252.4600 	EXP 	polygon: autoDraw = False
+252.4600 	EXP 	image: autoDraw = False
+252.4600 	EXP 	polygon: autoDraw = False
+252.4600 	EXP 	polygon_2: autoDraw = False
+252.4600 	EXP 	text_2: autoDraw = False
+252.4600 	EXP 	image: image = 'images/20_40 copy.jpg'
+252.4600 	EXP 	polygon: autoDraw = True
+252.6721 	EXP 	image: autoDraw = True
+253.2743 	EXP 	New trial (rep=0, index=141): OrderedDict([('current_image', 'images/17_40 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 66), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+253.2797 	EXP 	image: autoDraw = False
+253.2797 	EXP 	polygon: autoDraw = False
+253.2797 	EXP 	image: autoDraw = False
+253.2797 	EXP 	polygon: autoDraw = False
+253.2797 	EXP 	polygon_2: autoDraw = False
+253.2797 	EXP 	text_2: autoDraw = False
+253.2797 	EXP 	image: image = 'images/17_40 copy 5.jpg'
+253.2797 	EXP 	polygon: autoDraw = True
+253.4690 	EXP 	image: autoDraw = True
+254.0987 	EXP 	New trial (rep=0, index=142): OrderedDict([('current_image', 'images/19_28 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 67), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+254.1037 	EXP 	image: autoDraw = False
+254.1037 	EXP 	polygon: autoDraw = False
+254.1037 	EXP 	image: autoDraw = False
+254.1037 	EXP 	polygon: autoDraw = False
+254.1037 	EXP 	polygon_2: autoDraw = False
+254.1037 	EXP 	text_2: autoDraw = False
+254.1037 	EXP 	image: image = 'images/19_28 copy 5.jpg'
+254.1037 	EXP 	polygon: autoDraw = True
+254.2884 	EXP 	image: autoDraw = True
+254.9404 	EXP 	New trial (rep=0, index=143): OrderedDict([('current_image', 'images/22_28 copy.jpg'), ('is_repeat', 0), ('trial_index', 68), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+254.9464 	EXP 	image: autoDraw = False
+254.9464 	EXP 	polygon: autoDraw = False
+254.9464 	EXP 	image: autoDraw = False
+254.9464 	EXP 	polygon: autoDraw = False
+254.9464 	EXP 	polygon_2: autoDraw = False
+254.9464 	EXP 	text_2: autoDraw = False
+254.9464 	EXP 	image: image = 'images/22_28 copy.jpg'
+254.9464 	EXP 	polygon: autoDraw = True
+255.1459 	EXP 	image: autoDraw = True
+255.7868 	EXP 	New trial (rep=0, index=144): OrderedDict([('current_image', 'images/7_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 69), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+255.7920 	EXP 	image: autoDraw = False
+255.7920 	EXP 	polygon: autoDraw = False
+255.7920 	EXP 	image: autoDraw = False
+255.7920 	EXP 	polygon: autoDraw = False
+255.7920 	EXP 	polygon_2: autoDraw = False
+255.7920 	EXP 	text_2: autoDraw = False
+255.7920 	EXP 	image: image = 'images/7_12 copy 3.jpg'
+255.7920 	EXP 	polygon: autoDraw = True
+255.9871 	EXP 	image: autoDraw = True
+256.6253 	EXP 	New trial (rep=0, index=145): OrderedDict([('current_image', 'images/pair08 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 70), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 1)])
+256.6324 	EXP 	image: autoDraw = False
+256.6324 	EXP 	polygon: autoDraw = False
+256.6324 	EXP 	image: autoDraw = False
+256.6324 	EXP 	polygon: autoDraw = False
+256.6324 	EXP 	polygon_2: autoDraw = False
+256.6324 	EXP 	text_2: autoDraw = False
+256.6324 	EXP 	image: image = 'images/pair08 copy 7.jpg'
+256.6324 	EXP 	polygon: autoDraw = True
+256.8161 	EXP 	image: autoDraw = True
+257.4226 	EXP 	New trial (rep=0, index=146): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 71), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+257.4279 	EXP 	image: autoDraw = False
+257.4279 	EXP 	polygon: autoDraw = False
+257.4279 	EXP 	image: autoDraw = False
+257.4279 	EXP 	polygon: autoDraw = False
+257.4279 	EXP 	polygon_2: autoDraw = False
+257.4279 	EXP 	text_2: autoDraw = False
+257.4279 	EXP 	image: image = 'images/blank.jpg'
+257.4279 	EXP 	image: autoDraw = False
+257.4279 	EXP 	polygon: autoDraw = False
+257.4279 	EXP 	polygon_2: autoDraw = True
+258.1782 	EXP 	New trial (rep=0, index=147): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 72), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+258.1831 	EXP 	polygon_2: autoDraw = False
+258.1831 	EXP 	polygon_2: autoDraw = False
+258.1831 	EXP 	text_2: autoDraw = False
+258.1831 	EXP 	image: image = 'images/blank.jpg'
+258.1831 	EXP 	image: autoDraw = False
+258.1831 	EXP 	polygon: autoDraw = False
+258.1831 	EXP 	polygon_2: autoDraw = True
+258.9387 	EXP 	New trial (rep=0, index=148): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 73), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 1)])
+258.9433 	EXP 	polygon_2: autoDraw = False
+258.9433 	EXP 	polygon_2: autoDraw = False
+258.9433 	EXP 	text_2: autoDraw = False
+258.9433 	EXP 	image: image = 'images/blank.jpg'
+258.9433 	EXP 	image: autoDraw = False
+258.9433 	EXP 	polygon: autoDraw = False
+258.9433 	EXP 	polygon_2: autoDraw = True
+259.6874 	EXP 	New trial (rep=0, index=149): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 74), ('is_blank_trial', 1), ('is_new_run', 1), ('run_num', 1)])
+259.6922 	EXP 	polygon_2: autoDraw = False
+259.6922 	EXP 	polygon_2: autoDraw = False
+259.6922 	EXP 	text_2: autoDraw = False
+259.6922 	EXP 	image: image = 'images/blank.jpg'
+259.6922 	EXP 	image: autoDraw = False
+259.6922 	EXP 	polygon: autoDraw = False
+259.6922 	EXP 	polygon_2: autoDraw = True
+260.4418 	EXP 	New trial (rep=0, index=150): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 0), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 2)])
+260.4466 	EXP 	polygon_2: autoDraw = False
+260.4466 	EXP 	polygon_2: autoDraw = False
+260.4466 	EXP 	text_2: autoDraw = False
+260.4466 	EXP 	image: image = 'images/blank.jpg'
+260.4466 	EXP 	image: autoDraw = False
+260.4466 	EXP 	polygon: autoDraw = False
+260.4466 	EXP 	polygon_2: autoDraw = True
+261.1929 	EXP 	polygon_2: autoDraw = False
+261.1929 	EXP 	polygon_2: autoDraw = False
+261.1929 	EXP 	text_2: autoDraw = True
+262.3413 	EXP 	New trial (rep=0, index=151): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 1), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 2)])
+262.3464 	EXP 	text_2: autoDraw = False
+262.3464 	EXP 	text_2: autoDraw = False
+262.3464 	EXP 	image: image = 'images/blank.jpg'
+262.3464 	EXP 	image: autoDraw = False
+262.3464 	EXP 	polygon: autoDraw = False
+262.3464 	EXP 	polygon_2: autoDraw = True
+263.1043 	EXP 	New trial (rep=0, index=152): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 2), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 2)])
+263.1094 	EXP 	polygon_2: autoDraw = False
+263.1094 	EXP 	polygon_2: autoDraw = False
+263.1094 	EXP 	text_2: autoDraw = False
+263.1094 	EXP 	image: image = 'images/blank.jpg'
+263.1094 	EXP 	image: autoDraw = False
+263.1094 	EXP 	polygon: autoDraw = False
+263.1094 	EXP 	polygon_2: autoDraw = True
+263.8780 	EXP 	New trial (rep=0, index=153): OrderedDict([('current_image', 'images/14_12 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 3), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+263.8840 	EXP 	polygon_2: autoDraw = False
+263.8840 	EXP 	polygon_2: autoDraw = False
+263.8840 	EXP 	text_2: autoDraw = False
+263.8840 	EXP 	image: image = 'images/14_12 copy 6.jpg'
+263.8840 	EXP 	polygon: autoDraw = True
+264.0740 	EXP 	image: autoDraw = True
+264.7297 	EXP 	New trial (rep=0, index=154): OrderedDict([('current_image', 'images/12_0.jpg'), ('is_repeat', 0), ('trial_index', 4), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+264.7374 	EXP 	image: autoDraw = False
+264.7374 	EXP 	polygon: autoDraw = False
+264.7374 	EXP 	image: autoDraw = False
+264.7374 	EXP 	polygon: autoDraw = False
+264.7374 	EXP 	polygon_2: autoDraw = False
+264.7374 	EXP 	text_2: autoDraw = False
+264.7374 	EXP 	image: image = 'images/12_0.jpg'
+264.7374 	EXP 	polygon: autoDraw = True
+264.9489 	EXP 	image: autoDraw = True
+265.6859 	EXP 	New trial (rep=0, index=155): OrderedDict([('current_image', 'images/pair05 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 5), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+265.6929 	EXP 	image: autoDraw = False
+265.6929 	EXP 	polygon: autoDraw = False
+265.6929 	EXP 	image: autoDraw = False
+265.6929 	EXP 	polygon: autoDraw = False
+265.6929 	EXP 	polygon_2: autoDraw = False
+265.6929 	EXP 	text_2: autoDraw = False
+265.6929 	EXP 	image: image = 'images/pair05 copy 7.jpg'
+265.6929 	EXP 	polygon: autoDraw = True
+265.9096 	EXP 	image: autoDraw = True
+266.6192 	EXP 	New trial (rep=0, index=156): OrderedDict([('current_image', 'images/12_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 6), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+266.6280 	EXP 	image: autoDraw = False
+266.6280 	EXP 	polygon: autoDraw = False
+266.6280 	EXP 	image: autoDraw = False
+266.6280 	EXP 	polygon: autoDraw = False
+266.6280 	EXP 	polygon_2: autoDraw = False
+266.6280 	EXP 	text_2: autoDraw = False
+266.6280 	EXP 	image: image = 'images/12_12 copy 3.jpg'
+266.6280 	EXP 	polygon: autoDraw = True
+266.8424 	EXP 	image: autoDraw = True
+267.5775 	EXP 	New trial (rep=0, index=157): OrderedDict([('current_image', 'images/23_12 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 7), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+267.5828 	EXP 	image: autoDraw = False
+267.5828 	EXP 	polygon: autoDraw = False
+267.5828 	EXP 	image: autoDraw = False
+267.5828 	EXP 	polygon: autoDraw = False
+267.5828 	EXP 	polygon_2: autoDraw = False
+267.5828 	EXP 	text_2: autoDraw = False
+267.5828 	EXP 	image: image = 'images/23_12 copy 5.jpg'
+267.5828 	EXP 	polygon: autoDraw = True
+267.7903 	EXP 	image: autoDraw = True
+268.5252 	EXP 	New trial (rep=0, index=158): OrderedDict([('current_image', 'images/17_28 copy.jpg'), ('is_repeat', 0), ('trial_index', 8), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+268.5317 	EXP 	image: autoDraw = False
+268.5317 	EXP 	polygon: autoDraw = False
+268.5317 	EXP 	image: autoDraw = False
+268.5317 	EXP 	polygon: autoDraw = False
+268.5317 	EXP 	polygon_2: autoDraw = False
+268.5317 	EXP 	text_2: autoDraw = False
+268.5317 	EXP 	image: image = 'images/17_28 copy.jpg'
+268.5317 	EXP 	polygon: autoDraw = True
+268.7251 	EXP 	image: autoDraw = True
+269.4067 	EXP 	New trial (rep=0, index=159): OrderedDict([('current_image', 'images/22_28 copy.jpg'), ('is_repeat', 0), ('trial_index', 9), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+269.4144 	EXP 	image: autoDraw = False
+269.4144 	EXP 	polygon: autoDraw = False
+269.4144 	EXP 	image: autoDraw = False
+269.4144 	EXP 	polygon: autoDraw = False
+269.4144 	EXP 	polygon_2: autoDraw = False
+269.4144 	EXP 	text_2: autoDraw = False
+269.4144 	EXP 	image: image = 'images/22_28 copy.jpg'
+269.4144 	EXP 	polygon: autoDraw = True
+269.6072 	EXP 	image: autoDraw = True
+270.3160 	EXP 	New trial (rep=0, index=160): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 10), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 2)])
+270.3218 	EXP 	image: autoDraw = False
+270.3218 	EXP 	polygon: autoDraw = False
+270.3218 	EXP 	image: autoDraw = False
+270.3218 	EXP 	polygon: autoDraw = False
+270.3218 	EXP 	polygon_2: autoDraw = False
+270.3218 	EXP 	text_2: autoDraw = False
+270.3218 	EXP 	image: image = 'images/blank.jpg'
+270.3218 	EXP 	image: autoDraw = False
+270.3218 	EXP 	polygon: autoDraw = False
+270.3218 	EXP 	polygon_2: autoDraw = True
+271.0802 	EXP 	New trial (rep=0, index=161): OrderedDict([('current_image', 'images/11_0 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 11), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+271.0853 	EXP 	polygon_2: autoDraw = False
+271.0853 	EXP 	polygon_2: autoDraw = False
+271.0853 	EXP 	text_2: autoDraw = False
+271.0853 	EXP 	image: image = 'images/11_0 copy 6.jpg'
+271.0853 	EXP 	polygon: autoDraw = True
+271.2898 	EXP 	image: autoDraw = True
+271.9607 	EXP 	New trial (rep=0, index=162): OrderedDict([('current_image', 'images/11_40 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 12), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+271.9667 	EXP 	image: autoDraw = False
+271.9667 	EXP 	polygon: autoDraw = False
+271.9667 	EXP 	image: autoDraw = False
+271.9667 	EXP 	polygon: autoDraw = False
+271.9667 	EXP 	polygon_2: autoDraw = False
+271.9667 	EXP 	text_2: autoDraw = False
+271.9667 	EXP 	image: image = 'images/11_40 copy 7.jpg'
+271.9667 	EXP 	polygon: autoDraw = True
+272.1502 	EXP 	image: autoDraw = True
+272.8612 	EXP 	New trial (rep=0, index=163): OrderedDict([('current_image', 'images/pair01 copy.jpg'), ('is_repeat', 0), ('trial_index', 13), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+272.8687 	EXP 	image: autoDraw = False
+272.8687 	EXP 	polygon: autoDraw = False
+272.8687 	EXP 	image: autoDraw = False
+272.8687 	EXP 	polygon: autoDraw = False
+272.8687 	EXP 	polygon_2: autoDraw = False
+272.8687 	EXP 	text_2: autoDraw = False
+272.8687 	EXP 	image: image = 'images/pair01 copy.jpg'
+272.8687 	EXP 	polygon: autoDraw = True
+273.0786 	EXP 	image: autoDraw = True
+273.7220 	EXP 	New trial (rep=0, index=164): OrderedDict([('current_image', 'images/22_12 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 14), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+273.7276 	EXP 	image: autoDraw = False
+273.7276 	EXP 	polygon: autoDraw = False
+273.7276 	EXP 	image: autoDraw = False
+273.7276 	EXP 	polygon: autoDraw = False
+273.7276 	EXP 	polygon_2: autoDraw = False
+273.7276 	EXP 	text_2: autoDraw = False
+273.7276 	EXP 	image: image = 'images/22_12 copy 7.jpg'
+273.7276 	EXP 	polygon: autoDraw = True
+273.9150 	EXP 	image: autoDraw = True
+274.6124 	EXP 	New trial (rep=0, index=165): OrderedDict([('current_image', 'images/20_0 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 15), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+274.6184 	EXP 	image: autoDraw = False
+274.6184 	EXP 	polygon: autoDraw = False
+274.6184 	EXP 	image: autoDraw = False
+274.6184 	EXP 	polygon: autoDraw = False
+274.6184 	EXP 	polygon_2: autoDraw = False
+274.6184 	EXP 	text_2: autoDraw = False
+274.6184 	EXP 	image: image = 'images/20_0 copy 2.jpg'
+274.6184 	EXP 	polygon: autoDraw = True
+274.8279 	EXP 	image: autoDraw = True
+275.5467 	EXP 	New trial (rep=0, index=166): OrderedDict([('current_image', 'images/19_28 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 16), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+275.5532 	EXP 	image: autoDraw = False
+275.5532 	EXP 	polygon: autoDraw = False
+275.5532 	EXP 	image: autoDraw = False
+275.5532 	EXP 	polygon: autoDraw = False
+275.5532 	EXP 	polygon_2: autoDraw = False
+275.5532 	EXP 	text_2: autoDraw = False
+275.5532 	EXP 	image: image = 'images/19_28 copy 6.jpg'
+275.5532 	EXP 	polygon: autoDraw = True
+275.7493 	EXP 	image: autoDraw = True
+276.4306 	EXP 	New trial (rep=0, index=167): OrderedDict([('current_image', 'images/16_12 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 17), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+276.4366 	EXP 	image: autoDraw = False
+276.4366 	EXP 	polygon: autoDraw = False
+276.4366 	EXP 	image: autoDraw = False
+276.4366 	EXP 	polygon: autoDraw = False
+276.4366 	EXP 	polygon_2: autoDraw = False
+276.4366 	EXP 	text_2: autoDraw = False
+276.4366 	EXP 	image: image = 'images/16_12 copy 2.jpg'
+276.4366 	EXP 	polygon: autoDraw = True
+276.6254 	EXP 	image: autoDraw = True
+277.2519 	EXP 	New trial (rep=0, index=168): OrderedDict([('current_image', 'images/pair08 copy.jpg'), ('is_repeat', 0), ('trial_index', 18), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+277.2581 	EXP 	image: autoDraw = False
+277.2581 	EXP 	polygon: autoDraw = False
+277.2581 	EXP 	image: autoDraw = False
+277.2581 	EXP 	polygon: autoDraw = False
+277.2581 	EXP 	polygon_2: autoDraw = False
+277.2581 	EXP 	text_2: autoDraw = False
+277.2581 	EXP 	image: image = 'images/pair08 copy.jpg'
+277.2581 	EXP 	polygon: autoDraw = True
+277.4589 	EXP 	image: autoDraw = True
+278.1338 	EXP 	New trial (rep=0, index=169): OrderedDict([('current_image', 'images/9_40 copy.jpg'), ('is_repeat', 0), ('trial_index', 19), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+278.1445 	EXP 	image: autoDraw = False
+278.1445 	EXP 	polygon: autoDraw = False
+278.1445 	EXP 	image: autoDraw = False
+278.1445 	EXP 	polygon: autoDraw = False
+278.1445 	EXP 	polygon_2: autoDraw = False
+278.1445 	EXP 	text_2: autoDraw = False
+278.1445 	EXP 	image: image = 'images/9_40 copy.jpg'
+278.1445 	EXP 	polygon: autoDraw = True
+278.3534 	EXP 	image: autoDraw = True
+279.0703 	EXP 	New trial (rep=0, index=170): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 20), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 2)])
+279.0759 	EXP 	image: autoDraw = False
+279.0759 	EXP 	polygon: autoDraw = False
+279.0759 	EXP 	image: autoDraw = False
+279.0759 	EXP 	polygon: autoDraw = False
+279.0759 	EXP 	polygon_2: autoDraw = False
+279.0759 	EXP 	text_2: autoDraw = False
+279.0759 	EXP 	image: image = 'images/blank.jpg'
+279.0759 	EXP 	image: autoDraw = False
+279.0759 	EXP 	polygon: autoDraw = False
+279.0759 	EXP 	polygon_2: autoDraw = True
+279.8591 	EXP 	New trial (rep=0, index=171): OrderedDict([('current_image', 'images/24_28 copy.jpg'), ('is_repeat', 0), ('trial_index', 21), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+279.8651 	EXP 	polygon_2: autoDraw = False
+279.8651 	EXP 	polygon_2: autoDraw = False
+279.8651 	EXP 	text_2: autoDraw = False
+279.8651 	EXP 	image: image = 'images/24_28 copy.jpg'
+279.8651 	EXP 	polygon: autoDraw = True
+280.0662 	EXP 	image: autoDraw = True
+280.7972 	EXP 	New trial (rep=0, index=172): OrderedDict([('current_image', 'images/20_12 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 22), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+280.8035 	EXP 	image: autoDraw = False
+280.8035 	EXP 	polygon: autoDraw = False
+280.8035 	EXP 	image: autoDraw = False
+280.8035 	EXP 	polygon: autoDraw = False
+280.8035 	EXP 	polygon_2: autoDraw = False
+280.8035 	EXP 	text_2: autoDraw = False
+280.8035 	EXP 	image: image = 'images/20_12 copy 5.jpg'
+280.8035 	EXP 	polygon: autoDraw = True
+280.9896 	EXP 	image: autoDraw = True
+281.7389 	EXP 	New trial (rep=0, index=173): OrderedDict([('current_image', 'images/16_12 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 23), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+281.7480 	EXP 	image: autoDraw = False
+281.7480 	EXP 	polygon: autoDraw = False
+281.7480 	EXP 	image: autoDraw = False
+281.7480 	EXP 	polygon: autoDraw = False
+281.7480 	EXP 	polygon_2: autoDraw = False
+281.7480 	EXP 	text_2: autoDraw = False
+281.7480 	EXP 	image: image = 'images/16_12 copy 6.jpg'
+281.7480 	EXP 	polygon: autoDraw = True
+281.9665 	EXP 	image: autoDraw = True
+282.6527 	EXP 	New trial (rep=0, index=174): OrderedDict([('current_image', 'images/21_12 copy.jpg'), ('is_repeat', 0), ('trial_index', 24), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+282.6580 	EXP 	image: autoDraw = False
+282.6580 	EXP 	polygon: autoDraw = False
+282.6580 	EXP 	image: autoDraw = False
+282.6580 	EXP 	polygon: autoDraw = False
+282.6580 	EXP 	polygon_2: autoDraw = False
+282.6580 	EXP 	text_2: autoDraw = False
+282.6580 	EXP 	image: image = 'images/21_12 copy.jpg'
+282.6580 	EXP 	polygon: autoDraw = True
+282.8536 	EXP 	image: autoDraw = True
+283.5543 	EXP 	New trial (rep=0, index=175): OrderedDict([('current_image', 'images/5_40 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 25), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+283.5601 	EXP 	image: autoDraw = False
+283.5601 	EXP 	polygon: autoDraw = False
+283.5601 	EXP 	image: autoDraw = False
+283.5601 	EXP 	polygon: autoDraw = False
+283.5601 	EXP 	polygon_2: autoDraw = False
+283.5601 	EXP 	text_2: autoDraw = False
+283.5601 	EXP 	image: image = 'images/5_40 copy 5.jpg'
+283.5601 	EXP 	polygon: autoDraw = True
+283.7483 	EXP 	image: autoDraw = True
+284.4074 	EXP 	New trial (rep=0, index=176): OrderedDict([('current_image', 'images/9_40 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 26), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+284.4145 	EXP 	image: autoDraw = False
+284.4145 	EXP 	polygon: autoDraw = False
+284.4145 	EXP 	image: autoDraw = False
+284.4145 	EXP 	polygon: autoDraw = False
+284.4145 	EXP 	polygon_2: autoDraw = False
+284.4145 	EXP 	text_2: autoDraw = False
+284.4145 	EXP 	image: image = 'images/9_40 copy 7.jpg'
+284.4145 	EXP 	polygon: autoDraw = True
+284.6216 	EXP 	image: autoDraw = True
+285.3571 	EXP 	New trial (rep=0, index=177): OrderedDict([('current_image', 'images/pair13 copy.jpg'), ('is_repeat', 0), ('trial_index', 27), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+285.3676 	EXP 	image: autoDraw = False
+285.3676 	EXP 	polygon: autoDraw = False
+285.3676 	EXP 	image: autoDraw = False
+285.3676 	EXP 	polygon: autoDraw = False
+285.3676 	EXP 	polygon_2: autoDraw = False
+285.3676 	EXP 	text_2: autoDraw = False
+285.3676 	EXP 	image: image = 'images/pair13 copy.jpg'
+285.3676 	EXP 	polygon: autoDraw = True
+285.5557 	EXP 	image: autoDraw = True
+286.2376 	EXP 	New trial (rep=0, index=178): OrderedDict([('current_image', 'images/19_0 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 28), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+286.2443 	EXP 	image: autoDraw = False
+286.2443 	EXP 	polygon: autoDraw = False
+286.2443 	EXP 	image: autoDraw = False
+286.2443 	EXP 	polygon: autoDraw = False
+286.2443 	EXP 	polygon_2: autoDraw = False
+286.2443 	EXP 	text_2: autoDraw = False
+286.2443 	EXP 	image: image = 'images/19_0 copy 2.jpg'
+286.2443 	EXP 	polygon: autoDraw = True
+286.4562 	EXP 	image: autoDraw = True
+287.0545 	EXP 	New trial (rep=0, index=179): OrderedDict([('current_image', 'images/24_0.jpg'), ('is_repeat', 0), ('trial_index', 29), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+287.0594 	EXP 	image: autoDraw = False
+287.0594 	EXP 	polygon: autoDraw = False
+287.0594 	EXP 	image: autoDraw = False
+287.0594 	EXP 	polygon: autoDraw = False
+287.0594 	EXP 	polygon_2: autoDraw = False
+287.0594 	EXP 	text_2: autoDraw = False
+287.0594 	EXP 	image: image = 'images/24_0.jpg'
+287.0594 	EXP 	polygon: autoDraw = True
+287.2476 	EXP 	image: autoDraw = True
+287.9247 	EXP 	New trial (rep=0, index=180): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 30), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 2)])
+287.9304 	EXP 	image: autoDraw = False
+287.9304 	EXP 	polygon: autoDraw = False
+287.9304 	EXP 	image: autoDraw = False
+287.9304 	EXP 	polygon: autoDraw = False
+287.9304 	EXP 	polygon_2: autoDraw = False
+287.9304 	EXP 	text_2: autoDraw = False
+287.9304 	EXP 	image: image = 'images/blank.jpg'
+287.9304 	EXP 	image: autoDraw = False
+287.9304 	EXP 	polygon: autoDraw = False
+287.9304 	EXP 	polygon_2: autoDraw = True
+288.7162 	EXP 	New trial (rep=0, index=181): OrderedDict([('current_image', 'images/15_28 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 31), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+288.7227 	EXP 	polygon_2: autoDraw = False
+288.7227 	EXP 	polygon_2: autoDraw = False
+288.7227 	EXP 	text_2: autoDraw = False
+288.7227 	EXP 	image: image = 'images/15_28 copy 3.jpg'
+288.7227 	EXP 	polygon: autoDraw = True
+288.9225 	EXP 	image: autoDraw = True
+289.5530 	EXP 	New trial (rep=0, index=182): OrderedDict([('current_image', 'images/10_0 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 32), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+289.5584 	EXP 	image: autoDraw = False
+289.5584 	EXP 	polygon: autoDraw = False
+289.5584 	EXP 	image: autoDraw = False
+289.5584 	EXP 	polygon: autoDraw = False
+289.5584 	EXP 	polygon_2: autoDraw = False
+289.5584 	EXP 	text_2: autoDraw = False
+289.5584 	EXP 	image: image = 'images/10_0 copy 7.jpg'
+289.5584 	EXP 	polygon: autoDraw = True
+289.7472 	EXP 	image: autoDraw = True
+290.3881 	EXP 	New trial (rep=0, index=183): OrderedDict([('current_image', 'images/12_40 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 33), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+290.3942 	EXP 	image: autoDraw = False
+290.3942 	EXP 	polygon: autoDraw = False
+290.3942 	EXP 	image: autoDraw = False
+290.3942 	EXP 	polygon: autoDraw = False
+290.3942 	EXP 	polygon_2: autoDraw = False
+290.3942 	EXP 	text_2: autoDraw = False
+290.3942 	EXP 	image: image = 'images/12_40 copy 3.jpg'
+290.3942 	EXP 	polygon: autoDraw = True
+290.5910 	EXP 	image: autoDraw = True
+291.2719 	EXP 	New trial (rep=0, index=184): OrderedDict([('current_image', 'images/21_12 copy.jpg'), ('is_repeat', 0), ('trial_index', 34), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+291.2783 	EXP 	image: autoDraw = False
+291.2783 	EXP 	polygon: autoDraw = False
+291.2783 	EXP 	image: autoDraw = False
+291.2783 	EXP 	polygon: autoDraw = False
+291.2783 	EXP 	polygon_2: autoDraw = False
+291.2783 	EXP 	text_2: autoDraw = False
+291.2783 	EXP 	image: image = 'images/21_12 copy.jpg'
+291.2783 	EXP 	polygon: autoDraw = True
+291.4778 	EXP 	image: autoDraw = True
+292.1801 	EXP 	New trial (rep=0, index=185): OrderedDict([('current_image', 'images/11_0 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 35), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+292.1853 	EXP 	image: autoDraw = False
+292.1853 	EXP 	polygon: autoDraw = False
+292.1853 	EXP 	image: autoDraw = False
+292.1853 	EXP 	polygon: autoDraw = False
+292.1853 	EXP 	polygon_2: autoDraw = False
+292.1853 	EXP 	text_2: autoDraw = False
+292.1853 	EXP 	image: image = 'images/11_0 copy 6.jpg'
+292.1853 	EXP 	polygon: autoDraw = True
+292.3783 	EXP 	image: autoDraw = True
+293.0016 	EXP 	New trial (rep=0, index=186): OrderedDict([('current_image', 'images/22_28 copy.jpg'), ('is_repeat', 0), ('trial_index', 36), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+293.0066 	EXP 	image: autoDraw = False
+293.0066 	EXP 	polygon: autoDraw = False
+293.0066 	EXP 	image: autoDraw = False
+293.0066 	EXP 	polygon: autoDraw = False
+293.0066 	EXP 	polygon_2: autoDraw = False
+293.0066 	EXP 	text_2: autoDraw = False
+293.0066 	EXP 	image: image = 'images/22_28 copy.jpg'
+293.0066 	EXP 	polygon: autoDraw = True
+293.1984 	EXP 	image: autoDraw = True
+293.9135 	EXP 	New trial (rep=0, index=187): OrderedDict([('current_image', 'images/23_12 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 37), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+293.9201 	EXP 	image: autoDraw = False
+293.9201 	EXP 	polygon: autoDraw = False
+293.9201 	EXP 	image: autoDraw = False
+293.9201 	EXP 	polygon: autoDraw = False
+293.9201 	EXP 	polygon_2: autoDraw = False
+293.9201 	EXP 	text_2: autoDraw = False
+293.9201 	EXP 	image: image = 'images/23_12 copy 5.jpg'
+293.9201 	EXP 	polygon: autoDraw = True
+294.1240 	EXP 	image: autoDraw = True
+294.8484 	EXP 	New trial (rep=0, index=188): OrderedDict([('current_image', 'images/12_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 38), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+294.8557 	EXP 	image: autoDraw = False
+294.8557 	EXP 	polygon: autoDraw = False
+294.8557 	EXP 	image: autoDraw = False
+294.8557 	EXP 	polygon: autoDraw = False
+294.8557 	EXP 	polygon_2: autoDraw = False
+294.8557 	EXP 	text_2: autoDraw = False
+294.8557 	EXP 	image: image = 'images/12_12 copy 3.jpg'
+294.8557 	EXP 	polygon: autoDraw = True
+295.0711 	EXP 	image: autoDraw = True
+295.7941 	EXP 	New trial (rep=0, index=189): OrderedDict([('current_image', 'images/18_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 39), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+295.8011 	EXP 	image: autoDraw = False
+295.8011 	EXP 	polygon: autoDraw = False
+295.8011 	EXP 	image: autoDraw = False
+295.8011 	EXP 	polygon: autoDraw = False
+295.8011 	EXP 	polygon_2: autoDraw = False
+295.8011 	EXP 	text_2: autoDraw = False
+295.8011 	EXP 	image: image = 'images/18_12 copy 3.jpg'
+295.8011 	EXP 	polygon: autoDraw = True
+296.0170 	EXP 	image: autoDraw = True
+296.7133 	EXP 	New trial (rep=0, index=190): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 40), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 2)])
+296.7207 	EXP 	image: autoDraw = False
+296.7207 	EXP 	polygon: autoDraw = False
+296.7207 	EXP 	image: autoDraw = False
+296.7207 	EXP 	polygon: autoDraw = False
+296.7207 	EXP 	polygon_2: autoDraw = False
+296.7207 	EXP 	text_2: autoDraw = False
+296.7207 	EXP 	image: image = 'images/blank.jpg'
+296.7207 	EXP 	image: autoDraw = False
+296.7207 	EXP 	polygon: autoDraw = False
+296.7207 	EXP 	polygon_2: autoDraw = True
+297.5189 	EXP 	New trial (rep=0, index=191): OrderedDict([('current_image', 'images/17_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 41), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+297.5252 	EXP 	polygon_2: autoDraw = False
+297.5252 	EXP 	polygon_2: autoDraw = False
+297.5252 	EXP 	text_2: autoDraw = False
+297.5252 	EXP 	image: image = 'images/17_12 copy 3.jpg'
+297.5252 	EXP 	polygon: autoDraw = True
+297.7211 	EXP 	image: autoDraw = True
+298.4256 	EXP 	New trial (rep=0, index=192): OrderedDict([('current_image', 'images/pair02 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 42), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+298.4343 	EXP 	image: autoDraw = False
+298.4343 	EXP 	polygon: autoDraw = False
+298.4343 	EXP 	image: autoDraw = False
+298.4343 	EXP 	polygon: autoDraw = False
+298.4343 	EXP 	polygon_2: autoDraw = False
+298.4343 	EXP 	text_2: autoDraw = False
+298.4343 	EXP 	image: image = 'images/pair02 copy 3.jpg'
+298.4343 	EXP 	polygon: autoDraw = True
+298.6395 	EXP 	image: autoDraw = True
+299.2850 	EXP 	New trial (rep=0, index=193): OrderedDict([('current_image', 'images/pair02 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 43), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+299.2913 	EXP 	image: autoDraw = False
+299.2913 	EXP 	polygon: autoDraw = False
+299.2913 	EXP 	image: autoDraw = False
+299.2913 	EXP 	polygon: autoDraw = False
+299.2913 	EXP 	polygon_2: autoDraw = False
+299.2913 	EXP 	text_2: autoDraw = False
+299.2913 	EXP 	image: image = 'images/pair02 copy 3.jpg'
+299.2913 	EXP 	polygon: autoDraw = True
+299.4865 	EXP 	image: autoDraw = True
+300.0926 	EXP 	New trial (rep=0, index=194): OrderedDict([('current_image', 'images/10_28 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 44), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+300.0979 	EXP 	image: autoDraw = False
+300.0979 	EXP 	polygon: autoDraw = False
+300.0979 	EXP 	image: autoDraw = False
+300.0979 	EXP 	polygon: autoDraw = False
+300.0979 	EXP 	polygon_2: autoDraw = False
+300.0979 	EXP 	text_2: autoDraw = False
+300.0979 	EXP 	image: image = 'images/10_28 copy 7.jpg'
+300.0979 	EXP 	polygon: autoDraw = True
+300.2805 	EXP 	image: autoDraw = True
+300.9209 	EXP 	New trial (rep=0, index=195): OrderedDict([('current_image', 'images/18_0.jpg'), ('is_repeat', 0), ('trial_index', 45), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+300.9264 	EXP 	image: autoDraw = False
+300.9264 	EXP 	polygon: autoDraw = False
+300.9264 	EXP 	image: autoDraw = False
+300.9264 	EXP 	polygon: autoDraw = False
+300.9264 	EXP 	polygon_2: autoDraw = False
+300.9264 	EXP 	text_2: autoDraw = False
+300.9264 	EXP 	image: image = 'images/18_0.jpg'
+300.9264 	EXP 	polygon: autoDraw = True
+301.1240 	EXP 	image: autoDraw = True
+301.7359 	EXP 	New trial (rep=0, index=196): OrderedDict([('current_image', 'images/11_0 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 46), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+301.7409 	EXP 	image: autoDraw = False
+301.7409 	EXP 	polygon: autoDraw = False
+301.7409 	EXP 	image: autoDraw = False
+301.7409 	EXP 	polygon: autoDraw = False
+301.7409 	EXP 	polygon_2: autoDraw = False
+301.7409 	EXP 	text_2: autoDraw = False
+301.7409 	EXP 	image: image = 'images/11_0 copy 6.jpg'
+301.7409 	EXP 	polygon: autoDraw = True
+301.9259 	EXP 	image: autoDraw = True
+302.5478 	EXP 	New trial (rep=0, index=197): OrderedDict([('current_image', 'images/22_12.jpg'), ('is_repeat', 0), ('trial_index', 47), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+302.5546 	EXP 	image: autoDraw = False
+302.5546 	EXP 	polygon: autoDraw = False
+302.5546 	EXP 	image: autoDraw = False
+302.5546 	EXP 	polygon: autoDraw = False
+302.5546 	EXP 	polygon_2: autoDraw = False
+302.5546 	EXP 	text_2: autoDraw = False
+302.5546 	EXP 	image: image = 'images/22_12.jpg'
+302.5546 	EXP 	polygon: autoDraw = True
+302.7630 	EXP 	image: autoDraw = True
+303.4675 	EXP 	New trial (rep=0, index=198): OrderedDict([('current_image', 'images/.DS_Store'), ('is_repeat', 0), ('trial_index', 48), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 2)])
+303.5648 	ERROR 	Found file 'images/.DS_Store', failed to load as an image
+303.5991 	EXP 	window1: mouseVisible = True
