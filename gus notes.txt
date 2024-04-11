@@ -27,3 +27,5 @@ what to do about the mask
 do i assume tr starts at 0 and from there generate labels for each tr
 
 confounds
+
+I will want to get a b

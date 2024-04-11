@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on Tue Apr  9 13:57:34 2024
+    on Thu Apr 11 15:31:16 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -32,6 +32,8 @@ import sys  # to get file system encoding
 
 from psychopy.hardware import keyboard
 
+# Run 'Before Experiment' code from dynamic_feedback_string
+run_wait_string = ""
 # --- Setup global variables (available in all functions) ---
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
@@ -161,7 +163,7 @@ def setupWindow(expInfo=None, win=None):
         win = visual.Window(
             size=[1792, 1120], fullscr=False, screen=0,
             winType='pyglet', allowStencil=False,
-            monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
+            monitor='testMonitor', color=[-0.0039, -0.0039, -0.0039], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
             blendMode='avg', useFBO=True,
             units='deg'
@@ -171,7 +173,7 @@ def setupWindow(expInfo=None, win=None):
             expInfo['frameRate'] = win.getActualFrameRate()
     else:
         # if we have a window, just set the attributes which are safe to set
-        win.color = [0,0,0]
+        win.color = [-0.0039, -0.0039, -0.0039]
         win.colorSpace = 'rgb'
         win.backgroundImage = ''
         win.backgroundFit = 'none'
@@ -319,13 +321,15 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         languageStyle='LTR',
         depth=-1.0);
     
-    # --- Initialize components for Routine "set_skips" ---
+    # --- Initialize components for Routine "set_skips_and_correct_key" ---
     # Run 'Begin Experiment' code from trial_routine_set_up
     is_blank_trial_or_before_starting_run = False
     # Run 'Begin Experiment' code from blank_trial_set_up
     is_not_blank_trial_or_before_starting_run = False
     # Run 'Begin Experiment' code from between_round_screens_skip_set_up_2
     is_not_new_run_or_before_starting_run = False
+    # Run 'Begin Experiment' code from set_correct_key
+    correct_key_1or2 = '-1'
     
     # --- Initialize components for Routine "trial" ---
     image = visual.ImageStim(
@@ -342,7 +346,12 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         size=(0.2, 0.2), vertices='circle',
         ori=0.0, pos=(0, 0), anchor='center',
         lineWidth=3.0,     colorSpace='rgb',  lineColor=[-1.0000, -1.0000, -1.0000], fillColor=[1.0000, -1.0000, -1.0000],
-        opacity=0.3, depth=-2.0, interpolate=True)
+        opacity=0.5, depth=-2.0, interpolate=True)
+    # Run 'Begin Experiment' code from update_num_correct
+    num_trials_correct = 0
+    num_trials_total = 0
+    num_trials_responded = 0
+    all_keys_pressed = keyboard.Keyboard()
     
     # --- Initialize components for Routine "blank_trial" ---
     key_resp_3 = keyboard.Keyboard()
@@ -351,17 +360,19 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         size=(0.2, 0.2), vertices='circle',
         ori=0.0, pos=(0, 0), anchor='center',
         lineWidth=3.0,     colorSpace='rgb',  lineColor=[-1.0000, -1.0000, -1.0000], fillColor=[1.0000, -1.0000, -1.0000],
-        opacity=0.3, depth=-1.0, interpolate=True)
+        opacity=0.5, depth=-1.0, interpolate=True)
     
     # --- Initialize components for Routine "run_wait2" ---
     key_resp_5 = keyboard.Keyboard()
     text_5 = visual.TextStim(win=win, name='text_5',
-        text='Good job! Please press any button when you are ready to continue.',
+        text='',
         font='Open Sans',
         units='deg', pos=(0, 0), height=0.5, wrapWidth=None, ori=0.0, 
         color='white', colorSpace='rgb', opacity=None, 
         languageStyle='LTR',
         depth=-1.0);
+    # Run 'Begin Experiment' code from dynamic_feedback_string
+    run_wait_string = ""
     
     # --- Initialize components for Routine "waiting_fmri_2" ---
     key_resp_4 = keyboard.Keyboard()
@@ -590,10 +601,10 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             for paramName in thisLoop_all_image:
                 globals()[paramName] = thisLoop_all_image[paramName]
         
-        # --- Prepare to start Routine "set_skips" ---
+        # --- Prepare to start Routine "set_skips_and_correct_key" ---
         continueRoutine = True
         # update component parameters for each repeat
-        thisExp.addData('set_skips.started', globalClock.getTime())
+        thisExp.addData('set_skips_and_correct_key.started', globalClock.getTime())
         # Run 'Begin Routine' code from trial_routine_set_up
         if is_blank_trial or run_num < starting_run:
             is_blank_trial_or_before_starting_run = True
@@ -612,9 +623,15 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         else:
             is_not_new_run_or_before_starting_run = False
         
+        # Run 'Begin Routine' code from set_correct_key
+        if is_repeat:
+            correct_key_1or2 = '2'
+        else:
+            correct_key_1or2 = '1'
+        print("correct_key_1or2: ", correct_key_1or2)
         # keep track of which components have finished
-        set_skipsComponents = []
-        for thisComponent in set_skipsComponents:
+        set_skips_and_correct_keyComponents = []
+        for thisComponent in set_skips_and_correct_keyComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
             thisComponent.tStartRefresh = None
@@ -626,7 +643,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "set_skips" ---
+        # --- Run Routine "set_skips_and_correct_key" ---
         routineForceEnded = not continueRoutine
         while continueRoutine:
             # get current time
@@ -648,7 +665,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 routineForceEnded = True
                 break
             continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in set_skipsComponents:
+            for thisComponent in set_skips_and_correct_keyComponents:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
@@ -657,12 +674,12 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
         
-        # --- Ending Routine "set_skips" ---
-        for thisComponent in set_skipsComponents:
+        # --- Ending Routine "set_skips_and_correct_key" ---
+        for thisComponent in set_skips_and_correct_keyComponents:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
-        thisExp.addData('set_skips.stopped', globalClock.getTime())
-        # the Routine "set_skips" was not non-slip safe, so reset the non-slip timer
+        thisExp.addData('set_skips_and_correct_key.stopped', globalClock.getTime())
+        # the Routine "set_skips_and_correct_key" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
         # --- Prepare to start Routine "trial" ---
@@ -675,8 +692,11 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         press_if_repeat.keys = []
         press_if_repeat.rt = []
         _press_if_repeat_allKeys = []
+        all_keys_pressed.keys = []
+        all_keys_pressed.rt = []
+        _all_keys_pressed_allKeys = []
         # keep track of which components have finished
-        trialComponents = [image, press_if_repeat, polygon]
+        trialComponents = [image, press_if_repeat, polygon, all_keys_pressed]
         for thisComponent in trialComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
@@ -768,6 +788,11 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                     press_if_repeat.keys = _press_if_repeat_allKeys[-1].name  # just the last key pressed
                     press_if_repeat.rt = _press_if_repeat_allKeys[-1].rt
                     press_if_repeat.duration = _press_if_repeat_allKeys[-1].duration
+                    # was this correct?
+                    if (press_if_repeat.keys == str(correct_key_1or2)) or (press_if_repeat.keys == correct_key_1or2):
+                        press_if_repeat.corr = 1
+                    else:
+                        press_if_repeat.corr = 0
             
             # *polygon* updates
             
@@ -801,6 +826,44 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                     polygon.status = FINISHED
                     polygon.setAutoDraw(False)
             
+            # *all_keys_pressed* updates
+            waitOnFlip = False
+            
+            # if all_keys_pressed is starting this frame...
+            if all_keys_pressed.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
+                # keep track of start time/frame for later
+                all_keys_pressed.frameNStart = frameN  # exact frame index
+                all_keys_pressed.tStart = t  # local t and not account for scr refresh
+                all_keys_pressed.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(all_keys_pressed, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'all_keys_pressed.started')
+                # update status
+                all_keys_pressed.status = STARTED
+                # keyboard checking is just starting
+                waitOnFlip = True
+                win.callOnFlip(all_keys_pressed.clock.reset)  # t=0 on next screen flip
+                win.callOnFlip(all_keys_pressed.clearEvents, eventType='keyboard')  # clear events on next screen flip
+            
+            # if all_keys_pressed is stopping this frame...
+            if all_keys_pressed.status == STARTED:
+                if frameN >= (all_keys_pressed.frameNStart + 240):
+                    # keep track of stop time/frame for later
+                    all_keys_pressed.tStop = t  # not accounting for scr refresh
+                    all_keys_pressed.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'all_keys_pressed.stopped')
+                    # update status
+                    all_keys_pressed.status = FINISHED
+                    all_keys_pressed.status = FINISHED
+            if all_keys_pressed.status == STARTED and not waitOnFlip:
+                theseKeys = all_keys_pressed.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+                _all_keys_pressed_allKeys.extend(theseKeys)
+                if len(_all_keys_pressed_allKeys):
+                    all_keys_pressed.keys = [key.name for key in _all_keys_pressed_allKeys]  # storing all keys
+                    all_keys_pressed.rt = [key.rt for key in _all_keys_pressed_allKeys]
+                    all_keys_pressed.duration = [key.duration for key in _all_keys_pressed_allKeys]
+            
             # check for quit (typically the Esc key)
             if defaultKeyboard.getKeys(keyList=["escape"]):
                 thisExp.status = FINISHED
@@ -830,10 +893,37 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         # check responses
         if press_if_repeat.keys in ['', [], None]:  # No response was made
             press_if_repeat.keys = None
+            # was no response the correct answer?!
+            if str(correct_key_1or2).lower() == 'none':
+               press_if_repeat.corr = 1;  # correct non-response
+            else:
+               press_if_repeat.corr = 0;  # failed to respond (incorrectly)
+        # store data for loop_all_images (TrialHandler)
         loop_all_images.addData('press_if_repeat.keys',press_if_repeat.keys)
+        loop_all_images.addData('press_if_repeat.corr', press_if_repeat.corr)
         if press_if_repeat.keys != None:  # we had a response
             loop_all_images.addData('press_if_repeat.rt', press_if_repeat.rt)
             loop_all_images.addData('press_if_repeat.duration', press_if_repeat.duration)
+        # Run 'End Routine' code from update_num_correct
+        if not is_blank_trial_or_before_starting_run:
+            num_trials_total += 1 
+            if press_if_repeat.corr == 1:
+                num_trials_correct += 1
+                print("correct!")
+            if press_if_repeat.keys != None:
+                num_trials_responded += 1
+                print("responded!") 
+            print("press_if_repeat.corr: ", press_if_repeat.corr)
+            print("press_if_repeat.keys: ", press_if_repeat.keys)
+            print("is_repeat: ", is_repeat)
+            print("all_keys_pressed: ", all_keys_pressed.keys)
+        # check responses
+        if all_keys_pressed.keys in ['', [], None]:  # No response was made
+            all_keys_pressed.keys = None
+        loop_all_images.addData('all_keys_pressed.keys',all_keys_pressed.keys)
+        if all_keys_pressed.keys != None:  # we had a response
+            loop_all_images.addData('all_keys_pressed.rt', all_keys_pressed.rt)
+            loop_all_images.addData('all_keys_pressed.duration', all_keys_pressed.duration)
         # the Routine "trial" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
@@ -991,6 +1081,13 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         key_resp_5.keys = []
         key_resp_5.rt = []
         _key_resp_5_allKeys = []
+        text_5.setText(run_wait_string
+        )
+        # Run 'Begin Routine' code from dynamic_feedback_string
+        run_wait_string = "Good job! You succesfully responded to " +  str(num_trials_responded) + \
+                        " out of " + str(num_trials_total) + " trials. Your performance score is now " + \
+                        str(num_trials_correct * 1e2) + \
+                        ". Please press any button when you are ready to continue." 
         # keep track of which components have finished
         run_wait2Components = [key_resp_5, text_5]
         for thisComponent in run_wait2Components:

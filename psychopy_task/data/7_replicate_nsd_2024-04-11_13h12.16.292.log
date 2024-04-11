@@ -1,0 +1,519 @@
+8.0612 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, backgroundFit=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fbc99fa9130>, backgroundImage=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fbc99fa90d0>, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([-0.0039, -0.0039, -0.0039]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7fbc99f4bfa0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7fbc9a0f8f70>, multiSample=False, name='window1', numSamples=2, pos=(448, 280), screen=0, size=array([3584, 2240]), stencilBits=0, stereo=False, title='PsychoPy', units='deg', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+8.0614 	EXP 	window1: mouseVisible = True
+8.0615 	EXP 	window1: backgroundImage = ''
+8.0615 	EXP 	window1: backgroundFit = 'none'
+8.0642 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+8.0643 	EXP 	window1: recordFrameIntervals = False
+8.2269 	EXP 	window1: recordFrameIntervals = True
+8.4098 	EXP 	Screen (0) actual frame rate measured at 60.16Hz
+8.4099 	EXP 	window1: recordFrameIntervals = False
+8.4100 	EXP 	window1: mouseVisible = True
+11.8164 	EXP 	replicate_nsd: status = STARTED
+12.3938 	EXP 	window1: mouseVisible = True
+12.4437 	EXP 	Created text_3 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.5000000000000002, italic=False, languageStyle='LTR', name='text_3', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='waiting for scanner…', units='deg', win=Window(...), wrapWidth=15.0)
+12.4439 	EXP 	window1: mouseVisible = True
+12.4693 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, image='default.png', interpolate=True, mask=None, maskParams=None, name='image', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([8.4, 8.4]), texRes=128.0, units='deg', win=Window(...))
+13.0550 	EXP 	window1: mouseVisible = True
+13.0582 	EXP 	Created polygon = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-2.0, draggable=False, fillColor=array([ 1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([ 1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=3.0, name='polygon', opacity=0.5, ori=0.0, pos=array([0., 0.]), size=array([0.2, 0.2]), units='deg', vertices=ndarray(...), win=Window(...), windingRule=None)
+13.6445 	EXP 	window1: mouseVisible = True
+13.6474 	EXP 	Created polygon_2 = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-1.0, draggable=False, fillColor=array([ 1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([ 1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=3.0, name='polygon_2', opacity=0.5, ori=0.0, pos=array([0., 0.]), size=array([0.2, 0.2]), units='deg', vertices=ndarray(...), win=Window(...), windingRule=None)
+14.2270 	EXP 	window1: mouseVisible = True
+14.2369 	EXP 	Created text_5 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.5000000000000002, italic=False, languageStyle='LTR', name='text_5', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text=str(...), units='deg', win=Window(...), wrapWidth=15.0)
+14.8108 	EXP 	window1: mouseVisible = True
+14.8141 	EXP 	Created text_4 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.5000000000000002, italic=False, languageStyle='LTR', name='text_4', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='waiting for scanner…', units='deg', win=Window(...), wrapWidth=15.0)
+0.0070 	DATA 	Mouse: Left button down, pos=(576,797)
+0.0075 	DATA 	Mouse:  Left button up, pos=(576,797)
+0.0079 	DATA 	Mouse: Left button down, pos=(595,772)
+0.0083 	DATA 	Mouse:  Left button up, pos=(595,772)
+0.0518 	EXP 	text_3: autoDraw = True
+0.9340 	DATA 	Mouse: Left button down, pos=(595,772)
+1.0988 	DATA 	Mouse:  Left button up, pos=(595,772)
+1.2409 	EXP 	Imported conditions_files/participant7_.csv as conditions, 1152 conditions, 7 params
+1.2454 	EXP 	Created sequence: sequential, trialTypes=1152, nReps=1, seed=None
+1.2456 	EXP 	New trial (rep=0, index=0): OrderedDict([('current_image', 'images/pair04 copy.jpg'), ('is_repeat', 0), ('trial_index', 0), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+1.2681 	DATA 	Keypress: 5
+1.2919 	EXP 	text_3: autoDraw = False
+1.2919 	EXP 	image: image = 'images/pair04 copy.jpg'
+1.2919 	EXP 	polygon: autoDraw = True
+2.2792 	EXP 	image: autoDraw = True
+5.2670 	EXP 	New trial (rep=0, index=1): OrderedDict([('current_image', 'images/7_28 copy.jpg'), ('is_repeat', 0), ('trial_index', 1), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+5.2785 	EXP 	image: autoDraw = False
+5.2785 	EXP 	polygon: autoDraw = False
+5.2785 	EXP 	image: autoDraw = False
+5.2785 	EXP 	polygon: autoDraw = False
+5.2785 	EXP 	polygon_2: autoDraw = False
+5.2785 	EXP 	text_5: autoDraw = False
+5.2785 	EXP 	text_4: autoDraw = False
+5.2785 	EXP 	image: image = 'images/7_28 copy.jpg'
+5.2785 	EXP 	polygon: autoDraw = True
+6.2795 	EXP 	image: autoDraw = True
+9.2640 	EXP 	New trial (rep=0, index=2): OrderedDict([('current_image', 'images/20_40 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 2), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+9.2790 	EXP 	image: autoDraw = False
+9.2790 	EXP 	polygon: autoDraw = False
+9.2790 	EXP 	image: autoDraw = False
+9.2790 	EXP 	polygon: autoDraw = False
+9.2790 	EXP 	polygon_2: autoDraw = False
+9.2790 	EXP 	text_5: autoDraw = False
+9.2790 	EXP 	text_4: autoDraw = False
+9.2790 	EXP 	image: image = 'images/20_40 copy 7.jpg'
+9.2790 	EXP 	polygon: autoDraw = True
+10.2795 	EXP 	image: autoDraw = True
+10.9144 	DATA 	Keypress: lctrl
+13.2640 	EXP 	New trial (rep=0, index=3): OrderedDict([('current_image', 'images/12_28 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 3), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+13.2790 	EXP 	image: autoDraw = False
+13.2790 	EXP 	polygon: autoDraw = False
+13.2790 	EXP 	image: autoDraw = False
+13.2790 	EXP 	polygon: autoDraw = False
+13.2790 	EXP 	polygon_2: autoDraw = False
+13.2790 	EXP 	text_5: autoDraw = False
+13.2790 	EXP 	text_4: autoDraw = False
+13.2790 	EXP 	image: image = 'images/12_28 copy 2.jpg'
+13.2790 	EXP 	polygon: autoDraw = True
+14.2795 	EXP 	image: autoDraw = True
+14.9181 	DATA 	Keypress: lctrl
+17.2640 	EXP 	New trial (rep=0, index=4): OrderedDict([('current_image', 'images/8_40 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 4), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+17.2792 	EXP 	image: autoDraw = False
+17.2792 	EXP 	polygon: autoDraw = False
+17.2792 	EXP 	image: autoDraw = False
+17.2792 	EXP 	polygon: autoDraw = False
+17.2792 	EXP 	polygon_2: autoDraw = False
+17.2792 	EXP 	text_5: autoDraw = False
+17.2792 	EXP 	text_4: autoDraw = False
+17.2792 	EXP 	image: image = 'images/8_40 copy 2.jpg'
+17.2792 	EXP 	polygon: autoDraw = True
+18.1634 	DATA 	Keypress: lctrl
+18.2836 	EXP 	image: autoDraw = True
+21.2639 	EXP 	New trial (rep=0, index=5): OrderedDict([('current_image', 'images/23_0 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 5), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+21.2790 	EXP 	image: autoDraw = False
+21.2790 	EXP 	polygon: autoDraw = False
+21.2790 	EXP 	image: autoDraw = False
+21.2790 	EXP 	polygon: autoDraw = False
+21.2790 	EXP 	polygon_2: autoDraw = False
+21.2790 	EXP 	text_5: autoDraw = False
+21.2790 	EXP 	text_4: autoDraw = False
+21.2790 	EXP 	image: image = 'images/23_0 copy 4.jpg'
+21.2790 	EXP 	polygon: autoDraw = True
+22.2792 	EXP 	image: autoDraw = True
+25.2640 	EXP 	New trial (rep=0, index=6): OrderedDict([('current_image', 'images/12_0 copy.jpg'), ('is_repeat', 0), ('trial_index', 6), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+25.2789 	EXP 	image: autoDraw = False
+25.2789 	EXP 	polygon: autoDraw = False
+25.2789 	EXP 	image: autoDraw = False
+25.2789 	EXP 	polygon: autoDraw = False
+25.2789 	EXP 	polygon_2: autoDraw = False
+25.2789 	EXP 	text_5: autoDraw = False
+25.2789 	EXP 	text_4: autoDraw = False
+25.2789 	EXP 	image: image = 'images/12_0 copy.jpg'
+25.2789 	EXP 	polygon: autoDraw = True
+26.2789 	EXP 	image: autoDraw = True
+29.3142 	EXP 	New trial (rep=0, index=7): OrderedDict([('current_image', 'images/23_28 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 7), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+29.3292 	EXP 	image: autoDraw = False
+29.3292 	EXP 	polygon: autoDraw = False
+29.3292 	EXP 	image: autoDraw = False
+29.3292 	EXP 	polygon: autoDraw = False
+29.3292 	EXP 	polygon_2: autoDraw = False
+29.3292 	EXP 	text_5: autoDraw = False
+29.3292 	EXP 	text_4: autoDraw = False
+29.3292 	EXP 	image: image = 'images/23_28 copy 2.jpg'
+29.3292 	EXP 	polygon: autoDraw = True
+30.3294 	EXP 	image: autoDraw = True
+33.3143 	EXP 	New trial (rep=0, index=8): OrderedDict([('current_image', 'images/6_28 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 8), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+33.3292 	EXP 	image: autoDraw = False
+33.3292 	EXP 	polygon: autoDraw = False
+33.3292 	EXP 	image: autoDraw = False
+33.3292 	EXP 	polygon: autoDraw = False
+33.3292 	EXP 	polygon_2: autoDraw = False
+33.3292 	EXP 	text_5: autoDraw = False
+33.3292 	EXP 	text_4: autoDraw = False
+33.3292 	EXP 	image: image = 'images/6_28 copy 4.jpg'
+33.3292 	EXP 	polygon: autoDraw = True
+34.3295 	EXP 	image: autoDraw = True
+37.3137 	EXP 	New trial (rep=0, index=9): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 9), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+37.3290 	EXP 	image: autoDraw = False
+37.3290 	EXP 	polygon: autoDraw = False
+37.3290 	EXP 	image: autoDraw = False
+37.3290 	EXP 	polygon: autoDraw = False
+37.3290 	EXP 	polygon_2: autoDraw = False
+37.3290 	EXP 	text_5: autoDraw = False
+37.3290 	EXP 	text_4: autoDraw = False
+37.3290 	EXP 	image: image = 'images/blank.jpg'
+37.3290 	EXP 	image: autoDraw = False
+37.3290 	EXP 	polygon: autoDraw = False
+37.3290 	EXP 	polygon_2: autoDraw = True
+41.3137 	EXP 	New trial (rep=0, index=10): OrderedDict([('current_image', 'images/pair03 copy.jpg'), ('is_repeat', 0), ('trial_index', 10), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+41.3292 	EXP 	polygon_2: autoDraw = False
+41.3292 	EXP 	polygon_2: autoDraw = False
+41.3292 	EXP 	text_5: autoDraw = False
+41.3292 	EXP 	text_4: autoDraw = False
+41.3292 	EXP 	image: image = 'images/pair03 copy.jpg'
+41.3292 	EXP 	polygon: autoDraw = True
+42.3305 	EXP 	image: autoDraw = True
+45.3140 	EXP 	New trial (rep=0, index=11): OrderedDict([('current_image', 'images/24_28.jpg'), ('is_repeat', 0), ('trial_index', 11), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+45.3292 	EXP 	image: autoDraw = False
+45.3292 	EXP 	polygon: autoDraw = False
+45.3292 	EXP 	image: autoDraw = False
+45.3292 	EXP 	polygon: autoDraw = False
+45.3292 	EXP 	polygon_2: autoDraw = False
+45.3292 	EXP 	text_5: autoDraw = False
+45.3292 	EXP 	text_4: autoDraw = False
+45.3292 	EXP 	image: image = 'images/24_28.jpg'
+45.3292 	EXP 	polygon: autoDraw = True
+46.3294 	EXP 	image: autoDraw = True
+49.3140 	EXP 	New trial (rep=0, index=12): OrderedDict([('current_image', 'images/14_28 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 12), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+49.3292 	EXP 	image: autoDraw = False
+49.3292 	EXP 	polygon: autoDraw = False
+49.3292 	EXP 	image: autoDraw = False
+49.3292 	EXP 	polygon: autoDraw = False
+49.3292 	EXP 	polygon_2: autoDraw = False
+49.3292 	EXP 	text_5: autoDraw = False
+49.3292 	EXP 	text_4: autoDraw = False
+49.3292 	EXP 	image: image = 'images/14_28 copy 7.jpg'
+49.3292 	EXP 	polygon: autoDraw = True
+50.3295 	EXP 	image: autoDraw = True
+53.3139 	EXP 	New trial (rep=0, index=13): OrderedDict([('current_image', 'images/11_28 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 13), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+53.3290 	EXP 	image: autoDraw = False
+53.3290 	EXP 	polygon: autoDraw = False
+53.3290 	EXP 	image: autoDraw = False
+53.3290 	EXP 	polygon: autoDraw = False
+53.3290 	EXP 	polygon_2: autoDraw = False
+53.3290 	EXP 	text_5: autoDraw = False
+53.3290 	EXP 	text_4: autoDraw = False
+53.3290 	EXP 	image: image = 'images/11_28 copy 2.jpg'
+53.3290 	EXP 	polygon: autoDraw = True
+54.3294 	EXP 	image: autoDraw = True
+57.3139 	EXP 	New trial (rep=0, index=14): OrderedDict([('current_image', 'images/pair08 copy.jpg'), ('is_repeat', 0), ('trial_index', 14), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+57.3289 	EXP 	image: autoDraw = False
+57.3289 	EXP 	polygon: autoDraw = False
+57.3289 	EXP 	image: autoDraw = False
+57.3289 	EXP 	polygon: autoDraw = False
+57.3289 	EXP 	polygon_2: autoDraw = False
+57.3289 	EXP 	text_5: autoDraw = False
+57.3289 	EXP 	text_4: autoDraw = False
+57.3289 	EXP 	image: image = 'images/pair08 copy.jpg'
+57.3289 	EXP 	polygon: autoDraw = True
+58.3294 	EXP 	image: autoDraw = True
+61.3136 	EXP 	New trial (rep=0, index=15): OrderedDict([('current_image', 'images/13_28 copy 5.jpg'), ('is_repeat', 0), ('trial_index', 15), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+61.3289 	EXP 	image: autoDraw = False
+61.3289 	EXP 	polygon: autoDraw = False
+61.3289 	EXP 	image: autoDraw = False
+61.3289 	EXP 	polygon: autoDraw = False
+61.3289 	EXP 	polygon_2: autoDraw = False
+61.3289 	EXP 	text_5: autoDraw = False
+61.3289 	EXP 	text_4: autoDraw = False
+61.3289 	EXP 	image: image = 'images/13_28 copy 5.jpg'
+61.3289 	EXP 	polygon: autoDraw = True
+62.3291 	EXP 	image: autoDraw = True
+65.3136 	EXP 	New trial (rep=0, index=16): OrderedDict([('current_image', 'images/23_28 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 16), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+65.3288 	EXP 	image: autoDraw = False
+65.3288 	EXP 	polygon: autoDraw = False
+65.3288 	EXP 	image: autoDraw = False
+65.3288 	EXP 	polygon: autoDraw = False
+65.3288 	EXP 	polygon_2: autoDraw = False
+65.3288 	EXP 	text_5: autoDraw = False
+65.3288 	EXP 	text_4: autoDraw = False
+65.3288 	EXP 	image: image = 'images/23_28 copy 3.jpg'
+65.3288 	EXP 	polygon: autoDraw = True
+66.3307 	EXP 	image: autoDraw = True
+69.3139 	EXP 	New trial (rep=0, index=17): OrderedDict([('current_image', 'images/23_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 17), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+69.3289 	EXP 	image: autoDraw = False
+69.3289 	EXP 	polygon: autoDraw = False
+69.3289 	EXP 	image: autoDraw = False
+69.3289 	EXP 	polygon: autoDraw = False
+69.3289 	EXP 	polygon_2: autoDraw = False
+69.3289 	EXP 	text_5: autoDraw = False
+69.3289 	EXP 	text_4: autoDraw = False
+69.3289 	EXP 	image: image = 'images/23_12 copy 3.jpg'
+69.3289 	EXP 	polygon: autoDraw = True
+70.3291 	EXP 	image: autoDraw = True
+73.3140 	EXP 	New trial (rep=0, index=18): OrderedDict([('current_image', 'images/23_12 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 18), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+73.3294 	EXP 	image: autoDraw = False
+73.3294 	EXP 	polygon: autoDraw = False
+73.3294 	EXP 	image: autoDraw = False
+73.3294 	EXP 	polygon: autoDraw = False
+73.3294 	EXP 	polygon_2: autoDraw = False
+73.3294 	EXP 	text_5: autoDraw = False
+73.3294 	EXP 	text_4: autoDraw = False
+73.3294 	EXP 	image: image = 'images/23_12 copy 6.jpg'
+73.3294 	EXP 	polygon: autoDraw = True
+74.3291 	EXP 	image: autoDraw = True
+77.3141 	EXP 	New trial (rep=0, index=19): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 19), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+77.3291 	EXP 	image: autoDraw = False
+77.3291 	EXP 	polygon: autoDraw = False
+77.3291 	EXP 	image: autoDraw = False
+77.3291 	EXP 	polygon: autoDraw = False
+77.3291 	EXP 	polygon_2: autoDraw = False
+77.3291 	EXP 	text_5: autoDraw = False
+77.3291 	EXP 	text_4: autoDraw = False
+77.3291 	EXP 	image: image = 'images/blank.jpg'
+77.3291 	EXP 	image: autoDraw = False
+77.3291 	EXP 	polygon: autoDraw = False
+77.3291 	EXP 	polygon_2: autoDraw = True
+81.3136 	EXP 	New trial (rep=0, index=20): OrderedDict([('current_image', 'images/14_40 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 20), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+81.3289 	EXP 	polygon_2: autoDraw = False
+81.3289 	EXP 	polygon_2: autoDraw = False
+81.3289 	EXP 	text_5: autoDraw = False
+81.3289 	EXP 	text_4: autoDraw = False
+81.3289 	EXP 	image: image = 'images/14_40 copy 4.jpg'
+81.3289 	EXP 	polygon: autoDraw = True
+82.3291 	EXP 	image: autoDraw = True
+85.3139 	EXP 	New trial (rep=0, index=21): OrderedDict([('current_image', 'images/24_28 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 21), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+85.3289 	EXP 	image: autoDraw = False
+85.3289 	EXP 	polygon: autoDraw = False
+85.3289 	EXP 	image: autoDraw = False
+85.3289 	EXP 	polygon: autoDraw = False
+85.3289 	EXP 	polygon_2: autoDraw = False
+85.3289 	EXP 	text_5: autoDraw = False
+85.3289 	EXP 	text_4: autoDraw = False
+85.3289 	EXP 	image: image = 'images/24_28 copy 7.jpg'
+85.3289 	EXP 	polygon: autoDraw = True
+86.3291 	EXP 	image: autoDraw = True
+89.3135 	EXP 	New trial (rep=0, index=22): OrderedDict([('current_image', 'images/pair02 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 22), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+89.3289 	EXP 	image: autoDraw = False
+89.3289 	EXP 	polygon: autoDraw = False
+89.3289 	EXP 	image: autoDraw = False
+89.3289 	EXP 	polygon: autoDraw = False
+89.3289 	EXP 	polygon_2: autoDraw = False
+89.3289 	EXP 	text_5: autoDraw = False
+89.3289 	EXP 	text_4: autoDraw = False
+89.3289 	EXP 	image: image = 'images/pair02 copy 2.jpg'
+89.3289 	EXP 	polygon: autoDraw = True
+90.3291 	EXP 	image: autoDraw = True
+93.3139 	EXP 	New trial (rep=0, index=23): OrderedDict([('current_image', 'images/22_40 copy 7.jpg'), ('is_repeat', 0), ('trial_index', 23), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+93.3288 	EXP 	image: autoDraw = False
+93.3288 	EXP 	polygon: autoDraw = False
+93.3288 	EXP 	image: autoDraw = False
+93.3288 	EXP 	polygon: autoDraw = False
+93.3288 	EXP 	polygon_2: autoDraw = False
+93.3288 	EXP 	text_5: autoDraw = False
+93.3288 	EXP 	text_4: autoDraw = False
+93.3288 	EXP 	image: image = 'images/22_40 copy 7.jpg'
+93.3288 	EXP 	polygon: autoDraw = True
+94.3293 	EXP 	image: autoDraw = True
+97.3122 	EXP 	New trial (rep=0, index=24): OrderedDict([('current_image', 'images/7_12 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 24), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+97.3282 	EXP 	image: autoDraw = False
+97.3282 	EXP 	polygon: autoDraw = False
+97.3282 	EXP 	image: autoDraw = False
+97.3282 	EXP 	polygon: autoDraw = False
+97.3282 	EXP 	polygon_2: autoDraw = False
+97.3282 	EXP 	text_5: autoDraw = False
+97.3282 	EXP 	text_4: autoDraw = False
+97.3282 	EXP 	image: image = 'images/7_12 copy 4.jpg'
+97.3282 	EXP 	polygon: autoDraw = True
+98.3279 	EXP 	image: autoDraw = True
+101.3136 	EXP 	New trial (rep=0, index=25): OrderedDict([('current_image', 'images/24_0.jpg'), ('is_repeat', 0), ('trial_index', 25), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+101.3284 	EXP 	image: autoDraw = False
+101.3284 	EXP 	polygon: autoDraw = False
+101.3284 	EXP 	image: autoDraw = False
+101.3284 	EXP 	polygon: autoDraw = False
+101.3284 	EXP 	polygon_2: autoDraw = False
+101.3284 	EXP 	text_5: autoDraw = False
+101.3284 	EXP 	text_4: autoDraw = False
+101.3284 	EXP 	image: image = 'images/24_0.jpg'
+101.3284 	EXP 	polygon: autoDraw = True
+102.3279 	EXP 	image: autoDraw = True
+105.3471 	EXP 	New trial (rep=0, index=26): OrderedDict([('current_image', 'images/23_0 copy.jpg'), ('is_repeat', 0), ('trial_index', 26), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+105.3621 	EXP 	image: autoDraw = False
+105.3621 	EXP 	polygon: autoDraw = False
+105.3621 	EXP 	image: autoDraw = False
+105.3621 	EXP 	polygon: autoDraw = False
+105.3621 	EXP 	polygon_2: autoDraw = False
+105.3621 	EXP 	text_5: autoDraw = False
+105.3621 	EXP 	text_4: autoDraw = False
+105.3621 	EXP 	image: image = 'images/23_0 copy.jpg'
+105.3621 	EXP 	polygon: autoDraw = True
+106.3626 	EXP 	image: autoDraw = True
+109.3470 	EXP 	New trial (rep=0, index=27): OrderedDict([('current_image', 'images/17_0 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 27), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+109.3623 	EXP 	image: autoDraw = False
+109.3623 	EXP 	polygon: autoDraw = False
+109.3623 	EXP 	image: autoDraw = False
+109.3623 	EXP 	polygon: autoDraw = False
+109.3623 	EXP 	polygon_2: autoDraw = False
+109.3623 	EXP 	text_5: autoDraw = False
+109.3623 	EXP 	text_4: autoDraw = False
+109.3623 	EXP 	image: image = 'images/17_0 copy 4.jpg'
+109.3623 	EXP 	polygon: autoDraw = True
+110.3626 	EXP 	image: autoDraw = True
+113.3471 	EXP 	New trial (rep=0, index=28): OrderedDict([('current_image', 'images/10_40 copy 6.jpg'), ('is_repeat', 0), ('trial_index', 28), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+113.3620 	EXP 	image: autoDraw = False
+113.3620 	EXP 	polygon: autoDraw = False
+113.3620 	EXP 	image: autoDraw = False
+113.3620 	EXP 	polygon: autoDraw = False
+113.3620 	EXP 	polygon_2: autoDraw = False
+113.3620 	EXP 	text_5: autoDraw = False
+113.3620 	EXP 	text_4: autoDraw = False
+113.3620 	EXP 	image: image = 'images/10_40 copy 6.jpg'
+113.3620 	EXP 	polygon: autoDraw = True
+114.3626 	EXP 	image: autoDraw = True
+117.3471 	EXP 	New trial (rep=0, index=29): OrderedDict([('current_image', 'images/blank.jpg'), ('is_repeat', 0), ('trial_index', 29), ('is_blank_trial', 1), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+117.3620 	EXP 	image: autoDraw = False
+117.3620 	EXP 	polygon: autoDraw = False
+117.3620 	EXP 	image: autoDraw = False
+117.3620 	EXP 	polygon: autoDraw = False
+117.3620 	EXP 	polygon_2: autoDraw = False
+117.3620 	EXP 	text_5: autoDraw = False
+117.3620 	EXP 	text_4: autoDraw = False
+117.3620 	EXP 	image: image = 'images/blank.jpg'
+117.3620 	EXP 	image: autoDraw = False
+117.3620 	EXP 	polygon: autoDraw = False
+117.3620 	EXP 	polygon_2: autoDraw = True
+121.3465 	EXP 	New trial (rep=0, index=30): OrderedDict([('current_image', 'images/22_40 copy.jpg'), ('is_repeat', 0), ('trial_index', 30), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+121.3622 	EXP 	polygon_2: autoDraw = False
+121.3622 	EXP 	polygon_2: autoDraw = False
+121.3622 	EXP 	text_5: autoDraw = False
+121.3622 	EXP 	text_4: autoDraw = False
+121.3622 	EXP 	image: image = 'images/22_40 copy.jpg'
+121.3622 	EXP 	polygon: autoDraw = True
+122.3622 	EXP 	image: autoDraw = True
+125.3468 	EXP 	New trial (rep=0, index=31): OrderedDict([('current_image', 'images/15_12.jpg'), ('is_repeat', 0), ('trial_index', 31), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+125.3623 	EXP 	image: autoDraw = False
+125.3623 	EXP 	polygon: autoDraw = False
+125.3623 	EXP 	image: autoDraw = False
+125.3623 	EXP 	polygon: autoDraw = False
+125.3623 	EXP 	polygon_2: autoDraw = False
+125.3623 	EXP 	text_5: autoDraw = False
+125.3623 	EXP 	text_4: autoDraw = False
+125.3623 	EXP 	image: image = 'images/15_12.jpg'
+125.3623 	EXP 	polygon: autoDraw = True
+126.3622 	EXP 	image: autoDraw = True
+129.3467 	EXP 	New trial (rep=0, index=32): OrderedDict([('current_image', 'images/5_12 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 32), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+129.3620 	EXP 	image: autoDraw = False
+129.3620 	EXP 	polygon: autoDraw = False
+129.3620 	EXP 	image: autoDraw = False
+129.3620 	EXP 	polygon: autoDraw = False
+129.3620 	EXP 	polygon_2: autoDraw = False
+129.3620 	EXP 	text_5: autoDraw = False
+129.3620 	EXP 	text_4: autoDraw = False
+129.3620 	EXP 	image: image = 'images/5_12 copy 3.jpg'
+129.3620 	EXP 	polygon: autoDraw = True
+130.3620 	EXP 	image: autoDraw = True
+131.3155 	DATA 	Mouse: Left button down, pos=(849,754)
+131.4313 	DATA 	Mouse:  Left button up, pos=(851,755)
+132.8642 	DATA 	Mouse: Left button down, pos=(859,771)
+133.0144 	DATA 	Mouse:  Left button up, pos=(859,771)
+133.3469 	EXP 	New trial (rep=0, index=33): OrderedDict([('current_image', 'images/16_40 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 33), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+133.3620 	EXP 	image: autoDraw = False
+133.3620 	EXP 	polygon: autoDraw = False
+133.3620 	EXP 	image: autoDraw = False
+133.3620 	EXP 	polygon: autoDraw = False
+133.3620 	EXP 	polygon_2: autoDraw = False
+133.3620 	EXP 	text_5: autoDraw = False
+133.3620 	EXP 	text_4: autoDraw = False
+133.3620 	EXP 	image: image = 'images/16_40 copy 4.jpg'
+133.3620 	EXP 	polygon: autoDraw = True
+134.3626 	EXP 	image: autoDraw = True
+135.2309 	DATA 	Keypress: 1
+135.9313 	DATA 	Mouse: Left button down, pos=(919,655)
+136.0811 	DATA 	Mouse:  Left button up, pos=(919,655)
+136.2649 	DATA 	Keypress: 1
+136.4157 	DATA 	Keypress: 2
+136.5641 	DATA 	Keypress: 1
+136.6973 	DATA 	Keypress: 2
+136.8320 	DATA 	Keypress: 1
+136.9469 	DATA 	Keypress: 2
+137.0805 	DATA 	Keypress: 1
+137.1645 	DATA 	Keypress: 2
+137.3155 	DATA 	Keypress: 1
+137.3486 	EXP 	New trial (rep=0, index=34): OrderedDict([('current_image', 'images/12_40 copy 4.jpg'), ('is_repeat', 0), ('trial_index', 34), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+137.3616 	EXP 	image: autoDraw = False
+137.3616 	EXP 	polygon: autoDraw = False
+137.3616 	EXP 	image: autoDraw = False
+137.3616 	EXP 	polygon: autoDraw = False
+137.3616 	EXP 	polygon_2: autoDraw = False
+137.3616 	EXP 	text_5: autoDraw = False
+137.3616 	EXP 	text_4: autoDraw = False
+137.3616 	EXP 	image: image = 'images/12_40 copy 4.jpg'
+137.3616 	EXP 	polygon: autoDraw = True
+137.3973 	DATA 	Keypress: 2
+137.5502 	DATA 	Keypress: 1
+137.6302 	DATA 	Keypress: 2
+137.7657 	DATA 	Keypress: 1
+137.8635 	DATA 	Keypress: 2
+137.9970 	DATA 	Keypress: 1
+138.1132 	DATA 	Keypress: 2
+138.2639 	DATA 	Keypress: 1
+138.3616 	EXP 	image: autoDraw = True
+138.3645 	DATA 	Keypress: 2
+138.5152 	DATA 	Keypress: 1
+138.5805 	DATA 	Keypress: 2
+138.7136 	DATA 	Keypress: 1
+138.7971 	DATA 	Keypress: 2
+138.9301 	DATA 	Keypress: 1
+139.0139 	DATA 	Keypress: 2
+139.1651 	DATA 	Keypress: 1
+139.2137 	DATA 	Keypress: 2
+139.3311 	DATA 	Keypress: 1
+139.4315 	DATA 	Keypress: 2
+139.5640 	DATA 	Keypress: 1
+139.6476 	DATA 	Keypress: 2
+139.7820 	DATA 	Keypress: 1
+140.0148 	DATA 	Keypress: 2
+140.0479 	DATA 	Keypress: 1
+140.2650 	DATA 	Keypress: 2
+140.4148 	DATA 	Keypress: 1
+140.4972 	DATA 	Keypress: 2
+140.4982 	DATA 	Mouse: Left button down, pos=(975,590)
+140.6144 	DATA 	Mouse:  Left button up, pos=(975,590)
+140.6478 	DATA 	Keypress: 1
+140.7472 	DATA 	Keypress: 2
+140.8811 	DATA 	Keypress: 1
+140.9801 	DATA 	Keypress: 2
+141.1317 	DATA 	Keypress: 1
+141.2303 	DATA 	Keypress: 2
+141.2812 	DATA 	Mouse: Left button down, pos=(1164,345)
+141.3474 	EXP 	New trial (rep=0, index=35): OrderedDict([('current_image', 'images/10_40 copy 3.jpg'), ('is_repeat', 0), ('trial_index', 35), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+141.3622 	EXP 	image: autoDraw = False
+141.3622 	EXP 	polygon: autoDraw = False
+141.3622 	EXP 	image: autoDraw = False
+141.3622 	EXP 	polygon: autoDraw = False
+141.3622 	EXP 	polygon_2: autoDraw = False
+141.3622 	EXP 	text_5: autoDraw = False
+141.3622 	EXP 	text_4: autoDraw = False
+141.3622 	EXP 	image: image = 'images/10_40 copy 3.jpg'
+141.3622 	EXP 	polygon: autoDraw = True
+141.3970 	DATA 	Keypress: 1
+141.4139 	DATA 	Mouse:  Left button up, pos=(1164,345)
+141.4969 	DATA 	Keypress: 2
+141.6470 	DATA 	Keypress: 1
+141.7137 	DATA 	Keypress: 2
+141.8817 	DATA 	Keypress: 1
+141.9965 	DATA 	Keypress: 2
+142.1301 	DATA 	Keypress: 1
+142.2305 	DATA 	Keypress: 2
+142.3625 	EXP 	image: autoDraw = True
+142.3829 	DATA 	Keypress: 1
+142.4985 	DATA 	Keypress: 2
+142.6488 	DATA 	Keypress: 1
+142.7486 	DATA 	Keypress: 2
+142.9157 	DATA 	Keypress: 1
+143.0153 	DATA 	Keypress: 2
+143.1988 	DATA 	Keypress: 1
+143.2810 	DATA 	Keypress: 2
+143.4650 	DATA 	Keypress: 1
+143.5495 	DATA 	Keypress: 2
+143.6826 	DATA 	Keypress: 1
+143.8488 	DATA 	Keypress: 2
+143.9651 	DATA 	Keypress: 1
+144.0148 	DATA 	Mouse: Left button down, pos=(1341,316)
+144.1641 	DATA 	Mouse:  Left button up, pos=(1341,316)
+144.1654 	DATA 	Keypress: 1
+144.2475 	DATA 	Keypress: 2
+144.4140 	DATA 	Keypress: 1
+144.4817 	DATA 	Keypress: 2
+144.6643 	DATA 	Keypress: 1
+144.7139 	DATA 	Keypress: 2
+144.8817 	DATA 	Keypress: 1
+144.9648 	DATA 	Keypress: 2
+145.2975 	DATA 	Keypress: escape
+145.3473 	EXP 	New trial (rep=0, index=36): OrderedDict([('current_image', 'images/pair10 copy 2.jpg'), ('is_repeat', 0), ('trial_index', 36), ('is_blank_trial', 0), ('is_new_run', 0), ('run_num', 0), ('all_blanks_list', [9, 19, 29, 39, 49, 59, 68, 69, 70, 71])])
+145.3613 	EXP 	image: autoDraw = False
+145.3613 	EXP 	polygon: autoDraw = False
+145.3613 	EXP 	image: autoDraw = False
+145.3613 	EXP 	polygon: autoDraw = False
+145.3613 	EXP 	polygon_2: autoDraw = False
+145.3613 	EXP 	text_5: autoDraw = False
+145.3613 	EXP 	text_4: autoDraw = False
+145.3613 	EXP 	image: image = 'images/pair10 copy 2.jpg'
+145.3613 	EXP 	polygon: autoDraw = True
+145.3956 	EXP 	replicate_nsd: status = STOPPED
+145.4147 	EXP 	polygon: autoDraw = False
+145.4148 	EXP 	replicate_nsd: status = STOPPED
+145.4569 	EXP 	window1: mouseVisible = True
