@@ -11,11 +11,6 @@ random.shuffle(images_paths)
 images_paths = images_paths[:20]
 practice_trials_num = 20
 # set blank trials as fixed across participants but varied across trials
-import json
-f = open('blank_trials.json')
-run_to_blanks = json.load(f)
-f.close()
-print(run_to_blanks)
 for p_id in range(n_participants):
     random.seed(p_id)
     # make dirs
@@ -40,7 +35,6 @@ for p_id in range(n_participants):
             image_index += 1
     # output study and test
     output_dict = {"current_image": current_image_list,
-
                    "trial_index": trial_index_list,
                    "is_blank_trial":is_blank_trial_list,
           }

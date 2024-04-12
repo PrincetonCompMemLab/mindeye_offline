@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on Thu Apr 11 15:31:16 2024
+    on Fri Apr 12 12:17:36 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -161,7 +161,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1792, 1120], fullscr=False, screen=0,
+            size=[1792, 1120], fullscr=True, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='testMonitor', color=[-0.0039, -0.0039, -0.0039], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -178,7 +178,7 @@ def setupWindow(expInfo=None, win=None):
         win.backgroundImage = ''
         win.backgroundFit = 'none'
         win.units = 'deg'
-    win.mouseVisible = True
+    win.mouseVisible = False
     win.hideMessage()
     return win
 
@@ -311,6 +311,56 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "set_up" ---
     
+    # --- Initialize components for Routine "practice_continue" ---
+    key_resp_6 = keyboard.Keyboard()
+    text_6 = visual.TextStim(win=win, name='text_6',
+        text='',
+        font='Open Sans',
+        units='deg', pos=(0, 0), height=0.5, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-1.0);
+    
+    # --- Initialize components for Routine "set_skips_and_correct_key_2" ---
+    # Run 'Begin Experiment' code from blank_trial_set_up_2
+    is_not_blank_trial= False
+    
+    # --- Initialize components for Routine "practice_trial" ---
+    image_2 = visual.ImageStim(
+        win=win,
+        name='image_2', units='deg', 
+        image='default.png', mask=None, anchor='center',
+        ori=0.0, pos=(0, 0), size=(8.4, 8.4),
+        color=[1,1,1], colorSpace='rgb', opacity=None,
+        flipHoriz=False, flipVert=False,
+        texRes=128.0, interpolate=True, depth=0.0)
+    press_if_repeat_2 = keyboard.Keyboard()
+    polygon_3 = visual.ShapeStim(
+        win=win, name='polygon_3',units='deg', 
+        size=(0.2, 0.2), vertices='circle',
+        ori=0.0, pos=(0, 0), anchor='center',
+        lineWidth=3.0,     colorSpace='rgb',  lineColor=[-1.0000, -1.0000, -1.0000], fillColor=[1.0000, -1.0000, -1.0000],
+        opacity=0.5, depth=-2.0, interpolate=True)
+    all_keys_pressed_2 = keyboard.Keyboard()
+    
+    # --- Initialize components for Routine "blank_trial_2" ---
+    polygon_4 = visual.ShapeStim(
+        win=win, name='polygon_4',units='deg', 
+        size=(0.2, 0.2), vertices='circle',
+        ori=0.0, pos=(0, 0), anchor='center',
+        lineWidth=3.0,     colorSpace='rgb',  lineColor=[-1.0000, -1.0000, -1.0000], fillColor=[1.0000, -1.0000, -1.0000],
+        opacity=0.5, depth=0.0, interpolate=True)
+    
+    # --- Initialize components for Routine "testing_continue" ---
+    key_resp_7 = keyboard.Keyboard()
+    text_7 = visual.TextStim(win=win, name='text_7',
+        text='',
+        font='Open Sans',
+        units='deg', pos=(0, 0), height=0.5, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-1.0);
+    
     # --- Initialize components for Routine "waiting_fmri" ---
     key_resp_2 = keyboard.Keyboard()
     text_3 = visual.TextStim(win=win, name='text_3',
@@ -354,7 +404,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     all_keys_pressed = keyboard.Keyboard()
     
     # --- Initialize components for Routine "blank_trial" ---
-    key_resp_3 = keyboard.Keyboard()
+    blank_trial_testing_keys = keyboard.Keyboard()
     polygon_2 = visual.ShapeStim(
         win=win, name='polygon_2',units='deg', 
         size=(0.2, 0.2), vertices='circle',
@@ -362,7 +412,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         lineWidth=3.0,     colorSpace='rgb',  lineColor=[-1.0000, -1.0000, -1.0000], fillColor=[1.0000, -1.0000, -1.0000],
         opacity=0.5, depth=-1.0, interpolate=True)
     
-    # --- Initialize components for Routine "run_wait2" ---
+    # --- Initialize components for Routine "run_wait2_2" ---
     key_resp_5 = keyboard.Keyboard()
     text_5 = visual.TextStim(win=win, name='text_5',
         text='',
@@ -401,6 +451,8 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     thisExp.addData('set_up.started', globalClock.getTime())
     # Run 'Begin Routine' code from code
     participant_conditions_file = "conditions_files/participant" + expInfo["participant"] + "_.csv"
+    practice_participant_conditions_file = "practice_conditions_files/practice_participant" + expInfo["participant"] + "_.csv"
+    
     starting_run = int(expInfo["starting_run"])
     print("starting_run: ", starting_run)
     # keep track of which components have finished
@@ -454,6 +506,665 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             thisComponent.setAutoDraw(False)
     thisExp.addData('set_up.stopped', globalClock.getTime())
     # the Routine "set_up" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    
+    # --- Prepare to start Routine "practice_continue" ---
+    continueRoutine = True
+    # update component parameters for each repeat
+    thisExp.addData('practice_continue.started', globalClock.getTime())
+    # skip this Routine if its 'Skip if' condition is True
+    continueRoutine = continueRoutine and not (is_not_new_run_or_before_starting_run)
+    key_resp_6.keys = []
+    key_resp_6.rt = []
+    _key_resp_6_allKeys = []
+    text_6.setText('Press any button to begin the practice trials.')
+    # keep track of which components have finished
+    practice_continueComponents = [key_resp_6, text_6]
+    for thisComponent in practice_continueComponents:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+    
+    # --- Run Routine "practice_continue" ---
+    routineForceEnded = not continueRoutine
+    while continueRoutine:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # *key_resp_6* updates
+        waitOnFlip = False
+        
+        # if key_resp_6 is starting this frame...
+        if key_resp_6.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            key_resp_6.frameNStart = frameN  # exact frame index
+            key_resp_6.tStart = t  # local t and not account for scr refresh
+            key_resp_6.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(key_resp_6, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'key_resp_6.started')
+            # update status
+            key_resp_6.status = STARTED
+            # keyboard checking is just starting
+            waitOnFlip = True
+            win.callOnFlip(key_resp_6.clock.reset)  # t=0 on next screen flip
+            win.callOnFlip(key_resp_6.clearEvents, eventType='keyboard')  # clear events on next screen flip
+        if key_resp_6.status == STARTED and not waitOnFlip:
+            theseKeys = key_resp_6.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+            _key_resp_6_allKeys.extend(theseKeys)
+            if len(_key_resp_6_allKeys):
+                key_resp_6.keys = _key_resp_6_allKeys[-1].name  # just the last key pressed
+                key_resp_6.rt = _key_resp_6_allKeys[-1].rt
+                key_resp_6.duration = _key_resp_6_allKeys[-1].duration
+                # a response ends the routine
+                continueRoutine = False
+        
+        # *text_6* updates
+        
+        # if text_6 is starting this frame...
+        if text_6.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            text_6.frameNStart = frameN  # exact frame index
+            text_6.tStart = t  # local t and not account for scr refresh
+            text_6.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(text_6, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'text_6.started')
+            # update status
+            text_6.status = STARTED
+            text_6.setAutoDraw(True)
+        
+        # if text_6 is active this frame...
+        if text_6.status == STARTED:
+            # update params
+            pass
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
+        if thisExp.status == FINISHED or endExpNow:
+            endExperiment(thisExp, inputs=inputs, win=win)
+            return
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            routineForceEnded = True
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in practice_continueComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # --- Ending Routine "practice_continue" ---
+    for thisComponent in practice_continueComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    thisExp.addData('practice_continue.stopped', globalClock.getTime())
+    # check responses
+    if key_resp_6.keys in ['', [], None]:  # No response was made
+        key_resp_6.keys = None
+    thisExp.addData('key_resp_6.keys',key_resp_6.keys)
+    if key_resp_6.keys != None:  # we had a response
+        thisExp.addData('key_resp_6.rt', key_resp_6.rt)
+        thisExp.addData('key_resp_6.duration', key_resp_6.duration)
+    thisExp.nextEntry()
+    # the Routine "practice_continue" was not non-slip safe, so reset the non-slip timer
+    routineTimer.reset()
+    
+    # set up handler to look after randomisation of conditions etc
+    practice = data.TrialHandler(nReps=1.0, method='sequential', 
+        extraInfo=expInfo, originPath=-1,
+        trialList=data.importConditions(practice_participant_conditions_file),
+        seed=None, name='practice')
+    thisExp.addLoop(practice)  # add the loop to the experiment
+    thisPractice = practice.trialList[0]  # so we can initialise stimuli with some values
+    # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
+    if thisPractice != None:
+        for paramName in thisPractice:
+            globals()[paramName] = thisPractice[paramName]
+    
+    for thisPractice in practice:
+        currentLoop = practice
+        thisExp.timestampOnFlip(win, 'thisRow.t')
+        # pause experiment here if requested
+        if thisExp.status == PAUSED:
+            pauseExperiment(
+                thisExp=thisExp, 
+                inputs=inputs, 
+                win=win, 
+                timers=[routineTimer], 
+                playbackComponents=[]
+        )
+        # abbreviate parameter names if possible (e.g. rgb = thisPractice.rgb)
+        if thisPractice != None:
+            for paramName in thisPractice:
+                globals()[paramName] = thisPractice[paramName]
+        
+        # --- Prepare to start Routine "set_skips_and_correct_key_2" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        thisExp.addData('set_skips_and_correct_key_2.started', globalClock.getTime())
+        # Run 'Begin Routine' code from blank_trial_set_up_2
+        if not is_blank_trial:
+            is_not_blank_trial = True
+        else:
+            is_not_blank_trial = False
+        # keep track of which components have finished
+        set_skips_and_correct_key_2Components = []
+        for thisComponent in set_skips_and_correct_key_2Components:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "set_skips_and_correct_key_2" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, inputs=inputs, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in set_skips_and_correct_key_2Components:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "set_skips_and_correct_key_2" ---
+        for thisComponent in set_skips_and_correct_key_2Components:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        thisExp.addData('set_skips_and_correct_key_2.stopped', globalClock.getTime())
+        # the Routine "set_skips_and_correct_key_2" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
+        
+        # --- Prepare to start Routine "practice_trial" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        thisExp.addData('practice_trial.started', globalClock.getTime())
+        # skip this Routine if its 'Skip if' condition is True
+        continueRoutine = continueRoutine and not (is_blank_trial)
+        image_2.setImage(current_image)
+        press_if_repeat_2.keys = []
+        press_if_repeat_2.rt = []
+        _press_if_repeat_2_allKeys = []
+        all_keys_pressed_2.keys = []
+        all_keys_pressed_2.rt = []
+        _all_keys_pressed_2_allKeys = []
+        # keep track of which components have finished
+        practice_trialComponents = [image_2, press_if_repeat_2, polygon_3, all_keys_pressed_2]
+        for thisComponent in practice_trialComponents:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "practice_trial" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *image_2* updates
+            
+            # if image_2 is starting this frame...
+            if image_2.status == NOT_STARTED and frameN >= 60:
+                # keep track of start time/frame for later
+                image_2.frameNStart = frameN  # exact frame index
+                image_2.tStart = t  # local t and not account for scr refresh
+                image_2.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(image_2, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'image_2.started')
+                # update status
+                image_2.status = STARTED
+                image_2.setAutoDraw(True)
+            
+            # if image_2 is active this frame...
+            if image_2.status == STARTED:
+                # update params
+                pass
+            
+            # if image_2 is stopping this frame...
+            if image_2.status == STARTED:
+                if frameN >= (image_2.frameNStart + 180):
+                    # keep track of stop time/frame for later
+                    image_2.tStop = t  # not accounting for scr refresh
+                    image_2.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'image_2.stopped')
+                    # update status
+                    image_2.status = FINISHED
+                    image_2.setAutoDraw(False)
+            
+            # *press_if_repeat_2* updates
+            waitOnFlip = False
+            
+            # if press_if_repeat_2 is starting this frame...
+            if press_if_repeat_2.status == NOT_STARTED and frameN >= 60:
+                # keep track of start time/frame for later
+                press_if_repeat_2.frameNStart = frameN  # exact frame index
+                press_if_repeat_2.tStart = t  # local t and not account for scr refresh
+                press_if_repeat_2.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(press_if_repeat_2, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'press_if_repeat_2.started')
+                # update status
+                press_if_repeat_2.status = STARTED
+                # keyboard checking is just starting
+                waitOnFlip = True
+                win.callOnFlip(press_if_repeat_2.clock.reset)  # t=0 on next screen flip
+                win.callOnFlip(press_if_repeat_2.clearEvents, eventType='keyboard')  # clear events on next screen flip
+            
+            # if press_if_repeat_2 is stopping this frame...
+            if press_if_repeat_2.status == STARTED:
+                if frameN >= (press_if_repeat_2.frameNStart + 180):
+                    # keep track of stop time/frame for later
+                    press_if_repeat_2.tStop = t  # not accounting for scr refresh
+                    press_if_repeat_2.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'press_if_repeat_2.stopped')
+                    # update status
+                    press_if_repeat_2.status = FINISHED
+                    press_if_repeat_2.status = FINISHED
+            if press_if_repeat_2.status == STARTED and not waitOnFlip:
+                theseKeys = press_if_repeat_2.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
+                _press_if_repeat_2_allKeys.extend(theseKeys)
+                if len(_press_if_repeat_2_allKeys):
+                    press_if_repeat_2.keys = _press_if_repeat_2_allKeys[-1].name  # just the last key pressed
+                    press_if_repeat_2.rt = _press_if_repeat_2_allKeys[-1].rt
+                    press_if_repeat_2.duration = _press_if_repeat_2_allKeys[-1].duration
+                    # was this correct?
+                    if (press_if_repeat_2.keys == str(correct_key_1or2)) or (press_if_repeat_2.keys == correct_key_1or2):
+                        press_if_repeat_2.corr = 1
+                    else:
+                        press_if_repeat_2.corr = 0
+            
+            # *polygon_3* updates
+            
+            # if polygon_3 is starting this frame...
+            if polygon_3.status == NOT_STARTED and frameN >= 0:
+                # keep track of start time/frame for later
+                polygon_3.frameNStart = frameN  # exact frame index
+                polygon_3.tStart = t  # local t and not account for scr refresh
+                polygon_3.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(polygon_3, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'polygon_3.started')
+                # update status
+                polygon_3.status = STARTED
+                polygon_3.setAutoDraw(True)
+            
+            # if polygon_3 is active this frame...
+            if polygon_3.status == STARTED:
+                # update params
+                pass
+            
+            # if polygon_3 is stopping this frame...
+            if polygon_3.status == STARTED:
+                if frameN >= (polygon_3.frameNStart + 240):
+                    # keep track of stop time/frame for later
+                    polygon_3.tStop = t  # not accounting for scr refresh
+                    polygon_3.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'polygon_3.stopped')
+                    # update status
+                    polygon_3.status = FINISHED
+                    polygon_3.setAutoDraw(False)
+            
+            # *all_keys_pressed_2* updates
+            waitOnFlip = False
+            
+            # if all_keys_pressed_2 is starting this frame...
+            if all_keys_pressed_2.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
+                # keep track of start time/frame for later
+                all_keys_pressed_2.frameNStart = frameN  # exact frame index
+                all_keys_pressed_2.tStart = t  # local t and not account for scr refresh
+                all_keys_pressed_2.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(all_keys_pressed_2, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'all_keys_pressed_2.started')
+                # update status
+                all_keys_pressed_2.status = STARTED
+                # keyboard checking is just starting
+                waitOnFlip = True
+                win.callOnFlip(all_keys_pressed_2.clock.reset)  # t=0 on next screen flip
+                win.callOnFlip(all_keys_pressed_2.clearEvents, eventType='keyboard')  # clear events on next screen flip
+            
+            # if all_keys_pressed_2 is stopping this frame...
+            if all_keys_pressed_2.status == STARTED:
+                if frameN >= (all_keys_pressed_2.frameNStart + 240):
+                    # keep track of stop time/frame for later
+                    all_keys_pressed_2.tStop = t  # not accounting for scr refresh
+                    all_keys_pressed_2.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'all_keys_pressed_2.stopped')
+                    # update status
+                    all_keys_pressed_2.status = FINISHED
+                    all_keys_pressed_2.status = FINISHED
+            if all_keys_pressed_2.status == STARTED and not waitOnFlip:
+                theseKeys = all_keys_pressed_2.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+                _all_keys_pressed_2_allKeys.extend(theseKeys)
+                if len(_all_keys_pressed_2_allKeys):
+                    all_keys_pressed_2.keys = [key.name for key in _all_keys_pressed_2_allKeys]  # storing all keys
+                    all_keys_pressed_2.rt = [key.rt for key in _all_keys_pressed_2_allKeys]
+                    all_keys_pressed_2.duration = [key.duration for key in _all_keys_pressed_2_allKeys]
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, inputs=inputs, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in practice_trialComponents:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "practice_trial" ---
+        for thisComponent in practice_trialComponents:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        thisExp.addData('practice_trial.stopped', globalClock.getTime())
+        # check responses
+        if press_if_repeat_2.keys in ['', [], None]:  # No response was made
+            press_if_repeat_2.keys = None
+            # was no response the correct answer?!
+            if str(correct_key_1or2).lower() == 'none':
+               press_if_repeat_2.corr = 1;  # correct non-response
+            else:
+               press_if_repeat_2.corr = 0;  # failed to respond (incorrectly)
+        # store data for practice (TrialHandler)
+        practice.addData('press_if_repeat_2.keys',press_if_repeat_2.keys)
+        practice.addData('press_if_repeat_2.corr', press_if_repeat_2.corr)
+        if press_if_repeat_2.keys != None:  # we had a response
+            practice.addData('press_if_repeat_2.rt', press_if_repeat_2.rt)
+            practice.addData('press_if_repeat_2.duration', press_if_repeat_2.duration)
+        # check responses
+        if all_keys_pressed_2.keys in ['', [], None]:  # No response was made
+            all_keys_pressed_2.keys = None
+        practice.addData('all_keys_pressed_2.keys',all_keys_pressed_2.keys)
+        if all_keys_pressed_2.keys != None:  # we had a response
+            practice.addData('all_keys_pressed_2.rt', all_keys_pressed_2.rt)
+            practice.addData('all_keys_pressed_2.duration', all_keys_pressed_2.duration)
+        # the Routine "practice_trial" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
+        
+        # --- Prepare to start Routine "blank_trial_2" ---
+        continueRoutine = True
+        # update component parameters for each repeat
+        thisExp.addData('blank_trial_2.started', globalClock.getTime())
+        # skip this Routine if its 'Skip if' condition is True
+        continueRoutine = continueRoutine and not (is_not_blank_trial)
+        # keep track of which components have finished
+        blank_trial_2Components = [polygon_4]
+        for thisComponent in blank_trial_2Components:
+            thisComponent.tStart = None
+            thisComponent.tStop = None
+            thisComponent.tStartRefresh = None
+            thisComponent.tStopRefresh = None
+            if hasattr(thisComponent, 'status'):
+                thisComponent.status = NOT_STARTED
+        # reset timers
+        t = 0
+        _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+        frameN = -1
+        
+        # --- Run Routine "blank_trial_2" ---
+        routineForceEnded = not continueRoutine
+        while continueRoutine:
+            # get current time
+            t = routineTimer.getTime()
+            tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+            tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+            frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+            # update/draw components on each frame
+            
+            # *polygon_4* updates
+            
+            # if polygon_4 is starting this frame...
+            if polygon_4.status == NOT_STARTED and frameN >= 0:
+                # keep track of start time/frame for later
+                polygon_4.frameNStart = frameN  # exact frame index
+                polygon_4.tStart = t  # local t and not account for scr refresh
+                polygon_4.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(polygon_4, 'tStartRefresh')  # time at next scr refresh
+                # add timestamp to datafile
+                thisExp.timestampOnFlip(win, 'polygon_4.started')
+                # update status
+                polygon_4.status = STARTED
+                polygon_4.setAutoDraw(True)
+            
+            # if polygon_4 is active this frame...
+            if polygon_4.status == STARTED:
+                # update params
+                pass
+            
+            # if polygon_4 is stopping this frame...
+            if polygon_4.status == STARTED:
+                if frameN >= (polygon_4.frameNStart + 240):
+                    # keep track of stop time/frame for later
+                    polygon_4.tStop = t  # not accounting for scr refresh
+                    polygon_4.frameNStop = frameN  # exact frame index
+                    # add timestamp to datafile
+                    thisExp.timestampOnFlip(win, 'polygon_4.stopped')
+                    # update status
+                    polygon_4.status = FINISHED
+                    polygon_4.setAutoDraw(False)
+            
+            # check for quit (typically the Esc key)
+            if defaultKeyboard.getKeys(keyList=["escape"]):
+                thisExp.status = FINISHED
+            if thisExp.status == FINISHED or endExpNow:
+                endExperiment(thisExp, inputs=inputs, win=win)
+                return
+            
+            # check if all components have finished
+            if not continueRoutine:  # a component has requested a forced-end of Routine
+                routineForceEnded = True
+                break
+            continueRoutine = False  # will revert to True if at least one component still running
+            for thisComponent in blank_trial_2Components:
+                if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                    continueRoutine = True
+                    break  # at least one component has not yet finished
+            
+            # refresh the screen
+            if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                win.flip()
+        
+        # --- Ending Routine "blank_trial_2" ---
+        for thisComponent in blank_trial_2Components:
+            if hasattr(thisComponent, "setAutoDraw"):
+                thisComponent.setAutoDraw(False)
+        thisExp.addData('blank_trial_2.stopped', globalClock.getTime())
+        # the Routine "blank_trial_2" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
+        thisExp.nextEntry()
+        
+        if thisSession is not None:
+            # if running in a Session with a Liaison client, send data up to now
+            thisSession.sendExperimentData()
+    # completed 1.0 repeats of 'practice'
+    
+    
+    # --- Prepare to start Routine "testing_continue" ---
+    continueRoutine = True
+    # update component parameters for each repeat
+    thisExp.addData('testing_continue.started', globalClock.getTime())
+    # skip this Routine if its 'Skip if' condition is True
+    continueRoutine = continueRoutine and not (is_not_new_run_or_before_starting_run)
+    key_resp_7.keys = []
+    key_resp_7.rt = []
+    _key_resp_7_allKeys = []
+    text_7.setText('Good job! You finished the practice trials. Press any button to begin the experiment.')
+    # keep track of which components have finished
+    testing_continueComponents = [key_resp_7, text_7]
+    for thisComponent in testing_continueComponents:
+        thisComponent.tStart = None
+        thisComponent.tStop = None
+        thisComponent.tStartRefresh = None
+        thisComponent.tStopRefresh = None
+        if hasattr(thisComponent, 'status'):
+            thisComponent.status = NOT_STARTED
+    # reset timers
+    t = 0
+    _timeToFirstFrame = win.getFutureFlipTime(clock="now")
+    frameN = -1
+    
+    # --- Run Routine "testing_continue" ---
+    routineForceEnded = not continueRoutine
+    while continueRoutine:
+        # get current time
+        t = routineTimer.getTime()
+        tThisFlip = win.getFutureFlipTime(clock=routineTimer)
+        tThisFlipGlobal = win.getFutureFlipTime(clock=None)
+        frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
+        # update/draw components on each frame
+        
+        # *key_resp_7* updates
+        waitOnFlip = False
+        
+        # if key_resp_7 is starting this frame...
+        if key_resp_7.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            key_resp_7.frameNStart = frameN  # exact frame index
+            key_resp_7.tStart = t  # local t and not account for scr refresh
+            key_resp_7.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(key_resp_7, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'key_resp_7.started')
+            # update status
+            key_resp_7.status = STARTED
+            # keyboard checking is just starting
+            waitOnFlip = True
+            win.callOnFlip(key_resp_7.clock.reset)  # t=0 on next screen flip
+            win.callOnFlip(key_resp_7.clearEvents, eventType='keyboard')  # clear events on next screen flip
+        if key_resp_7.status == STARTED and not waitOnFlip:
+            theseKeys = key_resp_7.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+            _key_resp_7_allKeys.extend(theseKeys)
+            if len(_key_resp_7_allKeys):
+                key_resp_7.keys = _key_resp_7_allKeys[-1].name  # just the last key pressed
+                key_resp_7.rt = _key_resp_7_allKeys[-1].rt
+                key_resp_7.duration = _key_resp_7_allKeys[-1].duration
+                # a response ends the routine
+                continueRoutine = False
+        
+        # *text_7* updates
+        
+        # if text_7 is starting this frame...
+        if text_7.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
+            # keep track of start time/frame for later
+            text_7.frameNStart = frameN  # exact frame index
+            text_7.tStart = t  # local t and not account for scr refresh
+            text_7.tStartRefresh = tThisFlipGlobal  # on global time
+            win.timeOnFlip(text_7, 'tStartRefresh')  # time at next scr refresh
+            # add timestamp to datafile
+            thisExp.timestampOnFlip(win, 'text_7.started')
+            # update status
+            text_7.status = STARTED
+            text_7.setAutoDraw(True)
+        
+        # if text_7 is active this frame...
+        if text_7.status == STARTED:
+            # update params
+            pass
+        
+        # check for quit (typically the Esc key)
+        if defaultKeyboard.getKeys(keyList=["escape"]):
+            thisExp.status = FINISHED
+        if thisExp.status == FINISHED or endExpNow:
+            endExperiment(thisExp, inputs=inputs, win=win)
+            return
+        
+        # check if all components have finished
+        if not continueRoutine:  # a component has requested a forced-end of Routine
+            routineForceEnded = True
+            break
+        continueRoutine = False  # will revert to True if at least one component still running
+        for thisComponent in testing_continueComponents:
+            if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
+                continueRoutine = True
+                break  # at least one component has not yet finished
+        
+        # refresh the screen
+        if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+            win.flip()
+    
+    # --- Ending Routine "testing_continue" ---
+    for thisComponent in testing_continueComponents:
+        if hasattr(thisComponent, "setAutoDraw"):
+            thisComponent.setAutoDraw(False)
+    thisExp.addData('testing_continue.stopped', globalClock.getTime())
+    # check responses
+    if key_resp_7.keys in ['', [], None]:  # No response was made
+        key_resp_7.keys = None
+    thisExp.addData('key_resp_7.keys',key_resp_7.keys)
+    if key_resp_7.keys != None:  # we had a response
+        thisExp.addData('key_resp_7.rt', key_resp_7.rt)
+        thisExp.addData('key_resp_7.duration', key_resp_7.duration)
+    thisExp.nextEntry()
+    # the Routine "testing_continue" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     
     # --- Prepare to start Routine "waiting_fmri" ---
@@ -933,11 +1644,11 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         thisExp.addData('blank_trial.started', globalClock.getTime())
         # skip this Routine if its 'Skip if' condition is True
         continueRoutine = continueRoutine and not (is_not_blank_trial_or_before_starting_run)
-        key_resp_3.keys = []
-        key_resp_3.rt = []
-        _key_resp_3_allKeys = []
+        blank_trial_testing_keys.keys = []
+        blank_trial_testing_keys.rt = []
+        _blank_trial_testing_keys_allKeys = []
         # keep track of which components have finished
-        blank_trialComponents = [key_resp_3, polygon_2]
+        blank_trialComponents = [blank_trial_testing_keys, polygon_2]
         for thisComponent in blank_trialComponents:
             thisComponent.tStart = None
             thisComponent.tStop = None
@@ -952,54 +1663,51 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         
         # --- Run Routine "blank_trial" ---
         routineForceEnded = not continueRoutine
-        while continueRoutine and routineTimer.getTime() < 4.0:
+        while continueRoutine:
             # get current time
             t = routineTimer.getTime()
             tThisFlip = win.getFutureFlipTime(clock=routineTimer)
             tThisFlipGlobal = win.getFutureFlipTime(clock=None)
             frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
             # update/draw components on each frame
-            # is it time to end the Routine? (based on local clock)
-            if tThisFlip > 4-frameTolerance:
-                continueRoutine = False
             
-            # *key_resp_3* updates
+            # *blank_trial_testing_keys* updates
             waitOnFlip = False
             
-            # if key_resp_3 is starting this frame...
-            if key_resp_3.status == NOT_STARTED and frameN >= 0:
+            # if blank_trial_testing_keys is starting this frame...
+            if blank_trial_testing_keys.status == NOT_STARTED and frameN >= 0:
                 # keep track of start time/frame for later
-                key_resp_3.frameNStart = frameN  # exact frame index
-                key_resp_3.tStart = t  # local t and not account for scr refresh
-                key_resp_3.tStartRefresh = tThisFlipGlobal  # on global time
-                win.timeOnFlip(key_resp_3, 'tStartRefresh')  # time at next scr refresh
+                blank_trial_testing_keys.frameNStart = frameN  # exact frame index
+                blank_trial_testing_keys.tStart = t  # local t and not account for scr refresh
+                blank_trial_testing_keys.tStartRefresh = tThisFlipGlobal  # on global time
+                win.timeOnFlip(blank_trial_testing_keys, 'tStartRefresh')  # time at next scr refresh
                 # add timestamp to datafile
-                thisExp.timestampOnFlip(win, 'key_resp_3.started')
+                thisExp.timestampOnFlip(win, 'blank_trial_testing_keys.started')
                 # update status
-                key_resp_3.status = STARTED
+                blank_trial_testing_keys.status = STARTED
                 # keyboard checking is just starting
                 waitOnFlip = True
-                win.callOnFlip(key_resp_3.clock.reset)  # t=0 on next screen flip
-                win.callOnFlip(key_resp_3.clearEvents, eventType='keyboard')  # clear events on next screen flip
+                win.callOnFlip(blank_trial_testing_keys.clock.reset)  # t=0 on next screen flip
+                win.callOnFlip(blank_trial_testing_keys.clearEvents, eventType='keyboard')  # clear events on next screen flip
             
-            # if key_resp_3 is stopping this frame...
-            if key_resp_3.status == STARTED:
-                if frameN >= (key_resp_3.frameNStart + 240):
+            # if blank_trial_testing_keys is stopping this frame...
+            if blank_trial_testing_keys.status == STARTED:
+                if frameN >= (blank_trial_testing_keys.frameNStart + 240):
                     # keep track of stop time/frame for later
-                    key_resp_3.tStop = t  # not accounting for scr refresh
-                    key_resp_3.frameNStop = frameN  # exact frame index
+                    blank_trial_testing_keys.tStop = t  # not accounting for scr refresh
+                    blank_trial_testing_keys.frameNStop = frameN  # exact frame index
                     # add timestamp to datafile
-                    thisExp.timestampOnFlip(win, 'key_resp_3.stopped')
+                    thisExp.timestampOnFlip(win, 'blank_trial_testing_keys.stopped')
                     # update status
-                    key_resp_3.status = FINISHED
-                    key_resp_3.status = FINISHED
-            if key_resp_3.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_3.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
-                _key_resp_3_allKeys.extend(theseKeys)
-                if len(_key_resp_3_allKeys):
-                    key_resp_3.keys = _key_resp_3_allKeys[-1].name  # just the last key pressed
-                    key_resp_3.rt = _key_resp_3_allKeys[-1].rt
-                    key_resp_3.duration = _key_resp_3_allKeys[-1].duration
+                    blank_trial_testing_keys.status = FINISHED
+                    blank_trial_testing_keys.status = FINISHED
+            if blank_trial_testing_keys.status == STARTED and not waitOnFlip:
+                theseKeys = blank_trial_testing_keys.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+                _blank_trial_testing_keys_allKeys.extend(theseKeys)
+                if len(_blank_trial_testing_keys_allKeys):
+                    blank_trial_testing_keys.keys = [key.name for key in _blank_trial_testing_keys_allKeys]  # storing all keys
+                    blank_trial_testing_keys.rt = [key.rt for key in _blank_trial_testing_keys_allKeys]
+                    blank_trial_testing_keys.duration = [key.duration for key in _blank_trial_testing_keys_allKeys]
             
             # *polygon_2* updates
             
@@ -1060,22 +1768,19 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 thisComponent.setAutoDraw(False)
         thisExp.addData('blank_trial.stopped', globalClock.getTime())
         # check responses
-        if key_resp_3.keys in ['', [], None]:  # No response was made
-            key_resp_3.keys = None
-        loop_all_images.addData('key_resp_3.keys',key_resp_3.keys)
-        if key_resp_3.keys != None:  # we had a response
-            loop_all_images.addData('key_resp_3.rt', key_resp_3.rt)
-            loop_all_images.addData('key_resp_3.duration', key_resp_3.duration)
-        # using non-slip timing so subtract the expected duration of this Routine (unless ended on request)
-        if routineForceEnded:
-            routineTimer.reset()
-        else:
-            routineTimer.addTime(-4.000000)
+        if blank_trial_testing_keys.keys in ['', [], None]:  # No response was made
+            blank_trial_testing_keys.keys = None
+        loop_all_images.addData('blank_trial_testing_keys.keys',blank_trial_testing_keys.keys)
+        if blank_trial_testing_keys.keys != None:  # we had a response
+            loop_all_images.addData('blank_trial_testing_keys.rt', blank_trial_testing_keys.rt)
+            loop_all_images.addData('blank_trial_testing_keys.duration', blank_trial_testing_keys.duration)
+        # the Routine "blank_trial" was not non-slip safe, so reset the non-slip timer
+        routineTimer.reset()
         
-        # --- Prepare to start Routine "run_wait2" ---
+        # --- Prepare to start Routine "run_wait2_2" ---
         continueRoutine = True
         # update component parameters for each repeat
-        thisExp.addData('run_wait2.started', globalClock.getTime())
+        thisExp.addData('run_wait2_2.started', globalClock.getTime())
         # skip this Routine if its 'Skip if' condition is True
         continueRoutine = continueRoutine and not (is_not_new_run_or_before_starting_run)
         key_resp_5.keys = []
@@ -1089,8 +1794,8 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                         str(num_trials_correct * 1e2) + \
                         ". Please press any button when you are ready to continue." 
         # keep track of which components have finished
-        run_wait2Components = [key_resp_5, text_5]
-        for thisComponent in run_wait2Components:
+        run_wait2_2Components = [key_resp_5, text_5]
+        for thisComponent in run_wait2_2Components:
             thisComponent.tStart = None
             thisComponent.tStop = None
             thisComponent.tStartRefresh = None
@@ -1102,7 +1807,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         _timeToFirstFrame = win.getFutureFlipTime(clock="now")
         frameN = -1
         
-        # --- Run Routine "run_wait2" ---
+        # --- Run Routine "run_wait2_2" ---
         routineForceEnded = not continueRoutine
         while continueRoutine:
             # get current time
@@ -1172,7 +1877,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 routineForceEnded = True
                 break
             continueRoutine = False  # will revert to True if at least one component still running
-            for thisComponent in run_wait2Components:
+            for thisComponent in run_wait2_2Components:
                 if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
                     continueRoutine = True
                     break  # at least one component has not yet finished
@@ -1181,11 +1886,11 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                 win.flip()
         
-        # --- Ending Routine "run_wait2" ---
-        for thisComponent in run_wait2Components:
+        # --- Ending Routine "run_wait2_2" ---
+        for thisComponent in run_wait2_2Components:
             if hasattr(thisComponent, "setAutoDraw"):
                 thisComponent.setAutoDraw(False)
-        thisExp.addData('run_wait2.stopped', globalClock.getTime())
+        thisExp.addData('run_wait2_2.stopped', globalClock.getTime())
         # check responses
         if key_resp_5.keys in ['', [], None]:  # No response was made
             key_resp_5.keys = None
@@ -1193,7 +1898,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         if key_resp_5.keys != None:  # we had a response
             loop_all_images.addData('key_resp_5.rt', key_resp_5.rt)
             loop_all_images.addData('key_resp_5.duration', key_resp_5.duration)
-        # the Routine "run_wait2" was not non-slip safe, so reset the non-slip timer
+        # the Routine "run_wait2_2" was not non-slip safe, so reset the non-slip timer
         routineTimer.reset()
         
         # --- Prepare to start Routine "waiting_fmri_2" ---

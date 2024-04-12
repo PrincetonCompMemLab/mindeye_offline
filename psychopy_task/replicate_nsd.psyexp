@@ -10,7 +10,7 @@
     <Param val="" valType="str" updates="None" name="End Message"/>
     <Param val="{'participant': 'f&quot;{randint(0, 999999):06.0f}&quot;', 'session': '001', 'starting_run': '0', '': ''}" valType="code" updates="None" name="Experiment info"/>
     <Param val="True" valType="bool" updates="None" name="Force stereo"/>
-    <Param val="False" valType="bool" updates="None" name="Full-screen window"/>
+    <Param val="True" valType="bool" updates="None" name="Full-screen window"/>
     <Param val="" valType="str" updates="None" name="HTML path"/>
     <Param val="" valType="str" updates="None" name="Incomplete URL"/>
     <Param val="testMonitor" valType="str" updates="None" name="Monitor"/>
@@ -282,8 +282,8 @@
         <Param val="" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="participant_conditions_file = ((&quot;conditions_files/participant&quot; + expInfo[&quot;participant&quot;]) + &quot;_.csv&quot;);&amp;#10;starting_run = Number.parseInt(expInfo[&quot;starting_run&quot;]);&amp;#10;console.log(&quot;starting_run: &quot;, starting_run);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="participant_conditions_file = &quot;conditions_files/participant&quot; + expInfo[&quot;participant&quot;] + &quot;_.csv&quot;&amp;#10;starting_run = int(expInfo[&quot;starting_run&quot;])&amp;#10;print(&quot;starting_run: &quot;, starting_run)" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Auto-&gt;JS" valType="str" updates="None" name="Code Type"/>
+        <Param val="participant_conditions_file = &quot;conditions_files/participant&quot; + expInfo[&quot;participant&quot;] + &quot;_.csv&quot;&amp;#10;practice_participant_conditions_file = &quot;practice_conditions_files/practice_participant&quot; + expInfo[&quot;participant&quot;] + &quot;_.csv&quot;&amp;#10;&amp;#10;starting_run = int(expInfo[&quot;starting_run&quot;])&amp;#10;print(&quot;starting_run: &quot;, starting_run)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
@@ -367,18 +367,18 @@
         <Param val="blank_trial" valType="code" updates="None" name="name"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="is_not_blank_trial_or_before_starting_run" valType="code" updates="constant" name="skipIf"/>
-        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
-        <Param val="4" valType="code" updates="constant" name="stopVal"/>
+        <Param val="frame N" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
-      <KeyboardComponent name="key_resp_3" plugin="None">
+      <KeyboardComponent name="blank_trial_testing_keys" plugin="None">
         <Param val="" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="False" valType="bool" updates="constant" name="forceEndRoutine"/>
-        <Param val="key_resp_3" valType="code" updates="None" name="name"/>
+        <Param val="blank_trial_testing_keys" valType="code" updates="None" name="name"/>
         <Param val="press" valType="str" updates="constant" name="registerOn"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
         <Param val="" valType="code" updates="None" name="startEstim"/>
@@ -386,7 +386,7 @@
         <Param val="0" valType="code" updates="None" name="startVal"/>
         <Param val="duration (frames)" valType="str" updates="None" name="stopType"/>
         <Param val="240" valType="code" updates="constant" name="stopVal"/>
-        <Param val="last key" valType="str" updates="constant" name="store"/>
+        <Param val="all keys" valType="str" updates="constant" name="store"/>
         <Param val="False" valType="bool" updates="constant" name="storeCorrect"/>
         <Param val="True" valType="bool" updates="constant" name="syncScreenRefresh"/>
       </KeyboardComponent>
@@ -651,7 +651,7 @@
         <Param val="" valType="code" updates="None" name="durationEstim"/>
         <Param val="practice_trial" valType="code" updates="None" name="name"/>
         <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
-        <Param val="is_blank_trial_or_before_starting_run" valType="code" updates="constant" name="skipIf"/>
+        <Param val="is_blank_trial" valType="code" updates="constant" name="skipIf"/>
         <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
         <Param val="" valType="code" updates="constant" name="stopVal"/>
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
@@ -729,23 +729,6 @@
         <Param val="deg" valType="str" updates="None" name="units"/>
         <Param val="" valType="list" updates="constant" name="vertices"/>
       </PolygonComponent>
-      <CodeComponent name="update_num_correct_2" plugin="None">
-        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
-        <Param val="num_trials_correct = 0&amp;#10;num_trials_total = 0&amp;#10;num_trials_responded = 0" valType="extendedCode" updates="constant" name="Begin Experiment"/>
-        <Param val="num_trials_correct = 0;&amp;#10;num_trials_total = 0;&amp;#10;num_trials_responded = 0;&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Begin Routine"/>
-        <Param val="Auto-&gt;JS" valType="str" updates="None" name="Code Type"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
-        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
-        <Param val="if ((! is_blank_trial_or_before_starting_run)) {&amp;#10;    num_trials_total += 1;&amp;#10;    if ((press_if_repeat.corr === 1)) {&amp;#10;        num_trials_correct += 1;&amp;#10;        console.log(&quot;correct!&quot;);&amp;#10;    }&amp;#10;    if ((press_if_repeat.keys !== null)) {&amp;#10;        num_trials_responded += 1;&amp;#10;        console.log(&quot;responded!&quot;);&amp;#10;    }&amp;#10;    console.log(&quot;press_if_repeat.corr: &quot;, press_if_repeat.corr);&amp;#10;    console.log(&quot;press_if_repeat.keys: &quot;, press_if_repeat.keys);&amp;#10;    console.log(&quot;is_repeat: &quot;, is_repeat);&amp;#10;    console.log(&quot;all_keys_pressed: &quot;, all_keys_pressed.keys);&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="End JS Routine"/>
-        <Param val="if not is_blank_trial_or_before_starting_run:&amp;#10;    num_trials_total += 1 &amp;#10;    if press_if_repeat.corr == 1:&amp;#10;        num_trials_correct += 1&amp;#10;        print(&quot;correct!&quot;)&amp;#10;    if press_if_repeat.keys != None:&amp;#10;        num_trials_responded += 1&amp;#10;        print(&quot;responded!&quot;) &amp;#10;    print(&quot;press_if_repeat.corr: &quot;, press_if_repeat.corr)&amp;#10;    print(&quot;press_if_repeat.keys: &quot;, press_if_repeat.keys)&amp;#10;    print(&quot;is_repeat: &quot;, is_repeat)&amp;#10;    print(&quot;all_keys_pressed: &quot;, all_keys_pressed.keys)" valType="extendedCode" updates="constant" name="End Routine"/>
-        <Param val="False" valType="bool" updates="None" name="disabled"/>
-        <Param val="update_num_correct_2" valType="code" updates="None" name="name"/>
-      </CodeComponent>
       <KeyboardComponent name="all_keys_pressed_2" plugin="None">
         <Param val="" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
@@ -966,6 +949,84 @@
         <Param val="" valType="num" updates="constant" name="wrapWidth"/>
       </TextComponent>
     </Routine>
+    <Routine name="blank_trial_2">
+      <RoutineSettingsComponent name="blank_trial_2" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="blank_trial_2" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="is_not_blank_trial" valType="code" updates="constant" name="skipIf"/>
+        <Param val="frame N" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <PolygonComponent name="polygon_4" plugin="None">
+        <Param val="center" valType="str" updates="constant" name="anchor"/>
+        <Param val="rgb" valType="str" updates="constant" name="colorSpace"/>
+        <Param val="1" valType="num" updates="constant" name="contrast"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="1.0000, -1.0000, -1.0000" valType="color" updates="constant" name="fillColor"/>
+        <Param val="linear" valType="str" updates="constant" name="interpolate"/>
+        <Param val="-1.0000, -1.0000, -1.0000" valType="color" updates="constant" name="lineColor"/>
+        <Param val="3" valType="num" updates="constant" name="lineWidth"/>
+        <Param val="4" valType="int" updates="constant" name="nVertices"/>
+        <Param val="polygon_4" valType="code" updates="None" name="name"/>
+        <Param val="0.5" valType="num" updates="constant" name="opacity"/>
+        <Param val="0" valType="num" updates="constant" name="ori"/>
+        <Param val="(0, 0)" valType="list" updates="constant" name="pos"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="circle" valType="str" updates="None" name="shape"/>
+        <Param val="(0.2, 0.2)" valType="list" updates="constant" name="size"/>
+        <Param val="" valType="code" updates="None" name="startEstim"/>
+        <Param val="frame N" valType="str" updates="None" name="startType"/>
+        <Param val="0" valType="code" updates="None" name="startVal"/>
+        <Param val="duration (frames)" valType="str" updates="None" name="stopType"/>
+        <Param val="240" valType="code" updates="constant" name="stopVal"/>
+        <Param val="True" valType="bool" updates="None" name="syncScreenRefresh"/>
+        <Param val="deg" valType="str" updates="None" name="units"/>
+        <Param val="" valType="list" updates="constant" name="vertices"/>
+      </PolygonComponent>
+    </Routine>
+    <Routine name="set_skips_and_correct_key_2">
+      <RoutineSettingsComponent name="set_skips_and_correct_key_2" plugin="None">
+        <Param val="none" valType="str" updates="None" name="backgroundFit"/>
+        <Param val="" valType="str" updates="None" name="backgroundImg"/>
+        <Param val="$[0,0,0]" valType="color" updates="None" name="color"/>
+        <Param val="rgb" valType="str" updates="None" name="colorSpace"/>
+        <Param val="" valType="str" updates="constant" name="desc"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="" valType="code" updates="None" name="durationEstim"/>
+        <Param val="set_skips_and_correct_key_2" valType="code" updates="None" name="name"/>
+        <Param val="True" valType="bool" updates="None" name="saveStartStop"/>
+        <Param val="" valType="code" updates="constant" name="skipIf"/>
+        <Param val="duration (s)" valType="str" updates="None" name="stopType"/>
+        <Param val="" valType="code" updates="constant" name="stopVal"/>
+        <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
+      </RoutineSettingsComponent>
+      <CodeComponent name="blank_trial_set_up_2" plugin="None">
+        <Param val="" valType="extendedCode" updates="constant" name="Before Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
+        <Param val="is_not_blank_trial= False" valType="extendedCode" updates="constant" name="Begin Experiment"/>
+        <Param val="is_not_blank_trial = false;&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
+        <Param val="if ((! is_blank_trial)) {&amp;#10;    is_not_blank_trial = true;&amp;#10;} else {&amp;#10;    is_not_blank_trial = false;&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="if not is_blank_trial:&amp;#10;    is_not_blank_trial = True&amp;#10;else:&amp;#10;    is_not_blank_trial = False" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="Auto-&gt;JS" valType="str" updates="None" name="Code Type"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Experiment"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End JS Routine"/>
+        <Param val="" valType="extendedCode" updates="constant" name="End Routine"/>
+        <Param val="False" valType="bool" updates="None" name="disabled"/>
+        <Param val="blank_trial_set_up_2" valType="code" updates="None" name="name"/>
+      </CodeComponent>
+    </Routine>
   </Routines>
   <Flow>
     <Routine name="set_up"/>
@@ -973,7 +1034,7 @@
     <LoopInitiator loopType="TrialHandler" name="practice">
       <Param name="Selected rows" updates="None" val="" valType="str"/>
       <Param name="conditions" updates="None" val="None" valType="str"/>
-      <Param name="conditionsFile" updates="None" val="" valType="file"/>
+      <Param name="conditionsFile" updates="None" val="$practice_participant_conditions_file" valType="file"/>
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="loopType" updates="None" val="sequential" valType="str"/>
@@ -981,7 +1042,9 @@
       <Param name="name" updates="None" val="practice" valType="code"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
     </LoopInitiator>
+    <Routine name="set_skips_and_correct_key_2"/>
     <Routine name="practice_trial"/>
+    <Routine name="blank_trial_2"/>
     <LoopTerminator name="practice"/>
     <Routine name="testing_continue"/>
     <Routine name="waiting_fmri"/>
