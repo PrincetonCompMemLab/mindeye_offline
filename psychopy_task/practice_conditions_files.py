@@ -24,13 +24,13 @@ for p_id in range(n_participants):
         trial_index_list.append(trial_index)
 
         if trial_index == 10:
-            current_image_list.append("images/" + "blank.jpg")
+            current_image_list.append("practice_images/" + "blank.jpg")
             is_blank_trial_list.append(1)
         else:
             # print("len(images_paths): ",len(images_paths))
             # print("image_index: ",image_index)
             image_path = images_paths[image_index]
-            current_image_list.append("images/" + image_path)
+            current_image_list.append("practice_images/" + image_path)
             is_blank_trial_list.append(0)
             image_index += 1
     # output study and test

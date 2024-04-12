@@ -1,0 +1,175 @@
+8.0914 	EXP 	Created window1 = Window(allowGUI=True, allowStencil=False, autoLog=True, backendConf=UNKNOWN, backgroundFit=<method-wrapper '__getattribute__' of attributeSetter object at 0x7f86059cc310>, backgroundImage=<method-wrapper '__getattribute__' of attributeSetter object at 0x7f86059cc2b0>, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([-0.0039, -0.0039, -0.0039]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x7f86059cc100>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x7f8605aae040>, multiSample=False, name='window1', numSamples=2, pos=[448.0, 280.0], screen=0, size=array([3584, 2240]), stencilBits=0, stereo=False, title='PsychoPy', units='deg', useFBO=True, useRetina=True, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+8.0916 	EXP 	window1: mouseVisible = True
+8.0916 	EXP 	window1: backgroundImage = ''
+8.0916 	EXP 	window1: backgroundFit = 'none'
+8.0944 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+8.0944 	EXP 	window1: recordFrameIntervals = False
+8.2572 	EXP 	window1: recordFrameIntervals = True
+8.4408 	EXP 	Screen (0) actual frame rate measured at 60.11Hz
+8.4409 	EXP 	window1: recordFrameIntervals = False
+8.4420 	EXP 	window1: mouseVisible = False
+12.5187 	EXP 	replicate_nsd: status = STARTED
+13.2079 	EXP 	window1: mouseVisible = True
+13.2154 	EXP 	Created text_6 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.5, italic=False, languageStyle='LTR', name='text_6', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='deg', win=Window(...), wrapWidth=15.0)
+13.2155 	EXP 	window1: mouseVisible = True
+13.2418 	EXP 	Created image_2 = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, image='default.png', interpolate=True, mask=None, maskParams=None, name='image_2', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([8.4, 8.4]), texRes=128.0, units='deg', win=Window(...))
+13.9406 	EXP 	window1: mouseVisible = True
+13.9436 	EXP 	Created polygon_3 = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-2.0, draggable=False, fillColor=array([ 1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([ 1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=3.0, name='polygon_3', opacity=0.5, ori=0.0, pos=array([0., 0.]), size=array([0.2, 0.2]), units='deg', vertices=ndarray(...), win=Window(...), windingRule=None)
+14.6411 	EXP 	window1: mouseVisible = True
+14.6439 	EXP 	Created polygon_4 = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, draggable=False, fillColor=array([ 1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([ 1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=3.0, name='polygon_4', opacity=0.5, ori=0.0, pos=array([0., 0.]), size=array([0.2, 0.2]), units='deg', vertices=ndarray(...), win=Window(...), windingRule=None)
+15.3411 	EXP 	window1: mouseVisible = True
+15.3423 	EXP 	Created text_7 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.5, italic=False, languageStyle='LTR', name='text_7', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='deg', win=Window(...), wrapWidth=15.0)
+16.0396 	EXP 	window1: mouseVisible = True
+16.0727 	EXP 	Created text_3 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.5000000000000002, italic=False, languageStyle='LTR', name='text_3', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='waiting for scanner…', units='deg', win=Window(...), wrapWidth=15.0)
+16.0728 	EXP 	window1: mouseVisible = True
+16.0914 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, draggable=False, flipHoriz=False, flipVert=False, image='default.png', interpolate=True, mask=None, maskParams=None, name='image', opacity=1.0, ori=0.0, pos=array([0., 0.]), size=array([8.4, 8.4]), texRes=128.0, units='deg', win=Window(...))
+16.7924 	EXP 	window1: mouseVisible = True
+16.7953 	EXP 	Created polygon = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-2.0, draggable=False, fillColor=array([ 1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([ 1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=3.0, name='polygon', opacity=0.5, ori=0.0, pos=array([0., 0.]), size=array([0.2, 0.2]), units='deg', vertices=ndarray(...), win=Window(...), windingRule=None)
+18.1806 	EXP 	window1: mouseVisible = True
+18.1837 	EXP 	Created polygon_2 = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=-1.0, draggable=False, fillColor=array([ 1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([ 1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=3.0, name='polygon_2', opacity=0.5, ori=0.0, pos=array([0., 0.]), size=array([0.2, 0.2]), units='deg', vertices=ndarray(...), win=Window(...), windingRule=None)
+18.8783 	EXP 	window1: mouseVisible = True
+18.8795 	EXP 	Created text_5 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.5, italic=False, languageStyle='LTR', name='text_5', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='deg', win=Window(...), wrapWidth=15.0)
+19.5689 	EXP 	window1: mouseVisible = True
+19.5720 	EXP 	Created text_4 = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoDraw=False, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=-1.0, draggable=False, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.5000000000000002, italic=False, languageStyle='LTR', name='text_4', opacity=1.0, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='waiting for scanner…', units='deg', win=Window(...), wrapWidth=15.0)
+0.0016 	DATA 	Mouse: Left button down, pos=(841,673)
+0.0025 	DATA 	Mouse:  Left button up, pos=(841,673)
+0.0032 	DATA 	Mouse: Left button down, pos=(846,679)
+0.0035 	DATA 	Mouse:  Left button up, pos=(846,679)
+0.0039 	DATA 	Mouse: Left button down, pos=(857,686)
+0.0043 	DATA 	Mouse:  Left button up, pos=(857,686)
+0.0522 	EXP 	text_6: height = 0.5000000000000001
+0.0522 	EXP 	text_6: height = 0.5000000000000002
+0.0522 	EXP 	text_6: height = 0.5000000000000002
+0.0522 	EXP 	text_6: text = 'Press any button to begin the practice trials.'
+0.0522 	EXP 	text_6: autoDraw = True
+0.8949 	EXP 	Imported practice_conditions_files/practice_participant1_.csv as conditions, 20 conditions, 3 params
+0.8955 	EXP 	Created sequence: sequential, trialTypes=20, nReps=1, seed=None
+0.8957 	EXP 	New trial (rep=0, index=0): OrderedDict([('current_image', 'images/9_28 copy 2.jpg'), ('trial_index', 0), ('is_blank_trial', 0)])
+0.9153 	DATA 	Keypress: space
+0.9214 	EXP 	text_6: autoDraw = False
+0.9214 	EXP 	image_2: image = 'images/9_28 copy 2.jpg'
+0.9214 	EXP 	polygon_3: autoDraw = True
+1.9188 	EXP 	image_2: autoDraw = True
+4.9034 	EXP 	New trial (rep=0, index=1): OrderedDict([('current_image', 'images/14_40.jpg'), ('trial_index', 1), ('is_blank_trial', 0)])
+4.9182 	EXP 	image_2: autoDraw = False
+4.9182 	EXP 	polygon_3: autoDraw = False
+4.9182 	EXP 	image_2: autoDraw = False
+4.9182 	EXP 	polygon_3: autoDraw = False
+4.9182 	EXP 	polygon_4: autoDraw = False
+4.9182 	EXP 	image_2: image = 'images/14_40.jpg'
+4.9182 	EXP 	polygon_3: autoDraw = True
+5.9182 	EXP 	image_2: autoDraw = True
+7.0716 	DATA 	Keypress: 2
+7.1860 	DATA 	Keypress: 1
+7.6041 	DATA 	Keypress: 2
+7.6049 	DATA 	Keypress: 1
+7.8891 	DATA 	Keypress: 1
+7.8900 	DATA 	Keypress: 2
+8.2385 	DATA 	Keypress: 2
+8.2542 	DATA 	Keypress: 1
+8.5707 	DATA 	Keypress: 1
+8.8364 	DATA 	Keypress: 2
+8.9023 	EXP 	New trial (rep=0, index=2): OrderedDict([('current_image', 'images/6_28.jpg'), ('trial_index', 2), ('is_blank_trial', 0)])
+8.9184 	EXP 	image_2: autoDraw = False
+8.9184 	EXP 	polygon_3: autoDraw = False
+8.9184 	EXP 	image_2: autoDraw = False
+8.9184 	EXP 	polygon_3: autoDraw = False
+8.9184 	EXP 	polygon_4: autoDraw = False
+8.9184 	EXP 	image_2: image = 'images/6_28.jpg'
+8.9184 	EXP 	polygon_3: autoDraw = True
+9.1863 	DATA 	Keypress: 1
+9.2038 	DATA 	Keypress: 2
+9.5702 	DATA 	Keypress: 2
+9.5874 	DATA 	Keypress: 1
+9.8699 	DATA 	Keypress: 2
+9.9184 	EXP 	image_2: autoDraw = True
+10.0552 	DATA 	Keypress: 1
+10.4702 	DATA 	Keypress: 1
+10.4866 	DATA 	Keypress: 2
+10.7552 	DATA 	Keypress: 1
+10.8385 	DATA 	Keypress: 2
+11.0209 	DATA 	Keypress: 2
+11.4543 	DATA 	Keypress: 1
+11.9209 	DATA 	Keypress: 2
+12.2366 	DATA 	Keypress: 2
+12.2705 	DATA 	Keypress: 1
+12.7216 	DATA 	Keypress: 1
+12.9035 	EXP 	New trial (rep=0, index=3): OrderedDict([('current_image', 'images/23_40 copy 3.jpg'), ('trial_index', 3), ('is_blank_trial', 0)])
+12.9181 	EXP 	image_2: autoDraw = False
+12.9181 	EXP 	polygon_3: autoDraw = False
+12.9181 	EXP 	image_2: autoDraw = False
+12.9181 	EXP 	polygon_3: autoDraw = False
+12.9181 	EXP 	polygon_4: autoDraw = False
+12.9181 	EXP 	image_2: image = 'images/23_40 copy 3.jpg'
+12.9181 	EXP 	polygon_3: autoDraw = True
+13.2028 	DATA 	Keypress: 2
+13.4196 	DATA 	Keypress: 1
+13.8036 	DATA 	Keypress: 1
+13.8198 	DATA 	Keypress: 2
+13.9185 	EXP 	image_2: autoDraw = True
+14.0865 	DATA 	Keypress: 2
+14.1388 	DATA 	Keypress: 1
+14.7216 	DATA 	Keypress: 2
+14.7550 	DATA 	Keypress: 1
+14.9535 	DATA 	Keypress: 2
+15.2369 	DATA 	Keypress: 1
+15.6044 	DATA 	Keypress: 2
+15.6384 	DATA 	Keypress: 1
+16.2885 	DATA 	Keypress: 1
+16.3036 	DATA 	Keypress: 2
+16.6033 	DATA 	Keypress: 2
+16.9032 	EXP 	New trial (rep=0, index=4): OrderedDict([('current_image', 'images/14_12 copy.jpg'), ('trial_index', 4), ('is_blank_trial', 0)])
+16.9184 	EXP 	image_2: autoDraw = False
+16.9184 	EXP 	polygon_3: autoDraw = False
+16.9184 	EXP 	image_2: autoDraw = False
+16.9184 	EXP 	polygon_3: autoDraw = False
+16.9184 	EXP 	polygon_4: autoDraw = False
+16.9184 	EXP 	image_2: image = 'images/14_12 copy.jpg'
+16.9184 	EXP 	polygon_3: autoDraw = True
+16.9870 	DATA 	Keypress: 1
+17.1039 	DATA 	Keypress: 2
+17.2864 	DATA 	Keypress: 1
+17.3036 	DATA 	Keypress: 2
+17.6208 	DATA 	Keypress: 1
+17.6220 	DATA 	Keypress: 2
+17.9185 	EXP 	image_2: autoDraw = True
+18.1029 	DATA 	Keypress: 1
+18.1200 	DATA 	Keypress: 2
+18.4866 	DATA 	Keypress: 2
+18.6534 	DATA 	Keypress: 1
+19.0535 	DATA 	Keypress: 2
+19.3708 	DATA 	Keypress: 1
+19.6367 	DATA 	Keypress: 1
+19.6376 	DATA 	Keypress: 2
+19.9703 	DATA 	Keypress: 1
+19.9712 	DATA 	Keypress: 2
+20.3199 	DATA 	Keypress: 2
+20.3208 	DATA 	Keypress: 1
+20.7205 	DATA 	Keypress: 1
+20.8211 	DATA 	Keypress: 2
+20.9033 	EXP 	New trial (rep=0, index=5): OrderedDict([('current_image', 'images/6_28 copy 6.jpg'), ('trial_index', 5), ('is_blank_trial', 0)])
+20.9181 	EXP 	image_2: autoDraw = False
+20.9181 	EXP 	polygon_3: autoDraw = False
+20.9181 	EXP 	image_2: autoDraw = False
+20.9181 	EXP 	polygon_3: autoDraw = False
+20.9181 	EXP 	polygon_4: autoDraw = False
+20.9181 	EXP 	image_2: image = 'images/6_28 copy 6.jpg'
+20.9181 	EXP 	polygon_3: autoDraw = True
+21.2359 	DATA 	Keypress: 2
+21.3026 	DATA 	Keypress: 1
+21.6702 	DATA 	Keypress: 1
+21.9184 	EXP 	image_2: autoDraw = True
+21.9215 	DATA 	Keypress: 2
+21.9226 	DATA 	Keypress: 1
+22.2698 	DATA 	Keypress: 1
+22.2876 	DATA 	Keypress: 2
+22.8700 	DATA 	Keypress: 2
+22.9534 	DATA 	Keypress: 1
+23.2215 	DATA 	Keypress: 1
+23.2549 	DATA 	Keypress: 2
+23.6533 	DATA 	Keypress: escape
+23.8184 	EXP 	replicate_nsd: status = STOPPED
+23.8376 	EXP 	image_2: autoDraw = False
+23.8376 	EXP 	polygon_3: autoDraw = False
+23.8377 	EXP 	replicate_nsd: status = STOPPED
+24.3973 	EXP 	window1: mouseVisible = True

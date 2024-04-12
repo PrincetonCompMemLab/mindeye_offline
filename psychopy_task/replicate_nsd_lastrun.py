@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on Fri Apr 12 12:17:36 2024
+    on Fri Apr 12 14:35:55 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -561,7 +561,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_6.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_6.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_6.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_6.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+            theseKeys = key_resp_6.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
             _key_resp_6_allKeys.extend(theseKeys)
             if len(_key_resp_6_allKeys):
                 key_resp_6.keys = _key_resp_6_allKeys[-1].name  # just the last key pressed
@@ -628,7 +628,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     routineTimer.reset()
     
     # set up handler to look after randomisation of conditions etc
-    practice = data.TrialHandler(nReps=1.0, method='sequential', 
+    practice = data.TrialHandler(nReps=0.0, method='sequential', 
         extraInfo=expInfo, originPath=-1,
         trialList=data.importConditions(practice_participant_conditions_file),
         seed=None, name='practice')
@@ -893,7 +893,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                     all_keys_pressed_2.status = FINISHED
                     all_keys_pressed_2.status = FINISHED
             if all_keys_pressed_2.status == STARTED and not waitOnFlip:
-                theseKeys = all_keys_pressed_2.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = all_keys_pressed_2.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
                 _all_keys_pressed_2_allKeys.extend(theseKeys)
                 if len(_all_keys_pressed_2_allKeys):
                     all_keys_pressed_2.keys = [key.name for key in _all_keys_pressed_2_allKeys]  # storing all keys
@@ -1045,7 +1045,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         if thisSession is not None:
             # if running in a Session with a Liaison client, send data up to now
             thisSession.sendExperimentData()
-    # completed 1.0 repeats of 'practice'
+    # completed 0.0 repeats of 'practice'
     
     
     # --- Prepare to start Routine "testing_continue" ---
@@ -1101,7 +1101,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_7.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_7.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_7.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_7.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+            theseKeys = key_resp_7.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
             _key_resp_7_allKeys.extend(theseKeys)
             if len(_key_resp_7_allKeys):
                 key_resp_7.keys = _key_resp_7_allKeys[-1].name  # just the last key pressed
@@ -1217,7 +1217,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_2.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_2.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_2.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_2.getKeys(keyList=['5'], ignoreKeys=["escape"], waitRelease=False)
+            theseKeys = key_resp_2.getKeys(keyList=['=', 'equal'], ignoreKeys=["escape"], waitRelease=False)
             _key_resp_2_allKeys.extend(theseKeys)
             if len(_key_resp_2_allKeys):
                 key_resp_2.keys = _key_resp_2_allKeys[-1].name  # just the last key pressed
@@ -1568,7 +1568,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                     all_keys_pressed.status = FINISHED
                     all_keys_pressed.status = FINISHED
             if all_keys_pressed.status == STARTED and not waitOnFlip:
-                theseKeys = all_keys_pressed.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = all_keys_pressed.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
                 _all_keys_pressed_allKeys.extend(theseKeys)
                 if len(_all_keys_pressed_allKeys):
                     all_keys_pressed.keys = [key.name for key in _all_keys_pressed_allKeys]  # storing all keys
@@ -1702,7 +1702,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                     blank_trial_testing_keys.status = FINISHED
                     blank_trial_testing_keys.status = FINISHED
             if blank_trial_testing_keys.status == STARTED and not waitOnFlip:
-                theseKeys = blank_trial_testing_keys.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = blank_trial_testing_keys.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
                 _blank_trial_testing_keys_allKeys.extend(theseKeys)
                 if len(_blank_trial_testing_keys_allKeys):
                     blank_trial_testing_keys.keys = [key.name for key in _blank_trial_testing_keys_allKeys]  # storing all keys
@@ -1836,7 +1836,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_5.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_5.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_5.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_5.getKeys(keyList=None, ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = key_resp_5.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
                 _key_resp_5_allKeys.extend(theseKeys)
                 if len(_key_resp_5_allKeys):
                     key_resp_5.keys = _key_resp_5_allKeys[-1].name  # just the last key pressed
@@ -1953,7 +1953,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_4.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_4.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_4.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_4.getKeys(keyList=['5'], ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = key_resp_4.getKeys(keyList=['='], ignoreKeys=["escape"], waitRelease=False)
                 _key_resp_4_allKeys.extend(theseKeys)
                 if len(_key_resp_4_allKeys):
                     key_resp_4.keys = _key_resp_4_allKeys[-1].name  # just the last key pressed

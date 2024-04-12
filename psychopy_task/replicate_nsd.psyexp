@@ -180,7 +180,7 @@
         <Param val="update_num_correct" valType="code" updates="None" name="name"/>
       </CodeComponent>
       <KeyboardComponent name="all_keys_pressed" plugin="None">
-        <Param val="" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'1','2'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -311,7 +311,7 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <KeyboardComponent name="key_resp_2" plugin="None">
-        <Param val="'5'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'=', 'equal'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -372,7 +372,7 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <KeyboardComponent name="blank_trial_testing_keys" plugin="None">
-        <Param val="" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'1','2'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -511,7 +511,7 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <KeyboardComponent name="key_resp_4" plugin="None">
-        <Param val="'5'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'='" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -730,7 +730,7 @@
         <Param val="" valType="list" updates="constant" name="vertices"/>
       </PolygonComponent>
       <KeyboardComponent name="all_keys_pressed_2" plugin="None">
-        <Param val="" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'1','2'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -766,7 +766,7 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <KeyboardComponent name="key_resp_5" plugin="None">
-        <Param val="" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'1','2'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -844,7 +844,7 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <KeyboardComponent name="key_resp_6" plugin="None">
-        <Param val="" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'1','2'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -905,7 +905,7 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <KeyboardComponent name="key_resp_7" plugin="None">
-        <Param val="" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'1','2'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -1038,7 +1038,7 @@
       <Param name="endPoints" updates="None" val="[0, 1]" valType="num"/>
       <Param name="isTrials" updates="None" val="True" valType="bool"/>
       <Param name="loopType" updates="None" val="sequential" valType="str"/>
-      <Param name="nReps" updates="None" val="1" valType="num"/>
+      <Param name="nReps" updates="None" val="0" valType="num"/>
       <Param name="name" updates="None" val="practice" valType="code"/>
       <Param name="random seed" updates="None" val="" valType="code"/>
     </LoopInitiator>

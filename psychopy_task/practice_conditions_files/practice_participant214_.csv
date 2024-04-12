@@ -1,21 +1,21 @@
 current_image,trial_index,is_blank_trial
-images/18_28 copy 6.jpg,0,0
-images/9_12 copy 6.jpg,1,0
-images/23_40 copy 3.jpg,2,0
-images/7_0 copy 2.jpg,3,0
-images/21_40 copy 5.jpg,4,0
-images/11_12 copy 7.jpg,5,0
-images/19_12 copy 4.jpg,6,0
-images/pair03 copy 7.jpg,7,0
-images/19_40.jpg,8,0
-images/6_28 copy 6.jpg,9,0
-images/blank.jpg,10,1
-images/14_40.jpg,11,0
-images/17_28.jpg,12,0
-images/21_28 copy 5.jpg,13,0
-images/9_28 copy 2.jpg,14,0
-images/14_12 copy.jpg,15,0
-images/13_40 copy 5.jpg,16,0
-images/14_40 copy 6.jpg,17,0
-images/5_12 copy 7.jpg,18,0
-images/8_40 copy 3.jpg,19,0
+practice_images/paired_image_28_2.png,0,0
+practice_images/paired_image_35_1.png,1,0
+practice_images/paired_image_18_1.png,2,0
+practice_images/paired_image_35_2.png,3,0
+practice_images/paired_image_33_1.png,4,0
+practice_images/paired_image_21_2.png,5,0
+practice_images/paired_image_22_2.png,6,0
+practice_images/paired_image_4_2.png,7,0
+practice_images/blank.jpg,8,0
+practice_images/paired_image_29_1.png,9,0
+practice_images/blank.jpg,10,1
+practice_images/paired_image_24_2.png,11,0
+practice_images/paired_image_33_2.png,12,0
+practice_images/paired_image_34_1.png,13,0
+practice_images/paired_image_25_1.png,14,0
+practice_images/paired_image_15_1.png,15,0
+practice_images/paired_image_16_1.png,16,0
+practice_images/paired_image_6_1.png,17,0
+practice_images/paired_image_11_2.png,18,0
+practice_images/paired_image_26_2.png,19,0
