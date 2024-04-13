@@ -180,7 +180,7 @@
         <Param val="update_num_correct" valType="code" updates="None" name="name"/>
       </CodeComponent>
       <KeyboardComponent name="all_keys_pressed" plugin="None">
-        <Param val="'1','2'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'1','2','3','4'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -372,7 +372,7 @@
         <Param val="False" valType="bool" updates="None" name="useWindowParams"/>
       </RoutineSettingsComponent>
       <KeyboardComponent name="blank_trial_testing_keys" plugin="None">
-        <Param val="'1','2'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'1','2','3','4'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -594,7 +594,7 @@
         <Param val="is_not_blank_trial_or_before_starting_run = False" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="is_not_blank_trial_or_before_starting_run = false;&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="if (((! is_blank_trial) || (run_num &lt; starting_run))) {&amp;#10;    is_not_blank_trial_or_before_starting_run = true;&amp;#10;} else {&amp;#10;    is_not_blank_trial_or_before_starting_run = false;&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="if not is_blank_trial or run_num &lt; starting_run:&amp;#10;    is_not_blank_trial_or_before_starting_run = True&amp;#10;else:&amp;#10;    is_not_blank_trial_or_before_starting_run = False" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="if not is_blank_trial or run_num &lt; starting_run:&amp;#10;    is_not_blank_trial_or_before_starting_run = True&amp;#10;else:&amp;#10;    is_not_blank_trial_or_before_starting_run = False&amp;#10; " valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Auto-&gt;JS" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>
@@ -730,7 +730,7 @@
         <Param val="" valType="list" updates="constant" name="vertices"/>
       </PolygonComponent>
       <KeyboardComponent name="all_keys_pressed_2" plugin="None">
-        <Param val="'1','2'" valType="list" updates="constant" name="allowedKeys"/>
+        <Param val="'1','2','3','4'" valType="list" updates="constant" name="allowedKeys"/>
         <Param val="" valType="str" updates="constant" name="correctAns"/>
         <Param val="False" valType="bool" updates="None" name="disabled"/>
         <Param val="True" valType="bool" updates="constant" name="discard previous"/>
@@ -790,7 +790,7 @@
         <Param val="run_wait_string = &quot;&quot;" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
         <Param val="run_wait_string = (((&quot;Good job! You succesfully responded to &quot; + &quot; out of  triaYour performance score is &quot;) + num_trials_correct.toString()) + &quot;. Please press any button when you are ready to continue.&quot;);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="if is_new_run:&amp;#10;    run_wait_string = &quot;Good job! Your average accuracy in this run is &quot; + str(thisRun_num_trials_correct / thisRun_num_trials_total) + \&amp;#10;                    &quot;. Please press any button when you are ready to continue to run &quot; + str(run_num + 2) + &quot;.&quot; &amp;#10;    print(&quot;thisRun_num_trials_correct: &quot;, thisRun_num_trials_correct)&amp;#10;    print(&quot;thisRun_num_trials_total: &quot;, thisRun_num_trials_total)&amp;#10;    print(&quot;run_wait_string: &quot;, run_wait_string)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="if is_new_run and run_num &gt;= starting_run:&amp;#10;    run_wait_string = &quot;Good job! Your average accuracy in this run is &quot; + str(thisRun_num_trials_correct / thisRun_num_trials_total) + \&amp;#10;                    &quot;. Please press any button when you are ready to continue to run &quot; + str(run_num + 2) + &quot;.&quot; &amp;#10;    print(&quot;thisRun_num_trials_correct: &quot;, thisRun_num_trials_correct)&amp;#10;    print(&quot;thisRun_num_trials_total: &quot;, thisRun_num_trials_total)&amp;#10;    print(&quot;run_wait_string: &quot;, run_wait_string)" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Py" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>

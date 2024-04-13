@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on Sat Apr 13 12:09:26 2024
+    on Sat Apr 13 13:49:49 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -414,19 +414,19 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     
     # --- Initialize components for Routine "run_wait2_2" ---
     key_resp_5 = keyboard.Keyboard()
-    text_5 = visual.TextStim(win=win, name='text_5',
-        text='',
-        font='Open Sans',
-        units='deg', pos=(0, 0), height=0.5, wrapWidth=None, ori=0.0, 
-        color='white', colorSpace='rgb', opacity=None, 
-        languageStyle='LTR',
-        depth=-1.0);
     # Run 'Begin Experiment' code from dynamic_feedback_string
     run_wait_string = ""
     # Run 'Begin Experiment' code from set_up_within_round_performance
     thisRun_num_trials_correct = 0
     thisRun_num_trials_total = 0
     thisRun_num_trials_responded = 0
+    text_5 = visual.TextStim(win=win, name='text_5',
+        text='',
+        font='Open Sans',
+        units='deg', pos=(0, 0), height=0.5, wrapWidth=None, ori=0.0, 
+        color='white', colorSpace='rgb', opacity=None, 
+        languageStyle='LTR',
+        depth=-3.0);
     
     # --- Initialize components for Routine "waiting_fmri_2" ---
     key_resp_4 = keyboard.Keyboard()
@@ -897,7 +897,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                     all_keys_pressed_2.status = FINISHED
                     all_keys_pressed_2.status = FINISHED
             if all_keys_pressed_2.status == STARTED and not waitOnFlip:
-                theseKeys = all_keys_pressed_2.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = all_keys_pressed_2.getKeys(keyList=['1','2','3','4'], ignoreKeys=["escape"], waitRelease=False)
                 _all_keys_pressed_2_allKeys.extend(theseKeys)
                 if len(_all_keys_pressed_2_allKeys):
                     all_keys_pressed_2.keys = [key.name for key in _all_keys_pressed_2_allKeys]  # storing all keys
@@ -1332,6 +1332,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             is_not_blank_trial_or_before_starting_run = True
         else:
             is_not_blank_trial_or_before_starting_run = False
+         
         # Run 'Begin Routine' code from between_round_screens_skip_set_up_2
         if not is_new_run or run_num < starting_run:
             is_not_new_run_or_before_starting_run = True
@@ -1572,7 +1573,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                     all_keys_pressed.status = FINISHED
                     all_keys_pressed.status = FINISHED
             if all_keys_pressed.status == STARTED and not waitOnFlip:
-                theseKeys = all_keys_pressed.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = all_keys_pressed.getKeys(keyList=['1','2','3','4'], ignoreKeys=["escape"], waitRelease=False)
                 _all_keys_pressed_allKeys.extend(theseKeys)
                 if len(_all_keys_pressed_allKeys):
                     all_keys_pressed.keys = [key.name for key in _all_keys_pressed_allKeys]  # storing all keys
@@ -1709,7 +1710,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                     blank_trial_testing_keys.status = FINISHED
                     blank_trial_testing_keys.status = FINISHED
             if blank_trial_testing_keys.status == STARTED and not waitOnFlip:
-                theseKeys = blank_trial_testing_keys.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = blank_trial_testing_keys.getKeys(keyList=['1','2','3','4'], ignoreKeys=["escape"], waitRelease=False)
                 _blank_trial_testing_keys_allKeys.extend(theseKeys)
                 if len(_blank_trial_testing_keys_allKeys):
                     blank_trial_testing_keys.keys = [key.name for key in _blank_trial_testing_keys_allKeys]  # storing all keys
@@ -1793,15 +1794,15 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         key_resp_5.keys = []
         key_resp_5.rt = []
         _key_resp_5_allKeys = []
-        text_5.setText(run_wait_string
-        )
         # Run 'Begin Routine' code from dynamic_feedback_string
-        if is_new_run:
+        if is_new_run and run_num >= starting_run:
             run_wait_string = "Good job! Your average accuracy in this run is " + str(thisRun_num_trials_correct / thisRun_num_trials_total) + \
                             ". Please press any button when you are ready to continue to run " + str(run_num + 2) + "." 
             print("thisRun_num_trials_correct: ", thisRun_num_trials_correct)
             print("thisRun_num_trials_total: ", thisRun_num_trials_total)
             print("run_wait_string: ", run_wait_string)
+        text_5.setText(run_wait_string
+        )
         # keep track of which components have finished
         run_wait2_2Components = [key_resp_5, text_5]
         for thisComponent in run_wait2_2Components:
