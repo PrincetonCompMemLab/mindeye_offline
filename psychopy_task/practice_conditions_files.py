@@ -8,6 +8,7 @@ import numpy as np
 n_participants = 1000
 images_paths = os.listdir("practice_images/")
 random.shuffle(images_paths)
+
 images_paths = images_paths[:20]
 practice_trials_num = 20
 # set blank trials as fixed across participants but varied across trials
@@ -24,7 +25,7 @@ for p_id in range(n_participants):
         trial_index_list.append(trial_index)
 
         if trial_index == 10:
-            current_image_list.append("practice_images/" + "blank.jpg")
+            current_image_list.append("blank.jpg")
             is_blank_trial_list.append(1)
         else:
             # print("len(images_paths): ",len(images_paths))
@@ -34,9 +35,10 @@ for p_id in range(n_participants):
             is_blank_trial_list.append(0)
             image_index += 1
     # output study and test
-    output_dict = {"current_image": current_image_list,
-                   "trial_index": trial_index_list,
-                   "is_blank_trial":is_blank_trial_list,
+    output_dict = {
+        "current_image": current_image_list,
+        "trial_index": trial_index_list,
+        "is_blank_trial":is_blank_trial_list,
           }
     output_df = pd.DataFrame(output_dict)
     practice_file_path = participant_path + ".csv"

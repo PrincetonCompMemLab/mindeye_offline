@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on Sat Apr 13 09:51:40 2024
+    on Sat Apr 13 12:09:26 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -1105,7 +1105,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             win.callOnFlip(key_resp_7.clock.reset)  # t=0 on next screen flip
             win.callOnFlip(key_resp_7.clearEvents, eventType='keyboard')  # clear events on next screen flip
         if key_resp_7.status == STARTED and not waitOnFlip:
-            theseKeys = key_resp_7.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
+            theseKeys = key_resp_7.getKeys(keyList=['1','2','3','4'], ignoreKeys=["escape"], waitRelease=False)
             _key_resp_7_allKeys.extend(theseKeys)
             if len(_key_resp_7_allKeys):
                 key_resp_7.keys = _key_resp_7_allKeys[-1].name  # just the last key pressed
@@ -1621,7 +1621,6 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             loop_all_images.addData('press_if_repeat.duration', press_if_repeat.duration)
         # Run 'End Routine' code from update_num_correct
         if not is_blank_trial_or_before_starting_run:
-            num_trials_total += 1 
             thisRun_num_trials_total += 1 
             if press_if_repeat.corr == 1:
                 thisRun_num_trials_correct += 1
@@ -1633,6 +1632,9 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             print("press_if_repeat.keys: ", press_if_repeat.keys)
             print("is_repeat: ", is_repeat)
             print("all_keys_pressed: ", all_keys_pressed.keys)
+            print("thisRun_num_trials_correct: ", thisRun_num_trials_correct)
+            print("thisRun_num_trials_total: ", thisRun_num_trials_total)
+            print("run_wait_string: ", run_wait_string)
         # check responses
         if all_keys_pressed.keys in ['', [], None]:  # No response was made
             all_keys_pressed.keys = None
@@ -1794,11 +1796,12 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         text_5.setText(run_wait_string
         )
         # Run 'Begin Routine' code from dynamic_feedback_string
-        run_wait_string = "Good job! Your average accuracy in this run is " + str(thisRun_num_trials_correct / thisRun_num_trials_total) + \
-                        ". Please press any button when you are ready to continue to run" + str(run_num + 1) + "." 
-        print("thisRun_num_trials_correct: ", thisRun_num_trials_correct)
-        print("thisRun_num_trials_total: ", thisRun_num_trials_total)
-        print("run_wait_string: ", run_wait_string)
+        if is_new_run:
+            run_wait_string = "Good job! Your average accuracy in this run is " + str(thisRun_num_trials_correct / thisRun_num_trials_total) + \
+                            ". Please press any button when you are ready to continue to run " + str(run_num + 2) + "." 
+            print("thisRun_num_trials_correct: ", thisRun_num_trials_correct)
+            print("thisRun_num_trials_total: ", thisRun_num_trials_total)
+            print("run_wait_string: ", run_wait_string)
         # keep track of which components have finished
         run_wait2_2Components = [key_resp_5, text_5]
         for thisComponent in run_wait2_2Components:
@@ -1842,7 +1845,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
                 win.callOnFlip(key_resp_5.clock.reset)  # t=0 on next screen flip
                 win.callOnFlip(key_resp_5.clearEvents, eventType='keyboard')  # clear events on next screen flip
             if key_resp_5.status == STARTED and not waitOnFlip:
-                theseKeys = key_resp_5.getKeys(keyList=['1','2'], ignoreKeys=["escape"], waitRelease=False)
+                theseKeys = key_resp_5.getKeys(keyList=['1','2','3','4'], ignoreKeys=["escape"], waitRelease=False)
                 _key_resp_5_allKeys.extend(theseKeys)
                 if len(_key_resp_5_allKeys):
                     key_resp_5.keys = _key_resp_5_allKeys[-1].name  # just the last key pressed

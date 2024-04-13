@@ -6,7 +6,7 @@ import os
 import numpy as np
 
 n_participants = 1000
-images_paths = os.listdir("images/")[:750]
+images_paths = os.listdir("images/")
 random.shuffle(images_paths)
 images_paths_500 = images_paths[:500]
 images_paths = (images_paths_500 + images_paths_500)
@@ -93,7 +93,7 @@ for p_id in range(n_participants):
                 is_new_run_list.append(0)
 
             if trial_index in blank_trial_indices:
-                current_image_list.append("images/" + "blank.jpg")
+                current_image_list.append("blank.jpg")
                 is_blank_trial_list.append(1)
                 is_repeat_list.append(0)
             else:
