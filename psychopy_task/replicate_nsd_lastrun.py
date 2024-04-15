@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on Sat Apr 13 13:49:49 2024
+    on Mon Apr 15 11:46:30 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -1625,17 +1625,9 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             thisRun_num_trials_total += 1 
             if press_if_repeat.corr == 1:
                 thisRun_num_trials_correct += 1
-                print("correct!")
             if press_if_repeat.keys != None:
                 thisRun_num_trials_responded += 1
-                print("responded!") 
-            print("press_if_repeat.corr: ", press_if_repeat.corr)
-            print("press_if_repeat.keys: ", press_if_repeat.keys)
-            print("is_repeat: ", is_repeat)
-            print("all_keys_pressed: ", all_keys_pressed.keys)
-            print("thisRun_num_trials_correct: ", thisRun_num_trials_correct)
-            print("thisRun_num_trials_total: ", thisRun_num_trials_total)
-            print("run_wait_string: ", run_wait_string)
+        
         # check responses
         if all_keys_pressed.keys in ['', [], None]:  # No response was made
             all_keys_pressed.keys = None
@@ -1796,11 +1788,12 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         _key_resp_5_allKeys = []
         # Run 'Begin Routine' code from dynamic_feedback_string
         if is_new_run and run_num >= starting_run:
-            run_wait_string = "Good job! Your average accuracy in this run is " + str(thisRun_num_trials_correct / thisRun_num_trials_total) + \
+            insert_num_str = (thisRun_num_trials_correct / thisRun_num_trials_total)
+            run_wait_string = "Good job! Your average accuracy in this run is " + f"{insert_num_str:.3f}" + \
                             ". Please press any button when you are ready to continue to run " + str(run_num + 2) + "." 
-            print("thisRun_num_trials_correct: ", thisRun_num_trials_correct)
-            print("thisRun_num_trials_total: ", thisRun_num_trials_total)
-            print("run_wait_string: ", run_wait_string)
+        #    print("thisRun_num_trials_correct: ", thisRun_num_trials_correct)
+        #    print("thisRun_num_trials_total: ", thisRun_num_trials_total)
+        #    print("run_wait_string: ", run_wait_string)
         text_5.setText(run_wait_string
         )
         # keep track of which components have finished
