@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on Mon Apr 15 11:46:30 2024
+    on Tue Apr 16 10:20:58 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -1344,7 +1344,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             correct_key_1or2 = '2'
         else:
             correct_key_1or2 = '1'
-        print("correct_key_1or2: ", correct_key_1or2)
+        
         # keep track of which components have finished
         set_skips_and_correct_keyComponents = []
         for thisComponent in set_skips_and_correct_keyComponents:

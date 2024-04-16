@@ -7,6 +7,7 @@ import numpy as np
 
 n_participants = 1000
 images_paths = os.listdir("images/") # 750 + 100 pairs
+assert(len(images_paths) == 850)
 import pickle
 # open a file, where you stored the pickled data
 file = open('images150', 'rb')
@@ -20,6 +21,7 @@ pdb.set_trace()
 images_paths += repeats150
 print(images_paths)
 print(len(images_paths))
+assert(len(images_paths) == 1000)
 num_runs = 16
 trials_per_run = 72
 # set blank trials as fixed across participants but varied across trials
