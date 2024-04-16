@@ -6,10 +6,20 @@ import os
 import numpy as np
 
 n_participants = 1000
-images_paths = os.listdir("images/")
-random.shuffle(images_paths)
-images_paths_500 = images_paths[:500]
-images_paths = (images_paths_500 + images_paths_500)
+images_paths = os.listdir("images/") # 750 + 100 pairs
+import pickle
+# open a file, where you stored the pickled data
+file = open('images150', 'rb')
+# dump information to that file
+repeats150 = pickle.load(file)
+print(repeats150)
+# close the file
+file.close()
+# add the 150 to the 750
+pdb.set_trace()
+images_paths += repeats150
+print(images_paths)
+print(len(images_paths))
 num_runs = 16
 trials_per_run = 72
 # set blank trials as fixed across participants but varied across trials
@@ -106,7 +116,6 @@ for p_id in range(n_participants):
                     is_repeat_list.append(0)
                 current_image_list.append("images/" + image_path)
                 is_blank_trial_list.append(0)
-
                 image_index += 1
     # output study and test
     output_dict = {"current_image": current_image_list,

@@ -7,9 +7,8 @@ import numpy as np
 
 n_participants = 1000
 images_paths = os.listdir("practice_images/")
-random.shuffle(images_paths)
-
-images_paths = images_paths[:20]
+assert(len(images_paths) == 10)
+images_paths = images_paths + images_paths
 practice_trials_num = 20
 # set blank trials as fixed across participants but varied across trials
 for p_id in range(n_participants):

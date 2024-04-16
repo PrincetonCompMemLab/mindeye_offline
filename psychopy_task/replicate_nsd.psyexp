@@ -627,8 +627,8 @@
         <Param val="" valType="extendedCode" updates="constant" name="Before JS Experiment"/>
         <Param val="correct_key_1or2 = '-1'" valType="extendedCode" updates="constant" name="Begin Experiment"/>
         <Param val="correct_key_1or2 = &quot;-1&quot;;&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Experiment"/>
-        <Param val="if (is_repeat) {&amp;#10;    correct_key_1or2 = &quot;2&quot;;&amp;#10;} else {&amp;#10;    correct_key_1or2 = &quot;1&quot;;&amp;#10;}&amp;#10;console.log(&quot;correct_key_1or2: &quot;, correct_key_1or2);&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
-        <Param val="if is_repeat:&amp;#10;    correct_key_1or2 = '2'&amp;#10;else:&amp;#10;    correct_key_1or2 = '1'&amp;#10;print(&quot;correct_key_1or2: &quot;, correct_key_1or2)" valType="extendedCode" updates="constant" name="Begin Routine"/>
+        <Param val="if (is_repeat) {&amp;#10;    correct_key_1or2 = &quot;2&quot;;&amp;#10;} else {&amp;#10;    correct_key_1or2 = &quot;1&quot;;&amp;#10;}&amp;#10;" valType="extendedCode" updates="constant" name="Begin JS Routine"/>
+        <Param val="if is_repeat:&amp;#10;    correct_key_1or2 = '2'&amp;#10;else:&amp;#10;    correct_key_1or2 = '1'&amp;#10;" valType="extendedCode" updates="constant" name="Begin Routine"/>
         <Param val="Auto-&gt;JS" valType="str" updates="None" name="Code Type"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each Frame"/>
         <Param val="" valType="extendedCode" updates="constant" name="Each JS Frame"/>

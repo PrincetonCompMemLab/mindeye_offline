@@ -49,7 +49,6 @@ for tr_index in range(1,total_TRs + 1):
     # go through each onset and see if this tr is within it
     overlapping_events_amount = []
     overlapping_events_name = []
-    pdb.set_trace()
     for onset_index, onset in enumerate(onsets):
         overlap = overlap_amount(range1=(tr_start, tr_end), range2 = (onset, onset + stim_duration))
         if overlap > threshold:
@@ -66,4 +65,5 @@ for tr_index in range(1,total_TRs + 1):
         tr_trial_name.append(name_str)
     tr_list.append(tr_index)
     tr_range_list.append((tr_start,tr_end))
-    
+print("tr_trial_name: ", tr_trial_name)
+print("tr_list: ", tr_list)
