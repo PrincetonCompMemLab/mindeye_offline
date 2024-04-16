@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on Tue Apr 16 10:20:58 2024
+    on Tue Apr 16 10:54:06 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -161,7 +161,7 @@ def setupWindow(expInfo=None, win=None):
     if win is None:
         # if not given a window to setup, make one
         win = visual.Window(
-            size=[1792, 1120], fullscr=True, screen=0,
+            size=[1920, 1080], fullscr=True, screen=0,
             winType='pyglet', allowStencil=False,
             monitor='testMonitor', color=[-0.0039, -0.0039, -0.0039], colorSpace='rgb',
             backgroundImage='', backgroundFit='none',
@@ -870,7 +870,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             waitOnFlip = False
             
             # if all_keys_pressed_2 is starting this frame...
-            if all_keys_pressed_2.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
+            if all_keys_pressed_2.status == NOT_STARTED and frameN >= 0:
                 # keep track of start time/frame for later
                 all_keys_pressed_2.frameNStart = frameN  # exact frame index
                 all_keys_pressed_2.tStart = t  # local t and not account for scr refresh
@@ -1546,7 +1546,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
             waitOnFlip = False
             
             # if all_keys_pressed is starting this frame...
-            if all_keys_pressed.status == NOT_STARTED and tThisFlip >= 0-frameTolerance:
+            if all_keys_pressed.status == NOT_STARTED and frameN >= 0:
                 # keep track of start time/frame for later
                 all_keys_pressed.frameNStart = frameN  # exact frame index
                 all_keys_pressed.tStart = t  # local t and not account for scr refresh
