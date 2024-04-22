@@ -10,12 +10,23 @@ images_paths = os.listdir("practice_images/")
 assert(len(images_paths) == 10)
 images_paths = images_paths + images_paths
 practice_trials_num = 20
+def no_adjacent_duplicates(images_list):
+    for previous, current, next_image in zip([""] + images_list[:-1], 
+                                       images_list, 
+                                       images_list[1:] + [""]):
+        if previous == current or current == next_image:
+            print("ADJACENT DUP: ", images_list)
+            return False
+    print("CLEAR: ",images_list)
+    return True
 # set blank trials as fixed across participants but varied across trials
 for p_id in range(n_participants):
     random.seed(p_id)
     # make dirs
     participant_path = "practice_conditions_files/practice_participant" + str(p_id) + "_"
     random.shuffle(images_paths)
+    while not no_adjacent_duplicates(images_paths):
+        random.shuffle(images_paths)
     current_image_list = []
     is_blank_trial_list = []
     trial_index_list = []
