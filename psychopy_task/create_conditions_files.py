@@ -31,60 +31,26 @@ run_to_blanks = json.load(f)
 f.close()
 print(run_to_blanks)
 
-# def between9and14continuous(all_indices):
-#     all_indices = sorted(all_indices)
-#     print("all_indices: ", all_indices)
-#     for i, index in enumerate(all_indices):
-#         if i == 0:
-#             # print("all_indices[1]: ", all_indices[1])
-#             # print("index: ", index)
-#             if not ((all_indices[1] - index) >= 9 \
-#                     and (all_indices[1] - index) <= 14):
-#                 return False
-#         elif i == len(all_indices) - 1:
-#             # print("all_indices[len(all_indices) - 2]: ", \
-#             #        all_indices[len(all_indices) - 2])
-#             # print("index: ", index)
-#             if not (abs(all_indices[len(all_indices) - 2] - index) >= 9 \
-#                     and abs(all_indices[len(all_indices) - 2] - index) <= 14):
-#                 return False
-#         else:
-#             # print("all_indices[i + 1]: ", all_indices[i + 1])
-#             # print("all_indices[i - 1]: ", all_indices[i - 1])
-#             # print("index: ", index)
-#             if not ((all_indices[i + 1] - index) >= 9 \
-#                     and (all_indices[i + 1] - index) <= 14):
-#                 return False
-#             if not (abs(all_indices[i - 1] - index) >= 9 \
-#                     and abs(all_indices[i - 1] - index) <= 14):
-#                 return False
-#     return True
-# for run_num in range(num_runs):
-#     print("run_num: ", run_num)
-#     blank_trial_indices = [68,69,70,71]
-#     # if even, sample index only 9 or 10 indices above the last draw to not 
-#     # run into a situation where there is no slot for a 5th blank trial
-#     if run_num % 2 == 0:
-#         index_increments = [10,10,10,10,10,10]
-#     else:
-#         index_increments = [10,10,14,12,11]
-#     random.shuffle(index_increments)
-#     previous_blank_index = -1
-#     for ii in index_increments:
-#         new_blank_index = previous_blank_index + ii
-#         previous_blank_index = new_blank_index
-#         blank_trial_indices.append(new_blank_index)
-#     blank_trial_indices = sorted(blank_trial_indices)
-#     assert(between9and14continuous(blank_trial_indices[:-3]))
-#     print(between9and14continuous(blank_trial_indices[:-3]))
-#     run_to_blanks[run_num] = blank_trial_indices
-# print(run_to_blanks)
+def no_adjacent_duplicates(images_list):
+    for previous, current, next_image in zip([""] + images_list[:-1], 
+                                       images_list, 
+                                       images_list[1:] + [""]):
+        if previous == current or current == next_image:
+            print("ADJACENT DUP: ", images_list)
+            return False
+    print("CLEAR: ",images_list)
+    return True
+
+all_images_lists = []
 
 for p_id in range(n_participants):
     random.seed(p_id)
     # make dirs
     participant_path = "conditions_files/participant" + str(p_id) + "_"
     random.shuffle(images_paths)
+    while not no_adjacent_duplicates(images_paths) or images_paths in all_images_lists:
+        random.shuffle(images_paths)
+    all_images_lists.append(images_paths)
     current_image_list = []
     is_repeat_list = []
     run_num_list = []
