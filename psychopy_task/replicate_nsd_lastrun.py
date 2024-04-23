@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2023.2.3),
-    on Tue Apr 16 10:54:06 2024
+    on Mon Apr 22 16:55:51 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -378,6 +378,7 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
     is_not_blank_trial_or_before_starting_run = False
     # Run 'Begin Experiment' code from between_round_screens_skip_set_up_2
     is_not_new_run_or_before_starting_run = False
+    skip_feedback_screen = False
     # Run 'Begin Experiment' code from set_correct_key
     correct_key_1or2 = '-1'
     
@@ -1339,6 +1340,9 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         else:
             is_not_new_run_or_before_starting_run = False
         
+        skip_feedback_screen = is_not_new_run_or_before_starting_run
+        if trial_index == 71 and run_num == 15:
+            skip_feedback_screen = False
         # Run 'Begin Routine' code from set_correct_key
         if is_repeat:
             correct_key_1or2 = '2'
@@ -1782,15 +1786,19 @@ def run(expInfo, thisExp, win, inputs, globalClock=None, thisSession=None):
         # update component parameters for each repeat
         thisExp.addData('run_wait2_2.started', globalClock.getTime())
         # skip this Routine if its 'Skip if' condition is True
-        continueRoutine = continueRoutine and not (is_not_new_run_or_before_starting_run)
+        continueRoutine = continueRoutine and not (skip_feedback_screen)
         key_resp_5.keys = []
         key_resp_5.rt = []
         _key_resp_5_allKeys = []
         # Run 'Begin Routine' code from dynamic_feedback_string
-        if is_new_run and run_num >= starting_run:
+        if not skip_feedback_screen:
             insert_num_str = (thisRun_num_trials_correct / thisRun_num_trials_total)
-            run_wait_string = "Good job! Your average accuracy in this run is " + f"{insert_num_str:.3f}" + \
-                            ". Please press any button when you are ready to continue to run " + str(run_num + 2) + "." 
+            if run_num < 15:
+                run_wait_string = "Good job! Your average accuracy in this run is " + f"{insert_num_str:.3f}" + \
+                                ". Please press any button when you are ready to continue to run " + str(run_num + 2) + "." 
+            else: 
+                run_wait_string = "Good job! Your average accuracy in this run is " + f"{insert_num_str:.3f}" + \
+                ". Please press any button when you are ready to complete the experiment." 
         #    print("thisRun_num_trials_correct: ", thisRun_num_trials_correct)
         #    print("thisRun_num_trials_total: ", thisRun_num_trials_total)
         #    print("run_wait_string: ", run_wait_string)
