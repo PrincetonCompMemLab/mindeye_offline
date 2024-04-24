@@ -5,3 +5,7 @@ src/diffusion_engine
 raw/
 src/eval_downloads/
 src/evals/
+rt_python/masks
+rt_python/generative_models
+rt_python/fine_tuned_model
+rt_python/data
