@@ -9,7 +9,7 @@ rt_python/masks
 rt_python/generative_models
 rt_python/fine_tuned_model
 rt_python/data
-*DS_Store*
+*DS_Store
 __pycache__/
 *.py[cod]
 *$py.class
