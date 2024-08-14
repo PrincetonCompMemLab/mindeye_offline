@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy3 Experiment Builder (v2024.1.5),
-    on Tue Aug 13 10:18:15 2024
+    on Wed Aug 14 10:09:20 2024
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -45,7 +45,7 @@ expName = 'rtmindeye'  # from the Builder filename that created this script
 # information about this experiment
 expInfo = {
     'participant': '1',
-    'session (1 2 or 3)': '2',
+    'session (1 2 or 3)': '3',
     'starting_run': '0',
     'skip_practice': '1',
     'date|hid': data.getDateStr(),
