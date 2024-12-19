@@ -59,7 +59,6 @@ recon_inference.py
 recon_inference_orig.ipynb
 recon_inference_orig.py
 rt_glmsingle.ipynb
-run_all_batch.slurm
 run_final_evals.slurm
 run_recon_final.slurm
 run_recon_final_batch.slurm
