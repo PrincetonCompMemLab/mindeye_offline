@@ -10,16 +10,17 @@
 #SBATCH -e slurms/%j.err        # first create a "slurms" folder in current directory to store logs
 #SBATCH -o slurms/%j.out
 #SBATCH --no-requeue
-#SBATCH --array=0
+#SBATCH --array=0-19
 #SBATCH --mail-type=END
 #SBATCH --mail-user=rsiyer@princeton.edu
 
 module purge
 module load anaconda3/2023.3
-conda activate rt_mindEye2
+# conda activate rt_mindEye2
+source /scratch/gpfs/ri4541/MindEyeV2/src/fmri/bin/activate
 
 # The following line converts your jupyter notebook into a python script runnable with Slurm
-jupyter nbconvert orig_main.ipynb --to python
+jupyter nbconvert main-multisession.ipynb --to python
 
 export NUM_GPUS=1  # Set to equal gres=gpu:#!
 export BATCH_SIZE=24

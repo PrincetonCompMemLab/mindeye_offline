@@ -1,15 +1,16 @@
 #!/bin/bash
-#SBATCH --job-name=ses-01
+#SBATCH --job-name=ses-01_old
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1              
 #SBATCH --gres=gpu:1
+##SBATCH --constraint=gpu80
 #SBATCH --gpus-per-task=1       # Set to equal gres=gpu:#!
 #SBATCH --cpus-per-task=40      # 40 / 80 / 176 distributed across node
-#SBATCH --time=02:00:00         # total run time limit (HH:MM:SS)
+#SBATCH --time=00:20:00         # total run time limit (HH:MM:SS)
 #SBATCH -e slurms/%j.err        # first create a "slurms" folder in current directory to store logs
 #SBATCH -o slurms/%j.out
 #SBATCH --no-requeue
-#SBATCH --array=0-9               # 0-9
+#SBATCH --array=0               # 0-9
 #SBATCH --mail-type=END
 #SBATCH --mail-user=rsiyer@princeton.edu
 
@@ -19,16 +20,16 @@ echo "Executing on the machine: $(hostname)"
 
 module purge
 module load anaconda3/2023.3
-# conda activate rt_mindEye2
-source /scratch/gpfs/ri4541/MindEyeV2/src/fmri/bin/activate
+conda activate rt_mindEye2
+#source /scratch/gpfs/ri4541/MindEyeV2/src/fmri/bin/activate
 
 # verify these variables before submitting
 # ---
 sub=sub-001
 session=ses-01
 split=MST  # MST train/test split, alternative would be train on non-repeats and test on images that repeat (split=orig) 
-model_name=${sub}_${session}_bs24_MST_paul_${split}split
-main_script='Train (2)'
+model_name=${sub}_${session}_bs24_MST_rishab_${split}split_old
+main_script='main-multisession_old'
 # --- 
 
 jupyter nbconvert "${main_script}.ipynb" --to python
@@ -48,16 +49,16 @@ echo WORLD_SIZE=${COUNT_NODE}
 
 # singlesubject finetuning
 echo model_name=${model_name}
-accelerate launch --num_processes=$(($NUM_GPUS * $COUNT_NODE)) --num_machines=$COUNT_NODE --main_process_ip=$MASTER_ADDR --main_process_port=$MASTER_PORT "${main_script}.py" --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --model_name=${model_name} --no-multi_subject --subj=1 --batch_size=${BATCH_SIZE} --max_lr=3e-4 --mixup_pct=.33 --num_epochs=150 --use_prior --prior_scale=30 --clip_scale=1 --no-blurry_recon --blur_scale=.5 --no-use_image_aug --n_blocks=4 --hidden_dim=1024 --num_sessions=40 --ckpt_interval=999 --ckpt_saving --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep && \
+#accelerate launch --num_processes=$(($NUM_GPUS * $COUNT_NODE)) --num_machines=$COUNT_NODE --main_process_ip=$MASTER_ADDR --main_process_port=$MASTER_PORT "${main_script}.py" --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --model_name=${model_name} --no-multi_subject --subj=1 --batch_size=${BATCH_SIZE} --max_lr=3e-4 --mixup_pct=.33 --num_epochs=150 --use_prior --prior_scale=30 --clip_scale=1 --no-blurry_recon --blur_scale=.5 --no-use_image_aug --n_blocks=4 --hidden_dim=1024 --num_sessions=40 --ckpt_interval=999 --ckpt_saving --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep && \
 
 #jupyter nbconvert recon_inference-multisession-simple.ipynb --to python && \
 #python recon_inference-multisession-simple.py --model_name=${model_name} --subj=1 --no-blurry_recon --use_prior --hidden_dim=1024 --n_blocks=4 --glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${session}" && \
 
-jupyter nbconvert recon_inference_orig.ipynb --to python && \
-python recon_inference_orig.py --model_name=${model_name} --subj=1 --no-blurry_recon --use_prior --hidden_dim=1024 --n_blocks=4 --glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${session}" && \
+#jupyter nbconvert recon_inference-multisession.ipynb --to python && \
+#python recon_inference-multisession.py --model_name=${model_name} --subj=1 --no-blurry_recon --use_prior --hidden_dim=1024 --n_blocks=4 --glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${session}_paul" && \
 
-jupyter nbconvert enhanced_recon_inference_orig.ipynb --to python && \
-python enhanced_recon_inference_orig.py --model_name=${model_name} && \
+jupyter nbconvert enhanced_recon_inference.ipynb --to python && \
+python enhanced_recon_inference.py --model_name=${model_name} --all_recons_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/evals/${model_name}/${model_name}_all_recons.pt && \
 
-jupyter nbconvert final_evaluations_orig.ipynb --to python && \
-python final_evaluations_orig.py --model_name=${model_name} --all_recons_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/evals/${model_name}/all_enhancedrecons.pt --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --eval_dir=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/evals/${model_name}
+jupyter nbconvert final_evaluations.ipynb --to python && \
+python final_evaluations.py --model_name=${model_name} --all_recons_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/evals/${model_name}/all_enhancedrecons.pt --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --eval_dir=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/evals/${model_name}
