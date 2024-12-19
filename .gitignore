@@ -21,8 +21,6 @@ accel-more-train.slurm
 accel-multi-3subj.slurm
 accel-multi-batch.slurm
 accel-ses-03.slurm
-all_stimuli/
-csv/
 debug/
 enhanced_recon_inference-ses-03.ipynb
 enhanced_recon_inference.py
