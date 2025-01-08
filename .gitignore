@@ -26,7 +26,6 @@ enhanced_recon_inference-ses-03.ipynb
 enhanced_recon_inference.py
 enhanced_recon_inference_orig.ipynb
 enhanced_recon_inference_orig.py
-environment.yml
 evals/
 figures/
 final_batch_evals.ipynb
@@ -65,3 +64,4 @@ slurms/
 wandb/
 wandb_test.ipynb
 wandb_test.py
+.run_all_batch.slurm.swp
