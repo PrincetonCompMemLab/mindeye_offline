@@ -3,7 +3,7 @@
 
 # # Import packages & functions
 
-# In[1]:
+# In[76]:
 
 
 print("importing modules")
@@ -53,12 +53,12 @@ if utils.is_interactive():
 
 # ## Load Data & Design
 
-# In[2]:
+# In[77]:
 
 
 if utils.is_interactive():
-    sub = "sub-001"
-    session = "ses-05"
+    sub = "sub-002"
+    session = "ses-02"
     task = 'A'
 else:
     sub = os.environ["sub"]
@@ -92,7 +92,7 @@ if run_resample_voxel:
     resample_method = "nearestneighbour"  # {trilinear,nearestneighbour,sinc,spline}, credit: https://johnmuschelli.com/fslr/reference/flirt.help.html
 
 
-# In[3]:
+# In[79]:
 
 
 if utils.is_interactive():
@@ -102,16 +102,16 @@ else:
     
 
 print(glmsingle_path)
-assert os.path.exists(glmsingle_path)
 
 if run_resample_voxel:
     orig_glmsingle_path = glmsingle_path
     glmsingle_path += "_resampled"
     print("resampled glmsingle path:", glmsingle_path)
-    assert os.path.exists(glmsingle_path)
+
+assert os.path.exists(glmsingle_path)
 
 
-# In[4]:
+# In[84]:
 
 
 if session == "all":
@@ -125,7 +125,25 @@ if session == "all":
         data = pd.concat([data, pd.read_csv(filename)[14:]])
         print(data.shape)
 else:
-    filename = f"csv/{sub}_{session}.csv"
+    if (sub=='sub-001' and session in ('ses-02', 'ses-03', 'ses-04', 'ses-05')) or (sub=='sub-002' and session in ('ses-02')) or sub=='sub-003':
+        if sub=='sub-001' and session == 'ses-05':
+            if task == 'A':
+                filename = f"csv/{sub}_ses-05.csv"
+            elif task == 'B':
+                filename = f"csv/{sub}_ses-06.csv"
+            elif task == 'C':
+                filename = f"csv/{sub}_ses-07.csv"
+                
+        elif (sub=='sub-002' and session in ('ses-02')):
+            if task == 'A':
+                filename = f"csv/{sub}_ses-06.csv"
+            elif task == 'B':
+                filename = f"csv/{sub}_ses-07.csv"
+            elif task == 'C':
+                filename = f"csv/{sub}_ses-05.csv"
+        else:
+            filename = f"csv/{sub}_{session}.csv"
+    
     if sub == 'sub-001' and session == 'ses-01':
         data = pd.read_csv(filename)[23:]
     else: 
@@ -262,7 +280,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 
 # ## Load images
 
-# In[5]:
+# In[85]:
 
 
 import imageio.v2 as imageio
@@ -300,7 +318,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 print("MST_images==True", len(MST_images[MST_images==True]))
 
 
-# In[6]:
+# In[86]:
 
 
 # unique_images_pairs = [
@@ -318,7 +336,7 @@ print("MST_images==True", len(MST_images[MST_images==True]))
 # len(unique_images_pairs), unique_images[unique_images_pairs]
 
 
-# In[7]:
+# In[87]:
 
 
 # want IDs of pairmates based on MST_images
@@ -336,7 +354,7 @@ for p, pair in enumerate(MST_pairmate_names):
 print(MST_pairmate_indices.shape, MST_pairmate_indices)
 
 
-# In[8]:
+# In[88]:
 
 
 if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
@@ -364,7 +382,7 @@ if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
     plt.show()
 
 
-# In[9]:
+# In[89]:
 
 
 # pairs has the indices of all repeated images
@@ -385,7 +403,7 @@ plt.title(f"Trial 2")
 plt.show()
 
 
-# In[10]:
+# In[90]:
 
 
 # for i in range(len(images)):
@@ -395,11 +413,17 @@ plt.show()
 #     plt.show()
 
 
-# In[11]:
+# In[93]:
+
+
+pairs.shape
+
+
+# In[94]:
 
 
 p=114
-if session in ('ses-02', 'ses-03', 'all'):
+if pairs.shape[-1] == 3:
     fig, ax = plt.subplots(1, 3, figsize=(10,8))
 
     ax[0].imshow(images[pairs[p][0]].permute(1,2,0).numpy())
@@ -429,7 +453,7 @@ else:
     plt.show()
 
 
-# In[12]:
+# In[95]:
 
 
 from nilearn.plotting import plot_roi, plot_anat, plot_epi
@@ -463,7 +487,7 @@ nsdgeneral_path = f'{glmsingle_path}/{sub}{task_name}_nsdgeneral.nii.gz'
 
 # ## Load GLMSingle voxel data
 
-# In[13]:
+# In[96]:
 
 
 def load_preprocess_betas(glmsingle_path, session, ses_list,
@@ -507,7 +531,7 @@ def load_preprocess_betas(glmsingle_path, session, ses_list,
     return vox
 
 
-# In[14]:
+# In[97]:
 
 
 if resample_voxel_size:
@@ -561,7 +585,7 @@ if resample_voxel_size:
         return vox
 
 
-# In[15]:
+# In[98]:
 
 
 if resample_voxel_size:
@@ -588,7 +612,7 @@ assert len(vox) == len(image_idx)
 
 # ### Load nsdgeneral ROI
 
-# In[16]:
+# In[99]:
 
 
 # test = np.squeeze(glmsingle['betasmd'])
@@ -601,7 +625,7 @@ assert len(vox) == len(image_idx)
 # print(test.shape)
 
 
-# In[17]:
+# In[100]:
 
 
 # to_resample = nilearn.masking.unmask(test.T, avg_mask)  # reshapes from a flattened array to the dims of the brain mask, results in shape (X, Y, Z, trial)
@@ -609,45 +633,45 @@ assert len(vox) == len(image_idx)
 # print(to_resample.shape)
 
 
-# In[18]:
+# In[101]:
 
 
 # plot_roi(to_resample, bg_img=avg_mask, threshold=0, cmap='viridis', vmin=-10, vmax=10)
 
 
-# In[19]:
+# In[102]:
 
 
 # to_resample.shape
 
 
-# In[20]:
+# In[103]:
 
 
 # plt.imshow(to_resample.get_fdata())
 
 
-# In[21]:
+# In[104]:
 
 
 # to_resample.get_fdata()[46,74,32,208]
 
 
-# In[22]:
+# In[105]:
 
 
 # resample_path = f"{glmsingle_path}/glmsingle_outputs_to_resample"
 # nib.save(to_resample, resample_path)
 
 
-# In[23]:
+# In[106]:
 
 
 # target_vox_dim = 2.0
 # vox_resampled = os.system(f"flirt -in {resample_path} -ref {resample_path} -applyisoxfm {target_vox_dim} -nosearch")
 
 
-# In[24]:
+# In[107]:
 
 
 # target_affine = np.diag((3, 3, 3, 315))
@@ -655,14 +679,14 @@ assert len(vox) == len(image_idx)
 # print(vox_resampled.shape)
 
 
-# In[25]:
+# In[108]:
 
 
 # resample_out_path = f"{glmsingle_path}/glmsingle_outputs_resampled"
 # nib.save(vox_resampled, resample_out_path)
 
 
-# In[26]:
+# In[109]:
 
 
 if resample_voxel_size:
@@ -673,7 +697,7 @@ if resample_voxel_size:
         applyxfm(roi_in_path, ref_name, omat_name, resample_method, output=nsdgeneral_path)
 
 
-# In[27]:
+# In[110]:
 
 
 roi = nib.load(nsdgeneral_path)
@@ -681,7 +705,7 @@ plot_roi(roi, bg_img=avg_mask)
 plt.show()
 
 
-# In[28]:
+# In[111]:
 
 
 avg_mask = avg_mask.get_fdata().flatten()
@@ -697,7 +721,7 @@ print(f"nsdgeneral voxels = {roi.sum()}")
 
 # ### ROI voxel exclusion
 
-# In[29]:
+# In[112]:
 
 
 # ROI masking?
@@ -715,7 +739,7 @@ if np.any(np.isnan(vox)):
 
 # ### Calculate reliability (corr between first and second presentation of same image) for every voxel
 
-# In[30]:
+# In[113]:
 
 
 vox_pairs = utils.zscore(vox[pairs])
@@ -728,7 +752,7 @@ assert np.sum(np.all(np.isnan(rels))) == 0
 
 # ### Create representational similarity matrix
 
-# In[31]:
+# In[114]:
 
 
 # creating img x vox x repetitions matrix | shape=(150, 18419, 2)
@@ -740,7 +764,7 @@ for ipair, pair in enumerate(tqdm(pairs)):
 vox_avg = vox0.mean(-1) # average across the repetitions
 
 
-# In[32]:
+# In[115]:
 
 
 # Masking RDM for each reliability threshold
@@ -755,7 +779,7 @@ for ir_thresh, r_thresh in enumerate(r_thresholds):
 # rdm is shape (4, 150, 150)
 
 
-# In[33]:
+# In[116]:
 
 
 reliability_threshold_to_visualize = .2
@@ -766,7 +790,7 @@ plt.title(f"{sub}_{session}\nreliability threshold={reliability_threshold_to_vis
 plt.show()
 
 
-# In[34]:
+# In[117]:
 
 
 for thresh in range(rdm.shape[0]):
@@ -774,7 +798,7 @@ for thresh in range(rdm.shape[0]):
         assert np.isclose(rdm[thresh, img, img], 1)
 
 
-# In[35]:
+# In[118]:
 
 
 # Reliability thresholding?
@@ -783,7 +807,7 @@ vox = vox[:,rels>.2]
 print(f"\nvox after reliability thresholding: {vox.shape}")
 
 
-# In[36]:
+# In[119]:
 
 
 print(images.shape)
@@ -791,7 +815,7 @@ print(vox.shape)
 assert len(images) == len(vox)
 
 
-# In[37]:
+# In[120]:
 
 
 same_corrs = []
@@ -833,7 +857,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[38]:
+# In[121]:
 
 
 vox_pairs = utils.zscore(vox[pairs])
@@ -849,7 +873,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[39]:
+# In[122]:
 
 
 utils.seed_everything(seed)
@@ -884,7 +908,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[40]:
+# In[123]:
 
 
 train_mean = np.mean(vox[train_image_indices],axis=0)
@@ -899,7 +923,7 @@ images = torch.Tensor(images)
 vox = torch.Tensor(vox)
 
 
-# In[41]:
+# In[124]:
 
 
 ### Multi-GPU config ###
@@ -918,7 +942,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[42]:
+# In[125]:
 
 
 print("PID of this process =",os.getpid())
@@ -947,7 +971,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[43]:
+# In[126]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -972,7 +996,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[44]:
+# In[127]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -1120,7 +1144,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[45]:
+# In[128]:
 
 
 if ckpt_saving:
@@ -1146,7 +1170,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[46]:
+# In[129]:
 
 
 def my_split_by_node(urls): return urls
@@ -1167,7 +1191,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[47]:
+# In[130]:
 
 
 train_data = {}
@@ -1177,7 +1201,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[48]:
+# In[131]:
 
 
 num_voxels = {}
@@ -1201,7 +1225,7 @@ test_dl = torch.utils.data.DataLoader(test_data, batch_size=24, shuffle=False, d
 print(f"Loaded test dl for subj{subj}!\n")
 
 
-# In[49]:
+# In[132]:
 
 
 # paul_train_dl = torch.load('debug/paul_train_dl')
@@ -1209,7 +1233,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 # # paul_train_dl.shape, train_dl.shape, paul_test_dl.shape, test_dl.shape
 
 
-# In[50]:
+# In[133]:
 
 
 # for i, b in enumerate(test_dl): 
@@ -1223,7 +1247,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[51]:
+# In[134]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1266,7 +1290,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[52]:
+# In[135]:
 
 
 class MindEyeModule(nn.Module):
@@ -1279,7 +1303,7 @@ model = MindEyeModule()
 model
 
 
-# In[53]:
+# In[136]:
 
 
 class RidgeRegression(torch.nn.Module):
@@ -1304,7 +1328,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[54]:
+# In[137]:
 
 
 from functools import partial
@@ -1400,7 +1424,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[55]:
+# In[138]:
 
 
 if use_prior:
@@ -1438,7 +1462,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[56]:
+# In[139]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1514,7 +1538,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[57]:
+# In[140]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1559,7 +1583,7 @@ else:
 
 # # Train the model
 
-# In[58]:
+# In[141]:
 
 
 epoch = 0
@@ -1568,7 +1592,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[59]:
+# In[142]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1576,7 +1600,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[60]:
+# In[143]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1584,7 +1608,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[61]:
+# In[144]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1593,7 +1617,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[62]:
+# In[145]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
@@ -1863,7 +1887,7 @@ if ckpt_saving:
     save_ckpt(f'last')
 
 
-# In[63]:
+# In[146]:
 
 
 # # Track metrics here:
@@ -1872,13 +1896,13 @@ if ckpt_saving:
 
 # **To tell if the model is working I'm looking at test_bwd/fwd_pct_correct and seeing if that is doing better than chance (1/batch_size)**
 
-# In[75]:
+# In[147]:
 
 
 # MST_pairmate_names
 
 
-# In[65]:
+# In[148]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
@@ -1892,7 +1916,7 @@ for i, p in enumerate(MST_pairmate_names):
 # print(pairs)
 
 
-# In[66]:
+# In[149]:
 
 
 # if sub=="sub-002":
@@ -1920,7 +1944,7 @@ for i, p in enumerate(MST_pairmate_names):
 # # unique_images[unique_images_pairs]
 
 
-# In[67]:
+# In[150]:
 
 
 def evaluate_mst_pairs(mst_pairs):
@@ -1963,13 +1987,13 @@ def evaluate_mst_pairs(mst_pairs):
     return score/total
 
 
-# In[68]:
+# In[151]:
 
 
 print(evaluate_mst_pairs(pairs))
 
 
-# In[69]:
+# In[152]:
 
 
 # Compare first few pairs
@@ -1980,7 +2004,7 @@ for pair in pairs:  # Checking first 2 pairs
     print(f"Image 2: {x[pair[1]]}\n")
 
 
-# In[70]:
+# In[153]:
 
 
 for i in range(len(pairs)):
@@ -1997,7 +2021,7 @@ for i in range(len(pairs)):
     plt.show()
 
 
-# In[71]:
+# In[154]:
 
 
 # score = 0
@@ -2062,14 +2086,14 @@ for i in range(len(pairs)):
 # print(score/total)
 
 
-# In[72]:
+# In[155]:
 
 
 #display(utils.torch_to_Image(imageA))
 #display(utils.torch_to_Image(imageB))
 
 
-# In[73]:
+# In[156]:
 
 
 # from scipy.stats import binomtest
