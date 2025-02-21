@@ -3,7 +3,7 @@
 
 # # Import packages & functions
 
-# In[76]:
+# In[4]:
 
 
 print("importing modules")
@@ -53,13 +53,13 @@ if utils.is_interactive():
 
 # ## Load Data & Design
 
-# In[77]:
+# In[5]:
 
 
 if utils.is_interactive():
-    sub = "sub-002"
-    session = "ses-02"
-    task = 'A'
+    sub = "sub-001"
+    session = "all"
+    task = 'study'
 else:
     sub = os.environ["sub"]
     session = os.environ["session"]
@@ -71,7 +71,8 @@ ses_list = ["ses-02", "ses-03"] if session == "all" else []
 n_runs = 16 if task == 'study' else 5
 
 resample_voxel_size = False
-run_resample_voxel = False  # do you want to do voxel resampling here? if resample_voxel_size = True and run_resample_voxel = False, assume the resampling has been done prior to GLMsingle, so just use resampled directory but otherwise proceed as normal
+resample_post_glmsingle = False  # do you want to do voxel resampling here? if resample_voxel_size = True and resample_post_glmsingle = False, assume the resampling has been done prior to GLMsingle, so just use resampled directory but otherwise proceed as normal
+load_from_resampled_file = False  # do you want to load resampled data from file? if True, assume resampling was done in this notebook before, and that we're not using the GLMsingle resampled data
     
 train_test_split = 'MST' # 'MST', 'orig', 'unique'
 remove_close_to_MST = False
@@ -85,33 +86,60 @@ if remove_random_n:
     assert train_test_split == 'MST'  # MST images are excluded from the n images removed, so only makes sense if they're not in the training set
     n_to_remove = 150
     
-if run_resample_voxel:
+if resample_voxel_size:
     # voxel size was unchanged in glmsingle, want to perform resampling here
-    assert resample_voxel_size is True
-    resampled_vox_size = 2.0
-    resample_method = "nearestneighbour"  # {trilinear,nearestneighbour,sinc,spline}, credit: https://johnmuschelli.com/fslr/reference/flirt.help.html
+    resampled_vox_size = 2.5
+    resample_method = "trilinear"  # {trilinear,nearestneighbour,sinc,spline}, credit: https://johnmuschelli.com/fslr/reference/flirt.help.html
+    
+    # file name helper variables
+    vox_dim_str = str(resampled_vox_size).replace('.', '_')  # in case the voxel size has a decimal, replace with an underscore
+    resampled_suffix = f"resampled_{vox_dim_str}mm_{resample_method}"
+    mask_resampled_suffix = resampled_suffix
+    if resample_post_glmsingle:
+        resampled_suffix += '_postglmsingle'
+    else:
+        resampled_suffix += '_preglmsingle'
 
 
-# In[79]:
+# In[8]:
 
 
 if utils.is_interactive():
-    glmsingle_path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_{sub}_{session}{task_name}'
+    if session == "all":
+        glmsingle_path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle-multi'
+    else:
+        glmsingle_path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_{sub}_{session}{task_name}'
+    # glmsingle_path = "/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-001_ses-05_task-B_resampled_2_0mm_trilinear"
 else:
     glmsingle_path = os.environ["glmsingle_path"]
     
 
 print(glmsingle_path)
 
-if run_resample_voxel:
-    orig_glmsingle_path = glmsingle_path
-    glmsingle_path += "_resampled"
-    print("resampled glmsingle path:", glmsingle_path)
+if resample_voxel_size:
+    # option 1: we are using original (non-resampled) GLMsingle outputs and doing the resampling here
+    # option 2: doing resampling pre-GLMsingle and using those outputs; no resampling involved here
+    if resample_post_glmsingle:
+        # option 1
+        orig_glmsingle_path = glmsingle_path
+        glmsingle_path += f"_{resampled_suffix}"
+        print("resampled glmsingle path:", glmsingle_path)
+        if load_from_resampled_file:
+            # resampling is already done; load from file
+             assert os.path.exists(glmsingle_path)  # the new directory must have been created if we reached here
+        else:
+            # don't load from file; do resampling here
+            os.makedirs(glmsingle_path,exist_ok=True)
+    else:
+        # option 2
+        glmsingle_path += f"_{resampled_suffix}"
+        print("glmsingle path:", glmsingle_path)
 
 assert os.path.exists(glmsingle_path)
+print("glmsingle path exists!")
 
 
-# In[84]:
+# In[9]:
 
 
 if session == "all":
@@ -125,7 +153,7 @@ if session == "all":
         data = pd.concat([data, pd.read_csv(filename)[14:]])
         print(data.shape)
 else:
-    if (sub=='sub-001' and session in ('ses-02', 'ses-03', 'ses-04', 'ses-05')) or (sub=='sub-002' and session in ('ses-02')) or sub=='sub-003':
+    if (sub=='sub-001' and session in ('ses-02', 'ses-03', 'ses-04', 'ses-05')) or (sub=='sub-002' and session in ('ses-02')) or sub=='sub-003' or (sub=='sub-004' and session in ('ses-01')):
         if sub=='sub-001' and session == 'ses-05':
             if task == 'A':
                 filename = f"csv/{sub}_ses-05.csv"
@@ -141,6 +169,13 @@ else:
                 filename = f"csv/{sub}_ses-07.csv"
             elif task == 'C':
                 filename = f"csv/{sub}_ses-05.csv"
+        elif (sub=='sub-004' and session in ('ses-01')):
+            if task == 'A':
+                filename = f"csv/{sub}_ses-07.csv"
+            elif task == 'B':
+                filename = f"csv/{sub}_ses-05.csv"
+            elif task == 'C':
+                filename = f"csv/{sub}_ses-06.csv"
         else:
             filename = f"csv/{sub}_{session}.csv"
     
@@ -280,7 +315,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 
 # ## Load images
 
-# In[85]:
+# In[10]:
 
 
 import imageio.v2 as imageio
@@ -318,7 +353,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 print("MST_images==True", len(MST_images[MST_images==True]))
 
 
-# In[86]:
+# In[11]:
 
 
 # unique_images_pairs = [
@@ -336,7 +371,7 @@ print("MST_images==True", len(MST_images[MST_images==True]))
 # len(unique_images_pairs), unique_images[unique_images_pairs]
 
 
-# In[87]:
+# In[12]:
 
 
 # want IDs of pairmates based on MST_images
@@ -354,7 +389,7 @@ for p, pair in enumerate(MST_pairmate_names):
 print(MST_pairmate_indices.shape, MST_pairmate_indices)
 
 
-# In[88]:
+# In[13]:
 
 
 if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
@@ -382,28 +417,40 @@ if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
     plt.show()
 
 
-# In[89]:
+# In[14]:
 
 
 # pairs has the indices of all repeated images
 pairs = utils.find_paired_indices(image_idx)
 pairs = np.array(sorted(pairs, key=lambda x: x[0]))
 
-plt.figure(figsize=(2,2))
-plt.imshow(images[0].permute(1,2,0).numpy())
-plt.title(f"Trial 0")
-plt.show()
-plt.figure(figsize=(2,2))
-plt.imshow(images[1].permute(1,2,0).numpy())
-plt.title(f"Trial 1")
-plt.show()
-plt.figure(figsize=(2,2))
-plt.imshow(images[2].permute(1,2,0).numpy())
-plt.title(f"Trial 2")
+fig, axes = plt.subplots(1, 3, figsize=(6, 2))  # 1 row, 3 columns
+for i, ax in enumerate(axes):
+    ax.imshow(images[i].permute(1, 2, 0).numpy())
+    ax.set_title(f"Trial {i}")
+    ax.axis("off")  # Hide axes for better visualization
+
+plt.tight_layout()
+# output_path = os.path.join(output_dir, "trials_plot.png")
+# plt.savefig(output_path, dpi=300)  # Save figure
 plt.show()
 
 
-# In[90]:
+# plt.figure(figsize=(2,2))
+# plt.imshow(images[0].permute(1,2,0).numpy())
+# plt.title(f"Trial 0")
+# plt.show()
+# plt.figure(figsize=(2,2))
+# plt.imshow(images[1].permute(1,2,0).numpy())
+# plt.title(f"Trial 1")
+# plt.show()
+# plt.figure(figsize=(2,2))
+# plt.imshow(images[2].permute(1,2,0).numpy())
+# plt.title(f"Trial 2")
+# plt.show()
+
+
+# In[15]:
 
 
 # for i in range(len(images)):
@@ -413,13 +460,7 @@ plt.show()
 #     plt.show()
 
 
-# In[93]:
-
-
-pairs.shape
-
-
-# In[94]:
+# In[16]:
 
 
 p=114
@@ -453,22 +494,89 @@ else:
     plt.show()
 
 
-# In[95]:
+# In[17]:
+
+
+if resample_voxel_size:
+    from nilearn.masking import apply_mask, unmask
+    ref_name = f'{glmsingle_path}/boldref_resampled.nii.gz'
+    omat_name = f'{glmsingle_path}/boldref_omat'
+
+    # decorator function that prints that we loaded and saved data, to be used with calls to flirt as with the resample and applyxfm functions below
+    def log_io(func):  # the first argument must be input; output must be a kwarg for this to work properly
+        def wrapper(*args, **kwargs):
+            inp = args[0]
+            output = kwargs['output']
+            print(f'\n*** Loading data from {inp} ***\n')
+            result = func(*args, **kwargs)
+            print(f'\n*** Saved resampled data to {output} ***\n')
+            return result
+        return wrapper
+
+    @log_io  
+    def resample(inp, ref, target_size, omat, output=None):  
+        os.system(f"flirt -in {inp} \
+                        -ref {ref} \
+                        -applyisoxfm {target_size} -nosearch \
+                        -omat {omat} \
+                        -out {output}")
+
+    @log_io
+    def applyxfm(inp, ref, init, interp, output=None):
+        os.system(f"flirt -in {inp} \
+                    -ref {ref} \
+                    -out {output} \
+                    -applyxfm -init {init} \
+                    -interp {interp}")
+        
+    @log_io
+    def apply_thresh(inp, thresh, output=None):
+        os.system(f"fslmaths {inp} -thr {thresh} -bin {output}")
+        
+    def resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_path, glm_save_path_resampled, ref_name, omat):
+        # convert vox to nifti object and save
+        orig_mask = nib.load(f"{orig_glmsingle_path}/{sub}_{session}{task_name}_brain.nii.gz")
+
+        # apply mask and save original betas
+        print("original:", vox.shape)
+        vox_nii = unmask(vox, orig_mask)
+        glm_save_path = f"{glmsingle_path}/vox.nii.gz"
+        nib.save(vox_nii, glm_save_path)
+        print(f"saved original glmsingle betas to {glm_save_path}")
+
+        # resample and save betas
+        applyxfm(glm_save_path, ref_name, omat, resample_method, output=glm_save_path_resampled)
+        vox = nib.load(glm_save_path_resampled)
+        print("vox after resampling", vox.shape)
+
+        return vox
+
+
+# In[20]:
 
 
 from nilearn.plotting import plot_roi, plot_anat, plot_epi
 
-# avg_mask=nib.load(f'{sub}_ses-01_brain.nii.gz')
+
 if session == "all":
     print('loading multisession brain mask')
-    avg_mask=nib.load(f'{glmsingle_path}/{sub}_brain_multi.nii.gz')
+    mask_name = f"{glmsingle_path}/sub-001_brain_multi"
 else:
+    mask_name = f'{glmsingle_path}/{sub}_{session}{task_name}_brain'
     print('loading single session brain mask')
-    avg_mask=nib.load(f'{glmsingle_path}/{sub}_{session}{task_name}_brain.nii.gz')
+    if resample_voxel_size:
+        if resample_post_glmsingle is True:
+            # use original mask directory
+            mask_in_name = f'{orig_glmsingle_path}/{sub}_{session}{task_name}_brain.nii.gz'
+            mask_out_name = mask_name + f"_{mask_resampled_suffix}.nii.gz"
+            assert os.path.exists(mask_in_name)
+            applyxfm(mask_in_name, ref_name, omat_name, resample_method, output=mask_out_name)
+            apply_thresh(mask_out_name, 0.5, output=mask_out_name)  # binarize the mask since resampling can result in non- 0 or 1 values
+        mask_name += f"_{mask_resampled_suffix}"
 
-
-    # avg_mask=nib.load(f'masks/{sub}_{session}_brain.nii.gz')
-
+mask_name += ".nii.gz"
+print(mask_name)
+avg_mask = nib.load(mask_name)
 # mask info
 dimsize=avg_mask.header.get_zooms()
 affine_mat = avg_mask.affine
@@ -482,12 +590,10 @@ print(affine_mat)
 print('')
 print(f'There are {int(np.sum(brain))} voxels in the included brain mask\n')
 
-nsdgeneral_path = f'{glmsingle_path}/{sub}{task_name}_nsdgeneral.nii.gz'  
-
 
 # ## Load GLMSingle voxel data
 
-# In[96]:
+# In[21]:
 
 
 def load_preprocess_betas(glmsingle_path, session, ses_list,
@@ -531,173 +637,85 @@ def load_preprocess_betas(glmsingle_path, session, ses_list,
     return vox
 
 
-# In[97]:
+# In[22]:
 
 
-if resample_voxel_size:
-    from nilearn.masking import apply_mask, unmask
-    ref_name = f'{glmsingle_path}/boldref_resampled.nii.gz'
-    omat_name = f'{glmsingle_path}/boldref_omat'
+vox = None
+needs_postprocessing = False
+params = (session, ses_list, remove_close_to_MST, image_names, remove_random_n, vox_idx)
 
-    # decorator function that prints that we loaded and saved data, to be used with calls to flirt as with the resample and applyxfm functions below
-    def log_io(func):  # the first argument must be input; output must be a kwarg for this to work properly
-        def wrapper(*args, **kwargs):
-            inp = args[0]
-            output = kwargs['output']
-            print(f'\n*** Loading data from {inp} ***\n')
-            result = func(*args, **kwargs)
-            print(f'\n*** Saved resampled data to {output} ***\n')
-            return result
-        return wrapper
-
-    @log_io  
-    def resample(inp, ref, target_size, omat, output=None):  
-        os.system(f"flirt -in {inp} \
-                        -ref {ref} \
-                        -applyisoxfm {target_size} -nosearch \
-                        -omat {omat} \
-                        -out {output}")
-
-    @log_io
-    def applyxfm(inp, ref, init, interp, output=None):
-        os.system(f"flirt -in {inp} \
-                    -ref {ref} \
-                    -out {output} \
-                    -applyxfm -init {init} \
-                    -interp {interp}")
-
-    def resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_path, glm_save_path_resampled, ref_name, omat):
-        # convert vox to nifti object and save
-        orig_mask = nib.load(f"{orig_glmsingle_path}/{sub}_{session}{task_name}_brain.nii.gz")
-
-        # apply mask and save original betas
-        print("original:", vox.shape)
-        vox_nii = unmask(vox, orig_mask)
-        glm_save_path = f"{glmsingle_path}/vox.nii.gz"
-        nib.save(vox_nii, glm_save_path)
-        print(f"saved original glmsingle betas to {glm_save_path}")
-
-        # resample and save betas
-        applyxfm(glm_save_path, ref_name, omat, resample_method, output=glm_save_path_resampled)
-        vox = nib.load(glm_save_path_resampled)
-        print("vox after resampling", vox.shape)
-
-        return vox
-
-
-# In[98]:
-
-
-if resample_voxel_size:
+if resample_post_glmsingle == True:
     glm_save_path_resampled = f"{glmsingle_path}/vox_resampled.nii.gz"
-
-    if run_resample_voxel:
-        # perform resampling
-        params = (session, ses_list, remove_close_to_MST, image_names, remove_random_n, vox_idx)
+    if load_from_resampled_file == True:
+        # resampling was done in this notebook so we can load from file
+        vox = nib.load(glm_save_path_resampled)
+    else:
+        # do resampling here
+        assert os.path.exists(ref_name) and os.path.exists(omat_name), "need to generate the boldref and omat separately since we don't have access to the functional data here; either do so using flirt on the command line or copy over the glmsingle resampled outputs"
         vox = load_preprocess_betas(orig_glmsingle_path, *params)
         vox = resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_path, glm_save_path_resampled, ref_name, omat_name)
-    else:
-        # just load resampled data
-        vox = nib.load(glm_save_path_resampled)
-        
+    needs_postprocessing = True
+
+if vox is None:
+    # either resampling was done in glmsingle or we aren't resampling 
+    vox = load_preprocess_betas(glmsingle_path, *params)
+
+if needs_postprocessing == True:
     vox = apply_mask(vox, avg_mask)
     vox = vox.reshape(-1, vox.shape[-1])  # flatten the 3D image into np array with shape (voxels, images)
     print(vox.shape)
-else:
-    params = (session, ses_list, remove_close_to_MST, image_names, remove_random_n, vox_idx)
-    vox = load_preprocess_betas(glmsingle_path, *params)
 
 assert len(vox) == len(image_idx)
 
 
+# In[23]:
+
+
+# params = (session, ses_list, remove_close_to_MST, image_names, remove_random_n, vox_idx)
+# load_from_resampled_file = True
+
+# if resample_voxel_size:
+#     glm_save_path_resampled = f"{glmsingle_path}/vox_resampled.nii.gz"
+
+#     if resample_post_glmsingle:
+#         # perform resampling
+#         vox = load_preprocess_betas(orig_glmsingle_path, *params)
+#         vox = resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_path, glm_save_path_resampled, ref_name, omat_name)
+#     else:
+#         # just load resampled data
+#         vox = nib.load(glm_save_path_resampled)
+#         vox = load_preprocess_betas(glmsingle_path, *params)
+        
+#     vox = apply_mask(vox, avg_mask)
+#     vox = vox.reshape(-1, vox.shape[-1])  # flatten the 3D image into np array with shape (voxels, images)
+#     print(vox.shape)
+# else:
+#     vox = load_preprocess_betas(glmsingle_path, *params)
+
+# assert len(vox) == len(image_idx)
+
+
 # ### Load nsdgeneral ROI
 
-# In[99]:
+# In[24]:
 
 
-# test = np.squeeze(glmsingle['betasmd'])
-# print(test.shape)
-# try:
-#     test = np.mean(test, axis=1)
-#     pass
-# except:
-#     pass
-# print(test.shape)
+nsdgeneral_path = f'{glmsingle_path}/{sub}{task_name}_nsdgeneral.nii.gz'  
+print(nsdgeneral_path)
 
 
-# In[100]:
-
-
-# to_resample = nilearn.masking.unmask(test.T, avg_mask)  # reshapes from a flattened array to the dims of the brain mask, results in shape (X, Y, Z, trial)
-# # to_resample = nilearn.image.index_img(to_resample, 10)
-# print(to_resample.shape)
-
-
-# In[101]:
-
-
-# plot_roi(to_resample, bg_img=avg_mask, threshold=0, cmap='viridis', vmin=-10, vmax=10)
-
-
-# In[102]:
-
-
-# to_resample.shape
-
-
-# In[103]:
-
-
-# plt.imshow(to_resample.get_fdata())
-
-
-# In[104]:
-
-
-# to_resample.get_fdata()[46,74,32,208]
-
-
-# In[105]:
-
-
-# resample_path = f"{glmsingle_path}/glmsingle_outputs_to_resample"
-# nib.save(to_resample, resample_path)
-
-
-# In[106]:
-
-
-# target_vox_dim = 2.0
-# vox_resampled = os.system(f"flirt -in {resample_path} -ref {resample_path} -applyisoxfm {target_vox_dim} -nosearch")
-
-
-# In[107]:
-
-
-# target_affine = np.diag((3, 3, 3, 315))
-# vox_resampled = nilearn.image.resample_img(to_resample, target_affine)
-# print(vox_resampled.shape)
-
-
-# In[108]:
-
-
-# resample_out_path = f"{glmsingle_path}/glmsingle_outputs_resampled"
-# nib.save(vox_resampled, resample_out_path)
-
-
-# In[109]:
+# In[25]:
 
 
 if resample_voxel_size:
     nsdgeneral_path = f'{glmsingle_path}/{sub}_task-{task}_nsdgeneral_resampled.nii.gz'  
-    if run_resample_voxel:
+    if resample_post_glmsingle:
         assert os.path.exists(orig_glmsingle_path)
         roi_in_path = f"{orig_glmsingle_path}/{sub}_task-{task}_nsdgeneral.nii.gz"  # the input file is the original nsdgeneral mask (without resampling), from the original glmsingle directory
         applyxfm(roi_in_path, ref_name, omat_name, resample_method, output=nsdgeneral_path)
 
 
-# In[110]:
+# In[26]:
 
 
 roi = nib.load(nsdgeneral_path)
@@ -705,7 +723,7 @@ plot_roi(roi, bg_img=avg_mask)
 plt.show()
 
 
-# In[111]:
+# In[27]:
 
 
 avg_mask = avg_mask.get_fdata().flatten()
@@ -721,7 +739,7 @@ print(f"nsdgeneral voxels = {roi.sum()}")
 
 # ### ROI voxel exclusion
 
-# In[112]:
+# In[28]:
 
 
 # ROI masking?
@@ -739,7 +757,7 @@ if np.any(np.isnan(vox)):
 
 # ### Calculate reliability (corr between first and second presentation of same image) for every voxel
 
-# In[113]:
+# In[29]:
 
 
 vox_pairs = utils.zscore(vox[pairs])
@@ -752,7 +770,7 @@ assert np.sum(np.all(np.isnan(rels))) == 0
 
 # ### Create representational similarity matrix
 
-# In[114]:
+# In[30]:
 
 
 # creating img x vox x repetitions matrix | shape=(150, 18419, 2)
@@ -764,7 +782,7 @@ for ipair, pair in enumerate(tqdm(pairs)):
 vox_avg = vox0.mean(-1) # average across the repetitions
 
 
-# In[115]:
+# In[31]:
 
 
 # Masking RDM for each reliability threshold
@@ -779,10 +797,10 @@ for ir_thresh, r_thresh in enumerate(r_thresholds):
 # rdm is shape (4, 150, 150)
 
 
-# In[116]:
+# In[32]:
 
 
-reliability_threshold_to_visualize = .2
+reliability_threshold_to_visualize = .1
 plt.figure(figsize=(4,4))
 plt.imshow(rdm[np.where(r_thresholds==reliability_threshold_to_visualize)[0].item()], clim=(-1,1))
 plt.colorbar(shrink=0.8)
@@ -790,7 +808,7 @@ plt.title(f"{sub}_{session}\nreliability threshold={reliability_threshold_to_vis
 plt.show()
 
 
-# In[117]:
+# In[33]:
 
 
 for thresh in range(rdm.shape[0]):
@@ -798,7 +816,7 @@ for thresh in range(rdm.shape[0]):
         assert np.isclose(rdm[thresh, img, img], 1)
 
 
-# In[118]:
+# In[34]:
 
 
 # Reliability thresholding?
@@ -807,7 +825,7 @@ vox = vox[:,rels>.2]
 print(f"\nvox after reliability thresholding: {vox.shape}")
 
 
-# In[119]:
+# In[35]:
 
 
 print(images.shape)
@@ -815,7 +833,7 @@ print(vox.shape)
 assert len(images) == len(vox)
 
 
-# In[120]:
+# In[36]:
 
 
 same_corrs = []
@@ -857,7 +875,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[121]:
+# In[37]:
 
 
 vox_pairs = utils.zscore(vox[pairs])
@@ -873,7 +891,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[122]:
+# In[38]:
 
 
 utils.seed_everything(seed)
@@ -908,7 +926,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[123]:
+# In[39]:
 
 
 train_mean = np.mean(vox[train_image_indices],axis=0)
@@ -923,7 +941,7 @@ images = torch.Tensor(images)
 vox = torch.Tensor(vox)
 
 
-# In[124]:
+# In[40]:
 
 
 ### Multi-GPU config ###
@@ -942,7 +960,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[125]:
+# In[41]:
 
 
 print("PID of this process =",os.getpid())
@@ -971,7 +989,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[126]:
+# In[42]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -996,7 +1014,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[127]:
+# In[43]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -1144,7 +1162,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[128]:
+# In[44]:
 
 
 if ckpt_saving:
@@ -1170,7 +1188,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[129]:
+# In[45]:
 
 
 def my_split_by_node(urls): return urls
@@ -1191,7 +1209,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[130]:
+# In[46]:
 
 
 train_data = {}
@@ -1201,7 +1219,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[131]:
+# In[47]:
 
 
 num_voxels = {}
@@ -1225,29 +1243,11 @@ test_dl = torch.utils.data.DataLoader(test_data, batch_size=24, shuffle=False, d
 print(f"Loaded test dl for subj{subj}!\n")
 
 
-# In[132]:
-
-
-# paul_train_dl = torch.load('debug/paul_train_dl')
-# paul_test_dl = torch.load('debug/paul_test_dl')
-# # paul_train_dl.shape, train_dl.shape, paul_test_dl.shape, test_dl.shape
-
-
-# In[133]:
-
-
-# for i, b in enumerate(test_dl): 
-#     print(i,b)
-    
-# for i, b in enumerate(paul_test_dl): 
-#     print(i,b)
-
-
 # ## Load models
 
 # ### CLIP image embeddings  model
 
-# In[134]:
+# In[ ]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1290,7 +1290,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[135]:
+# In[ ]:
 
 
 class MindEyeModule(nn.Module):
@@ -1303,7 +1303,7 @@ model = MindEyeModule()
 model
 
 
-# In[136]:
+# In[ ]:
 
 
 class RidgeRegression(torch.nn.Module):
@@ -1328,7 +1328,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[137]:
+# In[ ]:
 
 
 from functools import partial
@@ -1424,7 +1424,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[138]:
+# In[ ]:
 
 
 if use_prior:
@@ -1462,7 +1462,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[139]:
+# In[ ]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1538,7 +1538,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[140]:
+# In[ ]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1583,7 +1583,7 @@ else:
 
 # # Train the model
 
-# In[141]:
+# In[ ]:
 
 
 epoch = 0
@@ -1592,7 +1592,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[142]:
+# In[ ]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1600,7 +1600,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[143]:
+# In[ ]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1608,7 +1608,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[144]:
+# In[ ]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1617,7 +1617,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[145]:
+# In[ ]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
@@ -1887,7 +1887,13 @@ if ckpt_saving:
     save_ckpt(f'last')
 
 
-# In[146]:
+# In[ ]:
+
+
+len(test_data)
+
+
+# In[ ]:
 
 
 # # Track metrics here:
@@ -1896,13 +1902,13 @@ if ckpt_saving:
 
 # **To tell if the model is working I'm looking at test_bwd/fwd_pct_correct and seeing if that is doing better than chance (1/batch_size)**
 
-# In[147]:
+# In[ ]:
 
 
 # MST_pairmate_names
 
 
-# In[148]:
+# In[ ]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
@@ -1916,7 +1922,7 @@ for i, p in enumerate(MST_pairmate_names):
 # print(pairs)
 
 
-# In[149]:
+# In[ ]:
 
 
 # if sub=="sub-002":
@@ -1944,7 +1950,7 @@ for i, p in enumerate(MST_pairmate_names):
 # # unique_images[unique_images_pairs]
 
 
-# In[150]:
+# In[ ]:
 
 
 def evaluate_mst_pairs(mst_pairs):
@@ -1986,14 +1992,10 @@ def evaluate_mst_pairs(mst_pairs):
             
     return score/total
 
-
-# In[151]:
-
-
 print(evaluate_mst_pairs(pairs))
 
 
-# In[152]:
+# In[ ]:
 
 
 # Compare first few pairs
@@ -2004,7 +2006,7 @@ for pair in pairs:  # Checking first 2 pairs
     print(f"Image 2: {x[pair[1]]}\n")
 
 
-# In[153]:
+# In[ ]:
 
 
 for i in range(len(pairs)):
@@ -2021,7 +2023,7 @@ for i in range(len(pairs)):
     plt.show()
 
 
-# In[154]:
+# In[ ]:
 
 
 # score = 0
@@ -2086,14 +2088,14 @@ for i in range(len(pairs)):
 # print(score/total)
 
 
-# In[155]:
+# In[ ]:
 
 
 #display(utils.torch_to_Image(imageA))
 #display(utils.torch_to_Image(imageB))
 
 
-# In[156]:
+# In[ ]:
 
 
 # from scipy.stats import binomtest

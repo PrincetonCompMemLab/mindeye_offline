@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=task-C_MST
+#SBATCH --job-name=sub-001_multi
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1              
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=gpu80
 #SBATCH --gpus-per-task=1       # Set to equal gres=gpu:#!
 #SBATCH --cpus-per-task=40      # 40 / 80 / 176 distributed across node
-#SBATCH --time=00:25:00         # total run time limit (HH:MM:SS)
+#SBATCH --time=02:30:00         # total run time limit (HH:MM:SS)
 #SBATCH -e slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o slurms/%A_%a.out
 #SBATCH --no-requeue
@@ -20,18 +20,21 @@ echo "Executing on the machine: $(hostname)"
 
 module purge
 module load anaconda3/2023.3
+module load fsl/6.0.6.2
 conda activate rt_mindEye2
 # source /scratch/gpfs/ri4541/MindEyeV2/src/fmri/bin/activate
 
 # verify these variables before submitting
 # ---
 sub=sub-001
-session=ses-05
+session="all"
 split=MST  # MST train/test split, alternative would be train on non-repeats and test on images that repeat (split=orig) 
-task=C
-model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split"
+task=study
+model_name="${sub}_multi_task-${task}_bs24_MST_rishab_${split}split"
+# model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split"
 main_script="main-multisession-3tasks"
-glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session}_task-${task}"
+glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle-multi"
+# glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session}" # _task-${task}"
 # --- 
 
 export NUM_GPUS=1  # Set to equal gres=gpu:#!
