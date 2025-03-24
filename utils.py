@@ -596,3 +596,154 @@ def zscore(data,train_mean=None,train_std=None):
         train_std = np.std(data,axis=0)
     zscored_data = (data - train_mean) / (train_std + 1e-6)
     return zscored_data
+
+
+def log_io(func):  # the first argument must be input; output must be a kwarg for this to work properly
+    def wrapper(*args, **kwargs):
+        inp = args[0]
+        output = kwargs['output']
+        print(f'\n*** Loading data from {inp} ***\n')
+        result = func(*args, **kwargs)
+        print(f'\n*** Saved resampled data to {output} ***\n')
+        return result
+    return wrapper
+
+@log_io  
+def resample(inp, ref, target_size, omat, output=None):  
+    os.system(f"flirt -in {inp} \
+                    -ref {ref} \
+                    -applyisoxfm {target_size} -nosearch \
+                    -omat {omat} \
+                    -out {output}")
+
+@log_io
+def applyxfm(inp, ref, init, interp, output=None):
+    os.system(f"flirt -in {inp} \
+                -ref {ref} \
+                -out {output} \
+                -applyxfm -init {init} \
+                -interp {interp}")
+
+@log_io
+def apply_thresh(inp, thresh, output=None):
+    os.system(f"fslmaths {inp} -thr {thresh} -bin {output}")
+
+def resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_path, glm_save_path_resampled, ref_name, omat):
+    # convert vox to nifti object and save
+    orig_mask = nib.load(f"{orig_glmsingle_path}/{sub}_{session}{task_name}_brain.nii.gz")
+
+    # apply mask and save original betas
+    print("original:", vox.shape)
+    vox_nii = unmask(vox, orig_mask)
+    glm_save_path = f"{glmsingle_path}/vox.nii.gz"
+    nib.save(vox_nii, glm_save_path)
+    print(f"saved original glmsingle betas to {glm_save_path}")
+
+    # resample and save betas
+    applyxfm(glm_save_path, ref_name, omat, resample_method, output=glm_save_path_resampled)
+    vox = nib.load(glm_save_path_resampled)
+    print("vox after resampling", vox.shape)
+
+    return vox
+
+
+def load_preprocess_betas(glmsingle_path, session, ses_list,
+                              remove_close_to_MST, image_names, 
+                              remove_random_n, vox_idx):
+    glmsingle = np.load(f"{glmsingle_path}/TYPED_FITHRF_GLMDENOISE_RR.npz", allow_pickle=True)
+    vox = glmsingle['betasmd'].T
+
+    print("vox", vox.shape)
+
+    # Preprocess betas
+    if vox.ndim == 4:
+        vox = vox[:, 0, 0]
+        print("vox", vox.shape)
+
+    if remove_close_to_MST:
+        x = [x for x in image_names if x != 'blank.jpg' and str(x) != 'nan']
+        close_to_MST_idx = [y for y, z in enumerate(x) if 'closest_pairs' in z]
+        close_to_MST_mask = np.ones(len(vox), dtype=bool)
+        close_to_MST_mask[close_to_MST_idx] = False
+        vox = vox[close_to_MST_mask]
+        print("vox after removing close_to_MST", vox.shape)
+
+    elif remove_random_n:
+        random_n_mask = np.ones(len(vox), dtype=bool)
+        random_n_mask[vox_idx] = False
+        vox = vox[random_n_mask]
+        print(f"vox after removing {n_to_remove}", vox.shape)
+
+    return vox
+
+
+def prepare_model_and_training(
+    num_voxels_list, 
+    n_blocks,
+    hidden_dim, 
+    clip_emb_dim, 
+    clip_seq_dim, 
+    clip_scale,
+    use_prior=False, 
+):
+    """
+    Prepare MindEye model, optimizer, and learning rate scheduler.
+    
+    Args:
+        num_voxels_list (list): List of number of voxels for each subject
+        hidden_dim (int): Hidden dimension for model layers
+        clip_emb_dim (int): CLIP embedding dimension
+        clip_seq_dim (int): CLIP sequence dimension
+        use_prior (bool): Whether to include diffusion prior network
+    
+    Returns:
+        model
+    """
+    import torch
+    import torch.nn as nn
+    import numpy as np
+    from models import VersatileDiffusionPriorNetwork, BrainDiffusionPrior
+    from MindEye2 import MindEyeModule, RidgeRegression, BrainNetwork
+    import utils
+
+    model = MindEyeModule()
+    print(model)
+
+    model.ridge = RidgeRegression(num_voxels_list, out_features=hidden_dim)
+    utils.count_params(model.ridge)
+    utils.count_params(model)
+
+    model.backbone = BrainNetwork(h=hidden_dim, in_dim=hidden_dim, out_dim=clip_emb_dim*clip_seq_dim, seq_len=1, n_blocks=n_blocks,
+                              clip_size=clip_emb_dim)
+    utils.count_params(model.backbone)
+    utils.count_params(model)
+
+    if use_prior:
+        # setup diffusion prior network
+        out_dim = clip_emb_dim
+        depth = 6
+        dim_head = 52
+        heads = clip_emb_dim//52 # heads * dim_head = clip_emb_dim
+        timesteps = 100
+        prior_network = VersatileDiffusionPriorNetwork(
+                dim=out_dim,
+                depth=depth,
+                dim_head=dim_head,
+                heads=heads,
+                causal=False,
+                num_tokens = clip_seq_dim,
+                learned_query_mode="pos_emb"
+            )
+        model.diffusion_prior = BrainDiffusionPrior(
+            net=prior_network,
+            image_embed_dim=out_dim,
+            condition_on_text_encodings=False,
+            timesteps=timesteps,
+            cond_drop_prob=0.2,
+            image_embed_scale=None,
+        )
+
+        utils.count_params(model.diffusion_prior)
+        utils.count_params(model)
+
+    return model

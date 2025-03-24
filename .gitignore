@@ -13,6 +13,7 @@ rt_python/data
 __pycache__/
 *.py[cod]
 *$py.class
+Untitled.ipynb
 .ipynb_checkpoints/
 Train (2).ipynb
 Train (2).py
@@ -49,7 +50,6 @@ recon_inference-multisession-simple-copy.ipynb
 recon_inference-multisession-simple-copy.py
 recon_inference-multisession-simple.ipynb
 recon_inference-multisession-simple.py
-recon_inference-multisession.ipynb
 recon_inference-multisession.py
 recon_inference-ses-03.ipynb
 recon_inference.py
