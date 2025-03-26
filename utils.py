@@ -747,3 +747,203 @@ def prepare_model_and_training(
         utils.count_params(model)
 
     return model
+
+
+def get_slurm_seed(default=0):
+    """Returns SLURM array seed or a default seed if not running in SLURM."""
+    try:
+        seed = int(os.environ["SLURM_ARRAY_TASK_ID"])
+        print(f"Using SLURM job array seed: {seed}")
+    except KeyError:
+        print(f"SLURM seed not found, using default: {default}")
+        seed = default
+    return seed
+
+
+# def get_unique_values(dic):
+#     """
+#     Takes a dictionary, potentially with duplicate values, and returns the key-value pairs for unique values. Keeps the key of the first unique value to appear in the dictionary.
+#     https://stackoverflow.com/questions/73682550/the-best-solution-for-receiving-dictionary-itemes-whose-value-is-unique
+    
+#     1. reverse the order of the dictionary so that you keep the key of the first unique value to appear
+#     2. swap keys and values; this deletes duplicates since dictionaries must have unique keys
+#     3. swap keys and values again so that the keys are back in place
+    
+#     to convince you that this works: 
+#     for k, v in reversed(dic.items()):
+#         # print(k,v)
+#         assert v == dic[k]
+    
+#     for k,v in {v: k for k, v in reversed(dic.items())}.items():
+#         # print(k,v)
+#         assert k == dic[v]
+
+#     for k, v in {v: k for k, v in reversed(dic.items())}.items():
+#         # print(k,v)
+#         assert k == dic[v]
+#     """
+    
+#     return {v: k for k, v in {v: k for k, v in reversed(dic.items())}.items()}
+
+
+# def get_MST(dic):
+#     """Takes a dictionary and returns items with MST images"""
+#     return {k: v for k, v in dic.items() if "MST_pairs" in v}
+
+
+# def get_unique_and_repeats(dic):
+#     from collections import defaultdict
+    
+#     reversed_dict = defaultdict(list)
+
+#     # Collect all indices for each item
+#     for k, v in dic.items():
+#         reversed_dict[v].append(k)
+
+#     # Create a dictionary with unique items (choosing the first occurrence)
+#     unique_dict = {v[0]: k for k, v in reversed_dict.items()}  # Keeps only one representative index
+
+#     # Create a dictionary with repeated items and all their indices
+#     repeats_dict = {k: v for k, v in reversed_dict.items() if len(v) > 1}
+
+#     return unique_dict, repeats_dict
+
+
+# def average_over_repeats(data, repeats_dict):
+#     """
+#     Reduces the data array by averaging over repeated indices while keeping unique images unchanged.
+
+#     Args:
+#         data (np.ndarray): The original array of shape (num_images, num_features).
+#         repeats_dict (dict): A dictionary mapping repeated image names to lists of indices.
+
+#     Returns:
+#         np.ndarray: The reduced array with unique images retained and repeats averaged.
+#     """
+#     unique_indices = set(range(data.shape[0]))  # Start with all indices
+#     averaged_data = []
+
+#     # Process repeated images: Average their corresponding data rows
+#     for repeated_indices in repeats_dict.values():
+#         avg_values = np.mean(data[repeated_indices], axis=0)  # Average over repeats
+#         averaged_data.append(avg_values)
+#         unique_indices.difference_update(repeated_indices)  # Remove repeated indices from the unique set
+
+#     # Add the remaining unique images (which were not repeated)
+#     for idx in sorted(unique_indices):  # Sort to maintain order
+#         averaged_data.append(data[idx])
+
+#     return np.array(averaged_data)
+
+
+# def filter_and_average_mst(vox, vox_image_dict):
+#     """
+#     Filters and averages the vox array over repeated MST images, while keeping non-MST images unchanged.
+
+#     Args:
+#         vox (np.ndarray): The original array of shape (num_images, num_features).
+#         vox_image_dict (dict): Maps image indices to file paths.
+
+#     Returns:
+#         np.ndarray: The reduced array with MST duplicates averaged and all unique images retained.
+#     """
+#     from collections import defaultdict
+    
+#     kept_indices = []  # Track retained indices  
+#     averaged_data = []  
+#     repeats_dict = defaultdict(list)
+
+#     # Identify MST repeats
+#     mst_indices = {idx: path for idx, path in vox_image_dict.items() if "MST_pairs" in path}
+#     for idx, path in mst_indices.items():
+#         repeats_dict[path].append(idx)
+
+#     unique_indices = set(range(vox.shape[0]))  # Start with all indices
+
+#     # Process MST repeated images
+#     for repeated_indices in repeats_dict.values():
+#         if len(repeated_indices) > 1:
+#             avg_values = np.mean(vox[repeated_indices], axis=0)
+#             averaged_data.append(avg_values)
+#             kept_indices.append(repeated_indices[0])  # Store first occurrence
+#             unique_indices.difference_update(repeated_indices)
+
+#     # Add remaining non-repeated images
+#     for idx in sorted(unique_indices):
+#         averaged_data.append(vox[idx])
+#         kept_indices.append(idx)
+
+#     return np.array(averaged_data), np.array(kept_indices)
+
+
+# def filter_and_average_mst(vox, vox_image_dict):
+#     """
+#     Filters and averages repeated MST images while retaining unique images.
+    
+#     Args:
+#         vox (np.ndarray): Original array of shape (num_images, num_features).
+#         vox_image_dict (dict): Maps image indices to file paths.
+#     Returns:
+#         tuple: Filtered array and corresponding kept indices.
+#     """
+#     from collections import defaultdict
+
+#     # Identify repeated MST paths
+#     repeats = {}
+#     for idx, path in vox_image_dict.items():
+#         if "MST_pairs" in path:
+#             repeats.setdefault(path, []).append(idx)
+    
+#     # Create mask to track kept entries
+#     keep_mask = np.ones(vox.shape[0], dtype=bool)
+#     output_vox = vox.copy()
+    
+#     # Average repeated MST images
+#     for indices in repeats.values():
+#         if len(indices) > 1:
+#             output_vox[indices[0]] = np.mean(vox[indices], axis=0)
+#             keep_mask[indices[1:]] = False
+    
+#     return output_vox[keep_mask], np.where(keep_mask)[0]
+
+
+def filter_and_average_mst(vox, vox_image_dict):
+    """
+    Filters and averages repeated MST images while retaining unique images.
+    
+    Args:
+        vox (np.ndarray): Original array of shape (num_images, num_features).
+        vox_image_dict (dict): Maps image indices to file paths.
+    Returns:
+        tuple: Filtered array and corresponding kept indices.
+    """
+    from copy import deepcopy
+    
+    # Identify repeated MST paths
+    repeats = {}
+    for idx, path in vox_image_dict.items():
+        if "MST_pairs" in path:
+            repeats.setdefault(path, []).append(idx)
+    
+    # Create mask to track kept entries
+    keep_mask = np.ones(vox.shape[0], dtype=bool)
+    output_vox = deepcopy(vox).astype(np.float32)
+    
+    # Average repeated MST images
+    for indices in repeats.values():
+        if len(indices) > 1:
+            avg_values = np.mean(vox[indices], axis=0)
+            output_vox[indices[0]] = avg_values
+            keep_mask[indices[1:]] = False
+    
+    return output_vox[keep_mask], np.where(keep_mask)[0]
+
+if __name__ == '__main__':
+    filter_and_average_mst(np.array([[1,2,3], [4,5,6], [7,8,9], [7,8,9], [10,11,12], [12,15,12]]), {
+        0: 'image1.jpg', 
+        1: 'MST_pairs/image2.jpg', 
+        2: 'image3.jpg', 
+        3: 'MST_pairs/image2.jpg', 
+        4: 'MST_pairs/image4.jpg', 
+        5: 'MST_pairs/image4.jpg'
+    })

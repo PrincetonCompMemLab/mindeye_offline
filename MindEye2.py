@@ -31,6 +31,7 @@ class BrainNetwork(nn.Module):
         self.seq_len = seq_len
         self.h = h
         self.clip_size = clip_size
+        self.clip_scale = clip_scale
         
         self.mixer_blocks1 = nn.ModuleList([
             self.mixer_block1(h, drop) for _ in range(n_blocks)
@@ -41,7 +42,7 @@ class BrainNetwork(nn.Module):
         
         # Output linear layer
         self.backbone_linear = nn.Linear(h * seq_len, out_dim, bias=True) 
-        if clip_scale>0:
+        if self.clip_scale>0:
             self.clip_proj = self.projector(clip_size, clip_size, h=clip_size)
             
     def projector(self, in_dim, out_dim, h=2048):
@@ -95,7 +96,7 @@ class BrainNetwork(nn.Module):
             
         x = x.reshape(x.size(0), -1)
         backbone = self.backbone_linear(x).reshape(len(x), -1, self.clip_size)
-        if clip_scale>0:
+        if self.clip_scale>0:
             c = self.clip_proj(backbone)
         
         return backbone, c, b

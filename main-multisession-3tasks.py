@@ -3,7 +3,7 @@
 
 # # Import packages & functions
 
-# In[6]:
+# In[1]:
 
 
 print("importing modules")
@@ -32,41 +32,37 @@ from torchvision import transforms
 torch.backends.cuda.matmul.allow_tf32 = True
 
 import utils
+from utils import load_preprocess_betas, resample, applyxfm, apply_thresh, resample_betas
 
+# imports utils from mindeye_preproc as "preproc"
 import importlib.util
 parent_utils_path = "/home/ri4541/mindeye_preproc/analysis/utils.py"
 spec = importlib.util.spec_from_file_location("utils", parent_utils_path)
 preproc = importlib.util.module_from_spec(spec)
-parent_dir = os.path.dirname(parent_utils_path)  # Extract directory
+parent_dir = os.path.dirname(parent_utils_path)
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
 spec.loader.exec_module(preproc)
-
-# Can run a SLURM job array to train many models with different random seed values
-try:
-    seed = int(os.environ["SLURM_ARRAY_TASK_ID"])
-    print(f"using random seed {seed} in SLURM job {seed} of array")
-except:
-    print("SLURM random seed indices not provided; using random seed = 0")
-    seed = 0
 
 if utils.is_interactive():
     from IPython.display import clear_output # function to clear print outputs in cell
     get_ipython().run_line_magic('load_ext', 'autoreload')
     # this allows you to change functions in models.py or utils.py and have this notebook automatically update with your revisions
     get_ipython().run_line_magic('autoreload', '2')
+    
+seed = utils.get_slurm_seed()
 
 
 # # Princeton data prep
 
 # ## Load Data & Design
 
-# In[7]:
+# In[2]:
 
 
 if utils.is_interactive():
     sub = "sub-005"
-    session = "all"
+    session = "ses-01"
     task = 'C'  # 'study' or 'A'; used to search for functional run in bids format
 else:
     sub = os.environ["sub"]
@@ -112,7 +108,7 @@ if resample_voxel_size:
         resampled_suffix += '_preglmsingle'
 
 
-# In[52]:
+# In[3]:
 
 
 session_label = preproc.get_session_label(ses_list)
@@ -120,7 +116,7 @@ print('session label:', session_label)
 n_runs, _ = preproc.get_runs_per_session(sub, session, ses_list)
 
 
-# In[11]:
+# In[4]:
 
 
 if utils.is_interactive():
@@ -154,7 +150,7 @@ assert os.path.exists(glmsingle_path)
 print("glmsingle path exists!")
 
 
-# In[12]:
+# In[5]:
 
 
 data, starts, images, is_new_run, image_names, unique_images, len_unique_images = preproc.load_design_files(
@@ -288,7 +284,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 
 # ## Load images
 
-# In[13]:
+# In[6]:
 
 
 import imageio.v2 as imageio
@@ -326,25 +322,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 print("MST_images==True", len(MST_images[MST_images==True]))
 
 
-# In[14]:
-
-
-# unique_images_pairs = [
-#     (1,2),(3,4),(5,6),(7,8),(9,10),(11,12),(13,14),(15,16),
-#     (17,18),(19,20),(21,22),(23,24),(25,26),(27,28),(29,30),
-#     (31,32),(33,34),(35,36),
-#     (787, 788), (789, 790), (791, 792), (793, 794), (795, 796),
-#     (797, 798), (799, 800), (801, 802), (803, 804), (805, 806),
-#     (807, 808), (809, 810), (811, 812), (813, 814), (815, 816),
-#     (817, 818), (819, 820), (821, 822), (823, 824), (825, 826),
-#     (827, 828), (829, 830), (831, 832), (833, 834), (835, 836),
-#     (837, 838), (839, 840), (841, 842), (843, 844), (845, 846),
-#     (847, 848), (849, 850)
-# ]
-# len(unique_images_pairs), unique_images[unique_images_pairs]
-
-
-# In[15]:
+# In[7]:
 
 
 # want IDs of pairmates based on MST_images
@@ -362,7 +340,7 @@ for p, pair in enumerate(MST_pairmate_names):
 print(MST_pairmate_indices.shape, MST_pairmate_indices)
 
 
-# In[16]:
+# In[8]:
 
 
 if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
@@ -390,7 +368,7 @@ if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
     plt.show()
 
 
-# In[17]:
+# In[9]:
 
 
 # pairs has the indices of all repeated images
@@ -409,51 +387,10 @@ plt.tight_layout()
 plt.show()
 
 
-# plt.figure(figsize=(2,2))
-# plt.imshow(images[0].permute(1,2,0).numpy())
-# plt.title(f"Trial 0")
-# plt.show()
-# plt.figure(figsize=(2,2))
-# plt.imshow(images[1].permute(1,2,0).numpy())
-# plt.title(f"Trial 1")
-# plt.show()
-# plt.figure(figsize=(2,2))
-# plt.imshow(images[2].permute(1,2,0).numpy())
-# plt.title(f"Trial 2")
-# plt.show()
-
-
-# In[18]:
-
-
-# for i in range(len(images)):
-#     plt.figure(figsize=(2,2))
-#     plt.imshow(images[i].permute(1,2,0).numpy())
-#     plt.title(f"Trial {i}")
-#     plt.show()
-
-
-# In[19]:
+# In[10]:
 
 
 p=0
-# if pairs.shape[-1] == 3:
-#     fig, ax = plt.subplots(1, 3, figsize=(10,8))
-
-#     ax[0].imshow(images[pairs[p][0]].permute(1,2,0).numpy())
-#     ax[0].set_title(f"Repeat 1")
-
-#     ax[1].imshow(images[pairs[p][1]].permute(1,2,0).numpy())
-#     ax[1].set_title(f"Repeat 2")
-
-#     ax[2].imshow(images[pairs[p][2]].permute(1,2,0).numpy())
-#     ax[2].set_title(f"Repeat 3")
-
-#     plt.setp(ax, xticks=[], yticks=[])
-#     plt.tight_layout()
-#     plt.show()
-    
-# else:
 
 # plot 2 repeats (anything in pairs should have 2 repeats, even if there's more)
 fig, ax = plt.subplots(1, 2, figsize=(10,8))
@@ -469,7 +406,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[20]:
+# In[11]:
 
 
 if resample_voxel_size:
@@ -477,57 +414,8 @@ if resample_voxel_size:
     ref_name = f'{glmsingle_path}/boldref_resampled.nii.gz'
     omat_name = f'{glmsingle_path}/boldref_omat'
 
-    # decorator function that prints that we loaded and saved data, to be used with calls to flirt as with the resample and applyxfm functions below
-    def log_io(func):  # the first argument must be input; output must be a kwarg for this to work properly
-        def wrapper(*args, **kwargs):
-            inp = args[0]
-            output = kwargs['output']
-            print(f'\n*** Loading data from {inp} ***\n')
-            result = func(*args, **kwargs)
-            print(f'\n*** Saved resampled data to {output} ***\n')
-            return result
-        return wrapper
 
-    @log_io  
-    def resample(inp, ref, target_size, omat, output=None):  
-        os.system(f"flirt -in {inp} \
-                        -ref {ref} \
-                        -applyisoxfm {target_size} -nosearch \
-                        -omat {omat} \
-                        -out {output}")
-
-    @log_io
-    def applyxfm(inp, ref, init, interp, output=None):
-        os.system(f"flirt -in {inp} \
-                    -ref {ref} \
-                    -out {output} \
-                    -applyxfm -init {init} \
-                    -interp {interp}")
-        
-    @log_io
-    def apply_thresh(inp, thresh, output=None):
-        os.system(f"fslmaths {inp} -thr {thresh} -bin {output}")
-        
-    def resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_path, glm_save_path_resampled, ref_name, omat):
-        # convert vox to nifti object and save
-        orig_mask = nib.load(f"{orig_glmsingle_path}/{sub}_{session}{task_name}_brain.nii.gz")
-
-        # apply mask and save original betas
-        print("original:", vox.shape)
-        vox_nii = unmask(vox, orig_mask)
-        glm_save_path = f"{glmsingle_path}/vox.nii.gz"
-        nib.save(vox_nii, glm_save_path)
-        print(f"saved original glmsingle betas to {glm_save_path}")
-
-        # resample and save betas
-        applyxfm(glm_save_path, ref_name, omat, resample_method, output=glm_save_path_resampled)
-        vox = nib.load(glm_save_path_resampled)
-        print("vox after resampling", vox.shape)
-
-        return vox
-
-
-# In[22]:
+# In[89]:
 
 
 from nilearn.plotting import plot_roi, plot_anat, plot_epi
@@ -562,51 +450,7 @@ print(f'There are {int(np.sum(brain))} voxels in the included brain mask\n')
 
 # ## Load GLMSingle voxel data
 
-# In[25]:
-
-
-def load_preprocess_betas(glmsingle_path, session, ses_list,
-                              remove_close_to_MST, image_names, 
-                              remove_random_n, vox_idx):
-#     # Load betas
-#     if session == "all":
-#         glmsingle = np.load(f"{glmsingle_path}/glmsingle_{ses_list[0]}/TYPED_FITHRF_GLMDENOISE_RR.npz", allow_pickle=True)
-#         vox = glmsingle['betasmd'].T
-#         print("vox", vox.shape)
-
-#         for s in ses_list[1:]:
-#             glmsingle = np.load(f"{glmsingle_path}/glmsingle_{s}/TYPED_FITHRF_GLMDENOISE_RR.npz", allow_pickle=True)
-#             vox = np.concatenate([vox, glmsingle['betasmd'].T])
-#             print("vox", vox.shape)
-#     else:
-    glmsingle = np.load(f"{glmsingle_path}/TYPED_FITHRF_GLMDENOISE_RR.npz", allow_pickle=True)
-    vox = glmsingle['betasmd'].T
-
-    print("vox", vox.shape)
-
-    # Preprocess betas
-    if vox.ndim == 4:
-        vox = vox[:, 0, 0]
-        print("vox", vox.shape)
-
-    if remove_close_to_MST:
-        x = [x for x in image_names if x != 'blank.jpg' and str(x) != 'nan']
-        close_to_MST_idx = [y for y, z in enumerate(x) if 'closest_pairs' in z]
-        close_to_MST_mask = np.ones(len(vox), dtype=bool)
-        close_to_MST_mask[close_to_MST_idx] = False
-        vox = vox[close_to_MST_mask]
-        print("vox after removing close_to_MST", vox.shape)
-
-    elif remove_random_n:
-        random_n_mask = np.ones(len(vox), dtype=bool)
-        random_n_mask[vox_idx] = False
-        vox = vox[random_n_mask]
-        print(f"vox after removing {n_to_remove}", vox.shape)
-
-    return vox
-
-
-# In[26]:
+# In[90]:
 
 
 vox = None
@@ -637,36 +481,9 @@ if needs_postprocessing == True:
 assert len(vox) == len(image_idx)
 
 
-# In[27]:
-
-
-# params = (session, ses_list, remove_close_to_MST, image_names, remove_random_n, vox_idx)
-# load_from_resampled_file = True
-
-# if resample_voxel_size:
-#     glm_save_path_resampled = f"{glmsingle_path}/vox_resampled.nii.gz"
-
-#     if resample_post_glmsingle:
-#         # perform resampling
-#         vox = load_preprocess_betas(orig_glmsingle_path, *params)
-#         vox = resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_path, glm_save_path_resampled, ref_name, omat_name)
-#     else:
-#         # just load resampled data
-#         vox = nib.load(glm_save_path_resampled)
-#         vox = load_preprocess_betas(glmsingle_path, *params)
-        
-#     vox = apply_mask(vox, avg_mask)
-#     vox = vox.reshape(-1, vox.shape[-1])  # flatten the 3D image into np array with shape (voxels, images)
-#     print(vox.shape)
-# else:
-#     vox = load_preprocess_betas(glmsingle_path, *params)
-
-# assert len(vox) == len(image_idx)
-
-
 # ### Load nsdgeneral ROI
 
-# In[33]:
+# In[91]:
 
 
 nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_nsdgeneral.nii.gz'  
@@ -675,7 +492,7 @@ assert os.path.exists(nsdgeneral_path)
 print(f"nsdgeneral path exists!")
 
 
-# In[29]:
+# In[92]:
 
 
 if resample_voxel_size:
@@ -686,15 +503,16 @@ if resample_voxel_size:
         applyxfm(roi_in_path, ref_name, omat_name, resample_method, output=nsdgeneral_path)
 
 
-# In[34]:
+# In[93]:
 
 
 roi = nib.load(nsdgeneral_path)
+print(roi.shape)
 plot_roi(roi, bg_img=avg_mask)
 plt.show()
 
 
-# In[35]:
+# In[94]:
 
 
 avg_mask = avg_mask.get_fdata().flatten()
@@ -710,7 +528,7 @@ print(f"nsdgeneral voxels = {roi.sum()}")
 
 # ### ROI voxel exclusion
 
-# In[36]:
+# In[95]:
 
 
 # ROI masking?
@@ -728,7 +546,7 @@ if np.any(np.isnan(vox)):
 
 # ### Calculate reliability (corr between first and second presentation of same image) for every voxel
 
-# In[37]:
+# In[96]:
 
 
 # results = []
@@ -736,13 +554,13 @@ if np.any(np.isnan(vox)):
 #     results.append(vox[i])
 
 
-# In[38]:
+# In[97]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[39]:
+# In[98]:
 
 
 # vox_pairs = []
@@ -769,11 +587,12 @@ assert np.sum(np.all(np.isnan(rels))) == 0
 
 # ### Create representational similarity matrix
 
-# In[40]:
+# In[99]:
 
 
 # creating img x vox x repetitions matrix | shape=(150, 18419, 2)
 vox0 = np.zeros((len(pairs_homog), vox.shape[-1], 2))
+print(vox0.shape)
 for ipair, pair in enumerate(tqdm(pairs_homog)):
     pair = pair[:2] # to keep things consistent, just using the first two repeats
     i,j = pair
@@ -781,7 +600,7 @@ for ipair, pair in enumerate(tqdm(pairs_homog)):
 vox_avg = vox0.mean(-1) # average across the repetitions
 
 
-# In[41]:
+# In[100]:
 
 
 # Masking RDM for each reliability threshold
@@ -796,7 +615,7 @@ for ir_thresh, r_thresh in enumerate(r_thresholds):
 # rdm is shape (4, 150, 150)
 
 
-# In[50]:
+# In[101]:
 
 
 thresh = .2
@@ -807,7 +626,7 @@ plt.title(f"{sub}_{session}\nreliability threshold={thresh}\n")
 plt.show()
 
 
-# In[43]:
+# In[102]:
 
 
 for thresh in range(rdm.shape[0]):
@@ -815,7 +634,13 @@ for thresh in range(rdm.shape[0]):
         assert np.isclose(rdm[thresh, img, img], 1)
 
 
-# In[44]:
+# In[103]:
+
+
+vox.shape
+
+
+# In[104]:
 
 
 # Reliability thresholding?
@@ -824,7 +649,7 @@ vox = vox[:,rels>.2]
 print(f"\nvox after reliability thresholding: {vox.shape}")
 
 
-# In[45]:
+# In[105]:
 
 
 print(images.shape)
@@ -832,7 +657,7 @@ print(vox.shape)
 assert len(images) == len(vox)
 
 
-# In[46]:
+# In[106]:
 
 
 same_corrs = []
@@ -874,7 +699,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[47]:
+# In[107]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -890,7 +715,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[48]:
+# In[108]:
 
 
 utils.seed_everything(seed)
@@ -906,10 +731,13 @@ if train_test_split == 'orig':
 elif train_test_split == 'MST':
     # non-MST images are the train split
     # MST images are the test split
-    train_image_indices = np.where(MST_images==False)[0]
-    test_image_indices = np.where(MST_images==True)[0]
+    vox_image_dict = {k:v for k,v in enumerate(vox_image_names)}
+    vox, kept_indices = utils.filter_and_average_mst(vox, vox_image_dict)
+    MST_images_filtered = MST_images[kept_indices]
+    train_image_indices = np.where(MST_images_filtered == False)[0]  
+    test_image_indices = np.where(MST_images_filtered == True)[0]
     print(len(train_image_indices), len(test_image_indices))
-    assert len(train_image_indices) + len(test_image_indices) == len(image_idx)
+    assert len(train_image_indices) + len(test_image_indices) == len(vox)
 elif train_test_split == 'unique':
     imageTest = np.arange(len(images))
     train_image_indices = pairs.flatten()
@@ -925,7 +753,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[49]:
+# In[109]:
 
 
 train_mean = np.mean(vox[train_image_indices],axis=0)
@@ -936,11 +764,18 @@ print("voxels have been zscored")
 print(vox[:,0].mean(), vox[:,0].std())
 print("vox", vox.shape)
 
+images = images[kept_indices]
+
+
+# In[111]:
+
+
 images = torch.Tensor(images)
 vox = torch.Tensor(vox)
+assert len(images) == len(vox)
 
 
-# In[ ]:
+# In[112]:
 
 
 ### Multi-GPU config ###
@@ -959,7 +794,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[ ]:
+# In[113]:
 
 
 print("PID of this process =",os.getpid())
@@ -988,7 +823,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[ ]:
+# In[114]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -1013,7 +848,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[ ]:
+# In[115]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -1161,7 +996,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[ ]:
+# In[116]:
 
 
 if ckpt_saving:
@@ -1187,7 +1022,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[ ]:
+# In[117]:
 
 
 def my_split_by_node(urls): return urls
@@ -1208,7 +1043,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[ ]:
+# In[118]:
 
 
 train_data = {}
@@ -1218,7 +1053,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[ ]:
+# In[119]:
 
 
 num_voxels = {}
@@ -1246,7 +1081,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[ ]:
+# In[120]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1289,129 +1124,30 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[ ]:
+# In[121]:
 
 
-class MindEyeModule(nn.Module):
-    def __init__(self):
-        super(MindEyeModule, self).__init__()
-    def forward(self, x):
-        return x
-        
-model = MindEyeModule()
-model
+model = utils.prepare_model_and_training(
+    num_voxels_list=num_voxels_list,
+    n_blocks=n_blocks,
+    hidden_dim=hidden_dim,
+    clip_emb_dim=clip_emb_dim,
+    clip_seq_dim=clip_seq_dim,
+    use_prior=use_prior,
+    clip_scale=clip_scale
+)
 
 
-# In[ ]:
+# In[122]:
 
-
-class RidgeRegression(torch.nn.Module):
-    # make sure to add weight_decay when initializing optimizer
-    def __init__(self, input_sizes, out_features, seq_len=1): 
-        super(RidgeRegression, self).__init__()
-        self.seq_len = seq_len
-        self.out_features = out_features
-        self.linears = torch.nn.ModuleList([
-                torch.nn.Linear(input_size, out_features) for input_size in input_sizes
-            ])
-    def forward(self, x, subj_idx=0):
-        out = torch.cat([self.linears[subj_idx](x[:,seq]).unsqueeze(1) for seq in range(self.seq_len)], dim=1)
-        return out
-        
-model.ridge = RidgeRegression(num_voxels_list, out_features=hidden_dim)
-utils.count_params(model.ridge)
-utils.count_params(model)
 
 # test on subject 1 with fake data
 b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[ ]:
+# In[123]:
 
-
-from functools import partial
-from diffusers.models.vae import Decoder
-class BrainNetwork(nn.Module):
-    def __init__(self, h=4096, in_dim=15724, out_dim=768, seq_len=1, n_blocks=n_blocks, drop=.15, 
-                 clip_size=768):
-        super().__init__()
-        self.seq_len = seq_len
-        self.h = h
-        self.clip_size = clip_size
-        
-        self.mixer_blocks1 = nn.ModuleList([
-            self.mixer_block1(h, drop) for _ in range(n_blocks)
-        ])
-        self.mixer_blocks2 = nn.ModuleList([
-            self.mixer_block2(seq_len, drop) for _ in range(n_blocks)
-        ])
-        
-        # Output linear layer
-        self.backbone_linear = nn.Linear(h * seq_len, out_dim, bias=True) 
-        if clip_scale>0:
-            self.clip_proj = self.projector(clip_size, clip_size, h=clip_size)
-            
-    def projector(self, in_dim, out_dim, h=2048):
-        return nn.Sequential(
-            nn.LayerNorm(in_dim),
-            nn.GELU(),
-            nn.Linear(in_dim, h),
-            nn.LayerNorm(h),
-            nn.GELU(),
-            nn.Linear(h, h),
-            nn.LayerNorm(h),
-            nn.GELU(),
-            nn.Linear(h, out_dim)
-        )
-    
-    def mlp(self, in_dim, out_dim, drop):
-        return nn.Sequential(
-            nn.Linear(in_dim, out_dim),
-            nn.GELU(),
-            nn.Dropout(drop),
-            nn.Linear(out_dim, out_dim),
-        )
-    
-    def mixer_block1(self, h, drop):
-        return nn.Sequential(
-            nn.LayerNorm(h),
-            self.mlp(h, h, drop),  # Token mixing
-        )
-
-    def mixer_block2(self, seq_len, drop):
-        return nn.Sequential(
-            nn.LayerNorm(seq_len),
-            self.mlp(seq_len, seq_len, drop)  # Channel mixing
-        )
-        
-    def forward(self, x):
-        # make empty tensors
-        c,b = torch.Tensor([0.]), torch.Tensor([[0.],[0.]])
-        
-        # Mixer blocks
-        residual1 = x
-        residual2 = x.permute(0,2,1)
-        for block1, block2 in zip(self.mixer_blocks1,self.mixer_blocks2):
-            x = block1(x) + residual1
-            residual1 = x
-            x = x.permute(0,2,1)
-            
-            x = block2(x) + residual2
-            residual2 = x
-            x = x.permute(0,2,1)
-            
-        x = x.reshape(x.size(0), -1)
-        backbone = self.backbone_linear(x).reshape(len(x), -1, self.clip_size)
-        if clip_scale>0:
-            c = self.clip_proj(backbone)
-        
-        return backbone, c, b
-
-model.backbone = BrainNetwork(h=hidden_dim, in_dim=hidden_dim, seq_len=1, 
-                          clip_size=clip_emb_dim, out_dim=clip_emb_dim*clip_seq_dim)
-utils.count_params(model.backbone)
-utils.count_params(model)
 
 # test that the model works on some fake data
 b = torch.randn((2,1,hidden_dim))
@@ -1423,7 +1159,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[ ]:
+# In[124]:
 
 
 if use_prior:
@@ -1461,7 +1197,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[ ]:
+# In[125]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1537,7 +1273,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[ ]:
+# In[126]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1582,7 +1318,7 @@ else:
 
 # # Train the model
 
-# In[ ]:
+# In[127]:
 
 
 epoch = 0
@@ -1591,7 +1327,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[ ]:
+# In[128]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1599,7 +1335,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[ ]:
+# In[129]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1607,7 +1343,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[ ]:
+# In[130]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
