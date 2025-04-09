@@ -733,6 +733,8 @@ elif train_test_split == 'MST':
     # MST images are the test split
     vox_image_dict = {k:v for k,v in enumerate(vox_image_names)}
     vox, kept_indices = utils.filter_and_average_mst(vox, vox_image_dict)
+    all_indices = set(range(vox.shape[0]))
+    deleted_indices = all_indices - set(kept_indices)  # used later to verify that the images removed are truly duplicates
     MST_images_filtered = MST_images[kept_indices]
     train_image_indices = np.where(MST_images_filtered == False)[0]  
     test_image_indices = np.where(MST_images_filtered == True)[0]
@@ -763,6 +765,23 @@ vox = utils.zscore(vox,train_mean=train_mean,train_std=train_std)
 print("voxels have been zscored")
 print(vox[:,0].mean(), vox[:,0].std())
 print("vox", vox.shape)
+
+
+# In[ ]:
+
+
+for idx in deleted_indices:
+    # check image names to be deleted match
+    original_name = vox_image_dict[idx]
+    matching_indices = [i for i in deleted_indices if vox_image_dict[i] == original_name]
+    assert all(vox_image_dict[i] == original_name for i in matching_indices), \
+        f"Mismatch in image names for deleted indices {matching_indices}"
+
+    # check image data to be deleted match
+    base_image = images[matching_indices[0]]  # Reference image
+    for i in matching_indices[1:]:
+        assert np.array_equal(base_image, images[i]), \
+            f"Mismatch in image data for {vox_image_dict[i]} at index {i}"
 
 images = images[kept_indices]
 
@@ -1278,32 +1297,37 @@ num_params = utils.count_params(model)
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
     import wandb
+    import time
+    
     wandb_project = 'rtmindeye'
     print(f"wandb {wandb_project} run {model_name}")
-    # need to configure wandb beforehand in terminal with "wandb init"!
+
+    # Need to configure wandb beforehand in terminal with "wandb init"!
     wandb_config = {
-      "model_name": model_name,
-      "global_batch_size": global_batch_size,
-      "batch_size": batch_size,
-      "num_epochs": num_epochs,
-      "num_sessions": num_sessions,
-      "num_params": num_params,
-      "clip_scale": clip_scale,
-      "prior_scale": prior_scale,
-      "blur_scale": blur_scale,
-      "use_image_aug": use_image_aug,
-      "max_lr": max_lr,
-      "mixup_pct": mixup_pct,
-      "num_samples_per_epoch": num_samples_per_epoch,
-      "ckpt_interval": ckpt_interval,
-      "ckpt_saving": ckpt_saving,
-      "seed": seed,
-      "distributed": distributed,
-      "num_devices": num_devices,
-      "world_size": world_size,
+        "model_name": model_name,
+        "global_batch_size": global_batch_size,
+        "batch_size": batch_size,
+        "num_epochs": num_epochs,
+        "num_sessions": num_sessions,
+        "num_params": num_params,
+        "clip_scale": clip_scale,
+        "prior_scale": prior_scale,
+        "blur_scale": blur_scale,
+        "use_image_aug": use_image_aug,
+        "max_lr": max_lr,
+        "mixup_pct": mixup_pct,
+        "num_samples_per_epoch": num_samples_per_epoch,
+        "ckpt_interval": ckpt_interval,
+        "ckpt_saving": ckpt_saving,
+        "seed": seed,  # SLURM array task ID
+        "distributed": distributed,
+        "num_devices": num_devices,
+        "world_size": world_size,
     }
-    print("wandb_config:\n",wandb_config)
-    print("wandb_id:",model_name)
+    print("wandb_config:\n", wandb_config)
+    print("wandb_id:", model_name)
+
+    # Initialize wandb
     wandb.init(
         id=model_name,
         project=wandb_project,
@@ -1312,6 +1336,32 @@ if local_rank==0 and wandb_log: # only use main process for wandb logging
         resume="allow",
         save_code=True,
     )
+
+    # Get SLURM job & array ID
+    slurm_job_id = utils.get_slurm_job()
+    slurm_array_id = seed  # seed corresponds to SLURM_ARRAY_TASK_ID
+
+    # Define SLURM log paths
+    log_dir = "slurms"
+    log_files = [
+        f"{log_dir}/{slurm_job_id}_{slurm_array_id}.out",
+        f"{log_dir}/{slurm_job_id}_{slurm_array_id}.err",
+    ]
+
+    # Ensure logs exist before logging them
+    for log_file in log_files:
+        wait_time = 0
+        while not os.path.exists(log_file) and wait_time < 60:  # Wait max 60s
+            time.sleep(5)
+            wait_time += 5
+
+    # Log SLURM logs as artifacts
+    artifact = wandb.Artifact(f"slurm_logs_{slurm_job_id}_{slurm_array_id}", type="logs")
+    for log_file in log_files:
+        if os.path.exists(log_file):
+            artifact.add_file(log_file)
+
+    wandb.log_artifact(artifact)
 else:
     wandb_log = False
 
@@ -1352,7 +1402,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[ ]:
+# In[131]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
@@ -1622,7 +1672,7 @@ if ckpt_saving:
     save_ckpt(f'last')
 
 
-# In[ ]:
+# In[132]:
 
 
 len(test_data)
@@ -1643,7 +1693,7 @@ len(test_data)
 # MST_pairmate_names
 
 
-# In[ ]:
+# In[134]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
@@ -1657,7 +1707,7 @@ for i, p in enumerate(MST_pairmate_names):
 # print(pairs)
 
 
-# In[ ]:
+# In[135]:
 
 
 # if sub=="sub-002":
@@ -1685,7 +1735,7 @@ for i, p in enumerate(MST_pairmate_names):
 # # unique_images[unique_images_pairs]
 
 
-# In[ ]:
+# In[136]:
 
 
 def evaluate_mst_pairs(mst_pairs):
@@ -1730,7 +1780,7 @@ def evaluate_mst_pairs(mst_pairs):
 print(evaluate_mst_pairs(pairs))
 
 
-# In[ ]:
+# In[137]:
 
 
 # Compare first few pairs
@@ -1741,24 +1791,24 @@ for pair in pairs:  # Checking first 2 pairs
     print(f"Image 2: {x[pair[1]]}\n")
 
 
-# In[ ]:
+# In[139]:
 
 
-for i in range(len(pairs)):
-    fig, ax = plt.subplots(1, 2, figsize=(10,8))
+# for i in range(len(pairs)):
+#     fig, ax = plt.subplots(1, 2, figsize=(10,8))
 
-    ax[0].imshow(images[pairs[i][0]].permute(1,2,0).numpy())
-    ax[0].set_title(f"Repeat 1")
+#     ax[0].imshow(images[pairs[i][0]].permute(1,2,0).numpy())
+#     ax[0].set_title(f"Repeat 1")
 
-    ax[1].imshow(images[pairs[i][1]].permute(1,2,0).numpy())
-    ax[1].set_title(f"Repeat 2")
+#     ax[1].imshow(images[pairs[i][1]].permute(1,2,0).numpy())
+#     ax[1].set_title(f"Repeat 2")
 
-    plt.setp(ax, xticks=[], yticks=[])
-    plt.tight_layout()
-    plt.show()
+#     plt.setp(ax, xticks=[], yticks=[])
+#     plt.tight_layout()
+#     plt.show()
 
 
-# In[ ]:
+# In[140]:
 
 
 # score = 0
@@ -1823,14 +1873,14 @@ for i in range(len(pairs)):
 # print(score/total)
 
 
-# In[ ]:
+# In[141]:
 
 
 #display(utils.torch_to_Image(imageA))
 #display(utils.torch_to_Image(imageB))
 
 
-# In[ ]:
+# In[142]:
 
 
 # from scipy.stats import binomtest

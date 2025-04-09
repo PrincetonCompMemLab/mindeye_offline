@@ -795,3 +795,155 @@ def filter_and_average_mst(vox, vox_image_dict):
             keep_mask[indices[1:]] = False
     
     return output_vox[keep_mask], np.where(keep_mask)[0]
+
+
+def verify_image_patterns(image_to_indices):
+    failures = []
+    for image_name, sessions in image_to_indices.items():
+        session1, session2 = sessions
+        total_count = len(session1) + len(session2)
+
+        if "special515" in image_name:
+            if not (
+                (len(session1) == 3 and len(session2) == 0) or
+                (len(session1) == 0 and len(session2) == 3) or
+                (len(session1) == 1 and len(session2) == 0) or
+                (len(session1) == 0 and len(session2) == 1)
+            ):
+                failures.append(f"{image_name} does not appear 3x in only 1 session.")
+        elif "MST_pairs" in image_name:
+            if not (len(session1) == 2 and len(session2) == 2):
+                failures.append(f"{image_name} does not appear 2x in both sessions.")
+        else:
+            if not (
+                (total_count == 1) and
+                (len(session1) == 1 and len(session2) == 0 or len(session1) == 0 and len(session2) == 1)
+            ):
+                failures.append(f"{image_name} does not appear 1x in only 1 session.")
+
+    return failures
+
+def compute_avg_repeat_corrs(vox_repeats: np.ndarray) -> np.ndarray:
+    """
+    Given an array of shape (n_repeats, n_voxels), compute the average correlation
+    across all unique repeat combinations for each voxel.
+    Returns:
+        rels: (n_voxels,) array of averaged correlations
+    """
+    import itertools
+    n_repeats, n_vox = vox_repeats.shape
+    combos = list(itertools.combinations(range(n_repeats), 2))
+    
+    rels = np.full(n_vox, np.nan)
+    
+    # For each voxel
+    for v in range(n_vox):
+        corrs = []
+        # Calculate correlation for each pair of repeats
+        for i, j in combos:
+            r = np.corrcoef(vox_repeats[i, v], vox_repeats[j, v])[0, 1]
+            corrs.append(r)
+        # Average across all pairwise correlations
+        rels[v] = np.mean(corrs)
+    
+    return rels
+
+
+def get_pairs(data, repeat_indices=(0, 1)):
+    """
+    Extract pairs based on specified repeat indices, falling back to available repeats.
+    
+    Parameters:
+    - data: List of items, where each item may have different number of repeats
+    - repeat_indices: Tuple of indices (i, j) to extract if available
+    
+    Returns:
+    - Array of pairs
+    """
+    result = []
+    
+    for item in data:
+        # Determine what repeats are actually available
+        num_repeats = len(item)
+        
+        # Handle the requested indices
+        i, j = repeat_indices
+        
+        # Adjust indices if they're out of bounds
+        if i >= num_repeats:
+            i = min(num_repeats - 1, 0)
+        if j >= num_repeats:
+            j = min(num_repeats - 1, 1 if num_repeats > 1 else 0)
+            
+        # Create the pair
+        result.append([item[i], item[j]])
+    
+    return np.array(result)
+
+
+def compute_vox_rels(vox, pairs, sub, session, rdm=False, repeat_indices=(0,1)):
+    from tqdm import tqdm
+    pairs = get_pairs(pairs, repeat_indices=repeat_indices)
+    # print(pairs)
+    # _tmp = [(i[0],i[-1]) for i in pairs]
+    # breakpoint()
+    # vox_pairs = zscore(vox[_tmp])  # zscoring based on first and last repeat only
+    # rels = compute_avg_repeat_corrs(vox_pairs)
+
+    # _tmp = [(i[0],i[1]) for i in pairs]
+    # vox_pairs = zscore(vox[_tmp])
+    
+    vox_pairs = zscore(vox[pairs])
+    rels = np.full(vox.shape[-1], np.nan)
+    for v in tqdm(range(vox.shape[-1])):
+        rels[v] = np.corrcoef(vox_pairs[:, 0, v], vox_pairs[:, 1, v])[1, 0]
+    
+    print("rels", rels.shape)
+    assert np.sum(np.all(np.isnan(rels))) == 0
+    
+    if rdm:  # generate a Representational Dissimilarity Matrix to visualize how similar the voxel patterns are across images
+        # average voxel patterns across repeats
+        vox0 = np.zeros((len(pairs), vox.shape[-1], 2))
+        for ipair, pair in enumerate(tqdm(pairs)):
+            i, j = pair[:2]  # Using the first two repeats
+            vox0[ipair, :, :] = vox[pair].T
+        vox_avg = vox0.mean(-1)
+
+        # plot the RDM at various thresholds
+        r_thresholds = np.array([.0, .1, .2, .3])
+        rdm = np.zeros((len(r_thresholds), len(pairs), len(pairs))) 
+
+        for ir_thresh, r_thresh in enumerate(r_thresholds):
+            print(f"reliability threshold = {r_thresh}")
+            for i in tqdm(range(len(pairs))):
+                for j in range(len(pairs)):
+                    rdm[ir_thresh, i, j] = np.corrcoef(vox_avg[i, rels > r_thresh], 
+                                                       vox_avg[j, rels > r_thresh])[0, 1]
+        n_thresh = len(r_thresholds)
+        fig, axs = plt.subplots(1, n_thresh, figsize=(4 * n_thresh, 4), squeeze=False)
+
+        for i, r_thresh in enumerate(r_thresholds):
+            ax = axs[0, i]
+            im = ax.imshow(rdm[i], clim=(-1, 1))
+            ax.set_title(f"r > {r_thresh:.1f}")
+            ax.set_xlabel("Image")
+            ax.set_ylabel("Image")
+            fig.colorbar(im, ax=ax, shrink=0.8)
+
+        # Optional: add a supertitle with subject/session/repeat info
+        fig.suptitle(f"{sub}_{session}\nrepeat combo {r}", fontsize=14)
+        plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Leave space for suptitle
+        plt.show()
+
+            # thresh = .2
+            # plt.figure(figsize=(4, 4))
+            # plt.imshow(rdm[np.where(r_thresholds == thresh)[0].item()], clim=(-1, 1))
+            # plt.colorbar(shrink=0.8)
+            # plt.title(f"{sub}_{session}\nreliability threshold={thresh}; repeats {r}")
+            # plt.show()
+
+        for thresh in range(rdm.shape[0]):
+            for img in range(rdm.shape[1]):
+                assert np.isclose(rdm[thresh, img, img], 1)
+    
+    return rels
