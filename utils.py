@@ -947,3 +947,104 @@ def compute_vox_rels(vox, pairs, sub, session, rdm=False, repeat_indices=(0,1)):
                 assert np.isclose(rdm[thresh, img, img], 1)
     
     return rels
+
+
+def load_masks(img_list):
+    from nilearn.masking import intersect_masks
+    import nilearn
+
+    masks = [nilearn.image.load_img(mask) for mask in img_list]
+    assert all(np.allclose(masks[0].affine, m.affine) for m in masks)
+    return masks, intersect_masks(masks, threshold=0.5, connected=True)
+
+
+def get_mask(ses_list, sub, func_task_name):
+    assert isinstance(ses_list, list), "ses_list is not a list"
+    mask_imgs = []
+    nsd_imgs = []
+    for ses in ses_list:
+        prefix = f"/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_{sub}_{ses}_task-{func_task_name}/{sub}_{ses}_task-{func_task_name}"
+        mask_path = prefix + "_brain.nii.gz"
+        nsd_path = prefix + "_nsdgeneral.nii.gz"
+        print(mask_path)
+        print(nsd_path)
+        assert os.path.exists(mask_path)
+        assert os.path.exists(nsd_path)
+        mask_imgs.append(mask_path)
+        nsd_imgs.append(nsd_path)
+
+    func_masks, avg_mask = load_masks(mask_imgs)
+    print(f'intersected brain masks from {ses_list}')
+    
+    nsd_masks, roi = load_masks(nsd_imgs)
+    print(f'intersected nsdgeneral roi masks from {ses_list}')
+
+    return func_masks, avg_mask, nsd_masks, roi
+
+
+
+def process_images(image_names, unique_images, remove_close_to_MST=False, remove_random_n=False, imgs_to_remove=None, sub=None, session=None):
+    image_idx = np.array([])
+    vox_image_names = np.array([])
+    all_MST_images = {}
+    
+    for i, im in enumerate(image_names):
+        if im == "blank.jpg" or str(im) == "nan":
+            continue
+                
+        if remove_close_to_MST and "closest_pairs" in im:
+            continue
+        
+        if remove_random_n and im in imgs_to_remove:
+            continue
+            
+        vox_image_names = np.append(vox_image_names, im)
+        image_idx_ = np.where(im == unique_images)[0].item()
+        image_idx = np.append(image_idx, image_idx_)
+        
+        if sub == 'ses-01' and session in ('ses-01', 'ses-04'):
+            if ('w_' in im or 'paired_image_' in im or re.match(r'all_stimuli/rtmindeye_stimuli/\d{1,2}_\d{1,3}\.png$', im) 
+                or re.match(r'images/\d{1,2}_\d{1,3}\.png$', im)):
+                all_MST_images[i] = im
+        elif 'MST' in im:
+            all_MST_images[i] = im
+    
+    image_idx = torch.Tensor(image_idx).long()
+    unique_MST_images = np.unique(list(all_MST_images.values()))
+    
+    MST_ID = np.array([], dtype=int)
+    if remove_close_to_MST:
+        close_to_MST_idx = np.array([], dtype=int)
+    if remove_random_n:
+        random_n_idx = np.array([], dtype=int)
+    
+    vox_idx = np.array([], dtype=int)
+    j = 0  # Counter for indexing vox based on removed images
+    
+    for i, im in enumerate(image_names):
+        if im == "blank.jpg" or str(im) == "nan":
+            continue
+        
+        if remove_close_to_MST and "closest_pairs" in im:
+            close_to_MST_idx = np.append(close_to_MST_idx, i)
+            continue
+        
+        if remove_random_n and im in imgs_to_remove:
+            vox_idx = np.append(vox_idx, j)
+            j += 1
+            continue
+        
+        j += 1
+        curr = np.where(im == unique_MST_images)
+        
+        if curr[0].size == 0:
+            MST_ID = np.append(MST_ID, len(unique_MST_images))  # Out of range index for filtering later
+        else:
+            MST_ID = np.append(MST_ID, curr)
+    
+    assert len(MST_ID) == len(image_idx)
+    
+    pairs = find_paired_indices(image_idx)
+    pairs = sorted(pairs, key=lambda x: x[0])
+    
+    return image_idx, vox_image_names, pairs
