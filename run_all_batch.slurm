@@ -32,8 +32,8 @@ session_label='ses-01-02'
 split=MST  # MST train/test split, alternative would be train on non-repeats and test on images that repeat (split=orig) 
 task=C
 # model_name="${sub}_multi_task-${task}_bs24_MST_rishab_${split}split"
-model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_union_mask_${SLURM_ARRAY_TASK_ID}"
-main_script="main-multisession-3tasks"
+model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_union_mask_finetune_${SLURM_ARRAY_TASK_ID}"
+main_script="main-finetune"
 # glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle-multi"
 glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session_label}_task-${task}"
 # glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session}"

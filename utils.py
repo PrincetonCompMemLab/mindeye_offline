@@ -1048,3 +1048,6 @@ def process_images(image_names, unique_images, remove_close_to_MST=False, remove
     pairs = sorted(pairs, key=lambda x: x[0])
     
     return image_idx, vox_image_names, pairs
+
+def find_all_indices(list_, element):
+    return [index for index, value in enumerate(list_) if value == element]

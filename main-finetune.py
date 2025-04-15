@@ -3,7 +3,7 @@
 
 # # Import packages & functions
 
-# In[1]:
+# In[2]:
 
 
 print("importing modules")
@@ -57,7 +57,7 @@ seed = utils.get_slurm_seed()
 
 # ## Load Data & Design
 
-# In[2]:
+# In[3]:
 
 
 if utils.is_interactive():
@@ -69,6 +69,7 @@ else:
     sub = os.environ["sub"]
     session = os.environ["session"]
     task = os.environ["task"]
+    func_task_name = 'C'
 
 if session == "all":
     ses_list = ["ses-01", "ses-02"]  # list of actual session IDs
@@ -109,7 +110,7 @@ if resample_voxel_size:
         resampled_suffix += '_preglmsingle'
 
 
-# In[3]:
+# In[4]:
 
 
 session_label = preproc.get_session_label(ses_list)
@@ -117,7 +118,7 @@ print('session label:', session_label)
 n_runs, _ = preproc.get_runs_per_session(sub, session, ses_list)
 
 
-# In[4]:
+# In[5]:
 
 
 if utils.is_interactive():
@@ -151,7 +152,7 @@ assert os.path.exists(glmsingle_path)
 print("glmsingle path exists!")
 
 
-# In[5]:
+# In[6]:
 
 
 data, starts, images, is_new_run, image_names, unique_images, len_unique_images = preproc.load_design_files(
@@ -285,7 +286,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 
 # ## Load images
 
-# In[6]:
+# In[7]:
 
 
 import imageio.v2 as imageio
@@ -323,7 +324,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 print("MST_images==True", len(MST_images[MST_images==True]))
 
 
-# In[7]:
+# In[8]:
 
 
 # want IDs of pairmates based on MST_images
@@ -341,7 +342,7 @@ for p, pair in enumerate(MST_pairmate_names):
 print(MST_pairmate_indices.shape, MST_pairmate_indices)
 
 
-# In[8]:
+# In[9]:
 
 
 if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
@@ -369,7 +370,7 @@ if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
     plt.show()
 
 
-# In[9]:
+# In[10]:
 
 
 # pairs has the indices of all repeated images
@@ -388,7 +389,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[10]:
+# In[11]:
 
 
 p=0
@@ -407,7 +408,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[11]:
+# In[12]:
 
 
 def get_image_pairs(sub, session, func_task_name, designdir):
@@ -422,7 +423,7 @@ def get_image_pairs(sub, session, func_task_name, designdir):
     return utils.process_images(image_names, unique_images)
 
 
-# In[12]:
+# In[13]:
 
 
 from collections import defaultdict
@@ -450,7 +451,7 @@ image_to_indices = dict(image_to_indices)
 # test_image_to_indices = dict(test_image_to_indices)
 
 
-# In[84]:
+# In[14]:
 
 
 # train_pairs_list = []
@@ -494,7 +495,7 @@ if sub == 'sub-005' and ses_list == ["ses-01", "ses-02"]:
 #     assert len(pairs_list) == 2
 
 
-# In[14]:
+# In[15]:
 
 
 if resample_voxel_size:
@@ -503,25 +504,15 @@ if resample_voxel_size:
     omat_name = f'{glmsingle_path}/boldref_omat'
 
 
-# In[42]:
+# In[16]:
 
 
-from nilearn.plotting import plot_roi, plot_anat, plot_epi
+from nilearn.plotting import plot_roi
+assert sub == 'sub-005' and session_label == 'ses-01-02'
+print('loading brain mask')
+avg_mask = nib.load('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/sub-005_final_brain.nii.gz')
+final_mask = nib.load('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/sub-005_final_mask.nii.gz')
 
-mask_name = f'{glmsingle_path}/{sub}_{session_label}{task_name}_brain'
-if resample_voxel_size:
-    if resample_post_glmsingle is True:
-        # use original mask directory
-        mask_in_name = f'{orig_glmsingle_path}/{sub}_{session}{task_name}_brain.nii.gz'
-        mask_out_name = mask_name + f"_{mask_resampled_suffix}.nii.gz"
-        assert os.path.exists(mask_in_name)
-        applyxfm(mask_in_name, ref_name, omat_name, resample_method, output=mask_out_name)
-        apply_thresh(mask_out_name, 0.5, output=mask_out_name)  # binarize the mask since resampling can result in non- 0 or 1 values
-    mask_name += f"_{mask_resampled_suffix}"
-
-mask_name += ".nii.gz"
-print(mask_name)
-avg_mask = nib.load(mask_name)
 # mask info
 dimsize=avg_mask.header.get_zooms()
 affine_mat = avg_mask.affine
@@ -535,12 +526,51 @@ print(affine_mat)
 print('')
 print(f'There are {int(np.sum(brain))} voxels in the included brain mask\n')
 
+plot_roi(final_mask, bg_img=avg_mask)
+plt.show()
+
+
+# In[17]:
+
+
+# # create union of ses-01 and ses-02 reliability masks and plot against avg_mask 
+# rel_masks = []
+# rel_masks.append(np.load('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/rel_mask_from_ses-01_to_ses-03.npy'))
+# rel_masks.append(np.load('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/rel_mask_from_ses-02_to_ses-03.npy'))
+# rel_masks = np.array(rel_masks)
+# for r in rel_masks:
+#     assert r.shape[0] == int(final_mask.get_fdata().sum())
+#     assert r.dtype == bool
+    
+# assert len(rel_masks) == 2  # should be the case if there's 2 training sessions
+# union_mask = np.logical_or(rel_masks[0], rel_masks[1])
+# assert union_mask.sum() > rel_masks[0].sum()
+# assert union_mask.sum() > rel_masks[1].sum()
+# print(f'there are {union_mask.sum()} reliable voxels based on the union mask out of {int(final_mask.get_fdata().sum())} voxels in the nsdgeneral roi')
+# print(f'{(union_mask.sum() / int(final_mask.get_fdata().sum())):.2%} of the voxels in the roi were selected')
+path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/union_mask_from_{session_label}.npy'
+# np.save(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/union_mask_from_{session_label}.npy', union_mask)
+# print(f'saved union mask to {path}!')
+union_mask = np.load(path)
+
 
 # ## Load GLMSingle voxel data
 
-# In[43]:
+# In[18]:
 
 
+ses_mask = []
+ses_mask.append(nib.load(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_ses-01_task-C/sub-005_ses-01_task-C_brain.nii.gz'))
+ses_mask.append(nib.load(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_ses-02_task-C/sub-005_ses-02_task-C_brain.nii.gz'))
+for m in ses_mask:
+    assert np.all(m.affine == final_mask.affine)
+    assert np.all(m.shape == final_mask.shape)
+
+
+# In[19]:
+
+
+ses_vox = []
 vox = None
 needs_postprocessing = False
 params = (session, ses_list, remove_close_to_MST, image_names, remove_random_n, vox_idx)
@@ -559,8 +589,19 @@ if resample_post_glmsingle == True:
 
 if vox is None:
     # either resampling was done in glmsingle or we aren't resampling 
-    vox = load_preprocess_betas(glmsingle_path, *params)
-
+    ses_vox.append(load_preprocess_betas(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_ses-01_task-C', *params))
+    ses_vox.append(load_preprocess_betas(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_ses-02_task-C', *params))
+    for i, v in enumerate(ses_vox):
+        v = nilearn.masking.unmask(v, ses_mask[i])
+        ses_vox[i] = nilearn.masking.apply_mask(v, final_mask)
+    vox = np.concatenate(ses_vox)
+    print("applied final brain mask")
+    print(vox.shape)
+    vox = vox[:, union_mask]
+    print("applied union roi mask")
+    print(vox.shape)
+    
+    
 if needs_postprocessing == True:
     vox = apply_mask(vox, avg_mask)
     vox = vox.reshape(-1, vox.shape[-1])  # flatten the 3D image into np array with shape (voxels, images)
@@ -569,175 +610,23 @@ if needs_postprocessing == True:
 assert len(vox) == len(image_idx)
 
 
-# ### Load nsdgeneral ROI
-
-# In[44]:
+# In[20]:
 
 
-nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_nsdgeneral.nii.gz'  
-print(nsdgeneral_path)
-assert os.path.exists(nsdgeneral_path)
-print(f"nsdgeneral path exists!")
+# # get vox into the same shape as the union mask
+# v = nilearn.masking.unmask(vox, ses_mask)  # move back to 3D based on own session mask
+# final_mask = nilearn.masking.intersect_masks([avg_mask, roi])
+# vox = nilearn.masking.apply_mask(vox, final_mask)  # re-flatten based on final mask so everything is in the same shape now
+# print(vox.shape)
 
 
-# In[45]:
-
-
-if resample_voxel_size:
-    nsdgeneral_path = f'{glmsingle_path}/{sub}_task-{task}_nsdgeneral_resampled.nii.gz'  
-    if resample_post_glmsingle:
-        assert os.path.exists(orig_glmsingle_path)
-        roi_in_path = f"{orig_glmsingle_path}/{sub}_task-{task}_nsdgeneral.nii.gz"  # the input file is the original nsdgeneral mask (without resampling), from the original glmsingle directory
-        applyxfm(roi_in_path, ref_name, omat_name, resample_method, output=nsdgeneral_path)
-
-
-# In[46]:
-
-
-roi = nib.load(nsdgeneral_path)
-print(roi.shape)
-plot_roi(roi, bg_img=avg_mask)
-plt.show()
-
-
-# In[47]:
-
-
-avg_mask = avg_mask.get_fdata().flatten()
-print(f"total voxels (whole brain) = {int(avg_mask.sum())}")
-
-roi = roi.get_fdata()
-roi = roi.flatten()
-roi = roi[avg_mask.astype(bool)]
-roi[np.isnan(roi)] = 0
-roi = roi.astype(bool)
-print(f"nsdgeneral voxels = {roi.sum()}")
-
-
-# ### ROI voxel exclusion
-
-# In[48]:
-
-
-# ROI masking?
-print(f"vox before ROI exclusion: {vox.shape}")
-vox = vox[:,roi]
-print(f"vox after ROI exclusion: {vox.shape}")
-
-if np.any(np.isnan(vox)):
-    print("NaNs found! Removing voxels...")
-    x,y = np.where(np.isnan(vox))
-    vox = vox[:,np.setdiff1d(np.arange(vox.shape[-1]), y)]
-
-
-# ## Reliability calculation
-
-# ### Calculate reliability (corr between first and second presentation of same image) for every voxel
-
-# In[49]:
+# In[21]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[50]:
-
-
-# vox_pairs = []
-# for i in pairs:
-#     vox_pairs.append(utils.zscore(vox[i]))
-
-vox_pairs = utils.zscore(vox[pairs_homog])
-rels = np.full(vox.shape[-1],np.nan)
-for v in tqdm(range(vox.shape[-1])):
-    rels[v] = np.corrcoef(vox_pairs[:,0,v], vox_pairs[:,1,v])[1,0]
-# for v in tqdm(range(vox[0].shape[-1])):
-#     rep0 = []
-#     rep1 = []
-
-#     for vp in vox_pairs:
-#         rep0.append(vp[0, v])
-#         rep1.append(vp[1, v])
-
-#     rels[v] = np.corrcoef(rep0, rep1)[1, 0]
-
-print("rels", rels.shape)
-assert np.sum(np.all(np.isnan(rels))) == 0
-
-
-# ### Create representational similarity matrix
-
-# In[51]:
-
-
-# creating img x vox x repetitions matrix | shape=(150, 18419, 2)
-vox0 = np.zeros((len(pairs_homog), vox.shape[-1], 2))
-print(vox0.shape)
-for ipair, pair in enumerate(tqdm(pairs_homog)):
-    pair = pair[:2] # to keep things consistent, just using the first two repeats
-    i,j = pair
-    vox0[ipair, :, :] = vox[pair].T
-vox_avg = vox0.mean(-1) # average across the repetitions
-
-
-# In[52]:
-
-
-# Masking RDM for each reliability threshold
-r_thresholds = np.array([.2])
-rdm = np.zeros((len(r_thresholds), len(pairs), len(pairs))) 
-for ir_thresh, r_thresh in enumerate(r_thresholds):
-    print(f"reliability threshold = {r_thresh}")
-    for i in tqdm(range(len(pairs))):
-        for j in range(len(pairs)):
-            rdm[ir_thresh,i,j] = np.corrcoef(vox_avg[i,rels>r_thresh], 
-                                             vox_avg[j,rels>r_thresh])[0,1]
-# rdm is shape (4, 150, 150)
-
-
-# In[53]:
-
-
-thresh = .2
-plt.figure(figsize=(4,4))
-plt.imshow(rdm[np.where(r_thresholds==thresh)[0].item()], clim=(-1,1))
-plt.colorbar(shrink=0.8)
-plt.title(f"{sub}_{session}\nreliability threshold={thresh}\n")
-plt.show()
-
-
-# In[54]:
-
-
-for thresh in range(rdm.shape[0]):
-    for img in range(rdm.shape[1]):
-        assert np.isclose(rdm[thresh, img, img], 1)
-
-
-# In[55]:
-
-
-vox.shape
-
-
-# In[56]:
-
-
-# Reliability thresholding?
-print(f"\nvox before reliability thresholding: {vox.shape}")
-vox = vox[:,rels>.2]
-print(f"\nvox after reliability thresholding: {vox.shape}")
-
-
-# In[57]:
-
-
-print(images.shape)
-print(vox.shape)
-assert len(images) == len(vox)
-
-
-# In[58]:
+# In[22]:
 
 
 same_corrs = []
@@ -779,7 +668,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[59]:
+# In[23]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -795,7 +684,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[177]:
+# In[24]:
 
 
 utils.seed_everything(seed)
@@ -833,7 +722,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[154]:
+# In[25]:
 
 
 train_mean = np.mean(vox[train_image_indices],axis=0)
@@ -845,7 +734,7 @@ print(vox[:,0].mean(), vox[:,0].std())
 print("vox", vox.shape)
 
 
-# In[155]:
+# In[26]:
 
 
 # for idx in deleted_indices:
@@ -864,7 +753,7 @@ print("vox", vox.shape)
 # images = images[kept_indices]
 
 
-# In[156]:
+# In[27]:
 
 
 images = torch.Tensor(images)
@@ -872,7 +761,7 @@ vox = torch.Tensor(vox)
 assert len(images) == len(vox)
 
 
-# In[157]:
+# In[28]:
 
 
 ### Multi-GPU config ###
@@ -891,7 +780,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[158]:
+# In[29]:
 
 
 print("PID of this process =",os.getpid())
@@ -920,7 +809,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[159]:
+# In[30]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -945,7 +834,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[160]:
+# In[31]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -1093,7 +982,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[161]:
+# In[32]:
 
 
 if ckpt_saving:
@@ -1119,7 +1008,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[162]:
+# In[33]:
 
 
 def my_split_by_node(urls): return urls
@@ -1140,7 +1029,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[163]:
+# In[34]:
 
 
 train_data = {}
@@ -1150,7 +1039,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[164]:
+# In[35]:
 
 
 num_voxels = {}
@@ -1178,7 +1067,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[165]:
+# In[36]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1221,7 +1110,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[166]:
+# In[37]:
 
 
 model = utils.prepare_model_and_training(
@@ -1235,7 +1124,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[167]:
+# In[38]:
 
 
 # test on subject 1 with fake data
@@ -1243,7 +1132,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[168]:
+# In[39]:
 
 
 # test that the model works on some fake data
@@ -1256,7 +1145,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[169]:
+# In[40]:
 
 
 if use_prior:
@@ -1294,7 +1183,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[170]:
+# In[41]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1370,7 +1259,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[171]:
+# In[42]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1446,7 +1335,7 @@ else:
 
 # # Train the model
 
-# In[172]:
+# In[43]:
 
 
 epoch = 0
@@ -1455,7 +1344,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[173]:
+# In[44]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1463,7 +1352,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[174]:
+# In[45]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1471,7 +1360,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[175]:
+# In[46]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1480,7 +1369,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[176]:
+# In[72]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
@@ -1628,94 +1517,114 @@ for epoch in progress_bar:
                 break
                 
     model.eval()
-    if local_rank==0:
-        with torch.no_grad(), torch.cuda.amp.autocast(dtype=data_type): 
-            for test_i, behav in enumerate(test_dl):  
-                behav = behav[0]
+    logs = {}
 
-                loss=0.
+    if local_rank == 0:
+        with torch.no_grad(), torch.cuda.amp.autocast(dtype=data_type):
+            for i in range(2):
+                for j in range(2):
+                    subset_indices = MST_idx[:, i, j].reshape(-1)
+                    subset_dataset = torch.utils.data.TensorDataset(torch.tensor(subset_indices))
+                    subset_dl = torch.utils.data.DataLoader(
+                        subset_dataset, batch_size=24, shuffle=False,
+                        drop_last=True, pin_memory=True
+                    )
 
-                if behav.ndim>1:
-                    image = images[behav[:,0].long().cpu()].to(device)
-                    voxel = vox[behav.long().cpu()].mean(1)
-                else:
-                    image = images[behav.long().cpu()].to(device)
-                    voxel = vox[behav.long().cpu()]
-                    
-                voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
+                    # Reset metrics for this subset
+                    test_losses = []
+                    test_loss_clip_total = 0
+                    test_loss_prior_total = 0
+                    test_blurry_pixcorr = 0
+                    test_fwd_percent_correct = 0
+                    test_bwd_percent_correct = 0
+                    test_recon_cossim = 0
+                    test_recon_mse = 0
 
-                clip_img_embedder = clip_img_embedder.to(device)
-                clip_target = clip_img_embedder(image.float())
-                
-                voxel_ridge = model.ridge(voxel,0)
+                    for test_i, behav in enumerate(subset_dl):
+                        behav = behav[0]
+                        loss = 0.
 
-                backbone, clip_voxels, blurry_image_enc_ = model.backbone(voxel_ridge)
+                        if behav.ndim > 1:
+                            image = images[behav[:, 0].long().cpu()].to(device)
+                            voxel = vox[behav.long().cpu()].mean(1)
+                        else:
+                            image = images[behav.long().cpu()].to(device)
+                            voxel = vox[behav.long().cpu()]
 
-                if clip_scale>0:
-                    clip_voxels_norm = nn.functional.normalize(clip_voxels.flatten(1), dim=-1)
-                    clip_target_norm = nn.functional.normalize(clip_target.flatten(1), dim=-1)
-                
-                # for some evals, only doing a subset of the samples per batch because of computational cost
-                random_samps = np.random.choice(np.arange(len(image)), size=len(image)//5, replace=False)
-                
-                if use_prior:
-                    loss_prior, contaminated_prior_out = model.diffusion_prior(text_embed=backbone[random_samps], image_embed=clip_target[random_samps])
-                    test_loss_prior_total += loss_prior.item()
-                    loss_prior *= prior_scale
-                    loss += loss_prior
-                        
-                if clip_scale>0:
-                    loss_clip = utils.soft_clip_loss(
-                        clip_voxels_norm,
-                        clip_target_norm,
-                        temp=.006)
+                        voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
 
-                    test_loss_clip_total += loss_clip.item()
-                    loss_clip = loss_clip * clip_scale
-                    loss += loss_clip
+                        clip_img_embedder = clip_img_embedder.to(device)
+                        clip_target = clip_img_embedder(image.float())
 
-                if blurry_recon:
-                    image_enc_pred, _ = blurry_image_enc_
-                    blurry_recon_images = (autoenc.decode(image_enc_pred[random_samps]/0.18215).sample / 2 + 0.5).clamp(0,1)
-                    pixcorr = utils.pixcorr(image[random_samps], blurry_recon_images)
-                    test_blurry_pixcorr += pixcorr.item()
+                        voxel_ridge = model.ridge(voxel, 0)
+                        backbone, clip_voxels, blurry_image_enc_ = model.backbone(voxel_ridge)
 
-                if clip_scale>0:
-                    # forward and backward top 1 accuracy        
-                    labels = torch.arange(len(clip_voxels_norm)).to(clip_voxels_norm.device) 
-                    test_fwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm, clip_target_norm), labels, k=1).item()
-                    test_bwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm), labels, k=1).item()
-                
-                utils.check_loss(loss)                
-                test_losses.append(loss.item())
+                        if clip_scale > 0:
+                            clip_voxels_norm = nn.functional.normalize(clip_voxels.flatten(1), dim=-1)
+                            clip_target_norm = nn.functional.normalize(clip_target.flatten(1), dim=-1)
 
-            # if utils.is_interactive(): clear_output(wait=True)
-            if skip_train: break
-            print("---")
+                        random_samps = np.random.choice(np.arange(len(image)), size=len(image) // 5, replace=False)
 
-            # assert (test_i+1) == 1
-            logs = {"train/loss": np.mean(losses[-(train_i+1):]),
-                "test/loss": np.mean(test_losses[-(test_i+1):]),
+                        if use_prior:
+                            loss_prior, contaminated_prior_out = model.diffusion_prior(
+                                text_embed=backbone[random_samps], image_embed=clip_target[random_samps])
+                            test_loss_prior_total += loss_prior.item()
+                            loss_prior *= prior_scale
+                            loss += loss_prior
+
+                        if clip_scale > 0:
+                            loss_clip = utils.soft_clip_loss(
+                                clip_voxels_norm,
+                                clip_target_norm,
+                                temp=0.006
+                            )
+                            test_loss_clip_total += loss_clip.item()
+                            loss_clip *= clip_scale
+                            loss += loss_clip
+
+                        if blurry_recon:
+                            image_enc_pred, _ = blurry_image_enc_
+                            blurry_recon_images = (autoenc.decode(image_enc_pred[random_samps] / 0.18215).sample / 2 + 0.5).clamp(0, 1)
+                            pixcorr = utils.pixcorr(image[random_samps], blurry_recon_images)
+                            test_blurry_pixcorr += pixcorr.item()
+
+                        if clip_scale > 0:
+                            labels = torch.arange(len(clip_voxels_norm)).to(clip_voxels_norm.device)
+                            test_fwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm, clip_target_norm), labels, k=1).item()
+                            test_bwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm), labels, k=1).item()
+
+                        utils.check_loss(loss)
+                        test_losses.append(loss.item())
+
+                    logs.update({
+                        f"subset_{i}_{j}_test/loss": np.mean(test_losses),
+                        f"subset_{i}_{j}_test/loss_clip_total": test_loss_clip_total / (test_i + 1),
+                        f"subset_{i}_{j}_test/loss_prior": test_loss_prior_total / (test_i + 1),
+                        f"subset_{i}_{j}_test/blurry_pixcorr": test_blurry_pixcorr / (test_i + 1),
+                        f"subset_{i}_{j}_test/fwd_pct_correct": test_fwd_percent_correct / (test_i + 1),
+                        f"subset_{i}_{j}_test/bwd_pct_correct": test_bwd_percent_correct / (test_i + 1),
+                    })
+                    print(f"--- Subset ({i},{j}) ---")
+                    for k, v in logs.items():
+                        if f"subset_{i}_{j}" in k:
+                            print(f"{k}: {v:.4f}")
+
+            # After subset loop: add train (and global test, if you want) metrics
+            logs.update({
+                "train/loss": np.mean(losses[-(train_i+1):]),
                 "train/lr": lrs[-1],
                 "train/num_steps": len(losses),
-                "test/num_steps": len(test_losses),
                 "train/fwd_pct_correct": fwd_percent_correct / (train_i + 1),
                 "train/bwd_pct_correct": bwd_percent_correct / (train_i + 1),
-                "test/test_fwd_pct_correct": test_fwd_percent_correct / (test_i + 1),
-                "test/test_bwd_pct_correct": test_bwd_percent_correct / (test_i + 1),
                 "train/loss_clip_total": loss_clip_total / (train_i + 1),
                 "train/loss_blurry_total": loss_blurry_total / (train_i + 1),
                 "train/loss_blurry_cont_total": loss_blurry_cont_total / (train_i + 1),
-                "test/loss_clip_total": test_loss_clip_total / (test_i + 1),
                 "train/blurry_pixcorr": blurry_pixcorr / (train_i + 1),
-                "test/blurry_pixcorr": test_blurry_pixcorr / (test_i + 1),
                 "train/recon_cossim": recon_cossim / (train_i + 1),
-                "test/recon_cossim": test_recon_cossim / (test_i + 1),
                 "train/recon_mse": recon_mse / (train_i + 1),
-                "test/recon_mse": test_recon_mse / (test_i + 1),
                 "train/loss_prior": loss_prior_total / (train_i + 1),
-                "test/loss_prior": test_loss_prior_total / (test_i + 1),
-                }
+            })
+
 
             # if finished training, save jpg recons if they exist
             if (epoch == num_epochs-1) or (epoch % ckpt_interval == 0):
@@ -1750,13 +1659,13 @@ if ckpt_saving:
     save_ckpt(f'last')
 
 
-# In[ ]:
+# In[73]:
 
 
 len(test_data)
 
 
-# In[ ]:
+# In[74]:
 
 
 # # Track metrics here:
@@ -1765,27 +1674,39 @@ len(test_data)
 
 # **To tell if the model is working I'm looking at test_bwd/fwd_pct_correct and seeing if that is doing better than chance (1/batch_size)**
 
-# In[ ]:
+# In[75]:
 
 
 # MST_pairmate_names
 
 
-# In[ ]:
+# In[76]:
+
+
+def find_all_indices(list_, element):
+    return [index for index, value in enumerate(list_) if value == element]
+
+
+# In[77]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
 assert len(image_idx) == len(x)
-pairs = np.empty(shape=MST_pairmate_names.shape, dtype=int)
+pairs = []
 for i, p in enumerate(MST_pairmate_names):
     assert p[0] != p[1]  # no duplicate images
-    pairs[i,0] = x.index(p[0])
-    pairs[i,1] = x.index(p[1])
+    pairs.append([find_all_indices(x,p[0]), find_all_indices(x,p[1])])
     
-# print(pairs)
+pairs = np.array(pairs)
 
 
-# In[ ]:
+# In[78]:
+
+
+pairs.shape
+
+
+# In[79]:
 
 
 # if sub=="sub-002":
@@ -1813,7 +1734,7 @@ for i, p in enumerate(MST_pairmate_names):
 # # unique_images[unique_images_pairs]
 
 
-# In[ ]:
+# In[80]:
 
 
 def evaluate_mst_pairs(mst_pairs):
@@ -1821,7 +1742,7 @@ def evaluate_mst_pairs(mst_pairs):
     total = 0
     
     with torch.no_grad(), torch.cuda.amp.autocast(dtype=data_type):
-        for pair in mst_pairs:
+        for pair in tqdm(mst_pairs):
             voxel = vox[image_idx[pair[0]]].to(device)[None]
             voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
             
@@ -1855,7 +1776,107 @@ def evaluate_mst_pairs(mst_pairs):
             
     return score/total
 
-print(evaluate_mst_pairs(pairs))
+# print(evaluate_mst_pairs(pairs))
+
+
+# In[85]:
+
+
+pairs[:5]
+
+
+# In[91]:
+
+
+np.stack([pairs[:, 0, 0], pairs[:, 1, 1]], axis=1)[0]
+
+
+# In[82]:
+
+
+mst_pairs[:5]
+
+
+# In[100]:
+
+
+for i in range(4):
+    for j in range(4):
+        mst_pairs = np.stack([pairs[:, 0, i], pairs[:, 1, j]], axis=1)  # shape (31, 2)
+        results = evaluate_mst_pairs(mst_pairs)
+        print(f"pairmate A repeat {i} vs pairmate B repeat {j}: {results}")
+
+
+# In[119]:
+
+
+mst_pairs[:5]
+
+
+# In[117]:
+
+
+mst_pairs[ix]
+
+
+# In[121]:
+
+
+pairs[0]
+
+
+# In[140]:
+
+
+images[image_idx[pairs[0][0]]].shape
+
+
+# In[132]:
+
+
+ix = 0
+display(utils.torch_to_Image(images[pairs[ix][0]]))
+display(utils.torch_to_Image(images[pairs[ix][1]]))
+
+
+# In[92]:
+
+
+print(np.allclose(embed_A[0], embed_A[1]))  # across repeats
+print(np.allclose(embed_A[0], embed_B[0]))  # across pairmates
+
+
+# In[68]:
+
+
+def generate_random_nonmatching_pairs(pairs, num_images_per_source=5, num_repeats=2):
+    n_imgs, n_pairmates, n_repeats = pairs.shape
+    nonmatch_pairs = []
+
+    for i in range(n_imgs):
+        other_idxs = [j for j in range(n_imgs) if j != i]
+        sampled_j = np.random.choice(other_idxs, size=num_images_per_source, replace=False)
+
+        for j in sampled_j:
+            for _ in range(num_repeats):
+                a_side = np.random.randint(2)
+                b_side = np.random.randint(2)
+                a_repeat = np.random.randint(n_repeats)
+                b_repeat = np.random.randint(n_repeats)
+
+                pair_a = pairs[i, a_side, a_repeat]
+                pair_b = pairs[j, b_side, b_repeat]
+                nonmatch_pairs.append([pair_a, pair_b])
+
+    return np.array(nonmatch_pairs)
+
+
+# In[90]:
+
+
+nonmatch_pairs = generate_random_nonmatching_pairs(pairs, num_images_per_source=5, num_repeats=1)
+results = evaluate_mst_pairs(nonmatch_pairs)
+print(results)
 
 
 # In[ ]:
