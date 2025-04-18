@@ -3,7 +3,7 @@
 
 # # Import packages & functions
 
-# In[2]:
+# In[1]:
 
 
 print("importing modules")
@@ -57,7 +57,7 @@ seed = utils.get_slurm_seed()
 
 # ## Load Data & Design
 
-# In[3]:
+# In[2]:
 
 
 if utils.is_interactive():
@@ -110,7 +110,7 @@ if resample_voxel_size:
         resampled_suffix += '_preglmsingle'
 
 
-# In[4]:
+# In[3]:
 
 
 session_label = preproc.get_session_label(ses_list)
@@ -118,7 +118,7 @@ print('session label:', session_label)
 n_runs, _ = preproc.get_runs_per_session(sub, session, ses_list)
 
 
-# In[5]:
+# In[4]:
 
 
 if utils.is_interactive():
@@ -152,7 +152,7 @@ assert os.path.exists(glmsingle_path)
 print("glmsingle path exists!")
 
 
-# In[6]:
+# In[5]:
 
 
 data, starts, images, is_new_run, image_names, unique_images, len_unique_images = preproc.load_design_files(
@@ -286,7 +286,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 
 # ## Load images
 
-# In[7]:
+# In[6]:
 
 
 import imageio.v2 as imageio
@@ -324,7 +324,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 print("MST_images==True", len(MST_images[MST_images==True]))
 
 
-# In[8]:
+# In[7]:
 
 
 # want IDs of pairmates based on MST_images
@@ -342,7 +342,7 @@ for p, pair in enumerate(MST_pairmate_names):
 print(MST_pairmate_indices.shape, MST_pairmate_indices)
 
 
-# In[9]:
+# In[8]:
 
 
 if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
@@ -370,7 +370,7 @@ if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
     plt.show()
 
 
-# In[10]:
+# In[9]:
 
 
 # pairs has the indices of all repeated images
@@ -389,7 +389,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[11]:
+# In[10]:
 
 
 p=0
@@ -408,7 +408,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[12]:
+# In[11]:
 
 
 def get_image_pairs(sub, session, func_task_name, designdir):
@@ -423,7 +423,7 @@ def get_image_pairs(sub, session, func_task_name, designdir):
     return utils.process_images(image_names, unique_images)
 
 
-# In[13]:
+# In[12]:
 
 
 from collections import defaultdict
@@ -451,7 +451,7 @@ image_to_indices = dict(image_to_indices)
 # test_image_to_indices = dict(test_image_to_indices)
 
 
-# In[14]:
+# In[13]:
 
 
 # train_pairs_list = []
@@ -495,7 +495,7 @@ if sub == 'sub-005' and ses_list == ["ses-01", "ses-02"]:
 #     assert len(pairs_list) == 2
 
 
-# In[15]:
+# In[14]:
 
 
 if resample_voxel_size:
@@ -504,7 +504,7 @@ if resample_voxel_size:
     omat_name = f'{glmsingle_path}/boldref_omat'
 
 
-# In[16]:
+# In[45]:
 
 
 from nilearn.plotting import plot_roi
@@ -530,7 +530,7 @@ plot_roi(final_mask, bg_img=avg_mask)
 plt.show()
 
 
-# In[17]:
+# In[46]:
 
 
 # # create union of ses-01 and ses-02 reliability masks and plot against avg_mask 
@@ -556,7 +556,7 @@ union_mask = np.load(path)
 
 # ## Load GLMSingle voxel data
 
-# In[18]:
+# In[47]:
 
 
 ses_mask = []
@@ -567,7 +567,7 @@ for m in ses_mask:
     assert np.all(m.shape == final_mask.shape)
 
 
-# In[19]:
+# In[48]:
 
 
 ses_vox = []
@@ -610,7 +610,7 @@ if needs_postprocessing == True:
 assert len(vox) == len(image_idx)
 
 
-# In[20]:
+# In[49]:
 
 
 # # get vox into the same shape as the union mask
@@ -620,13 +620,13 @@ assert len(vox) == len(image_idx)
 # print(vox.shape)
 
 
-# In[21]:
+# In[50]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[22]:
+# In[51]:
 
 
 same_corrs = []
@@ -668,7 +668,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[23]:
+# In[52]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -684,7 +684,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[24]:
+# In[53]:
 
 
 utils.seed_everything(seed)
@@ -722,19 +722,27 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[25]:
+# In[54]:
 
 
-train_mean = np.mean(vox[train_image_indices],axis=0)
-train_std = np.std(vox[train_image_indices],axis=0)
+ses_split = vox[train_image_indices].shape[0] // 2
 
-vox = utils.zscore(vox,train_mean=train_mean,train_std=train_std)
+train_mean_s1 = np.mean(vox[train_image_indices][:ses_split], axis=0)
+train_std_s1 = np.std(vox[train_image_indices][:ses_split], axis=0)
+train_mean_s2 = np.mean(vox[train_image_indices][ses_split:], axis=0)
+train_std_s2 = np.std(vox[train_image_indices][ses_split:], axis=0)
+
+
+vox[:ses_split] = utils.zscore(vox[:ses_split],train_mean=train_mean_s1,train_std=train_std_s1)
+vox[ses_split:] = utils.zscore(vox[ses_split:],train_mean=train_mean_s2,train_std=train_std_s2)
+
 print("voxels have been zscored")
-print(vox[:,0].mean(), vox[:,0].std())
+print("ses-01:", vox[:ses_split,0].mean(), vox[:ses_split,0].std())
+print("ses-02:", vox[ses_split:,0].mean(), vox[ses_split:,0].std())
 print("vox", vox.shape)
 
 
-# In[26]:
+# In[55]:
 
 
 # for idx in deleted_indices:
@@ -753,7 +761,7 @@ print("vox", vox.shape)
 # images = images[kept_indices]
 
 
-# In[27]:
+# In[56]:
 
 
 images = torch.Tensor(images)
@@ -761,7 +769,7 @@ vox = torch.Tensor(vox)
 assert len(images) == len(vox)
 
 
-# In[28]:
+# In[57]:
 
 
 ### Multi-GPU config ###
@@ -780,7 +788,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[29]:
+# In[58]:
 
 
 print("PID of this process =",os.getpid())
@@ -809,7 +817,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[30]:
+# In[59]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -834,7 +842,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[31]:
+# In[60]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -982,7 +990,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[32]:
+# In[61]:
 
 
 if ckpt_saving:
@@ -1008,7 +1016,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[33]:
+# In[62]:
 
 
 def my_split_by_node(urls): return urls
@@ -1029,7 +1037,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[34]:
+# In[63]:
 
 
 train_data = {}
@@ -1039,7 +1047,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[35]:
+# In[64]:
 
 
 num_voxels = {}
@@ -1067,7 +1075,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[36]:
+# In[65]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1110,7 +1118,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[37]:
+# In[66]:
 
 
 model = utils.prepare_model_and_training(
@@ -1124,7 +1132,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[38]:
+# In[67]:
 
 
 # test on subject 1 with fake data
@@ -1132,7 +1140,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[39]:
+# In[68]:
 
 
 # test that the model works on some fake data
@@ -1145,7 +1153,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[40]:
+# In[69]:
 
 
 if use_prior:
@@ -1183,7 +1191,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[41]:
+# In[70]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1259,7 +1267,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[42]:
+# In[71]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1335,7 +1343,7 @@ else:
 
 # # Train the model
 
-# In[43]:
+# In[72]:
 
 
 epoch = 0
@@ -1344,7 +1352,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[44]:
+# In[73]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1352,7 +1360,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[45]:
+# In[74]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1360,7 +1368,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[46]:
+# In[75]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1369,7 +1377,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[72]:
+# In[76]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
@@ -1659,13 +1667,13 @@ if ckpt_saving:
     save_ckpt(f'last')
 
 
-# In[73]:
+# In[77]:
 
 
 len(test_data)
 
 
-# In[74]:
+# In[78]:
 
 
 # # Track metrics here:
@@ -1674,20 +1682,13 @@ len(test_data)
 
 # **To tell if the model is working I'm looking at test_bwd/fwd_pct_correct and seeing if that is doing better than chance (1/batch_size)**
 
-# In[75]:
+# In[79]:
 
 
 # MST_pairmate_names
 
 
-# In[76]:
-
-
-def find_all_indices(list_, element):
-    return [index for index, value in enumerate(list_) if value == element]
-
-
-# In[77]:
+# In[80]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
@@ -1695,18 +1696,18 @@ assert len(image_idx) == len(x)
 pairs = []
 for i, p in enumerate(MST_pairmate_names):
     assert p[0] != p[1]  # no duplicate images
-    pairs.append([find_all_indices(x,p[0]), find_all_indices(x,p[1])])
+    pairs.append([utils.find_all_indices(x,p[0]), utils.find_all_indices(x,p[1])])
     
 pairs = np.array(pairs)
 
 
-# In[78]:
+# In[81]:
 
 
 pairs.shape
 
 
-# In[79]:
+# In[82]:
 
 
 # if sub=="sub-002":
@@ -1734,104 +1735,102 @@ pairs.shape
 # # unique_images[unique_images_pairs]
 
 
-# In[80]:
+# In[114]:
+
+
+import pdb
+
+
+# In[115]:
 
 
 def evaluate_mst_pairs(mst_pairs):
-    score = 0
-    total = 0
-    
     with torch.no_grad(), torch.cuda.amp.autocast(dtype=data_type):
-        for pair in tqdm(mst_pairs):
-            voxel = vox[image_idx[pair[0]]].to(device)[None]
-            voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
-            
-            imageA = images[image_idx[pair[0]]].to(device)[None]
-            imageB = images[image_idx[pair[1]]].to(device)[None]
-            
-            clip_targetA = clip_img_embedder(imageA.float())
-            clip_targetB = clip_img_embedder(imageB.float())
-            
-            voxel_ridge = model.ridge(voxel,0)
-            backbone, clip_voxels, _ = model.backbone(voxel_ridge)
-            
-            clip_voxels_norm = nn.functional.normalize(clip_voxels.flatten(1), dim=-1)
-            clip_targetA_norm = nn.functional.normalize(clip_targetA.flatten(1), dim=-1)
-            clip_targetB_norm = nn.functional.normalize(clip_targetB.flatten(1), dim=-1)
-            
-            if utils.batchwise_cosine_similarity(clip_voxels_norm, clip_targetA_norm) > utils.batchwise_cosine_similarity(clip_voxels_norm, clip_targetB_norm):
-                score += 1
-            total += 1
-            
-            voxel = vox[image_idx[pair[1]]].to(device)[None]
-            voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
-            
-            voxel_ridge = model.ridge(voxel,0)
-            backbone, clip_voxels, _ = model.backbone(voxel_ridge)
-            clip_voxels_norm = nn.functional.normalize(clip_voxels.flatten(1), dim=-1)
-            
-            if utils.batchwise_cosine_similarity(clip_voxels_norm, clip_targetB_norm) > utils.batchwise_cosine_similarity(clip_voxels_norm, clip_targetA_norm):
-                score += 1
-            total += 1
-            
-    return score/total
+        # Get all unique image indices
+        all_indices = np.unique(mst_pairs.flatten())
+        
+        # Pre-load all images and betas to device
+        all_images = images[image_idx[all_indices]].to(device)
+        all_voxels = torch.Tensor(vox[image_idx[all_indices]]).unsqueeze(1).to(device)
+        
+        # Get CLIP embeddings for all images
+        all_clip_targets = clip_img_embedder(all_images.float())
+        all_clip_targets_norm = nn.functional.normalize(all_clip_targets.flatten(1), dim=-1)
+        
+        # Pass all betas through model to get MindEye embeddings
+        all_voxel_ridge = model.ridge(all_voxels, 0)
+        _, all_clip_voxels, _ = model.backbone(all_voxel_ridge)
+        all_clip_voxels_norm = nn.functional.normalize(all_clip_voxels.flatten(1), dim=-1)
+        
+        # Dict mapping idx (which indexes the "vox" and "images" tensors) to pos (their position in the flattened array "all_indices")
+        idx_to_pos = {idx: pos for pos, idx in enumerate(all_indices)}
+        
+        # Initialize scores
+        corr_score = 0
+        corr_total = 0
+        non_corr_score = 0
+        non_corr_total = 0
+        
+        # Pre-load voxelwise beta-based embeddings from MindEye and CLIP image embeddings
+        idxA = np.array([pair[0] for pair in mst_pairs])
+        idxB = np.array([pair[1] for pair in mst_pairs])
+        
+        posA = np.array([idx_to_pos[idx] for idx in idxA])
+        posB = np.array([idx_to_pos[idx] for idx in idxB])
+        
+        voxA_embeddings = all_clip_voxels_norm[posA]
+        voxB_embeddings = all_clip_voxels_norm[posB]
+        imgA_embeddings = all_clip_targets_norm[posA]
+        imgB_embeddings = all_clip_targets_norm[posB]
+        
+        # Is the MindEye embedding for pairmate A more similar to the CLIP embedding for image A than to image B?
+        simA_A = utils.batchwise_cosine_similarity(voxA_embeddings, imgA_embeddings)
+        simA_B = utils.batchwise_cosine_similarity(voxA_embeddings, imgB_embeddings)
+        pdb.set_trace()
+        
+        corr_score += (torch.diag(simA_A) > torch.diag(simA_B)).sum().item()
+        corr_total += len(mst_pairs)
+        non_corr_score += (simA_A > simA_B).sum().item()
+        non_corr_total += 
+        
+        # Is the MindEye embedding for pairmate B more similar to the CLIP embedding for image B than to image A?
+        simB_B = utils.batchwise_cosine_similarity(voxB_embeddings, imgB_embeddings)
+        simB_A = utils.batchwise_cosine_similarity(voxB_embeddings, imgA_embeddings)
+        score += (simB_B > simB_A).sum().item()
+        total += len(mst_pairs)
+        
+    return score, total
 
-# print(evaluate_mst_pairs(pairs))
 
-
-# In[85]:
-
-
-pairs[:5]
-
-
-# In[91]:
-
-
-np.stack([pairs[:, 0, 0], pairs[:, 1, 1]], axis=1)[0]
-
-
-# In[82]:
-
-
-mst_pairs[:5]
-
-
-# In[100]:
+# In[ ]:
 
 
 for i in range(4):
     for j in range(4):
         mst_pairs = np.stack([pairs[:, 0, i], pairs[:, 1, j]], axis=1)  # shape (31, 2)
-        results = evaluate_mst_pairs(mst_pairs)
-        print(f"pairmate A repeat {i} vs pairmate B repeat {j}: {results}")
+        score, total = evaluate_mst_pairs(mst_pairs)
+        print(f"pairmate A repeat {i} vs pairmate B repeat {j}: {score/total}")
 
 
-# In[119]:
+# In[88]:
 
 
 mst_pairs[:5]
 
 
-# In[117]:
-
-
-mst_pairs[ix]
-
-
-# In[121]:
+# In[91]:
 
 
 pairs[0]
 
 
-# In[140]:
+# In[92]:
 
 
 images[image_idx[pairs[0][0]]].shape
 
 
-# In[132]:
+# In[93]:
 
 
 ix = 0
@@ -1839,14 +1838,14 @@ display(utils.torch_to_Image(images[pairs[ix][0]]))
 display(utils.torch_to_Image(images[pairs[ix][1]]))
 
 
-# In[92]:
+# In[95]:
 
 
-print(np.allclose(embed_A[0], embed_A[1]))  # across repeats
-print(np.allclose(embed_A[0], embed_B[0]))  # across pairmates
+# print(np.allclose(embed_A[0], embed_A[1]))  # across repeats
+# print(np.allclose(embed_A[0], embed_B[0]))  # across pairmates
 
 
-# In[68]:
+# In[96]:
 
 
 def generate_random_nonmatching_pairs(pairs, num_images_per_source=5, num_repeats=2):
@@ -1871,7 +1870,7 @@ def generate_random_nonmatching_pairs(pairs, num_images_per_source=5, num_repeat
     return np.array(nonmatch_pairs)
 
 
-# In[90]:
+# In[97]:
 
 
 nonmatch_pairs = generate_random_nonmatching_pairs(pairs, num_images_per_source=5, num_repeats=1)
@@ -1879,18 +1878,18 @@ results = evaluate_mst_pairs(nonmatch_pairs)
 print(results)
 
 
-# In[ ]:
+# In[99]:
 
 
-# Compare first few pairs
-for pair in pairs:  # Checking first 2 pairs
-    print("Indices in mst_pairs:", pair)
-    print("Corresponding filenames:")
-    print(f"Image 1: {x[pair[0]]}")
-    print(f"Image 2: {x[pair[1]]}\n")
+# # Compare first few pairs
+# for pair in pairs:  # Checking first 2 pairs
+#     print("Indices in mst_pairs:", pair)
+#     print("Corresponding filenames:")
+#     print(f"Image 1: {x[pair[0]]}")
+#     print(f"Image 2: {x[pair[1]]}\n")
 
 
-# In[ ]:
+# In[100]:
 
 
 # for i in range(len(pairs)):
@@ -1907,7 +1906,7 @@ for pair in pairs:  # Checking first 2 pairs
 #     plt.show()
 
 
-# In[ ]:
+# In[101]:
 
 
 # score = 0
@@ -1972,14 +1971,14 @@ for pair in pairs:  # Checking first 2 pairs
 # print(score/total)
 
 
-# In[ ]:
+# In[102]:
 
 
 #display(utils.torch_to_Image(imageA))
 #display(utils.torch_to_Image(imageB))
 
 
-# In[ ]:
+# In[103]:
 
 
 # from scipy.stats import binomtest
