@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=sub-005_ses-01-02_union_mask
+#SBATCH --job-name=sub-005_ses-01-02_finetune_correct_evals
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1              
 #SBATCH --gres=gpu:1

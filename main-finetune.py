@@ -504,7 +504,7 @@ if resample_voxel_size:
     omat_name = f'{glmsingle_path}/boldref_omat'
 
 
-# In[45]:
+# In[15]:
 
 
 from nilearn.plotting import plot_roi
@@ -530,7 +530,7 @@ plot_roi(final_mask, bg_img=avg_mask)
 plt.show()
 
 
-# In[46]:
+# In[16]:
 
 
 # # create union of ses-01 and ses-02 reliability masks and plot against avg_mask 
@@ -556,7 +556,7 @@ union_mask = np.load(path)
 
 # ## Load GLMSingle voxel data
 
-# In[47]:
+# In[17]:
 
 
 ses_mask = []
@@ -567,7 +567,7 @@ for m in ses_mask:
     assert np.all(m.shape == final_mask.shape)
 
 
-# In[48]:
+# In[18]:
 
 
 ses_vox = []
@@ -610,7 +610,7 @@ if needs_postprocessing == True:
 assert len(vox) == len(image_idx)
 
 
-# In[49]:
+# In[19]:
 
 
 # # get vox into the same shape as the union mask
@@ -620,13 +620,13 @@ assert len(vox) == len(image_idx)
 # print(vox.shape)
 
 
-# In[50]:
+# In[20]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[51]:
+# In[21]:
 
 
 same_corrs = []
@@ -668,7 +668,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[52]:
+# In[22]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -684,7 +684,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[53]:
+# In[23]:
 
 
 utils.seed_everything(seed)
@@ -722,7 +722,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[54]:
+# In[24]:
 
 
 ses_split = vox[train_image_indices].shape[0] // 2
@@ -742,7 +742,7 @@ print("ses-02:", vox[ses_split:,0].mean(), vox[ses_split:,0].std())
 print("vox", vox.shape)
 
 
-# In[55]:
+# In[25]:
 
 
 # for idx in deleted_indices:
@@ -761,7 +761,7 @@ print("vox", vox.shape)
 # images = images[kept_indices]
 
 
-# In[56]:
+# In[26]:
 
 
 images = torch.Tensor(images)
@@ -769,7 +769,7 @@ vox = torch.Tensor(vox)
 assert len(images) == len(vox)
 
 
-# In[57]:
+# In[27]:
 
 
 ### Multi-GPU config ###
@@ -788,7 +788,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[58]:
+# In[28]:
 
 
 print("PID of this process =",os.getpid())
@@ -817,7 +817,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[59]:
+# In[29]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -842,7 +842,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[60]:
+# In[30]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -990,7 +990,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[61]:
+# In[31]:
 
 
 if ckpt_saving:
@@ -1016,7 +1016,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[62]:
+# In[32]:
 
 
 def my_split_by_node(urls): return urls
@@ -1037,7 +1037,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[63]:
+# In[33]:
 
 
 train_data = {}
@@ -1047,7 +1047,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[64]:
+# In[34]:
 
 
 num_voxels = {}
@@ -1075,7 +1075,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[65]:
+# In[35]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1118,7 +1118,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[66]:
+# In[36]:
 
 
 model = utils.prepare_model_and_training(
@@ -1132,7 +1132,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[67]:
+# In[37]:
 
 
 # test on subject 1 with fake data
@@ -1140,7 +1140,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[68]:
+# In[38]:
 
 
 # test that the model works on some fake data
@@ -1153,7 +1153,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[69]:
+# In[39]:
 
 
 if use_prior:
@@ -1191,7 +1191,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[70]:
+# In[40]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1267,7 +1267,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[71]:
+# In[41]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1343,7 +1343,7 @@ else:
 
 # # Train the model
 
-# In[72]:
+# In[42]:
 
 
 epoch = 0
@@ -1352,7 +1352,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[73]:
+# In[43]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1360,7 +1360,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[74]:
+# In[44]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1368,7 +1368,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[75]:
+# In[45]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1377,7 +1377,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[76]:
+# In[46]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
@@ -1534,7 +1534,7 @@ for epoch in progress_bar:
                     subset_indices = MST_idx[:, i, j].reshape(-1)
                     subset_dataset = torch.utils.data.TensorDataset(torch.tensor(subset_indices))
                     subset_dl = torch.utils.data.DataLoader(
-                        subset_dataset, batch_size=24, shuffle=False,
+                        subset_dataset, batch_size=len(MST_idx), shuffle=False,
                         drop_last=True, pin_memory=True
                     )
 
@@ -1667,13 +1667,13 @@ if ckpt_saving:
     save_ckpt(f'last')
 
 
-# In[77]:
+# In[47]:
 
 
 len(test_data)
 
 
-# In[78]:
+# In[48]:
 
 
 # # Track metrics here:
@@ -1682,13 +1682,13 @@ len(test_data)
 
 # **To tell if the model is working I'm looking at test_bwd/fwd_pct_correct and seeing if that is doing better than chance (1/batch_size)**
 
-# In[79]:
+# In[49]:
 
 
 # MST_pairmate_names
 
 
-# In[80]:
+# In[50]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
@@ -1701,13 +1701,64 @@ for i, p in enumerate(MST_pairmate_names):
 pairs = np.array(pairs)
 
 
-# In[81]:
+# In[51]:
 
 
 pairs.shape
 
 
-# In[82]:
+# In[64]:
+
+
+model.eval()
+logs = {}
+if local_rank == 0:
+    with torch.no_grad(), torch.cuda.amp.autocast(dtype=data_type):
+        for i in range(2):
+            for j in range(2):
+                subset_indices = MST_idx[:, i, j].reshape(-1)
+                subset_dataset = torch.utils.data.TensorDataset(torch.tensor(subset_indices))
+                subset_dl = torch.utils.data.DataLoader(
+                    subset_dataset, batch_size=len(MST_idx), shuffle=False,
+                    drop_last=True, pin_memory=True
+                )
+
+                # Reset metrics for this subset
+                test_fwd_percent_correct = 0
+                test_bwd_percent_correct = 0
+
+                for test_i, behav in enumerate(subset_dl):
+                    behav = behav[0]
+                    loss = 0.
+                    image = images[behav.long().cpu()].to(device)
+                    voxel = vox[behav.long().cpu()]
+                    voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
+                    clip_img_embedder = clip_img_embedder.to(device)
+                    clip_target = clip_img_embedder(image.float())
+
+                    voxel_ridge = model.ridge(voxel, 0)
+                    backbone, clip_voxels, blurry_image_enc_ = model.backbone(voxel_ridge)
+
+                    clip_voxels_norm = torch.nn.functional.normalize(clip_voxels, dim=-1)
+                    clip_target_norm = torch.nn.functional.normalize(clip_target, dim=-1)
+
+                    if clip_scale > 0:
+                        labels = torch.arange(len(clip_voxels_norm)).to(clip_voxels_norm.device)
+                        test_fwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm, clip_target_norm), labels, k=1).item()
+                        test_bwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm), labels, k=1).item()
+                    print(test_fwd_percent_correct)
+                    print(test_bwd_percent_correct)
+                    logs.update({
+                        f"subset_{i}_{j}_test/fwd_pct_correct": test_fwd_percent_correct / (test_i + 1),
+                        f"subset_{i}_{j}_test/bwd_pct_correct": test_bwd_percent_correct / (test_i + 1),
+                    })
+
+    print("--- Full Dataset Evaluation ---")
+    for k, v in logs.items():
+        print(f"{k}: {v:.4f}")
+
+
+# In[52]:
 
 
 # if sub=="sub-002":
@@ -1735,17 +1786,21 @@ pairs.shape
 # # unique_images[unique_images_pairs]
 
 
-# In[114]:
+# In[53]:
 
 
 import pdb
 
 
-# In[115]:
+# In[54]:
 
 
 def evaluate_mst_pairs(mst_pairs):
     with torch.no_grad(), torch.cuda.amp.autocast(dtype=data_type):
+        failed_A = []
+        failed_B = []
+        failed_non_corr = []
+
         # Get all unique image indices
         all_indices = np.unique(mst_pairs.flatten())
         
@@ -1767,9 +1822,10 @@ def evaluate_mst_pairs(mst_pairs):
         
         # Initialize scores
         corr_score = 0
-        corr_total = 0
         non_corr_score = 0
-        non_corr_total = 0
+        corr_total = len(mst_pairs) * 2
+        non_corr_total = len(mst_pairs) * (len(mst_pairs)-1) * 4  # number of elements in the matrix excluding the diagonal is n*(n-1)*4 since we're doing this twice each for pairmate A and B
+
         
         # Pre-load voxelwise beta-based embeddings from MindEye and CLIP image embeddings
         idxA = np.array([pair[0] for pair in mst_pairs])
@@ -1783,54 +1839,278 @@ def evaluate_mst_pairs(mst_pairs):
         imgA_embeddings = all_clip_targets_norm[posA]
         imgB_embeddings = all_clip_targets_norm[posB]
         
-        # Is the MindEye embedding for pairmate A more similar to the CLIP embedding for image A than to image B?
         simA_A = utils.batchwise_cosine_similarity(voxA_embeddings, imgA_embeddings)
         simA_B = utils.batchwise_cosine_similarity(voxA_embeddings, imgB_embeddings)
-        pdb.set_trace()
-        
-        corr_score += (torch.diag(simA_A) > torch.diag(simA_B)).sum().item()
-        corr_total += len(mst_pairs)
-        non_corr_score += (simA_A > simA_B).sum().item()
-        non_corr_total += 
-        
-        # Is the MindEye embedding for pairmate B more similar to the CLIP embedding for image B than to image A?
         simB_B = utils.batchwise_cosine_similarity(voxB_embeddings, imgB_embeddings)
         simB_A = utils.batchwise_cosine_similarity(voxB_embeddings, imgA_embeddings)
-        score += (simB_B > simB_A).sum().item()
-        total += len(mst_pairs)
+
         
-    return score, total
+        # corresponding 2-AFC
+        # is the voxel embedding for image 1 pairmate A more similar to the CLIP embedding for image 1 pairmate A or the CLIP embedding for image 1 pairmate B?
+        correct_A = torch.diag(simA_A) > torch.diag(simA_B)
+        # is the voxel embedding for image 1 pairmate B more similar to the CLIP embedding for image 1 pairmate B or the CLIP embedding for image 1 pairmate A?
+        correct_B = torch.diag(simB_B) > torch.diag(simB_A)
+
+        corr_score += correct_A.sum().item()
+        corr_score += correct_B.sum().item()
+
+        # Store indices where AFC fails
+        failed_A = [i for i, correct in enumerate(correct_A.cpu()) if not correct]
+        failed_B = [i for i, correct in enumerate(correct_B.cpu()) if not correct]
+        
+        # non-corresponding 2-AFC
+        N = len(mst_pairs)        
+        # Create a mask that is True for all off-diagonal elements
+        row_idx = torch.arange(N).unsqueeze(1)  # (N, 1)
+        col_idx = torch.arange(N).unsqueeze(0)  # (1, N)
+        off_diag_mask = row_idx != col_idx  # shape (N, N)
+        
+        diagA_A = simA_A.diag().unsqueeze(1).expand(-1, N)  # Get diagonal values and expand to (N, N) by duplicating the diagonal element along the rows (since each row is the cosine similarity between a single voxel embedding and all CLIP embeddings)
+        diagB_B = simB_B.diag().unsqueeze(1).expand(-1, N)
+        
+        # pdb.set_trace()
+
+        # Compare each element in the row to the diagonal element
+        off_diag_mask_device = off_diag_mask.to(device)
+
+        fail_AA = (simA_A < diagA_A) & off_diag_mask_device
+        fail_AB = (simA_B < diagA_A) & off_diag_mask_device
+        fail_BB = (simB_B < diagB_B) & off_diag_mask_device
+        fail_BA = (simB_A < diagB_B) & off_diag_mask_device
+
+        non_corr_score += fail_AA.sum().item()
+        non_corr_score += fail_AB.sum().item()
+        non_corr_score += fail_BB.sum().item()
+        non_corr_score += fail_BA.sum().item()
+
+        # Log failed indices
+        fail_sources = [fail_AA, fail_AB, fail_BB, fail_BA]
+        for fail_matrix, label in zip(fail_sources, ["AA", "AB", "BB", "BA"]):
+            fail_coords = torch.nonzero(fail_matrix, as_tuple=False).cpu().numpy()
+            for i, j in fail_coords:
+                failed_non_corr.append({"type": label, "i": i, "j": j, "pair_i": mst_pairs[i], "pair_j": mst_pairs[j]})
+
+    return corr_score, corr_total, int(non_corr_score), non_corr_total, failed_A, failed_B, failed_non_corr
+
+
+# In[55]:
+
+
+all_scores = []
+all_failures = []
+
+for i in range(4):
+    for j in range(4):
+        mst_pairs = np.stack([pairs[:, 0, i], pairs[:, 1, j]], axis=1)  # shape (31, 2)
+        corr_score, corr_total, non_corr_score, non_corr_total, failed_A, failed_B, failed_non_corr = evaluate_mst_pairs(mst_pairs)
+
+        # Store scores and failure info together
+        all_scores.append((corr_score, corr_total, non_corr_score, non_corr_total))
+        all_failures.append({
+            "repeat_A": i,
+            "repeat_B": j,
+            "failed_A": failed_A,
+            "failed_B": failed_B,
+            "failed_non_corr": failed_non_corr,
+            "mst_pairs": mst_pairs,
+        })
+
+        # Print summary
+        print(f"pairmate A repeat {i} vs pairmate B repeat {j}:")
+        print(f"2-AFC corresponding = {corr_score}/{corr_total} ({corr_score/corr_total:.2%})")
+        print(f"2-AFC non-corresponding = {non_corr_score}/{non_corr_total} ({non_corr_score/non_corr_total:.2%})")
+        print("")
+
+
+# In[56]:
+
+
+all_scores = np.array(all_scores)
+print(f"average 2-AFC corresponding: {all_scores[:,0].mean():.2f}/{all_scores[:,1].mean():.2f} ({(all_scores[:,0].sum()/all_scores[:,1].sum()):.2%})")
+print(f"average 2-AFC non-corresponding: {all_scores[:,2].mean():.2f}/{all_scores[:,3].mean():.2f} ({(all_scores[:,2].sum()/all_scores[:,3].sum()):.2%})")
+print(f'chance = 1/{corr_total} ({(1/corr_total):.2%})')
+
+
+# In[57]:
+
+
+from collections import defaultdict
+
+# Map from image index to failure details
+failed_images = defaultdict(list)
+
+for failure_entry in all_failures:
+    mst_pairs = failure_entry["mst_pairs"]
+    i, j = failure_entry["repeat_A"], failure_entry["repeat_B"]
+
+    # A-side failures
+    for fail_idx in failure_entry["failed_A"]:
+        image_idx = mst_pairs[fail_idx][0]
+        pairmate_idx = mst_pairs[fail_idx][1]
+        failed_images[image_idx].append({
+            "repeat_A": i,
+            "repeat_B": j,
+            "pairmate": pairmate_idx,
+            "type": "A",
+        })
+
+    # B-side failures
+    for fail_idx in failure_entry["failed_B"]:
+        image_idx = mst_pairs[fail_idx][1]
+        pairmate_idx = mst_pairs[fail_idx][0]
+        failed_images[image_idx].append({
+            "repeat_A": i,
+            "repeat_B": j,
+            "pairmate": pairmate_idx,
+            "type": "B",
+        })
 
 
 # In[ ]:
 
 
-for i in range(4):
-    for j in range(4):
-        mst_pairs = np.stack([pairs[:, 0, i], pairs[:, 1, j]], axis=1)  # shape (31, 2)
-        score, total = evaluate_mst_pairs(mst_pairs)
-        print(f"pairmate A repeat {i} vs pairmate B repeat {j}: {score/total}")
+# import matplotlib.pyplot as plt
+
+# for img_idx, failure_list in failed_images.items():
+#     print(f"\n==== Failed Image {img_idx} ====")
+
+#     # Load and normalize the embeddings
+#     image = images[img_idx].unsqueeze(0).to(device).float()
+#     image_clip = nn.functional.normalize(clip_img_embedder(image).flatten(1), dim=-1)
+
+#     # Get voxel→CLIP embedding
+#     voxel = torch.Tensor(vox[img_idx]).unsqueeze(0).unsqueeze(0).to(device)
+#     voxel_embed = model.backbone(model.ridge(voxel, 0))[1]
+#     voxel_embed = nn.functional.normalize(voxel_embed.flatten(1), dim=-1)
+
+#     # Display original image
+#     print("Original image:")
+#     display(utils.torch_to_Image(images[img_idx]))
+
+#     # Collect unique pairmates involved in the failure
+#     pairmate_indices = list(set(entry["pairmate"] for entry in failure_list))
+
+#     # Plot failed pairmates with similarity annotations
+#     fig, axs = plt.subplots(1, len(pairmate_indices), figsize=(4 * len(pairmate_indices), 4))
+#     if len(pairmate_indices) == 1:
+#         axs = [axs]
+
+#     # Compute "correct" similarity — voxel to its own CLIP embedding
+#     correct_clip = image_clip.float()
+#     correct_voxel_sim = (voxel_embed.float() @ correct_clip.T).item()
+#     print(f"Correct voxel→CLIP similarity = {correct_voxel_sim:.4f}")
+
+#     # Plot failed pairmates with similarity annotations
+#     fig, axs = plt.subplots(1, len(pairmate_indices), figsize=(4 * len(pairmate_indices), 4))
+#     if len(pairmate_indices) == 1:
+#         axs = [axs]
+
+#     for ax, mate_idx in zip(axs, pairmate_indices):
+#         mate_image = images[mate_idx].unsqueeze(0).to(device).float()
+#         mate_clip = nn.functional.normalize(clip_img_embedder(mate_image).flatten(1), dim=-1).float()
+
+#         # Similarities
+#         clip_sim = (correct_clip @ mate_clip.T).item()
+#         voxel_sim = (voxel_embed.float() @ mate_clip.T).item()
+
+#         # Check if this was the mistaken "higher" match
+#         wrong_match = voxel_sim > correct_voxel_sim
+
+#         # Plot image and annotate
+#         ax.imshow(utils.torch_to_Image(images[mate_idx]))
+#         ax.axis("off")
+#         ax.set_title(f"Pairmate {mate_idx}\nCLIP={clip_sim:.3f}\nVoxel={voxel_sim:.3f}\n{'← WRONG' if wrong_match else ''}",
+#                      color="red" if wrong_match else "black")
 
 
-# In[88]:
+#     plt.tight_layout()
+#     plt.show()
+
+
+# In[ ]:
+
+
+# comp[20,18] is the only False
+
+
+# In[ ]:
+
+
+# import matplotlib.pyplot as plt
+
+# for img_idx, failure_list in failed_images.items():
+#     print(f"\n==== Failed Image {img_idx} ====")
+
+#     # Load and normalize the embeddings
+#     image = images[img_idx].unsqueeze(0).to(device).float()
+#     image_clip = nn.functional.normalize(clip_img_embedder(image).flatten(1), dim=-1)
+
+#     # Get voxel→CLIP embedding
+#     voxel = torch.Tensor(vox[img_idx]).unsqueeze(0).unsqueeze(0).to(device)
+#     voxel_embed = model.backbone(model.ridge(voxel, 0))[1]
+#     voxel_embed = nn.functional.normalize(voxel_embed.flatten(1), dim=-1)
+
+#     # Display original image
+#     print("Original image:")
+#     display(utils.torch_to_Image(images[img_idx]))
+
+#     # Collect unique pairmates involved in the failure
+#     pairmate_indices = list(set(entry["pairmate"] for entry in failure_list))
+
+#     # Plot failed pairmates with similarity annotations
+#     fig, axs = plt.subplots(1, len(pairmate_indices), figsize=(4 * len(pairmate_indices), 4))
+#     if len(pairmate_indices) == 1:
+#         axs = [axs]
+
+#     for ax, mate_idx in zip(axs, pairmate_indices):
+#         # Get all CLIP embeddings for failed image and pairmates
+#         all_indices = [img_idx] + pairmate_indices
+#         all_images = images[all_indices].to(device).float()
+#         all_clip_embeds = clip_img_embedder(all_images)
+#         all_clip_embeds = nn.functional.normalize(all_clip_embeds.flatten(1), dim=-1).float()
+
+#         # Compare voxel embedding for the failed image to all CLIP embeddings
+#         sims = (voxel_embed.float() @ all_clip_embeds.T).squeeze().cpu().detach().numpy()  # shape: (1, N) → (N,)
+#         image_ids = ["correct"] + [f"pairmate {idx}" for idx in pairmate_indices]
+
+#         # Sort and display
+#         sorted_sims = sorted(zip(image_ids, all_indices, sims), key=lambda x: -x[2])
+
+#         print("\n🧠 Voxel→CLIP similarity ranking:")
+#         for label, idx, sim in sorted_sims:
+#             print(f"{label:12} (index {idx:3}): similarity = {sim:.4f}")
+
+#         # Optional assertion: did any pairmate score higher than the correct image?
+#         correct_sim = sims[0]
+#         higher = [(label, sim) for label, _, sim in sorted_sims[1:] if sim > correct_sim]
+#         if higher:
+#             print("\n❌ Mismatch detected: voxel embedding matched other images more than the correct one!")
+#         else:
+#             print("\n✅ Model correctly ranked the correct image highest (despite failure elsewhere)")
+
+#     plt.tight_layout()
+#     plt.show()
+
+
+# In[58]:
 
 
 mst_pairs[:5]
 
 
-# In[91]:
+# In[59]:
 
 
 pairs[0]
 
 
-# In[92]:
+# In[61]:
 
 
-images[image_idx[pairs[0][0]]].shape
+# images[image_idx[pairs[0][0]]].shape
 
 
-# In[93]:
+# In[62]:
 
 
 ix = 0
@@ -1838,47 +2118,47 @@ display(utils.torch_to_Image(images[pairs[ix][0]]))
 display(utils.torch_to_Image(images[pairs[ix][1]]))
 
 
-# In[95]:
+# In[ ]:
 
 
 # print(np.allclose(embed_A[0], embed_A[1]))  # across repeats
 # print(np.allclose(embed_A[0], embed_B[0]))  # across pairmates
 
 
-# In[96]:
+# In[ ]:
 
 
-def generate_random_nonmatching_pairs(pairs, num_images_per_source=5, num_repeats=2):
-    n_imgs, n_pairmates, n_repeats = pairs.shape
-    nonmatch_pairs = []
+# def generate_random_nonmatching_pairs(pairs, num_images_per_source=5, num_repeats=2):
+#     n_imgs, n_pairmates, n_repeats = pairs.shape
+#     nonmatch_pairs = []
 
-    for i in range(n_imgs):
-        other_idxs = [j for j in range(n_imgs) if j != i]
-        sampled_j = np.random.choice(other_idxs, size=num_images_per_source, replace=False)
+#     for i in range(n_imgs):
+#         other_idxs = [j for j in range(n_imgs) if j != i]
+#         sampled_j = np.random.choice(other_idxs, size=num_images_per_source, replace=False)
 
-        for j in sampled_j:
-            for _ in range(num_repeats):
-                a_side = np.random.randint(2)
-                b_side = np.random.randint(2)
-                a_repeat = np.random.randint(n_repeats)
-                b_repeat = np.random.randint(n_repeats)
+#         for j in sampled_j:
+#             for _ in range(num_repeats):
+#                 a_side = np.random.randint(2)
+#                 b_side = np.random.randint(2)
+#                 a_repeat = np.random.randint(n_repeats)
+#                 b_repeat = np.random.randint(n_repeats)
 
-                pair_a = pairs[i, a_side, a_repeat]
-                pair_b = pairs[j, b_side, b_repeat]
-                nonmatch_pairs.append([pair_a, pair_b])
+#                 pair_a = pairs[i, a_side, a_repeat]
+#                 pair_b = pairs[j, b_side, b_repeat]
+#                 nonmatch_pairs.append([pair_a, pair_b])
 
-    return np.array(nonmatch_pairs)
-
-
-# In[97]:
+#     return np.array(nonmatch_pairs)
 
 
-nonmatch_pairs = generate_random_nonmatching_pairs(pairs, num_images_per_source=5, num_repeats=1)
-results = evaluate_mst_pairs(nonmatch_pairs)
-print(results)
+# In[ ]:
 
 
-# In[99]:
+# nonmatch_pairs = generate_random_nonmatching_pairs(pairs, num_images_per_source=5, num_repeats=1)
+# results = evaluate_mst_pairs(nonmatch_pairs)
+# print(results)
+
+
+# In[ ]:
 
 
 # # Compare first few pairs
@@ -1889,7 +2169,7 @@ print(results)
 #     print(f"Image 2: {x[pair[1]]}\n")
 
 
-# In[100]:
+# In[ ]:
 
 
 # for i in range(len(pairs)):
@@ -1906,7 +2186,7 @@ print(results)
 #     plt.show()
 
 
-# In[101]:
+# In[ ]:
 
 
 # score = 0
@@ -1971,14 +2251,14 @@ print(results)
 # print(score/total)
 
 
-# In[102]:
+# In[ ]:
 
 
 #display(utils.torch_to_Image(imageA))
 #display(utils.torch_to_Image(imageB))
 
 
-# In[103]:
+# In[ ]:
 
 
 # from scipy.stats import binomtest
