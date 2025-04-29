@@ -100,7 +100,7 @@ def batchwise_cosine_similarity(Z,B):
     cosine_similarity = ((Z @ B) / (Z_norm @ B_norm)).T
     return cosine_similarity
 
-def prenormed_batchwise_cosine_similarity(Z,B):
+def prenormed_batchwise_cosine_similarity(Z,B):\
     return (Z @ B.T).T
 
 def cosine_similarity(Z,B,l=0):

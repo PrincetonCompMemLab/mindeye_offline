@@ -623,7 +623,7 @@ print(f"nsdgeneral voxels = {roi.sum()}")
 
 # ROI masking?
 print(f"vox before ROI exclusion: {vox.shape}")
-vox = vox[:,roi]
+# vox = vox[:,roi]
 print(f"vox after ROI exclusion: {vox.shape}")
 
 if np.any(np.isnan(vox)):
