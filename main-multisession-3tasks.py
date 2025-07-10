@@ -57,20 +57,38 @@ seed = utils.get_slurm_seed()
 
 # ## Load Data & Design
 
-# In[2]:
+# In[67]:
 
 
-if utils.is_interactive():
-    sub = "sub-005"
-    session = "ses-03"
-    task = 'C'  # 'study' or 'A'; used to search for functional run in bids format
-    func_task_name = 'C'
-else:
-    sub = os.environ["sub"]
-    session = os.environ["session"]
-    task = os.environ["task"]
-    func_task_name = 'C'
-
+def get_flag(name, default, cast=int):
+    """Retrieve a flag from environment variables or return a default value."""
+    if utils.is_interactive():
+        return default
+    val = os.environ.get(name.upper(), str(default))
+    print(f"Retrieved {name.upper()} from environment: {val}")
+    
+    if cast == bool:
+        # Explicitly handle string conversion to boolean
+        if val.lower() in ['true', '1']:
+            return True
+        elif val.lower() in ['false', '0']:
+            return False
+        else:
+            return bool(val)  # Fallback to default casting behavior
+    
+    try:
+        return cast(val)
+    except Exception:
+        return val
+    
+if not utils.is_interactive():
+    print('running non-interactively')
+    
+# Define variables using get_flag
+sub = get_flag('SUB', 'sub-005', cast=str)
+session = get_flag('SESSION', 'ses-04', cast=str)  # 'ses-xx', 'all'
+task = get_flag('TASK', 'B', cast=str)  # 'study', 'A', or 'B'
+func_task_name = get_flag('FUNC_TASK_NAME', 'B', cast=str)
 
 if session == "all":
     ses_list = ["ses-01", "ses-02"]  # list of actual session IDs
@@ -78,16 +96,15 @@ if session == "all":
 else:
     ses_list = [session]
     design_ses_list = [session]
-    
-task_name = f"_task-{task}" if task != 'study' else ''
-resample_voxel_size = False
-resample_post_glmsingle = False  # do you want to do voxel resampling here? if resample_voxel_size = True and resample_post_glmsingle = False, assume the resampling has been done prior to GLMsingle, so just use resampled directory but otherwise proceed as normal
-load_from_resampled_file = False  # do you want to load resampled data from file? if True, assume resampling was done in this notebook before, and that we're not using the GLMsingle resampled data
-    
-train_test_split = 'MST' # 'MST', 'orig', 'unique'
-remove_close_to_MST = False
-remove_random_n = False
 
+task_name = f"_task-{task}" if task != 'study' else ''
+resample_voxel_size = get_flag('RESAMPLE_VOXEL_SIZE', True, cast=bool)
+resample_post_glmsingle = get_flag('RESAMPLE_POST_GLMSINGLE', False, cast=bool)
+load_from_resampled_file = get_flag('LOAD_FROM_RESAMPLED_FILE', False, cast=bool)
+
+train_test_split = get_flag('TRAIN_TEST_SPLIT', 'MST', cast=str)
+remove_close_to_MST = get_flag('REMOVE_CLOSE_TO_MST', False, cast=bool)
+remove_random_n = get_flag('REMOVE_RANDOM_N', False, cast=bool)
 if remove_close_to_MST or remove_random_n:
     assert remove_close_to_MST != remove_random_n  # don't remove both sets of images
 
@@ -97,21 +114,36 @@ if remove_random_n:
     n_to_remove = 150
     
 if resample_voxel_size:
-    # voxel size was unchanged in glmsingle, want to perform resampling here
-    resampled_vox_size = 2.5
-    resample_method = "sinc"  # {trilinear,nearestneighbour,sinc,spline}, credit: https://johnmuschelli.com/fslr/reference/flirt.help.html
+    resampled_vox_size = get_flag('RESAMPLED_VOX_SIZE', 2.0, cast=float)
+    resample_method = get_flag('RESAMPLE_METHOD', 'trilinear', cast=str)
     
-    # file name helper variables
-    vox_dim_str = str(resampled_vox_size).replace('.', '_')  # in case the voxel size has a decimal, replace with an underscore
+    vox_dim_str = str(resampled_vox_size).replace('.', '_')
     resampled_suffix = f"resampled_{vox_dim_str}mm_{resample_method}"
     mask_resampled_suffix = resampled_suffix
     if resample_post_glmsingle:
-        resampled_suffix += '_postglmsingle'
-    else:
-        resampled_suffix += '_preglmsingle'
+        resampled_suffix += '_postglmsingle'      
+        
+print('sub:', sub)
+print('session:', session)
+print('task:', task)
+print('func_task_name:', func_task_name)
+print('ses_list:', ses_list)
+print('design_ses_list:', design_ses_list)
+print('task_name:', task_name)
+print('resample_voxel_size:', resample_voxel_size)
+print('resample_post_glmsingle:', resample_post_glmsingle)
+print('load_from_resampled_file:', load_from_resampled_file)
+print('train_test_split:', train_test_split)
+print('remove_close_to_MST:', remove_close_to_MST)
+print('remove_random_n:', remove_random_n)
+print('n_to_remove:', n_to_remove)
+print('resampled_vox_size:', resampled_vox_size)
+print('resample_method:', resample_method)
+print('resampled_suffix:', resampled_suffix)
+print('mask_resampled_suffix:', mask_resampled_suffix)
 
 
-# In[3]:
+# In[7]:
 
 
 session_label = preproc.get_session_label(ses_list)
@@ -119,7 +151,7 @@ print('session label:', session_label)
 n_runs, _ = preproc.get_runs_per_session(sub, session, ses_list)
 
 
-# In[4]:
+# In[8]:
 
 
 if utils.is_interactive():
@@ -153,7 +185,7 @@ assert os.path.exists(glmsingle_path)
 print("glmsingle path exists!")
 
 
-# In[5]:
+# In[9]:
 
 
 data, starts, images, is_new_run, image_names, unique_images, len_unique_images = preproc.load_design_files(
@@ -287,7 +319,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 
 # ## Load images
 
-# In[6]:
+# In[10]:
 
 
 import imageio.v2 as imageio
@@ -325,7 +357,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 print("MST_images==True", len(MST_images[MST_images==True]))
 
 
-# In[7]:
+# In[11]:
 
 
 # want IDs of pairmates based on MST_images
@@ -343,7 +375,7 @@ for p, pair in enumerate(MST_pairmate_names):
 print(MST_pairmate_indices.shape, MST_pairmate_indices)
 
 
-# In[8]:
+# In[12]:
 
 
 if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
@@ -371,7 +403,7 @@ if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
     plt.show()
 
 
-# In[9]:
+# In[13]:
 
 
 # pairs has the indices of all repeated images
@@ -390,7 +422,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[10]:
+# In[14]:
 
 
 p=0
@@ -409,7 +441,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[11]:
+# In[15]:
 
 
 def get_image_pairs(sub, session, func_task_name, designdir):
@@ -424,7 +456,7 @@ def get_image_pairs(sub, session, func_task_name, designdir):
     return utils.process_images(image_names, unique_images)
 
 
-# In[12]:
+# In[16]:
 
 
 from collections import defaultdict
@@ -452,7 +484,7 @@ image_to_indices = dict(image_to_indices)
 # test_image_to_indices = dict(test_image_to_indices)
 
 
-# In[13]:
+# In[17]:
 
 
 # train_pairs_list = []
@@ -496,7 +528,7 @@ if sub == 'sub-005' and ses_list == ["ses-01", "ses-02"]:
 #     assert len(pairs_list) == 2
 
 
-# In[14]:
+# In[18]:
 
 
 if resample_voxel_size:
@@ -505,7 +537,7 @@ if resample_voxel_size:
     omat_name = f'{glmsingle_path}/boldref_omat'
 
 
-# In[15]:
+# In[19]:
 
 
 from nilearn.plotting import plot_roi, plot_anat, plot_epi
@@ -540,7 +572,7 @@ print(f'There are {int(np.sum(brain))} voxels in the included brain mask\n')
 
 # ## Load GLMSingle voxel data
 
-# In[16]:
+# In[20]:
 
 
 vox = None
@@ -573,27 +605,27 @@ assert len(vox) == len(image_idx)
 
 # ### Load nsdgeneral ROI
 
-# In[17]:
+# In[23]:
 
 
-nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_nsdgeneral.nii.gz'  
+nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_nsdgeneral_{resampled_suffix}.nii.gz'  
 print(nsdgeneral_path)
 assert os.path.exists(nsdgeneral_path)
 print(f"nsdgeneral path exists!")
 
 
-# In[18]:
+# In[28]:
 
 
 if resample_voxel_size:
-    nsdgeneral_path = f'{glmsingle_path}/{sub}_task-{task}_nsdgeneral_resampled.nii.gz'  
+    nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}_task-{task}_nsdgeneral_{resampled_suffix}.nii.gz'  
     if resample_post_glmsingle:
         assert os.path.exists(orig_glmsingle_path)
-        roi_in_path = f"{orig_glmsingle_path}/{sub}_task-{task}_nsdgeneral.nii.gz"  # the input file is the original nsdgeneral mask (without resampling), from the original glmsingle directory
+        roi_in_path = f"{orig_glmsingle_path}/{sub}_{session_label}_task-{task}_nsdgeneral.nii.gz"  # the input file is the original nsdgeneral mask (without resampling), from the original glmsingle directory
         applyxfm(roi_in_path, ref_name, omat_name, resample_method, output=nsdgeneral_path)
 
 
-# In[19]:
+# In[29]:
 
 
 roi = nib.load(nsdgeneral_path)
@@ -602,7 +634,7 @@ plot_roi(roi, bg_img=avg_mask)
 plt.show()
 
 
-# In[20]:
+# In[30]:
 
 
 avg_mask = avg_mask.get_fdata().flatten()
@@ -618,12 +650,12 @@ print(f"nsdgeneral voxels = {roi.sum()}")
 
 # ### ROI voxel exclusion
 
-# In[21]:
+# In[31]:
 
 
 # ROI masking?
 print(f"vox before ROI exclusion: {vox.shape}")
-# vox = vox[:,roi]
+vox = vox[:,roi]
 print(f"vox after ROI exclusion: {vox.shape}")
 
 if np.any(np.isnan(vox)):
@@ -636,13 +668,13 @@ if np.any(np.isnan(vox)):
 
 # ### Calculate reliability (corr between first and second presentation of same image) for every voxel
 
-# In[22]:
+# In[32]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[23]:
+# In[33]:
 
 
 # vox_pairs = []
@@ -669,7 +701,7 @@ assert np.sum(np.all(np.isnan(rels))) == 0
 
 # ### Create representational similarity matrix
 
-# In[24]:
+# In[34]:
 
 
 # creating img x vox x repetitions matrix | shape=(150, 18419, 2)
@@ -682,7 +714,7 @@ for ipair, pair in enumerate(tqdm(pairs_homog)):
 vox_avg = vox0.mean(-1) # average across the repetitions
 
 
-# In[25]:
+# In[35]:
 
 
 # Masking RDM for each reliability threshold
@@ -697,7 +729,7 @@ for ir_thresh, r_thresh in enumerate(r_thresholds):
 # rdm is shape (4, 150, 150)
 
 
-# In[26]:
+# In[36]:
 
 
 thresh = .2
@@ -708,7 +740,7 @@ plt.title(f"{sub}_{session}\nreliability threshold={thresh}\n")
 plt.show()
 
 
-# In[27]:
+# In[37]:
 
 
 for thresh in range(rdm.shape[0]):
@@ -716,13 +748,13 @@ for thresh in range(rdm.shape[0]):
         assert np.isclose(rdm[thresh, img, img], 1)
 
 
-# In[28]:
+# In[38]:
 
 
 vox.shape
 
 
-# In[29]:
+# In[39]:
 
 
 # Reliability thresholding?
@@ -731,7 +763,7 @@ vox = vox[:,rels>.2]
 print(f"\nvox after reliability thresholding: {vox.shape}")
 
 
-# In[30]:
+# In[40]:
 
 
 print(images.shape)
@@ -739,7 +771,7 @@ print(vox.shape)
 assert len(images) == len(vox)
 
 
-# In[31]:
+# In[41]:
 
 
 same_corrs = []
@@ -781,7 +813,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[32]:
+# In[42]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -797,7 +829,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[33]:
+# In[43]:
 
 
 utils.seed_everything(seed)
@@ -835,7 +867,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[34]:
+# In[44]:
 
 
 train_mean = np.mean(vox[train_image_indices],axis=0)
@@ -847,7 +879,7 @@ print(vox[:,0].mean(), vox[:,0].std())
 print("vox", vox.shape)
 
 
-# In[35]:
+# In[45]:
 
 
 # for idx in deleted_indices:
@@ -866,7 +898,7 @@ print("vox", vox.shape)
 # images = images[kept_indices]
 
 
-# In[36]:
+# In[46]:
 
 
 images = torch.Tensor(images)
@@ -874,7 +906,7 @@ vox = torch.Tensor(vox)
 assert len(images) == len(vox)
 
 
-# In[37]:
+# In[47]:
 
 
 ### Multi-GPU config ###
@@ -893,7 +925,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[38]:
+# In[48]:
 
 
 print("PID of this process =",os.getpid())
@@ -922,7 +954,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[39]:
+# In[49]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -947,7 +979,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[40]:
+# In[50]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -1095,7 +1127,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[41]:
+# In[51]:
 
 
 if ckpt_saving:
@@ -1121,7 +1153,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[42]:
+# In[52]:
 
 
 def my_split_by_node(urls): return urls
@@ -1142,7 +1174,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[43]:
+# In[53]:
 
 
 train_data = {}
@@ -1152,7 +1184,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[44]:
+# In[54]:
 
 
 num_voxels = {}
@@ -1180,7 +1212,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[45]:
+# In[55]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1223,7 +1255,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[46]:
+# In[56]:
 
 
 model = utils.prepare_model_and_training(
@@ -1237,7 +1269,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[47]:
+# In[57]:
 
 
 # test on subject 1 with fake data
@@ -1245,7 +1277,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[48]:
+# In[58]:
 
 
 # test that the model works on some fake data
@@ -1258,7 +1290,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[49]:
+# In[59]:
 
 
 if use_prior:
@@ -1296,7 +1328,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[50]:
+# In[60]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1372,7 +1404,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[51]:
+# In[61]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1448,7 +1480,7 @@ else:
 
 # # Train the model
 
-# In[52]:
+# In[62]:
 
 
 epoch = 0
@@ -1457,7 +1489,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[53]:
+# In[63]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1465,7 +1497,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[54]:
+# In[64]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1473,7 +1505,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[55]:
+# In[65]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1482,7 +1514,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[56]:
+# In[ ]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
@@ -1772,13 +1804,13 @@ if ckpt_saving:
     save_ckpt(f'last')
 
 
-# In[57]:
+# In[68]:
 
 
 len(test_data)
 
 
-# In[58]:
+# In[69]:
 
 
 # # Track metrics here:
@@ -1787,13 +1819,13 @@ len(test_data)
 
 # **To tell if the model is working I'm looking at test_bwd/fwd_pct_correct and seeing if that is doing better than chance (1/batch_size)**
 
-# In[59]:
+# In[70]:
 
 
 # MST_pairmate_names
 
 
-# In[60]:
+# In[71]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
@@ -1807,7 +1839,7 @@ for i, p in enumerate(MST_pairmate_names):
 # print(pairs)
 
 
-# In[61]:
+# In[72]:
 
 
 # if sub=="sub-002":
@@ -1835,7 +1867,7 @@ for i, p in enumerate(MST_pairmate_names):
 # # unique_images[unique_images_pairs]
 
 
-# In[62]:
+# In[73]:
 
 
 def evaluate_mst_pairs(mst_pairs):
@@ -1880,7 +1912,7 @@ def evaluate_mst_pairs(mst_pairs):
 print(evaluate_mst_pairs(pairs))
 
 
-# In[63]:
+# In[74]:
 
 
 model.eval()
@@ -1931,7 +1963,7 @@ if local_rank == 0:
         print(f"{k}: {v:.4f}")
 
 
-# In[64]:
+# In[ ]:
 
 
 top_k = 5
@@ -1960,7 +1992,7 @@ for x in range(len(MST_idx)):
     plt.show()
 
 
-# In[65]:
+# In[76]:
 
 
 def evaluate_mst_pairs(mst_pairs):
@@ -2061,7 +2093,7 @@ def evaluate_mst_pairs(mst_pairs):
     return corr_score, corr_total, int(non_corr_score), non_corr_total, failed_A, failed_B, failed_non_corr
 
 
-# In[73]:
+# In[77]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
@@ -2075,7 +2107,7 @@ pairs = np.array(pairs)
 print(pairs.shape)
 
 
-# In[74]:
+# In[78]:
 
 
 all_scores = []
@@ -2104,7 +2136,7 @@ for i in range(1):
         print("")
 
 
-# In[76]:
+# In[79]:
 
 
 # # Compare first few pairs
@@ -2115,7 +2147,7 @@ for i in range(1):
 #     print(f"Image 2: {x[pair[1]]}\n")
 
 
-# In[77]:
+# In[80]:
 
 
 # for i in range(len(pairs)):
@@ -2132,7 +2164,7 @@ for i in range(1):
 #     plt.show()
 
 
-# In[78]:
+# In[81]:
 
 
 # score = 0
@@ -2197,14 +2229,14 @@ for i in range(1):
 # print(score/total)
 
 
-# In[79]:
+# In[82]:
 
 
 #display(utils.torch_to_Image(imageA))
 #display(utils.torch_to_Image(imageB))
 
 
-# In[80]:
+# In[83]:
 
 
 # from scipy.stats import binomtest
@@ -2225,6 +2257,12 @@ for i in range(1):
 #     print("The decoder's accuracy is significantly better than chance.")
 # else:
 #     print("The decoder's accuracy is not significantly better than chance.")
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:

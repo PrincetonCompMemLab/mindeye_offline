@@ -13,7 +13,7 @@ rt_python/data
 __pycache__/
 *.py[cod]
 *$py.class
-Untitled.ipynb
+Untitled*.ipynb
 .ipynb_checkpoints/
 Train (2).ipynb
 Train (2).py

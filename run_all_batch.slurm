@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=sub-005_ses-03_notrain_unionmask
+#SBATCH --job-name=sub-007_ses-01_task-E_2_5mm
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1              
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=gpu80
 #SBATCH --gpus-per-task=1       # Set to equal gres=gpu:#!
-#SBATCH --cpus-per-task=1      # 40 / 80 / 176 distributed across node
-#SBATCH --time=01:00:00         # total run time limit (HH:MM:SS)
+#SBATCH --cpus-per-task=40      # 40 / 80 / 176 distributed across node
+#SBATCH --time=00:20:00         # total run time limit (HH:MM:SS)
 #SBATCH -e slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o slurms/%A_%a.out
 #SBATCH --no-requeue
@@ -26,17 +26,29 @@ conda activate rt_mindEye2
 
 # verify these variables before submitting
 # ---
-sub="sub-005"
-session="ses-03"
-session_label='ses-03'
+sub="sub-007"
+session="ses-01"
+session_label='ses-01'
 split=MST  # MST train/test split, alternative would be train on non-repeats and test on images that repeat (split=orig) 
-task=C
+task=E
+func_task_name=E
+resample_voxel_size=True
+resample_post_glmsingle=False
+load_from_resampled_file=False
+remove_close_to_MST=False
+remove_random_n=False
+resampled_vox_size=2.5
+resample_method="trilinear"
+# Convert decimal point to underscore
+vox_dim_str=${resampled_vox_size//./_}
+
 # model_name="${sub}_multi_task-${task}_bs24_MST_rishab_${split}split"
-model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_notrain_unionmask_${SLURM_ARRAY_TASK_ID}"
-main_script="main-test"
+# model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split"
+model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_resampled_${vox_dim_str}mm_${resample_method}"
+main_script="main-multisession-3tasks"
 # glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle-multi"
 glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session_label}_task-${task}"
-# glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session}"
+# glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session_label}_task-${task}_resampled_${resampled_vox_size}mm_${resample_method}"
 # --- 
 
 export NUM_GPUS=1  # Set to equal gres=gpu:#!
@@ -55,9 +67,20 @@ echo WORLD_SIZE=${COUNT_NODE}
 echo model_name=${model_name}
 
 eval_dir="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/evals/${model_name}"
-export sub=${sub}
-export session=${session}
-export task=${task}
+export SUB=${sub}
+export SESSION=${session}
+export SESSION_LABEL=${session_label}
+export SPLIT=${split}
+export TASK=${task}
+export FUNC_TASK_NAME=${func_task_name}
+export RESAMPLE_VOXEL_SIZE=${resample_voxel_size}
+export RESAMPLE_POST_GLMSINGLE=${resample_post_glmsingle}
+export LOAD_FROM_RESAMPLED_FILE=${load_from_resampled_file}
+export REMOVE_CLOSE_TO_MST=${remove_close_to_MST}
+export REMOVE_RANDOM_N=${remove_random_n}
+export RESAMPLED_VOX_SIZE=${resampled_vox_size}
+export RESAMPLE_METHOD=${resample_method}
+
 export glmsingle_path=${glmsingle_path}
 export eval_dir=${eval_dir}
 export WANDB_MODE="offline"
