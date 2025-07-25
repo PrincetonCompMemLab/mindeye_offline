@@ -123,6 +123,13 @@ if resample_voxel_size:
     if resample_post_glmsingle:
         resampled_suffix += '_postglmsingle'      
         
+    print('resample_voxel_size:', resample_voxel_size)
+    print('resample_post_glmsingle:', resample_post_glmsingle)
+    print('load_from_resampled_file:', load_from_resampled_file)
+    print('resampled_vox_size:', resampled_vox_size)
+    print('resample_method:', resample_method)
+    print('resampled_suffix:', resampled_suffix)
+    print('mask_resampled_suffix:', mask_resampled_suffix)
 print('sub:', sub)
 print('session:', session)
 print('task:', task)
@@ -130,17 +137,10 @@ print('func_task_name:', func_task_name)
 print('ses_list:', ses_list)
 print('design_ses_list:', design_ses_list)
 print('task_name:', task_name)
-print('resample_voxel_size:', resample_voxel_size)
-print('resample_post_glmsingle:', resample_post_glmsingle)
-print('load_from_resampled_file:', load_from_resampled_file)
 print('train_test_split:', train_test_split)
 print('remove_close_to_MST:', remove_close_to_MST)
 print('remove_random_n:', remove_random_n)
 print('n_to_remove:', n_to_remove)
-print('resampled_vox_size:', resampled_vox_size)
-print('resample_method:', resample_method)
-print('resampled_suffix:', resampled_suffix)
-print('mask_resampled_suffix:', mask_resampled_suffix)
 
 
 # In[7]:
@@ -605,15 +605,6 @@ assert len(vox) == len(image_idx)
 
 # ### Load nsdgeneral ROI
 
-# In[23]:
-
-
-nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_nsdgeneral_{resampled_suffix}.nii.gz'  
-print(nsdgeneral_path)
-assert os.path.exists(nsdgeneral_path)
-print(f"nsdgeneral path exists!")
-
-
 # In[28]:
 
 
@@ -623,6 +614,12 @@ if resample_voxel_size:
         assert os.path.exists(orig_glmsingle_path)
         roi_in_path = f"{orig_glmsingle_path}/{sub}_{session_label}_task-{task}_nsdgeneral.nii.gz"  # the input file is the original nsdgeneral mask (without resampling), from the original glmsingle directory
         applyxfm(roi_in_path, ref_name, omat_name, resample_method, output=nsdgeneral_path)
+else:
+    nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_nsdgeneral.nii.gz'  
+    
+print(nsdgeneral_path)
+assert os.path.exists(nsdgeneral_path)
+print(f"nsdgeneral path exists!")
 
 
 # In[29]:

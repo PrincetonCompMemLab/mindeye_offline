@@ -1,16 +1,16 @@
 #!/bin/bash
-#SBATCH --job-name=sub-007_ses-01_task-E_2_5mm
+#SBATCH --job-name=sub-007_ses-01_task-E_2_0mm
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1              
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=gpu80
 #SBATCH --gpus-per-task=1       # Set to equal gres=gpu:#!
 #SBATCH --cpus-per-task=40      # 40 / 80 / 176 distributed across node
-#SBATCH --time=00:20:00         # total run time limit (HH:MM:SS)
+#SBATCH --time=00:35:00         # total run time limit (HH:MM:SS)
 #SBATCH -e slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o slurms/%A_%a.out
 #SBATCH --no-requeue
-#SBATCH --array=0               # 0 or 0-9
+#SBATCH --array=1-9               # 0 or 0-9
 #SBATCH --mail-type=END
 #SBATCH --mail-user=rsiyer@princeton.edu
 
@@ -34,21 +34,20 @@ task=E
 func_task_name=E
 resample_voxel_size=True
 resample_post_glmsingle=False
-load_from_resampled_file=False
+load_from_resampled_file=True
 remove_close_to_MST=False
 remove_random_n=False
-resampled_vox_size=2.5
+resampled_vox_size=2.0
 resample_method="trilinear"
 # Convert decimal point to underscore
 vox_dim_str=${resampled_vox_size//./_}
 
 # model_name="${sub}_multi_task-${task}_bs24_MST_rishab_${split}split"
 # model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split"
-model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_resampled_${vox_dim_str}mm_${resample_method}"
+model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_resampled_${vox_dim_str}mm_${resample_method}_seed${SLURM_ARRAY_TASK_ID}"
 main_script="main-multisession-3tasks"
 # glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle-multi"
 glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session_label}_task-${task}"
-# glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session_label}_task-${task}_resampled_${resampled_vox_size}mm_${resample_method}"
 # --- 
 
 export NUM_GPUS=1  # Set to equal gres=gpu:#!
