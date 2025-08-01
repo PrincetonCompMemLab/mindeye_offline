@@ -1,16 +1,16 @@
 #!/bin/bash
-#SBATCH --job-name=sub-007_ses-01_task-E_2_0mm
+#SBATCH --job-name=sub-005_ses-01-02_task-C_finetune_rtpreproc_unionmask
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1              
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=gpu80
 #SBATCH --gpus-per-task=1       # Set to equal gres=gpu:#!
-#SBATCH --cpus-per-task=40      # 40 / 80 / 176 distributed across node
-#SBATCH --time=00:35:00         # total run time limit (HH:MM:SS)
+#SBATCH --cpus-per-task=1      # 40 / 80 / 176 distributed across node
+#SBATCH --time=02:35:00         # total run time limit (HH:MM:SS)
 #SBATCH -e slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o slurms/%A_%a.out
 #SBATCH --no-requeue
-#SBATCH --array=1-9               # 0 or 0-9
+#SBATCH --array=0               # 0 or 0-9
 #SBATCH --mail-type=END
 #SBATCH --mail-user=rsiyer@princeton.edu
 
@@ -26,13 +26,13 @@ conda activate rt_mindEye2
 
 # verify these variables before submitting
 # ---
-sub="sub-007"
-session="ses-01"
-session_label='ses-01'
+sub="sub-005"
+session="all"
+session_label='ses-01-02'
 split=MST  # MST train/test split, alternative would be train on non-repeats and test on images that repeat (split=orig) 
-task=E
-func_task_name=E
-resample_voxel_size=True
+task=C
+func_task_name=C
+resample_voxel_size=False
 resample_post_glmsingle=False
 load_from_resampled_file=True
 remove_close_to_MST=False
@@ -43,9 +43,9 @@ resample_method="trilinear"
 vox_dim_str=${resampled_vox_size//./_}
 
 # model_name="${sub}_multi_task-${task}_bs24_MST_rishab_${split}split"
-# model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split"
-model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_resampled_${vox_dim_str}mm_${resample_method}_seed${SLURM_ARRAY_TASK_ID}"
-main_script="main-multisession-3tasks"
+model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_finetune_rtpreproc_unionmask"
+# model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_resampled_${vox_dim_str}mm_${resample_method}_seed${SLURM_ARRAY_TASK_ID}"
+main_script="main-finetune-rt-preproc"
 # glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle-multi"
 glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session_label}_task-${task}"
 # --- 
