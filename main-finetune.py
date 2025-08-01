@@ -72,8 +72,8 @@ else:
     func_task_name = 'C'
 
 if session == "all":
-    ses_list = ["ses-01", "ses-02"]  # list of actual session IDs
-    design_ses_list = ["ses-01", "ses-02"]  # list of session IDs to search for design matrix
+    ses_list = ["ses-01", "ses-02", "ses-03"]  # list of actual session IDs
+    design_ses_list = ["ses-01", "ses-02", "ses-03"]  # list of session IDs to search for design matrix
 else:
     ses_list = [session]
     design_ses_list = [session]
@@ -286,7 +286,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 
 # ## Load images
 
-# In[6]:
+# In[ ]:
 
 
 import imageio.v2 as imageio
@@ -324,7 +324,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 print("MST_images==True", len(MST_images[MST_images==True]))
 
 
-# In[7]:
+# In[ ]:
 
 
 # want IDs of pairmates based on MST_images
@@ -342,7 +342,7 @@ for p, pair in enumerate(MST_pairmate_names):
 print(MST_pairmate_indices.shape, MST_pairmate_indices)
 
 
-# In[8]:
+# In[ ]:
 
 
 if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
@@ -370,7 +370,7 @@ if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
     plt.show()
 
 
-# In[9]:
+# In[ ]:
 
 
 # pairs has the indices of all repeated images
@@ -389,7 +389,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[10]:
+# In[ ]:
 
 
 p=0
@@ -408,7 +408,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[11]:
+# In[ ]:
 
 
 def get_image_pairs(sub, session, func_task_name, designdir):
@@ -423,7 +423,7 @@ def get_image_pairs(sub, session, func_task_name, designdir):
     return utils.process_images(image_names, unique_images)
 
 
-# In[12]:
+# In[ ]:
 
 
 from collections import defaultdict
@@ -450,52 +450,21 @@ image_to_indices = dict(image_to_indices)
         
 # test_image_to_indices = dict(test_image_to_indices)
 
-
-# In[13]:
-
-
-# train_pairs_list = []
-# test_pairs_list = []
-
-if sub == 'sub-005' and ses_list == ["ses-01", "ses-02"]:
-    for image, (ses0_indices, ses1_indices) in image_to_indices.items():
-        # Offset session 1 indices by 693
-        image_to_indices[image] = [ses0_indices, [i + 693 for i in ses1_indices]]
-
-#         # Combine all repeat indices (across both sessions)
-#         all_indices = ses0_indices + ses1_indices_offset
-
-#         # Only include if there are at least 2 repeats
-#         if len(all_indices) >= 2:
-#             train_pairs_list.append(all_indices)
+if sub == 'sub-005' and len(ses_list) > 1:
+    session_length = 693
+    for image, session_indices_list in image_to_indices.items():
+        new_indices_list = []
+        for idx, indices in enumerate(session_indices_list):
+            offset = idx * session_length
+            new_indices = [i + offset for i in indices]
+            new_indices_list.append(new_indices)
+        image_to_indices[image] = new_indices_list
         
-#     for i in test_image_to_indices.values():
-#         # print(i[0])
-#         # Only include if there are at least 2 repeats
-#         if len(i[0]) >= 2:
-#             test_pairs_list.append(i[0])
-            
-#     train_test_pairs = [train_pairs_list, test_pairs_list]
-            
-# elif sub == 'sub-005' and ses_list == ["ses-01", "ses-03"]:
-#     pairs_list = []
-
-#     if len(ses_list) > 2:
-#         # Case 1: Aggregate results from multiple sessions (ses_list[:-1]), concatenating into a single list
-#         combined_pairs = sum([get_image_pairs(sub, s, func_task_name, designdir) for s in ses_list[:-1]], [])
-#         pairs_list.append(combined_pairs)
-
-#         # Case 2: Process last session separately
-#         pairs_list.append(get_image_pairs(sub, ses_list[-1], func_task_name, designdir))
-
-#     else:
-#         # Case 3: Process both sessions individually if ses_list has only 2 entries
-#         pairs_list.extend([get_image_pairs(sub, s, func_task_name, designdir) for s in ses_list])
-
-#     assert len(pairs_list) == 2
+    import itertools
+    assert max(itertools.chain.from_iterable(list(image_to_indices.values())))[0] == (len(ses_list)*session_length) - 1
 
 
-# In[14]:
+# In[ ]:
 
 
 if resample_voxel_size:
@@ -504,11 +473,11 @@ if resample_voxel_size:
     omat_name = f'{glmsingle_path}/boldref_omat'
 
 
-# In[15]:
+# In[ ]:
 
 
 from nilearn.plotting import plot_roi
-assert sub == 'sub-005' and session_label == 'ses-01-02'
+
 print('loading brain mask')
 avg_mask = nib.load('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/sub-005_final_brain.nii.gz')
 final_mask = nib.load('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/sub-005_final_mask.nii.gz')
@@ -530,7 +499,7 @@ plot_roi(final_mask, bg_img=avg_mask)
 plt.show()
 
 
-# In[16]:
+# In[ ]:
 
 
 # # create union of ses-01 and ses-02 reliability masks and plot against avg_mask 
@@ -548,7 +517,8 @@ plt.show()
 # assert union_mask.sum() > rel_masks[1].sum()
 # print(f'there are {union_mask.sum()} reliable voxels based on the union mask out of {int(final_mask.get_fdata().sum())} voxels in the nsdgeneral roi')
 # print(f'{(union_mask.sum() / int(final_mask.get_fdata().sum())):.2%} of the voxels in the roi were selected')
-path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/union_mask_from_{session_label}.npy'
+# path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/union_mask_from_{session_label}.npy'
+path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/union_mask_from_ses-01-02.npy'
 # np.save(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/union_mask_from_{session_label}.npy', union_mask)
 # print(f'saved union mask to {path}!')
 union_mask = np.load(path)
@@ -556,18 +526,20 @@ union_mask = np.load(path)
 
 # ## Load GLMSingle voxel data
 
-# In[17]:
+# In[ ]:
 
 
 ses_mask = []
-ses_mask.append(nib.load(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_ses-01_task-C/sub-005_ses-01_task-C_brain.nii.gz'))
-ses_mask.append(nib.load(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_ses-02_task-C/sub-005_ses-02_task-C_brain.nii.gz'))
-for m in ses_mask:
-    assert np.all(m.affine == final_mask.affine)
-    assert np.all(m.shape == final_mask.shape)
+
+for s in ses_list:
+    ses_mask_path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_{s}_task-C/sub-005_{s}_task-C_brain.nii.gz'
+    ses_mask.append(nib.load(ses_mask_path))
+    
+    assert np.all(ses_mask[-1].affine == final_mask.affine)
+    assert np.all(ses_mask[-1].shape == final_mask.shape)
 
 
-# In[18]:
+# In[ ]:
 
 
 ses_vox = []
@@ -587,12 +559,13 @@ if resample_post_glmsingle == True:
         vox = resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_path, glm_save_path_resampled, ref_name, omat_name)
     needs_postprocessing = True
 
-if vox is None:
-    # either resampling was done in glmsingle or we aren't resampling 
-    ses_vox.append(load_preprocess_betas(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_ses-01_task-C', *params))
-    ses_vox.append(load_preprocess_betas(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_ses-02_task-C', *params))
-    for i, v in enumerate(ses_vox):
-        v = nilearn.masking.unmask(v, ses_mask[i])
+if vox is None:    
+    for i, s in enumerate(ses_list):
+        # either resampling was done in glmsingle or we aren't resampling 
+        ses_vox_path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_{s}_task-C'
+        assert os.path.exists(ses_vox_path)
+        ses_vox.append(load_preprocess_betas(ses_vox_path, *params))
+        v = nilearn.masking.unmask(ses_vox[i], ses_mask[i])
         ses_vox[i] = nilearn.masking.apply_mask(v, final_mask)
     vox = np.concatenate(ses_vox)
     print("applied final brain mask")
@@ -610,7 +583,7 @@ if needs_postprocessing == True:
 assert len(vox) == len(image_idx)
 
 
-# In[19]:
+# In[ ]:
 
 
 # # get vox into the same shape as the union mask
@@ -620,13 +593,13 @@ assert len(vox) == len(image_idx)
 # print(vox.shape)
 
 
-# In[20]:
+# In[ ]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[21]:
+# In[ ]:
 
 
 same_corrs = []
@@ -668,7 +641,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[22]:
+# In[ ]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -684,7 +657,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[23]:
+# In[ ]:
 
 
 utils.seed_everything(seed)
@@ -722,7 +695,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[24]:
+# In[ ]:
 
 
 ses_split = vox[train_image_indices].shape[0] // 2
@@ -742,7 +715,21 @@ print("ses-02:", vox[ses_split:,0].mean(), vox[ses_split:,0].std())
 print("vox", vox.shape)
 
 
-# In[25]:
+# In[ ]:
+
+
+# save the mean and std from ses-01 and 02
+train_test_mean_s1 = np.mean(vox[:ses_split], axis=0)
+train_test_std_s1 = np.std(vox[:ses_split], axis=0)
+train_test_mean_s2 = np.mean(vox[ses_split:], axis=0)
+train_test_std_s2 = np.std(vox[ses_split:], axis=0)
+print(train_test_mean_s1.shape)
+assert np.all(train_test_mean_s1.shape == train_test_std_s1.shape)
+assert np.all(train_test_mean_s1.shape == train_test_mean_s2.shape)
+assert np.all(train_test_mean_s1.shape == train_test_std_s2.shape)
+
+
+# In[ ]:
 
 
 # for idx in deleted_indices:
@@ -761,7 +748,7 @@ print("vox", vox.shape)
 # images = images[kept_indices]
 
 
-# In[26]:
+# In[ ]:
 
 
 images = torch.Tensor(images)
@@ -769,7 +756,7 @@ vox = torch.Tensor(vox)
 assert len(images) == len(vox)
 
 
-# In[27]:
+# In[ ]:
 
 
 ### Multi-GPU config ###
@@ -788,7 +775,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[28]:
+# In[ ]:
 
 
 print("PID of this process =",os.getpid())
@@ -817,7 +804,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[29]:
+# In[ ]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -842,7 +829,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[30]:
+# In[ ]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -990,7 +977,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[31]:
+# In[ ]:
 
 
 if ckpt_saving:
@@ -1012,11 +999,16 @@ if ckpt_saving:
     np.save(f"{eval_dir}/test_image_indices.npy", test_image_indices)
     np.save(f"{eval_dir}/images.npy", images)
     np.save(f"{eval_dir}/vox.npy", vox)
+    
+    np.save(f'{eval_dir}/train_test_mean_s1.npy', train_test_mean_s1)
+    np.save(f'{eval_dir}/train_test_std_s1.npy', train_test_std_s1)
+    np.save(f'{eval_dir}/train_test_mean_s2.npy', train_test_mean_s2)
+    np.save(f'{eval_dir}/train_test_std_s2.npy', train_test_std_s2)
 
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[32]:
+# In[ ]:
 
 
 def my_split_by_node(urls): return urls
@@ -1037,7 +1029,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[33]:
+# In[ ]:
 
 
 train_data = {}
@@ -1047,7 +1039,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[34]:
+# In[ ]:
 
 
 num_voxels = {}
@@ -1075,7 +1067,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[35]:
+# In[ ]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1118,7 +1110,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[36]:
+# In[ ]:
 
 
 model = utils.prepare_model_and_training(
@@ -1132,7 +1124,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[37]:
+# In[ ]:
 
 
 # test on subject 1 with fake data
@@ -1140,7 +1132,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[38]:
+# In[ ]:
 
 
 # test that the model works on some fake data
@@ -1153,7 +1145,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[39]:
+# In[ ]:
 
 
 if use_prior:
@@ -1191,7 +1183,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[40]:
+# In[ ]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1267,7 +1259,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[41]:
+# In[ ]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1343,7 +1335,7 @@ else:
 
 # # Train the model
 
-# In[42]:
+# In[ ]:
 
 
 epoch = 0
@@ -1352,7 +1344,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[43]:
+# In[ ]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1360,7 +1352,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[44]:
+# In[ ]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1368,7 +1360,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[45]:
+# In[ ]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1377,7 +1369,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[46]:
+# In[ ]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
@@ -1667,13 +1659,13 @@ if ckpt_saving:
     save_ckpt(f'last')
 
 
-# In[47]:
+# In[ ]:
 
 
 len(test_data)
 
 
-# In[48]:
+# In[ ]:
 
 
 # # Track metrics here:
@@ -1682,13 +1674,13 @@ len(test_data)
 
 # **To tell if the model is working I'm looking at test_bwd/fwd_pct_correct and seeing if that is doing better than chance (1/batch_size)**
 
-# In[49]:
+# In[ ]:
 
 
 # MST_pairmate_names
 
 
-# In[50]:
+# In[ ]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
@@ -1701,13 +1693,13 @@ for i, p in enumerate(MST_pairmate_names):
 pairs = np.array(pairs)
 
 
-# In[51]:
+# In[ ]:
 
 
 pairs.shape
 
 
-# In[64]:
+# In[ ]:
 
 
 model.eval()
@@ -1758,7 +1750,7 @@ if local_rank == 0:
         print(f"{k}: {v:.4f}")
 
 
-# In[52]:
+# In[ ]:
 
 
 # if sub=="sub-002":
@@ -1786,13 +1778,13 @@ if local_rank == 0:
 # # unique_images[unique_images_pairs]
 
 
-# In[53]:
+# In[ ]:
 
 
 import pdb
 
 
-# In[54]:
+# In[ ]:
 
 
 def evaluate_mst_pairs(mst_pairs):
@@ -1893,7 +1885,7 @@ def evaluate_mst_pairs(mst_pairs):
     return corr_score, corr_total, int(non_corr_score), non_corr_total, failed_A, failed_B, failed_non_corr
 
 
-# In[55]:
+# In[ ]:
 
 
 all_scores = []
@@ -1922,7 +1914,7 @@ for i in range(4):
         print("")
 
 
-# In[56]:
+# In[ ]:
 
 
 all_scores = np.array(all_scores)
@@ -1931,7 +1923,7 @@ print(f"average 2-AFC non-corresponding: {all_scores[:,2].mean():.2f}/{all_score
 print(f'chance = 1/{corr_total} ({(1/corr_total):.2%})')
 
 
-# In[57]:
+# In[ ]:
 
 
 from collections import defaultdict
@@ -2092,25 +2084,25 @@ for failure_entry in all_failures:
 #     plt.show()
 
 
-# In[58]:
+# In[ ]:
 
 
 mst_pairs[:5]
 
 
-# In[59]:
+# In[ ]:
 
 
 pairs[0]
 
 
-# In[61]:
+# In[ ]:
 
 
 # images[image_idx[pairs[0][0]]].shape
 
 
-# In[62]:
+# In[ ]:
 
 
 ix = 0
