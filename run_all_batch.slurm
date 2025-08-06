@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=sub-005_ses-01-02_task-C_finetune_no-multisubj-ckpt_unionmask
+#SBATCH --job-name=sub-005_ses-01-02_task-C_finetune_multisubj-ckpt_unionmask
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1              
 #SBATCH --gres=gpu:1
@@ -44,7 +44,7 @@ resample_method="trilinear"
 vox_dim_str=${resampled_vox_size//./_}
 
 # model_name="${sub}_multi_task-${task}_bs24_MST_rishab_${split}split"
-model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_finetune_no-multisubj-ckpt_unionmask"
+model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_finetune_multisubj-ckpt_unionmask"
 # model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_resampled_${vox_dim_str}mm_${resample_method}_seed${SLURM_ARRAY_TASK_ID}"
 main_script="main-multisession-sub-005_ses-03_union_mask"
 # glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle-multi"
@@ -87,7 +87,7 @@ export WANDB_MODE="offline"
 
 # singlesubject finetuning
 jupyter nbconvert "${main_script}.ipynb" --to python && \
-accelerate launch --num_processes=$(($NUM_GPUS * $COUNT_NODE)) --num_machines=$COUNT_NODE --main_process_ip=$MASTER_ADDR --main_process_port=$MASTER_PORT "${main_script}.py" --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --model_name=${model_name} --no-multi_subject --subj=1 --batch_size=${BATCH_SIZE} --max_lr=3e-4 --mixup_pct=.33 --num_epochs=150 --use_prior --prior_scale=30 --clip_scale=1 --no-blurry_recon --blur_scale=.5 --no-use_image_aug --n_blocks=4 --hidden_dim=1024 --num_sessions=40 --ckpt_interval=999 --ckpt_saving --wandb_log --seed="${SLURM_ARRAY_TASK_ID}" && \
+accelerate launch --num_processes=$(($NUM_GPUS * $COUNT_NODE)) --num_machines=$COUNT_NODE --main_process_ip=$MASTER_ADDR --main_process_port=$MASTER_PORT "${main_script}.py" --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --model_name=${model_name} --no-multi_subject --subj=1 --batch_size=${BATCH_SIZE} --max_lr=3e-4 --mixup_pct=.33 --num_epochs=150 --use_prior --prior_scale=30 --clip_scale=1 --no-blurry_recon --blur_scale=.5 --no-use_image_aug --n_blocks=4 --hidden_dim=1024 --num_sessions=40 --ckpt_interval=999 --ckpt_saving --wandb_log --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep --seed="${SLURM_ARRAY_TASK_ID}" && \
 
 # jupyter nbconvert recon_inference-multisession.ipynb --to python && \
 # python recon_inference-multisession.py --model_name=${model_name} --subj=1 --no-blurry_recon --use_prior --hidden_dim=1024 --n_blocks=4 --glmsingle_path="${glmsingle_path}" && \
