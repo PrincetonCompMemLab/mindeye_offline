@@ -66,14 +66,14 @@ if utils.is_interactive():
     task = 'C'  # 'study' or 'A'; used to search for functional run in bids format
     func_task_name = 'C'
 else:
-    sub = os.environ["sub"]
-    session = os.environ["session"]
-    task = os.environ["task"]
+    sub = os.environ["SUB"]
+    session = os.environ["SESSION"]
+    task = os.environ["TASK"]
     func_task_name = 'C'
 
 if session == "all":
-    ses_list = ["ses-01", "ses-02", "ses-03"]  # list of actual session IDs
-    design_ses_list = ["ses-01", "ses-02", "ses-03"]  # list of session IDs to search for design matrix
+    ses_list = ["ses-01", "ses-02"]  # list of actual session IDs
+    design_ses_list = ["ses-01", "ses-02"]  # list of session IDs to search for design matrix
 else:
     ses_list = [session]
     design_ses_list = [session]
@@ -286,7 +286,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 
 # ## Load images
 
-# In[ ]:
+# In[6]:
 
 
 import imageio.v2 as imageio
@@ -324,7 +324,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 print("MST_images==True", len(MST_images[MST_images==True]))
 
 
-# In[ ]:
+# In[7]:
 
 
 # want IDs of pairmates based on MST_images
@@ -342,7 +342,7 @@ for p, pair in enumerate(MST_pairmate_names):
 print(MST_pairmate_indices.shape, MST_pairmate_indices)
 
 
-# In[ ]:
+# In[8]:
 
 
 if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
@@ -370,7 +370,7 @@ if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
     plt.show()
 
 
-# In[ ]:
+# In[9]:
 
 
 # pairs has the indices of all repeated images
@@ -389,7 +389,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[ ]:
+# In[10]:
 
 
 p=0
@@ -408,7 +408,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[ ]:
+# In[11]:
 
 
 def get_image_pairs(sub, session, func_task_name, designdir):
@@ -423,7 +423,7 @@ def get_image_pairs(sub, session, func_task_name, designdir):
     return utils.process_images(image_names, unique_images)
 
 
-# In[ ]:
+# In[12]:
 
 
 from collections import defaultdict
@@ -464,7 +464,7 @@ if sub == 'sub-005' and len(ses_list) > 1:
     assert max(itertools.chain.from_iterable(list(image_to_indices.values())))[0] == (len(ses_list)*session_length) - 1
 
 
-# In[ ]:
+# In[13]:
 
 
 if resample_voxel_size:
@@ -473,7 +473,7 @@ if resample_voxel_size:
     omat_name = f'{glmsingle_path}/boldref_omat'
 
 
-# In[ ]:
+# In[14]:
 
 
 from nilearn.plotting import plot_roi
@@ -499,7 +499,7 @@ plot_roi(final_mask, bg_img=avg_mask)
 plt.show()
 
 
-# In[ ]:
+# In[15]:
 
 
 # # create union of ses-01 and ses-02 reliability masks and plot against avg_mask 
@@ -526,7 +526,7 @@ union_mask = np.load(path)
 
 # ## Load GLMSingle voxel data
 
-# In[ ]:
+# In[16]:
 
 
 ses_mask = []
@@ -539,7 +539,7 @@ for s in ses_list:
     assert np.all(ses_mask[-1].shape == final_mask.shape)
 
 
-# In[ ]:
+# In[17]:
 
 
 ses_vox = []
@@ -583,7 +583,7 @@ if needs_postprocessing == True:
 assert len(vox) == len(image_idx)
 
 
-# In[ ]:
+# In[18]:
 
 
 # # get vox into the same shape as the union mask
@@ -593,13 +593,13 @@ assert len(vox) == len(image_idx)
 # print(vox.shape)
 
 
-# In[ ]:
+# In[19]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[ ]:
+# In[20]:
 
 
 same_corrs = []
@@ -641,7 +641,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[ ]:
+# In[21]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -657,7 +657,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[ ]:
+# In[22]:
 
 
 utils.seed_everything(seed)
@@ -695,7 +695,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[ ]:
+# In[23]:
 
 
 ses_split = vox[train_image_indices].shape[0] // 2
@@ -704,6 +704,11 @@ train_mean_s1 = np.mean(vox[train_image_indices][:ses_split], axis=0)
 train_std_s1 = np.std(vox[train_image_indices][:ses_split], axis=0)
 train_mean_s2 = np.mean(vox[train_image_indices][ses_split:], axis=0)
 train_std_s2 = np.std(vox[train_image_indices][ses_split:], axis=0)
+
+print('shape of train mean from ses-01:', train_mean_s1.shape)
+print('shape of train std from ses-01:', train_std_s1.shape)
+print('shape of train mean from ses-02:', train_mean_s2.shape)
+print('shape of train std from ses-02:', train_std_s2.shape)
 
 
 vox[:ses_split] = utils.zscore(vox[:ses_split],train_mean=train_mean_s1,train_std=train_std_s1)
@@ -715,7 +720,7 @@ print("ses-02:", vox[ses_split:,0].mean(), vox[ses_split:,0].std())
 print("vox", vox.shape)
 
 
-# In[ ]:
+# In[24]:
 
 
 # save the mean and std from ses-01 and 02
@@ -729,7 +734,7 @@ assert np.all(train_test_mean_s1.shape == train_test_mean_s2.shape)
 assert np.all(train_test_mean_s1.shape == train_test_std_s2.shape)
 
 
-# In[ ]:
+# In[25]:
 
 
 # for idx in deleted_indices:
@@ -748,7 +753,7 @@ assert np.all(train_test_mean_s1.shape == train_test_std_s2.shape)
 # images = images[kept_indices]
 
 
-# In[ ]:
+# In[26]:
 
 
 images = torch.Tensor(images)
@@ -756,7 +761,7 @@ vox = torch.Tensor(vox)
 assert len(images) == len(vox)
 
 
-# In[ ]:
+# In[27]:
 
 
 ### Multi-GPU config ###
@@ -775,7 +780,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[ ]:
+# In[28]:
 
 
 print("PID of this process =",os.getpid())
@@ -804,7 +809,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[ ]:
+# In[29]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -829,7 +834,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[ ]:
+# In[30]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -977,7 +982,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[ ]:
+# In[31]:
 
 
 if ckpt_saving:
@@ -1008,7 +1013,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[ ]:
+# In[32]:
 
 
 def my_split_by_node(urls): return urls
@@ -1029,7 +1034,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[ ]:
+# In[33]:
 
 
 train_data = {}
@@ -1039,7 +1044,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[ ]:
+# In[34]:
 
 
 num_voxels = {}
@@ -1067,7 +1072,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[ ]:
+# In[35]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1110,7 +1115,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[ ]:
+# In[36]:
 
 
 model = utils.prepare_model_and_training(
@@ -1124,7 +1129,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[ ]:
+# In[37]:
 
 
 # test on subject 1 with fake data
@@ -1132,7 +1137,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[ ]:
+# In[38]:
 
 
 # test that the model works on some fake data
@@ -1145,7 +1150,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[ ]:
+# In[39]:
 
 
 if use_prior:
@@ -1183,7 +1188,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[ ]:
+# In[40]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1259,7 +1264,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[ ]:
+# In[41]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1335,7 +1340,7 @@ else:
 
 # # Train the model
 
-# In[ ]:
+# In[42]:
 
 
 epoch = 0
@@ -1344,7 +1349,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[ ]:
+# In[43]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1352,7 +1357,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[ ]:
+# In[44]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1360,7 +1365,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[ ]:
+# In[45]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1369,7 +1374,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[ ]:
+# In[46]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")

@@ -4,10 +4,10 @@
 #SBATCH --nodes=1              
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=gpu80
-#SBATCH --mem=64G
+#SBATCH --mem=24G
 #SBATCH --gpus-per-task=1       # Set to equal gres=gpu:#!
 #SBATCH --cpus-per-task=1      # 40 / 80 / 176 distributed across node
-#SBATCH --time=02:35:00         # total run time limit (HH:MM:SS)
+#SBATCH --time=02:00:00         # total run time limit (HH:MM:SS)
 #SBATCH -e slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o slurms/%A_%a.out
 #SBATCH --no-requeue
@@ -46,7 +46,7 @@ vox_dim_str=${resampled_vox_size//./_}
 # model_name="${sub}_multi_task-${task}_bs24_MST_rishab_${split}split"
 model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_finetune_multisubj-ckpt_unionmask"
 # model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_resampled_${vox_dim_str}mm_${resample_method}_seed${SLURM_ARRAY_TASK_ID}"
-main_script="main-multisession-sub-005_ses-03_union_mask"
+main_script="main-finetune"
 # glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle-multi"
 glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session_label}_task-${task}"
 # --- 
