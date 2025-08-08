@@ -1,0 +1,2 @@
+*.png,[[:space:]]*.jpg filter=lfs diff=lfs merge=lfs -text
+main*.ipynb filter=lfs diff=lfs merge=lfs -text
