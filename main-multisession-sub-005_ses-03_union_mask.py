@@ -62,13 +62,13 @@ seed = utils.get_slurm_seed()
 
 if utils.is_interactive():
     sub = "sub-005"
-    session = "ses-03"
+    session = "all"
     task = 'C'  # 'study' or 'A'; used to search for functional run in bids format
     func_task_name = 'C'
 else:
-    sub = os.environ["sub"]
-    session = os.environ["session"]
-    task = os.environ["task"]
+    sub = os.environ["SUB"]
+    session = os.environ["SESSION"]
+    task = os.environ["TASK"]
     func_task_name = 'C'
 
 if session == "all":
@@ -537,11 +537,11 @@ print('')
 print(f'There are {int(np.sum(brain))} voxels in the included brain mask\n')
 
 
-# In[16]:
+# In[17]:
 
 
 from nilearn.plotting import plot_roi
-assert sub == 'sub-005' and session == "ses-03"
+# assert sub == 'sub-005' and session == "ses-03"
 print('loading brain mask')
 # func_masks, avg_mask, nsd_masks, roi = utils.get_mask(['ses-01', 'ses-02', 'ses-03'], sub, func_task_name)
 avg_mask = nib.load('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/sub-005_final_brain.nii.gz')
@@ -564,7 +564,7 @@ plot_roi(final_mask, bg_img=avg_mask)
 plt.show()
 
 
-# In[17]:
+# In[18]:
 
 
 union_mask = np.load('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_task-C/union_mask_from_ses-01-02.npy')
@@ -572,7 +572,7 @@ union_mask = np.load('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub
 
 # ## Load GLMSingle voxel data
 
-# In[18]:
+# In[19]:
 
 
 vox = None
@@ -603,7 +603,7 @@ if needs_postprocessing == True:
 assert len(vox) == len(image_idx)
 
 
-# In[19]:
+# In[20]:
 
 
 ses_mask = nib.load(f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_{session_label}_task-C/sub-005_{session_label}_task-C_brain.nii.gz')
@@ -611,7 +611,7 @@ assert np.all(ses_mask.affine == final_mask.affine)
 assert np.all(ses_mask.shape == final_mask.shape)
 
 
-# In[20]:
+# In[21]:
 
 
 # get vox into the same shape as the union mask
@@ -628,13 +628,13 @@ print(vox.shape)
 
 # ### Calculate reliability (corr between first and second presentation of same image) for every voxel
 
-# In[21]:
+# In[22]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[22]:
+# In[23]:
 
 
 same_corrs = []
@@ -676,7 +676,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[23]:
+# In[24]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -692,7 +692,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[24]:
+# In[25]:
 
 
 utils.seed_everything(seed)
@@ -730,7 +730,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[25]:
+# In[26]:
 
 
 train_mean = np.mean(vox[train_image_indices],axis=0)
@@ -742,7 +742,7 @@ print(vox[:,0].mean(), vox[:,0].std())
 print("vox", vox.shape)
 
 
-# In[26]:
+# In[27]:
 
 
 # for idx in deleted_indices:
@@ -761,7 +761,7 @@ print("vox", vox.shape)
 # images = images[kept_indices]
 
 
-# In[27]:
+# In[28]:
 
 
 images = torch.Tensor(images)
@@ -769,7 +769,7 @@ vox = torch.Tensor(vox)
 assert len(images) == len(vox)
 
 
-# In[28]:
+# In[29]:
 
 
 ### Multi-GPU config ###
@@ -788,7 +788,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[29]:
+# In[30]:
 
 
 print("PID of this process =",os.getpid())
@@ -817,7 +817,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[30]:
+# In[32]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -836,13 +836,13 @@ if utils.is_interactive():
                     --no-blurry_recon --blur_scale=.5 \
                     --no-use_prior --prior_scale=30 \
                     --n_blocks=4 --max_lr=3e-4 --mixup_pct=.33 --num_epochs=30 --no-use_image_aug \
-                    --ckpt_interval=999 --no-ckpt_saving --new_test \
-                    --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep"
+                    --ckpt_interval=999 --no-ckpt_saving --new_test" # \
+                    # --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep"
     print(jupyter_args)
     jupyter_args = jupyter_args.split()
 
 
-# In[31]:
+# In[33]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -990,7 +990,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[32]:
+# In[34]:
 
 
 if ckpt_saving:
@@ -1016,7 +1016,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[33]:
+# In[35]:
 
 
 def my_split_by_node(urls): return urls
@@ -1037,7 +1037,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[34]:
+# In[36]:
 
 
 train_data = {}
@@ -1047,7 +1047,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[35]:
+# In[37]:
 
 
 num_voxels = {}
@@ -1075,7 +1075,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[36]:
+# In[38]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1118,7 +1118,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[37]:
+# In[39]:
 
 
 model = utils.prepare_model_and_training(
@@ -1132,7 +1132,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[38]:
+# In[40]:
 
 
 # test on subject 1 with fake data
@@ -1140,7 +1140,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[39]:
+# In[41]:
 
 
 # test that the model works on some fake data
@@ -1153,7 +1153,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[40]:
+# In[42]:
 
 
 if use_prior:
@@ -1191,7 +1191,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[41]:
+# In[43]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1267,7 +1267,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[42]:
+# In[44]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1343,7 +1343,7 @@ else:
 
 # # Train the model
 
-# In[43]:
+# In[45]:
 
 
 epoch = 0
@@ -1352,7 +1352,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[44]:
+# In[46]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1360,7 +1360,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[45]:
+# In[47]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1368,7 +1368,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[46]:
+# In[48]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1377,7 +1377,7 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # leaving out test_dl since we will only have local_rank 0 device do evals
 
 
-# In[56]:
+# In[49]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
@@ -1534,8 +1534,8 @@ for epoch in progress_bar:
                     subset_indices = MST_idx[:, i, j].reshape(-1)
                     subset_dataset = torch.utils.data.TensorDataset(torch.tensor(subset_indices))
                     subset_dl = torch.utils.data.DataLoader(
-                        subset_dataset, batch_size=24, shuffle=False,
-                        drop_last=True, pin_memory=True
+                        subset_dataset, batch_size=len(MST_idx), shuffle=False,
+                        drop_last=False, pin_memory=True
                     )
 
                     # Reset metrics for this subset
@@ -1667,13 +1667,13 @@ if ckpt_saving:
     save_ckpt(f'last')
 
 
-# In[48]:
+# In[50]:
 
 
 len(test_data)
 
 
-# In[49]:
+# In[51]:
 
 
 # # Track metrics here:
@@ -1682,13 +1682,13 @@ len(test_data)
 
 # **To tell if the model is working I'm looking at test_bwd/fwd_pct_correct and seeing if that is doing better than chance (1/batch_size)**
 
-# In[50]:
+# In[52]:
 
 
 # MST_pairmate_names
 
 
-# In[51]:
+# In[53]:
 
 
 x = [im for im in image_names if str(im) not in ('blank.jpg', 'nan')]
@@ -1702,7 +1702,7 @@ for i, p in enumerate(MST_pairmate_names):
 # print(pairs)
 
 
-# In[52]:
+# In[54]:
 
 
 # if sub=="sub-002":
@@ -1730,7 +1730,7 @@ for i, p in enumerate(MST_pairmate_names):
 # # unique_images[unique_images_pairs]
 
 
-# In[53]:
+# In[55]:
 
 
 def evaluate_mst_pairs(mst_pairs):
@@ -1775,7 +1775,7 @@ def evaluate_mst_pairs(mst_pairs):
 print(evaluate_mst_pairs(pairs))
 
 
-# In[55]:
+# In[56]:
 
 
 model.eval()
@@ -1826,7 +1826,7 @@ if local_rank == 0:
         print(f"{k}: {v:.4f}")
 
 
-# In[54]:
+# In[57]:
 
 
 # Compare first few pairs
@@ -1837,7 +1837,7 @@ for pair in pairs:  # Checking first 2 pairs
     print(f"Image 2: {x[pair[1]]}\n")
 
 
-# In[ ]:
+# In[58]:
 
 
 # for i in range(len(pairs)):
@@ -1854,7 +1854,7 @@ for pair in pairs:  # Checking first 2 pairs
 #     plt.show()
 
 
-# In[ ]:
+# In[59]:
 
 
 # score = 0
@@ -1919,14 +1919,14 @@ for pair in pairs:  # Checking first 2 pairs
 # print(score/total)
 
 
-# In[ ]:
+# In[60]:
 
 
 #display(utils.torch_to_Image(imageA))
 #display(utils.torch_to_Image(imageB))
 
 
-# In[ ]:
+# In[61]:
 
 
 # from scipy.stats import binomtest
