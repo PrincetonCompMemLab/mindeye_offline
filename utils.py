@@ -849,6 +849,244 @@ def compute_avg_repeat_corrs(vox_repeats: np.ndarray) -> np.ndarray:
     return rels
 
 
+def compute_reliability_with_train_test_split(vox, pairs, train_indices, test_indices=None, verbose=True):
+    """
+    Compute voxel reliability using only training set images to maintain train/test purity.
+    Averages correlation across all available repeats (not just first 2).
+    
+    Args:
+        vox: array of shape (n_images, n_voxels) containing voxel responses
+        pairs: list of lists, where each sublist contains indices of repeated presentations of the same image
+        train_indices: array of indices corresponding to training set images
+        test_indices: optional array of test set indices (used for validation checks)
+        verbose: whether to print diagnostic information
+        
+    Returns:
+        rels: array of shape (n_voxels,) containing reliability scores for each voxel
+        pairs_used: list of pairs that were used for reliability calculation (only train set)
+        
+    Note:
+        - Only pairs where ALL repeats are in the training set are used for reliability calculation
+        - This ensures train/test purity: no test set images contaminate reliability estimates
+        - Averages across all available pairwise correlations between repeats
+    """
+    import itertools
+    from tqdm import tqdm
+    
+    train_set = set(train_indices)
+    if test_indices is not None:
+        test_set = set(test_indices)
+        # Verify no overlap between train and test
+        assert len(train_set & test_set) == 0, "Train and test sets must not overlap!"
+    
+    # Filter pairs to only include those where ALL repeats are in training set
+    train_pairs = []
+    for pair in pairs:
+        if all(idx in train_set for idx in pair):
+            train_pairs.append(pair)
+    
+    if verbose:
+        print(f"Total pairs: {len(pairs)}")
+        print(f"Pairs with all repeats in training set: {len(train_pairs)}")
+        if len(train_pairs) == 0:
+            print("WARNING: No pairs found with all repeats in training set!")
+            print("This may indicate an issue with the train/test split or pairs structure.")
+    
+    if len(train_pairs) == 0:
+        # Return NaN reliability if no valid pairs
+        return np.full(vox.shape[-1], np.nan), []
+    
+    # For each pair, z-score the voxel responses and compute correlations
+    n_voxels = vox.shape[-1]
+    rels = np.full(n_voxels, np.nan)
+    
+    # Collect all repeat responses for each voxel
+    # We'll compute correlations across all pairs
+    for v in tqdm(range(n_voxels), disable=not verbose, desc="Computing reliability"):
+        all_corrs = []
+        
+        for pair in train_pairs:
+            # Get voxel responses for all repeats of this pair
+            pair_responses = vox[pair, v]
+            
+            # Z-score the responses for this pair
+            pair_responses = (pair_responses - np.mean(pair_responses)) / (np.std(pair_responses) + 1e-8)
+            
+            # Compute correlation for all unique pairwise combinations of repeats
+            n_repeats = len(pair)
+            combos = list(itertools.combinations(range(n_repeats), 2))
+            
+            for i, j in combos:
+                r = np.corrcoef(pair_responses[i], pair_responses[j])[0, 1]
+                if not np.isnan(r):
+                    all_corrs.append(r)
+        
+        # Average across all pairwise correlations from all pairs
+        if len(all_corrs) > 0:
+            rels[v] = np.mean(all_corrs)
+    
+    if verbose:
+        print(f"\nReliability statistics:")
+        print(f"  Mean: {np.nanmean(rels):.4f}")
+        print(f"  Std: {np.nanstd(rels):.4f}")
+        print(f"  Min: {np.nanmin(rels):.4f}")
+        print(f"  Max: {np.nanmax(rels):.4f}")
+        print(f"  NaN voxels: {np.sum(np.isnan(rels))} / {n_voxels}")
+    
+    return rels, train_pairs
+
+
+def validate_reliability_calculation(rels, vox, pairs, train_indices, test_indices=None):
+    """
+    Quality control checks for reliability calculation.
+    
+    Args:
+        rels: reliability scores for each voxel
+        vox: voxel data (n_images, n_voxels)
+        pairs: list of repeated image indices
+        train_indices: training set indices
+        test_indices: optional test set indices
+        
+    Returns:
+        dict with QC results and metrics
+    """
+    qc_results = {}
+    
+    # Check 1: Reliability scores are in reasonable range
+    qc_results['mean_reliability'] = np.nanmean(rels)
+    qc_results['std_reliability'] = np.nanstd(rels)
+    qc_results['min_reliability'] = np.nanmin(rels)
+    qc_results['max_reliability'] = np.nanmax(rels)
+    qc_results['n_nan_voxels'] = np.sum(np.isnan(rels))
+    qc_results['pct_positive'] = np.sum(rels > 0) / len(rels) * 100
+    
+    # Check 2: Distribution analysis
+    qc_results['median_reliability'] = np.nanmedian(rels)
+    qc_results['q25_reliability'] = np.nanpercentile(rels, 25)
+    qc_results['q75_reliability'] = np.nanpercentile(rels, 75)
+    
+    # Check 3: Verify train/test purity
+    train_set = set(train_indices)
+    if test_indices is not None:
+        test_set = set(test_indices)
+        overlap = train_set & test_set
+        qc_results['train_test_overlap'] = len(overlap)
+        qc_results['train_test_pure'] = (len(overlap) == 0)
+        
+        # Check that pairs used only contain train indices
+        all_pair_indices = set()
+        for pair in pairs:
+            all_pair_indices.update(pair)
+        test_contamination = all_pair_indices & test_set
+        qc_results['test_contamination_in_pairs'] = len(test_contamination)
+    
+    # Check 4: Count repeats usage
+    repeat_counts = [len(pair) for pair in pairs]
+    qc_results['min_repeats'] = min(repeat_counts) if repeat_counts else 0
+    qc_results['max_repeats'] = max(repeat_counts) if repeat_counts else 0
+    qc_results['mean_repeats'] = np.mean(repeat_counts) if repeat_counts else 0
+    qc_results['total_pairs_used'] = len(pairs)
+    
+    # Print summary
+    print("\n" + "="*50)
+    print("RELIABILITY QC SUMMARY")
+    print("="*50)
+    print(f"Reliability Statistics:")
+    print(f"  Mean ± Std: {qc_results['mean_reliability']:.4f} ± {qc_results['std_reliability']:.4f}")
+    print(f"  Median: {qc_results['median_reliability']:.4f}")
+    print(f"  Range: [{qc_results['min_reliability']:.4f}, {qc_results['max_reliability']:.4f}]")
+    print(f"  Q25-Q75: [{qc_results['q25_reliability']:.4f}, {qc_results['q75_reliability']:.4f}]")
+    print(f"  % Positive: {qc_results['pct_positive']:.1f}%")
+    print(f"  NaN voxels: {qc_results['n_nan_voxels']}")
+    
+    print(f"\nRepeat Usage:")
+    print(f"  Total pairs: {qc_results['total_pairs_used']}")
+    print(f"  Repeats per pair: {qc_results['min_repeats']}-{qc_results['max_repeats']} (mean: {qc_results['mean_repeats']:.1f})")
+    
+    if test_indices is not None:
+        print(f"\nTrain/Test Purity:")
+        print(f"  Train/test overlap: {qc_results['train_test_overlap']} indices")
+        print(f"  Pure split: {'✓ PASS' if qc_results['train_test_pure'] else '✗ FAIL'}")
+        print(f"  Test contamination in pairs: {qc_results['test_contamination_in_pairs']} indices")
+    
+    # Warnings
+    print(f"\nWarnings:")
+    warnings = []
+    if qc_results['mean_reliability'] < 0:
+        warnings.append("Mean reliability is negative!")
+    if qc_results['mean_reliability'] > 0.8:
+        warnings.append("Mean reliability is suspiciously high (>0.8)")
+    if qc_results['pct_positive'] < 50:
+        warnings.append("Less than 50% of voxels have positive reliability")
+    if test_indices is not None and not qc_results['train_test_pure']:
+        warnings.append("Train/test split is not pure!")
+    if qc_results['total_pairs_used'] == 0:
+        warnings.append("No pairs were used for reliability calculation!")
+        
+    if warnings:
+        for w in warnings:
+            print(f"  ⚠ {w}")
+    else:
+        print("  ✓ All checks passed")
+    
+    print("="*50 + "\n")
+    
+    return qc_results
+
+
+def compare_reliability_methods(vox, pairs, train_indices, test_indices=None):
+    """
+    Compare old (first 2 repeats only) vs new (all repeats) reliability calculation.
+    
+    Args:
+        vox: voxel data
+        pairs: list of repeated image indices
+        train_indices: training set indices
+        test_indices: optional test set indices
+        
+    Returns:
+        dict with comparison results
+    """
+    print("Computing reliability using OLD method (first 2 repeats only)...")
+    # Old method: only use first 2 repeats, no train/test filtering
+    pairs_homog = np.array([[p[0], p[1]] for p in pairs])
+    vox_pairs = zscore(vox[pairs_homog])
+    rels_old = np.full(vox.shape[-1], np.nan)
+    for v in range(vox.shape[-1]):
+        rels_old[v] = np.corrcoef(vox_pairs[:,0,v], vox_pairs[:,1,v])[1,0]
+    
+    print("Computing reliability using NEW method (all repeats, train-only)...")
+    rels_new, train_pairs = compute_reliability_with_train_test_split(
+        vox, pairs, train_indices, test_indices, verbose=False
+    )
+    
+    # Compare
+    comparison = {}
+    comparison['old_mean'] = np.nanmean(rels_old)
+    comparison['new_mean'] = np.nanmean(rels_new)
+    comparison['old_std'] = np.nanstd(rels_old)
+    comparison['new_std'] = np.nanstd(rels_new)
+    comparison['correlation'] = np.corrcoef(rels_old[~np.isnan(rels_old) & ~np.isnan(rels_new)], 
+                                            rels_new[~np.isnan(rels_old) & ~np.isnan(rels_new)])[0,1]
+    comparison['mean_diff'] = np.nanmean(rels_new - rels_old)
+    
+    print("\n" + "="*50)
+    print("METHOD COMPARISON")
+    print("="*50)
+    print(f"Old method (first 2 repeats, all pairs):")
+    print(f"  Mean: {comparison['old_mean']:.4f}")
+    print(f"  Std: {comparison['old_std']:.4f}")
+    print(f"\nNew method (all repeats, train-only pairs):")
+    print(f"  Mean: {comparison['new_mean']:.4f}")
+    print(f"  Std: {comparison['new_std']:.4f}")
+    print(f"\nDifference:")
+    print(f"  Mean difference: {comparison['mean_diff']:.4f}")
+    print(f"  Correlation: {comparison['correlation']:.4f}")
+    print("="*50 + "\n")
+    
+    return comparison, rels_old, rels_new
+
+
 def get_pairs(data, repeat_indices=(0, 1)):
     """
     Extract pairs based on specified repeat indices, falling back to available repeats.
