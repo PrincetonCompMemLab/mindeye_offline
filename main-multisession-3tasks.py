@@ -62,7 +62,7 @@ seed = utils.get_slurm_seed()
 
 if utils.is_interactive():
     sub = "sub-005"
-    session = "ses-01"
+    session = "ses-03"
     task = 'C'  # 'study' or 'A'; used to search for functional run in bids format
 else:
     sub = os.environ["sub"]
@@ -415,7 +415,7 @@ if resample_voxel_size:
     omat_name = f'{glmsingle_path}/boldref_omat'
 
 
-# In[89]:
+# In[12]:
 
 
 from nilearn.plotting import plot_roi, plot_anat, plot_epi
@@ -450,7 +450,7 @@ print(f'There are {int(np.sum(brain))} voxels in the included brain mask\n')
 
 # ## Load GLMSingle voxel data
 
-# In[90]:
+# In[13]:
 
 
 vox = None
@@ -483,7 +483,7 @@ assert len(vox) == len(image_idx)
 
 # ### Load nsdgeneral ROI
 
-# In[91]:
+# In[14]:
 
 
 nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_nsdgeneral.nii.gz'  
@@ -492,7 +492,7 @@ assert os.path.exists(nsdgeneral_path)
 print(f"nsdgeneral path exists!")
 
 
-# In[92]:
+# In[15]:
 
 
 if resample_voxel_size:
@@ -503,7 +503,7 @@ if resample_voxel_size:
         applyxfm(roi_in_path, ref_name, omat_name, resample_method, output=nsdgeneral_path)
 
 
-# In[93]:
+# In[16]:
 
 
 roi = nib.load(nsdgeneral_path)
@@ -512,7 +512,7 @@ plot_roi(roi, bg_img=avg_mask)
 plt.show()
 
 
-# In[94]:
+# In[17]:
 
 
 avg_mask = avg_mask.get_fdata().flatten()
@@ -528,7 +528,7 @@ print(f"nsdgeneral voxels = {roi.sum()}")
 
 # ### ROI voxel exclusion
 
-# In[95]:
+# In[18]:
 
 
 # ROI masking?
@@ -546,7 +546,7 @@ if np.any(np.isnan(vox)):
 
 # ### Calculate reliability (corr between first and second presentation of same image) for every voxel
 
-# In[96]:
+# In[19]:
 
 
 # results = []
@@ -554,13 +554,13 @@ if np.any(np.isnan(vox)):
 #     results.append(vox[i])
 
 
-# In[97]:
+# In[20]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[98]:
+# In[21]:
 
 
 # vox_pairs = []
@@ -587,7 +587,7 @@ assert np.sum(np.all(np.isnan(rels))) == 0
 
 # ### Create representational similarity matrix
 
-# In[99]:
+# In[22]:
 
 
 # creating img x vox x repetitions matrix | shape=(150, 18419, 2)
@@ -600,7 +600,7 @@ for ipair, pair in enumerate(tqdm(pairs_homog)):
 vox_avg = vox0.mean(-1) # average across the repetitions
 
 
-# In[100]:
+# In[23]:
 
 
 # Masking RDM for each reliability threshold
@@ -615,7 +615,7 @@ for ir_thresh, r_thresh in enumerate(r_thresholds):
 # rdm is shape (4, 150, 150)
 
 
-# In[101]:
+# In[24]:
 
 
 thresh = .2
@@ -626,7 +626,7 @@ plt.title(f"{sub}_{session}\nreliability threshold={thresh}\n")
 plt.show()
 
 
-# In[102]:
+# In[25]:
 
 
 for thresh in range(rdm.shape[0]):
@@ -634,13 +634,13 @@ for thresh in range(rdm.shape[0]):
         assert np.isclose(rdm[thresh, img, img], 1)
 
 
-# In[103]:
+# In[26]:
 
 
 vox.shape
 
 
-# In[104]:
+# In[27]:
 
 
 # Reliability thresholding?
@@ -649,7 +649,7 @@ vox = vox[:,rels>.2]
 print(f"\nvox after reliability thresholding: {vox.shape}")
 
 
-# In[105]:
+# In[28]:
 
 
 print(images.shape)
@@ -657,7 +657,7 @@ print(vox.shape)
 assert len(images) == len(vox)
 
 
-# In[106]:
+# In[29]:
 
 
 same_corrs = []
@@ -699,7 +699,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[107]:
+# In[30]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -715,7 +715,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[108]:
+# In[31]:
 
 
 utils.seed_everything(seed)
@@ -753,7 +753,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[109]:
+# In[32]:
 
 
 train_mean = np.mean(vox[train_image_indices],axis=0)
@@ -767,7 +767,7 @@ print("vox", vox.shape)
 images = images[kept_indices]
 
 
-# In[111]:
+# In[33]:
 
 
 images = torch.Tensor(images)
@@ -775,7 +775,7 @@ vox = torch.Tensor(vox)
 assert len(images) == len(vox)
 
 
-# In[112]:
+# In[34]:
 
 
 ### Multi-GPU config ###
@@ -794,7 +794,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[113]:
+# In[35]:
 
 
 print("PID of this process =",os.getpid())
@@ -823,7 +823,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[114]:
+# In[36]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -840,7 +840,7 @@ if utils.is_interactive():
                     --no-multi_subject --subj=1 --batch_size={batch_size} \
                     --hidden_dim=1024 --clip_scale=1. \
                     --no-blurry_recon --blur_scale=.5 \
-                    --no-use_prior --prior_scale=30 \
+                    --no-use_prior --prior_scale=30 --prior_lr=3e-5 \
                     --n_blocks=4 --max_lr=3e-4 --mixup_pct=.33 --num_epochs=30 --no-use_image_aug \
                     --ckpt_interval=999 --no-ckpt_saving --new_test \
                     --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep"
@@ -848,7 +848,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[115]:
+# In[37]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -958,6 +958,10 @@ parser.add_argument(
 parser.add_argument(
     "--max_lr",type=float,default=3e-4,
 )
+parser.add_argument(
+    "--prior_lr", type=float, default=None,
+    help="Optional specific learning rate for the diffusion prior. If not set, it defaults to the value of --max_lr.",
+)
 
 if utils.is_interactive():
     args = parser.parse_args(jupyter_args)
@@ -996,7 +1000,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[116]:
+# In[38]:
 
 
 if ckpt_saving:
@@ -1022,7 +1026,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[117]:
+# In[39]:
 
 
 def my_split_by_node(urls): return urls
@@ -1043,7 +1047,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[118]:
+# In[40]:
 
 
 train_data = {}
@@ -1053,7 +1057,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[119]:
+# In[41]:
 
 
 num_voxels = {}
@@ -1081,7 +1085,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[120]:
+# In[42]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1124,7 +1128,7 @@ clip_emb_dim = 1664
 
 # ### MindEye modules
 
-# In[121]:
+# In[54]:
 
 
 model = utils.prepare_model_and_training(
@@ -1138,7 +1142,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[122]:
+# In[55]:
 
 
 # test on subject 1 with fake data
@@ -1146,7 +1150,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[123]:
+# In[56]:
 
 
 # test that the model works on some fake data
@@ -1159,7 +1163,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[124]:
+# In[57]:
 
 
 if use_prior:
@@ -1197,7 +1201,7 @@ if use_prior:
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[125]:
+# In[58]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1210,9 +1214,15 @@ opt_grouped_parameters = [
 # model.backbone.requires_grad_(False)
 
 if use_prior:
+    effective_prior_lr = prior_lr if prior_lr is not None else max_lr
+    print(f"--- Setting learning rate for diffusion_prior: {effective_prior_lr} ---")
+
+    if prior_lr is not None:
+        assert lr_scheduler_type == 'cycle'  # if prior_lr exists, ensure lr scheduler is cycle because we want to set custom lr for the prior. custom lr for prior is not implemented in the linear scheduler code.
+
     opt_grouped_parameters.extend([
-        {'params': [p for n, p in model.diffusion_prior.named_parameters() if not any(nd in n for nd in no_decay)], 'weight_decay': 1e-2},
-        {'params': [p for n, p in model.diffusion_prior.named_parameters() if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
+        {'params': [p for n, p in model.diffusion_prior.named_parameters() if not any(nd in n for nd in no_decay)], 'weight_decay': 1e-2, 'lr': effective_prior_lr},
+        {'params': [p for n, p in model.diffusion_prior.named_parameters() if any(nd in n for nd in no_decay)], 'weight_decay': 0.0, 'lr': effective_prior_lr}
     ])
 
 optimizer = torch.optim.AdamW(opt_grouped_parameters, lr=max_lr)
@@ -1228,9 +1238,13 @@ elif lr_scheduler_type == 'cycle':
         num_iterations_per_epoch=1
     total_steps=int(np.floor(num_epochs*num_iterations_per_epoch))
     print("total_steps", total_steps)
+    max_lrs = [max_lr] * 3  # for ridge and backbone
+    if use_prior:
+        max_lrs.extend([effective_prior_lr] * 2) # for prior
+
     lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(
         optimizer, 
-        max_lr=max_lr,
+        max_lr=max_lrs,
         total_steps=total_steps,
         final_div_factor=1000,
         last_epoch=-1, pct_start=2/num_epochs
@@ -1273,37 +1287,42 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[126]:
+# In[ ]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
     import wandb
+    import time
+    
     wandb_project = 'rtmindeye'
     print(f"wandb {wandb_project} run {model_name}")
-    # need to configure wandb beforehand in terminal with "wandb init"!
+
+    # Need to configure wandb beforehand in terminal with "wandb init"!
     wandb_config = {
-      "model_name": model_name,
-      "global_batch_size": global_batch_size,
-      "batch_size": batch_size,
-      "num_epochs": num_epochs,
-      "num_sessions": num_sessions,
-      "num_params": num_params,
-      "clip_scale": clip_scale,
-      "prior_scale": prior_scale,
-      "blur_scale": blur_scale,
-      "use_image_aug": use_image_aug,
-      "max_lr": max_lr,
-      "mixup_pct": mixup_pct,
-      "num_samples_per_epoch": num_samples_per_epoch,
-      "ckpt_interval": ckpt_interval,
-      "ckpt_saving": ckpt_saving,
-      "seed": seed,
-      "distributed": distributed,
-      "num_devices": num_devices,
-      "world_size": world_size,
+        "model_name": model_name,
+        "global_batch_size": global_batch_size,
+        "batch_size": batch_size,
+        "num_epochs": num_epochs,
+        "num_sessions": num_sessions,
+        "num_params": num_params,
+        "clip_scale": clip_scale,
+        "prior_scale": prior_scale,
+        "blur_scale": blur_scale,
+        "use_image_aug": use_image_aug,
+        "max_lr": max_lr,
+        "mixup_pct": mixup_pct,
+        "num_samples_per_epoch": num_samples_per_epoch,
+        "ckpt_interval": ckpt_interval,
+        "ckpt_saving": ckpt_saving,
+        "seed": seed,  # SLURM array task ID
+        "distributed": distributed,
+        "num_devices": num_devices,
+        "world_size": world_size,
     }
-    print("wandb_config:\n",wandb_config)
-    print("wandb_id:",model_name)
+    print("wandb_config:\n", wandb_config)
+    print("wandb_id:", model_name)
+
+    # Initialize wandb
     wandb.init(
         id=model_name,
         project=wandb_project,
@@ -1312,13 +1331,41 @@ if local_rank==0 and wandb_log: # only use main process for wandb logging
         resume="allow",
         save_code=True,
     )
+    
+    wandb.save("run_all_batch.slurm")
+
+    # Get SLURM job & array ID
+    slurm_job_id = utils.get_slurm_job()
+    slurm_array_id = seed  # seed corresponds to SLURM_ARRAY_TASK_ID
+
+    # Define SLURM log paths
+    log_dir = "slurms"
+    log_files = [
+        f"{log_dir}/{slurm_job_id}_{slurm_array_id}.out",
+        f"{log_dir}/{slurm_job_id}_{slurm_array_id}.err",
+    ]
+
+    # Ensure logs exist before logging them
+    for log_file in log_files:
+        wait_time = 0
+        while not os.path.exists(log_file) and wait_time < 60:  # Wait max 60s
+            time.sleep(5)
+            wait_time += 5
+
+    # Log SLURM logs as artifacts
+    artifact = wandb.Artifact(f"slurm_logs_{slurm_job_id}_{slurm_array_id}", type="logs")
+    for log_file in log_files:
+        if os.path.exists(log_file):
+            artifact.add_file(log_file)
+
+    wandb.log_artifact(artifact)
 else:
     wandb_log = False
 
 
 # # Train the model
 
-# In[127]:
+# In[ ]:
 
 
 epoch = 0
@@ -1327,7 +1374,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[128]:
+# In[ ]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1335,7 +1382,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[129]:
+# In[ ]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1343,7 +1390,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[130]:
+# In[ ]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1744,18 +1791,18 @@ for pair in pairs:  # Checking first 2 pairs
 # In[ ]:
 
 
-for i in range(len(pairs)):
-    fig, ax = plt.subplots(1, 2, figsize=(10,8))
+# for i in range(len(pairs)):
+#     fig, ax = plt.subplots(1, 2, figsize=(10,8))
 
-    ax[0].imshow(images[pairs[i][0]].permute(1,2,0).numpy())
-    ax[0].set_title(f"Repeat 1")
+#     ax[0].imshow(images[pairs[i][0]].permute(1,2,0).numpy())
+#     ax[0].set_title(f"Repeat 1")
 
-    ax[1].imshow(images[pairs[i][1]].permute(1,2,0).numpy())
-    ax[1].set_title(f"Repeat 2")
+#     ax[1].imshow(images[pairs[i][1]].permute(1,2,0).numpy())
+#     ax[1].set_title(f"Repeat 2")
 
-    plt.setp(ax, xticks=[], yticks=[])
-    plt.tight_layout()
-    plt.show()
+#     plt.setp(ax, xticks=[], yticks=[])
+#     plt.tight_layout()
+#     plt.show()
 
 
 # In[ ]:
