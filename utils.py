@@ -702,7 +702,7 @@ def prepare_model_and_training(
     import torch
     import torch.nn as nn
     import numpy as np
-    from models import VersatileDiffusionPriorNetwork, BrainDiffusionPrior
+    from models import PriorNetwork, BrainDiffusionPrior
     from MindEye2 import MindEyeModule, RidgeRegression, BrainNetwork
     import utils
 
@@ -725,7 +725,7 @@ def prepare_model_and_training(
         dim_head = 52
         heads = clip_emb_dim//52 # heads * dim_head = clip_emb_dim
         timesteps = 100
-        prior_network = VersatileDiffusionPriorNetwork(
+        prior_network = PriorNetwork(
                 dim=out_dim,
                 depth=depth,
                 dim_head=dim_head,

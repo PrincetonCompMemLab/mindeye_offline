@@ -823,7 +823,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[36]:
+# In[55]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -840,7 +840,7 @@ if utils.is_interactive():
                     --no-multi_subject --subj=1 --batch_size={batch_size} \
                     --hidden_dim=1024 --clip_scale=1. \
                     --no-blurry_recon --blur_scale=.5 \
-                    --no-use_prior --prior_scale=30 --prior_lr=3e-5 \
+                    --use_prior --prior_scale=30 --prior_lr=3e-5 \
                     --n_blocks=4 --max_lr=3e-4 --mixup_pct=.33 --num_epochs=30 --no-use_image_aug \
                     --ckpt_interval=999 --no-ckpt_saving --new_test \
                     --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep"
@@ -848,7 +848,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[37]:
+# In[56]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -1108,27 +1108,10 @@ except:
 clip_seq_dim = 256
 clip_emb_dim = 1664
 
-# ## USING OPEN AI CLIP ViT-L ###
-# import clip
-# try:
-#     print(clip_model)
-# except:
-#     clip_model, preprocess = clip.load("ViT-L/14", device=device)
-#     preprocess = transforms.Compose([
-#         transforms.Resize(224, interpolation=transforms.InterpolationMode.BILINEAR),
-#         transforms.Normalize(mean=[0.48145466, 0.4578275, 0.40821073],
-#                              std=[0.26862954, 0.26130258, 0.27577711]),
-#     ])
-# def clip_img_embedder(image):
-#     preproc_img = preprocess(image)
-#     return clip_model.encode_image(preproc_img)
-# clip_seq_dim = 1
-# clip_emb_dim = 768
-
 
 # ### MindEye modules
 
-# In[54]:
+# In[50]:
 
 
 model = utils.prepare_model_and_training(
@@ -1142,7 +1125,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[55]:
+# In[51]:
 
 
 # test on subject 1 with fake data
@@ -1150,7 +1133,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[56]:
+# In[52]:
 
 
 # test that the model works on some fake data
@@ -1163,45 +1146,45 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[57]:
+# In[53]:
 
 
-if use_prior:
-    from models import *
+# if use_prior:
+#     from models import *
 
-    # setup diffusion prior network
-    out_dim = clip_emb_dim
-    depth = 6
-    dim_head = 52
-    heads = clip_emb_dim//52 # heads * dim_head = clip_emb_dim
-    timesteps = 100
+#     # setup diffusion prior network
+#     out_dim = clip_emb_dim
+#     depth = 6
+#     dim_head = 52
+#     heads = clip_emb_dim//52 # heads * dim_head = clip_emb_dim
+#     timesteps = 100
 
-    prior_network = VersatileDiffusionPriorNetwork(
-            dim=out_dim,
-            depth=depth,
-            dim_head=dim_head,
-            heads=heads,
-            causal=False,
-            num_tokens = clip_seq_dim,
-            learned_query_mode="pos_emb"
-        )
+#     prior_network = VersatileDiffusionPriorNetwork(
+#             dim=out_dim,
+#             depth=depth,
+#             dim_head=dim_head,
+#             heads=heads,
+#             causal=False,
+#             num_tokens = clip_seq_dim,
+#             learned_query_mode="pos_emb"
+#         )
 
-    model.diffusion_prior = BrainDiffusionPrior(
-        net=prior_network,
-        image_embed_dim=out_dim,
-        condition_on_text_encodings=False,
-        timesteps=timesteps,
-        cond_drop_prob=0.2,
-        image_embed_scale=None,
-    )
+#     model.diffusion_prior = BrainDiffusionPrior(
+#         net=prior_network,
+#         image_embed_dim=out_dim,
+#         condition_on_text_encodings=False,
+#         timesteps=timesteps,
+#         cond_drop_prob=0.2,
+#         image_embed_scale=None,
+#     )
     
-    utils.count_params(model.diffusion_prior)
-    utils.count_params(model)
+#     utils.count_params(model.diffusion_prior)
+#     utils.count_params(model)
 
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[58]:
+# In[48]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1287,7 +1270,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[ ]:
+# In[54]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
