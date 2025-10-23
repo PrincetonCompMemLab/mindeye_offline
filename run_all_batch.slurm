@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=sub-005_ses-03_sdxl-unclip
+#SBATCH --job-name=sub-005_ses-03_special515
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1              
 #SBATCH --gres=gpu:1
 #SBATCH --constraint=gpu80
 #SBATCH --gpus-per-task=1       # Set to equal gres=gpu:#!
 #SBATCH --cpus-per-task=40      # 40 / 80 / 176 distributed across node
-#SBATCH --time=01:15:00         # total run time limit (HH:MM:SS)
+#SBATCH --time=00:35:00         # total run time limit (HH:MM:SS)
 #SBATCH -e slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o slurms/%A_%a.out
 #SBATCH --no-requeue
@@ -29,10 +29,10 @@ conda activate rt_mindEye2
 sub="sub-005"
 session="ses-03"
 session_label='ses-03'
-split=MST  # MST train/test split, alternative would be train on non-repeats and test on images that repeat (split=orig) 
+split=repeats_3  # MST train/test split, alternative would be train on non-repeats and test on images that repeat (split=orig) 
 task=C
 # model_name="${sub}_multi_task-${task}_bs24_MST_rishab_${split}split"
-model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_${SLURM_ARRAY_TASK_ID}_avgrepeats_sdxl-unclip"
+model_name="${sub}_${session}_task-${task}_bs24_MST_rishab_${split}split_${SLURM_ARRAY_TASK_ID}_avgrepeats_finalmask"
 main_script="main-multisession-3tasks"
 # glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle-multi"
 glmsingle_path="/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_${sub}_${session_label}_task-${task}"
@@ -64,24 +64,15 @@ export WANDB_MODE="offline"
 
 # singlesubject finetuning
 jupyter nbconvert "${main_script}.ipynb" --to python && \
-accelerate launch --num_processes=$(($NUM_GPUS * $COUNT_NODE)) --num_machines=$COUNT_NODE --main_process_ip=$MASTER_ADDR --main_process_port=$MASTER_PORT "${main_script}.py" --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --model_name=${model_name} --no-multi_subject --subj=1 --batch_size=${BATCH_SIZE} --max_lr=3e-4 --mixup_pct=.33 --num_epochs=150 --use_prior --prior_scale=30 --clip_scale=1 --no-blurry_recon --no-use_image_aug --blur_scale=.5 --n_blocks=4 --hidden_dim=1024 --num_sessions=40 --ckpt_interval=999 --ckpt_saving --wandb_log --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep --seed="${SLURM_ARRAY_TASK_ID}" && \
+accelerate launch --num_processes=$(($NUM_GPUS * $COUNT_NODE)) --num_machines=$COUNT_NODE --main_process_ip=$MASTER_ADDR --main_process_port=$MASTER_PORT "${main_script}.py" --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --model_name=${model_name} --no-multi_subject --subj=1 --batch_size=${BATCH_SIZE} --max_lr=3e-4 --mixup_pct=.33 --num_epochs=30 --use_prior --prior_scale=30 --clip_scale=1 --no-blurry_recon --no-use_image_aug --blur_scale=.5 --n_blocks=4 --hidden_dim=1024 --num_sessions=40 --ckpt_interval=999 --ckpt_saving --wandb_log --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep --seed="${SLURM_ARRAY_TASK_ID}" && \
 
 jupyter nbconvert recon_inference-multisession.ipynb --to python && \
 python recon_inference-multisession.py --model_name=${model_name} --subj=1 --no-blurry_recon --use_prior --hidden_dim=1024 --n_blocks=4 --glmsingle_path="${glmsingle_path}" --eval_dir=${eval_dir} && \
 
-# #jupyter nbconvert recon_inference_orig.ipynb --to python && \
-# #python recon_inference_orig.py --model_name=${model_name} --subj=1 --no-blurry_recon --use_prior --hidden_dim=1024 --n_blocks=4 && \ 
-
 # jupyter nbconvert enhanced_recon_inference.ipynb --to python && \
 # python enhanced_recon_inference.py --model_name=${model_name} --all_recons_path=${eval_dir}/${model_name}_all_recons.pt && \
 
-# #jupyter nbconvert enhanced_recon_inference_orig.ipynb --to python && \
-# #python enhanced_recon_inference_orig.py --model_name=${model_name} && \
-
 jupyter nbconvert final_evaluations.ipynb --to python && \
 python final_evaluations.py --model_name=${model_name} --all_recons_path=${eval_dir}/${model_name}_all_recons.pt --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --eval_dir=${eval_dir} && \
-
-#jupyter nbconvert final_evaluations_orig.ipynb --to python && \
-#python final_evaluations_orig.py --model_name=${model_name} --all_recons_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/evals/${model_name}/${model_name}_all_recons.pt --data_path=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2 --eval_dir=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/evals/${model_name}
 
 echo "Remember to sync wandb logs with online node!"

@@ -795,3 +795,37 @@ def filter_and_average_mst(vox, vox_image_dict):
             keep_mask[indices[1:]] = False
     
     return output_vox[keep_mask], np.where(keep_mask)[0]
+
+
+def filter_and_average_repeats(vox, vox_image_names):
+    """
+    Filters and averages repeated images and retains unique images. Images means repeats are possible while conditions corresponds to unique images only.
+    
+    Args:
+        vox (np.ndarray): Original array of betas with shape (images x voxels).
+        vox_image_names (array-like): List of image names corresponding to vox.
+    Returns:
+        tuple: Filtered array of betas with shape (conditions x voxels) and corresponding kept indices.
+    """
+    from copy import deepcopy
+    
+    assert len(vox) == len(vox_image_names)
+    
+    # Identify repeated images and their indices
+    repeats = {image: [] for image in vox_image_names}
+    for trial_idx, image in enumerate(vox_image_names):
+        repeats[image].append(trial_idx)    
+        
+    # Create mask to track kept entries
+    keep_mask = np.ones(vox.shape[0], dtype=bool)
+    output_vox = deepcopy(vox).astype(np.float32)
+    
+    # Average repeated images
+    for indices in repeats.values():
+        if len(indices) > 1:
+            avg_values = np.mean(vox[indices], axis=0)
+            output_vox[indices[0]] = avg_values
+            keep_mask[indices[1:]] = False
+    
+    return output_vox[keep_mask], np.where(keep_mask)[0]
+
