@@ -62,12 +62,14 @@ seed = utils.get_slurm_seed()
 
 if utils.is_interactive():
     sub = "sub-005"
-    session = "ses-03"
+    session = "ses-01"
     task = 'C'  # 'study' or 'A'; used to search for functional run in bids format
+    train_test_split = 'MST' # 'MST', 'orig', 'unique', 'repeats_3'
 else:
     sub = os.environ["sub"]
     session = os.environ["session"]
     task = os.environ["task"]
+    train_test_split = os.environ["split"]
 
 if session == "all":
     ses_list = ["ses-01", "ses-02"]  # list of actual session IDs
@@ -81,7 +83,6 @@ resample_voxel_size = False
 resample_post_glmsingle = False  # do you want to do voxel resampling here? if resample_voxel_size = True and resample_post_glmsingle = False, assume the resampling has been done prior to GLMsingle, so just use resampled directory but otherwise proceed as normal
 load_from_resampled_file = False  # do you want to load resampled data from file? if True, assume resampling was done in this notebook before, and that we're not using the GLMsingle resampled data
     
-train_test_split = 'repeats_3' # 'MST', 'orig', 'unique', 'repeats_3'
 remove_close_to_MST = False
 remove_random_n = False
 
@@ -643,9 +644,9 @@ plt.show()
 # In[ ]:
 
 
-for thresh in range(rdm.shape[0]):
+for t in range(rdm.shape[0]):
     for img in range(rdm.shape[1]):
-        assert np.isclose(rdm[thresh, img, img], 1)
+        assert np.isclose(rdm[t, img, img], 1)
 
 
 # In[ ]:
@@ -659,8 +660,17 @@ vox.shape
 
 # Reliability thresholding?
 print(f"\nvox before reliability thresholding: {vox.shape}")
-vox = vox[:,rels>.2]
+vox = vox[:,rels>thresh]
 print(f"\nvox after reliability thresholding: {vox.shape}")
+
+relmask_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_relmask.npy'
+print(relmask_path)
+if os.path.exists(relmask_path):
+    orig_relmask = np.load(relmask_path)
+    if not np.allclose(orig_relmask, rels>thresh):
+        print('saved reliability mask is different from the current one; overwriting!')
+
+np.save(relmask_path, rels>thresh)
 
 
 # In[ ]:
@@ -674,7 +684,7 @@ assert len(images) == len(vox)
 # In[ ]:
 
 
-# np.save('/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_sub-005_ses-03_task-C/rel_mask_from_ses-03.npy', rels) 
+
 
 
 # In[ ]:
@@ -775,7 +785,6 @@ elif train_test_split == 'repeats_3':
     train_image_indices = np.array([i for i, image in enumerate(filtered_image_names) if image_counts[image] != 3])
     
     print(len(train_image_indices), len(test_image_indices))
-    assert sub == 'sub-005' and session == 'ses-03'
     assert len(test_image_indices) == 50  # there are 50 special515 in this session with 3 repeats
     assert all('special515' in i for i in vox_image_names[kept_indices][test_image_indices]), \
     f"Not all test images contain 'special515'. Image names: {vox_image_names[kept_indices][test_image_indices]}"
