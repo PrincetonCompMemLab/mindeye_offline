@@ -648,8 +648,8 @@ def resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_
 
 
 def load_preprocess_betas(glmsingle_path, session, ses_list,
-                              remove_close_to_MST, image_names, 
-                              remove_random_n, vox_idx):
+                              remove_close_to_MST=False, image_names=None, 
+                              remove_random_n=False, vox_idx=None):
     glmsingle = np.load(f"{glmsingle_path}/TYPED_FITHRF_GLMDENOISE_RR.npz", allow_pickle=True)
     vox = glmsingle['betasmd'].T
 
