@@ -1,3 +1,4 @@
+bixby_data/
 src/clip_img_embedder
 src/processor
 src/clip_text_model
