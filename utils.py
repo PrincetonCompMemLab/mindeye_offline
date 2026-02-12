@@ -648,8 +648,8 @@ def resample_betas(orig_glmsingle_path, sub, session, task_name, vox, glmsingle_
 
 
 def load_preprocess_betas(glmsingle_path, session, ses_list,
-                              remove_close_to_MST, image_names, 
-                              remove_random_n, vox_idx):
+                              remove_close_to_MST=False, image_names=None, 
+                              remove_random_n=False, vox_idx=None):
     glmsingle = np.load(f"{glmsingle_path}/TYPED_FITHRF_GLMDENOISE_RR.npz", allow_pickle=True)
     vox = glmsingle['betasmd'].T
 
@@ -702,7 +702,7 @@ def prepare_model_and_training(
     import torch
     import torch.nn as nn
     import numpy as np
-    from models import VersatileDiffusionPriorNetwork, BrainDiffusionPrior
+    from models import PriorNetwork, BrainDiffusionPrior
     from MindEye2 import MindEyeModule, RidgeRegression, BrainNetwork
     import utils
 
@@ -725,7 +725,7 @@ def prepare_model_and_training(
         dim_head = 52
         heads = clip_emb_dim//52 # heads * dim_head = clip_emb_dim
         timesteps = 100
-        prior_network = VersatileDiffusionPriorNetwork(
+        prior_network = PriorNetwork(
                 dim=out_dim,
                 depth=depth,
                 dim_head=dim_head,
@@ -797,257 +797,35 @@ def filter_and_average_mst(vox, vox_image_dict):
     return output_vox[keep_mask], np.where(keep_mask)[0]
 
 
-def verify_image_patterns(image_to_indices):
-    failures = []
-    for image_name, sessions in image_to_indices.items():
-        session1, session2 = sessions
-        total_count = len(session1) + len(session2)
-
-        if "special515" in image_name:
-            if not (
-                (len(session1) == 3 and len(session2) == 0) or
-                (len(session1) == 0 and len(session2) == 3) or
-                (len(session1) == 1 and len(session2) == 0) or
-                (len(session1) == 0 and len(session2) == 1)
-            ):
-                failures.append(f"{image_name} does not appear 3x in only 1 session.")
-        elif "MST_pairs" in image_name:
-            if not (len(session1) == 2 and len(session2) == 2):
-                failures.append(f"{image_name} does not appear 2x in both sessions.")
-        else:
-            if not (
-                (total_count == 1) and
-                (len(session1) == 1 and len(session2) == 0 or len(session1) == 0 and len(session2) == 1)
-            ):
-                failures.append(f"{image_name} does not appear 1x in only 1 session.")
-
-    return failures
-
-def compute_avg_repeat_corrs(vox_repeats: np.ndarray) -> np.ndarray:
+def filter_and_average_repeats(vox, vox_image_names):
     """
-    Given an array of shape (n_repeats, n_voxels), compute the average correlation
-    across all unique repeat combinations for each voxel.
+    Filters and averages repeated images and retains unique images. Images means repeats are possible while conditions corresponds to unique images only.
+    
+    Args:
+        vox (np.ndarray): Original array of betas with shape (images x voxels).
+        vox_image_names (array-like): List of image names corresponding to vox.
     Returns:
-        rels: (n_voxels,) array of averaged correlations
+        tuple: Filtered array of betas with shape (conditions x voxels) and corresponding kept indices.
     """
-    import itertools
-    n_repeats, n_vox = vox_repeats.shape
-    combos = list(itertools.combinations(range(n_repeats), 2))
+    from copy import deepcopy
     
-    rels = np.full(n_vox, np.nan)
+    assert len(vox) == len(vox_image_names)
     
-    # For each voxel
-    for v in range(n_vox):
-        corrs = []
-        # Calculate correlation for each pair of repeats
-        for i, j in combos:
-            r = np.corrcoef(vox_repeats[i, v], vox_repeats[j, v])[0, 1]
-            corrs.append(r)
-        # Average across all pairwise correlations
-        rels[v] = np.mean(corrs)
-    
-    return rels
-
-
-def get_pairs(data, repeat_indices=(0, 1)):
-    """
-    Extract pairs based on specified repeat indices, falling back to available repeats.
-    
-    Parameters:
-    - data: List of items, where each item may have different number of repeats
-    - repeat_indices: Tuple of indices (i, j) to extract if available
-    
-    Returns:
-    - Array of pairs
-    """
-    result = []
-    
-    for item in data:
-        # Determine what repeats are actually available
-        num_repeats = len(item)
+    # Identify repeated images and their indices
+    repeats = {image: [] for image in vox_image_names}
+    for trial_idx, image in enumerate(vox_image_names):
+        repeats[image].append(trial_idx)    
         
-        # Handle the requested indices
-        i, j = repeat_indices
-        
-        # Adjust indices if they're out of bounds
-        if i >= num_repeats:
-            i = min(num_repeats - 1, 0)
-        if j >= num_repeats:
-            j = min(num_repeats - 1, 1 if num_repeats > 1 else 0)
-            
-        # Create the pair
-        result.append([item[i], item[j]])
+    # Create mask to track kept entries
+    keep_mask = np.ones(vox.shape[0], dtype=bool)
+    output_vox = deepcopy(vox).astype(np.float32)
     
-    return np.array(result)
-
-
-def compute_vox_rels(vox, pairs, sub, session, rdm=False, repeat_indices=(0,1)):
-    from tqdm import tqdm
-    pairs = get_pairs(pairs, repeat_indices=repeat_indices)
-    # print(pairs)
-    # _tmp = [(i[0],i[-1]) for i in pairs]
-    # breakpoint()
-    # vox_pairs = zscore(vox[_tmp])  # zscoring based on first and last repeat only
-    # rels = compute_avg_repeat_corrs(vox_pairs)
-
-    # _tmp = [(i[0],i[1]) for i in pairs]
-    # vox_pairs = zscore(vox[_tmp])
+    # Average repeated images
+    for indices in repeats.values():
+        if len(indices) > 1:
+            avg_values = np.mean(vox[indices], axis=0)
+            output_vox[indices[0]] = avg_values
+            keep_mask[indices[1:]] = False
     
-    vox_pairs = zscore(vox[pairs])
-    rels = np.full(vox.shape[-1], np.nan)
-    for v in tqdm(range(vox.shape[-1])):
-        rels[v] = np.corrcoef(vox_pairs[:, 0, v], vox_pairs[:, 1, v])[1, 0]
-    
-    print("rels", rels.shape)
-    assert np.sum(np.all(np.isnan(rels))) == 0
-    
-    if rdm:  # generate a Representational Dissimilarity Matrix to visualize how similar the voxel patterns are across images
-        # average voxel patterns across repeats
-        vox0 = np.zeros((len(pairs), vox.shape[-1], 2))
-        for ipair, pair in enumerate(tqdm(pairs)):
-            i, j = pair[:2]  # Using the first two repeats
-            vox0[ipair, :, :] = vox[pair].T
-        vox_avg = vox0.mean(-1)
+    return output_vox[keep_mask], np.where(keep_mask)[0]
 
-        # plot the RDM at various thresholds
-        r_thresholds = np.array([.0, .1, .2, .3])
-        rdm = np.zeros((len(r_thresholds), len(pairs), len(pairs))) 
-
-        for ir_thresh, r_thresh in enumerate(r_thresholds):
-            print(f"reliability threshold = {r_thresh}")
-            for i in tqdm(range(len(pairs))):
-                for j in range(len(pairs)):
-                    rdm[ir_thresh, i, j] = np.corrcoef(vox_avg[i, rels > r_thresh], 
-                                                       vox_avg[j, rels > r_thresh])[0, 1]
-        n_thresh = len(r_thresholds)
-        fig, axs = plt.subplots(1, n_thresh, figsize=(4 * n_thresh, 4), squeeze=False)
-
-        for i, r_thresh in enumerate(r_thresholds):
-            ax = axs[0, i]
-            im = ax.imshow(rdm[i], clim=(-1, 1))
-            ax.set_title(f"r > {r_thresh:.1f}")
-            ax.set_xlabel("Image")
-            ax.set_ylabel("Image")
-            fig.colorbar(im, ax=ax, shrink=0.8)
-
-        # Optional: add a supertitle with subject/session/repeat info
-        fig.suptitle(f"{sub}_{session}\nrepeat combo {r}", fontsize=14)
-        plt.tight_layout(rect=[0, 0.03, 1, 0.95])  # Leave space for suptitle
-        plt.show()
-
-            # thresh = .2
-            # plt.figure(figsize=(4, 4))
-            # plt.imshow(rdm[np.where(r_thresholds == thresh)[0].item()], clim=(-1, 1))
-            # plt.colorbar(shrink=0.8)
-            # plt.title(f"{sub}_{session}\nreliability threshold={thresh}; repeats {r}")
-            # plt.show()
-
-        for thresh in range(rdm.shape[0]):
-            for img in range(rdm.shape[1]):
-                assert np.isclose(rdm[thresh, img, img], 1)
-    
-    return rels
-
-
-def load_masks(img_list):
-    from nilearn.masking import intersect_masks
-    import nilearn
-
-    masks = [nilearn.image.load_img(mask) for mask in img_list]
-    assert all(np.allclose(masks[0].affine, m.affine) for m in masks)
-    return masks, intersect_masks(masks, threshold=0.5, connected=True)
-
-
-def get_mask(ses_list, sub, func_task_name):
-    assert isinstance(ses_list, list), "ses_list is not a list"
-    mask_imgs = []
-    nsd_imgs = []
-    for ses in ses_list:
-        prefix = f"/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_{sub}_{ses}_task-{func_task_name}/{sub}_{ses}_task-{func_task_name}"
-        mask_path = prefix + "_brain.nii.gz"
-        nsd_path = prefix + "_nsdgeneral.nii.gz"
-        print(mask_path)
-        print(nsd_path)
-        assert os.path.exists(mask_path)
-        assert os.path.exists(nsd_path)
-        mask_imgs.append(mask_path)
-        nsd_imgs.append(nsd_path)
-
-    func_masks, avg_mask = load_masks(mask_imgs)
-    print(f'intersected brain masks from {ses_list}')
-    
-    nsd_masks, roi = load_masks(nsd_imgs)
-    print(f'intersected nsdgeneral roi masks from {ses_list}')
-
-    return func_masks, avg_mask, nsd_masks, roi
-
-
-
-def process_images(image_names, unique_images, remove_close_to_MST=False, remove_random_n=False, imgs_to_remove=None, sub=None, session=None):
-    image_idx = np.array([])
-    vox_image_names = np.array([])
-    all_MST_images = {}
-    
-    for i, im in enumerate(image_names):
-        if im == "blank.jpg" or str(im) == "nan":
-            continue
-                
-        if remove_close_to_MST and "closest_pairs" in im:
-            continue
-        
-        if remove_random_n and im in imgs_to_remove:
-            continue
-            
-        vox_image_names = np.append(vox_image_names, im)
-        image_idx_ = np.where(im == unique_images)[0].item()
-        image_idx = np.append(image_idx, image_idx_)
-        
-        if sub == 'ses-01' and session in ('ses-01', 'ses-04'):
-            if ('w_' in im or 'paired_image_' in im or re.match(r'all_stimuli/rtmindeye_stimuli/\d{1,2}_\d{1,3}\.png$', im) 
-                or re.match(r'images/\d{1,2}_\d{1,3}\.png$', im)):
-                all_MST_images[i] = im
-        elif 'MST' in im:
-            all_MST_images[i] = im
-    
-    image_idx = torch.Tensor(image_idx).long()
-    unique_MST_images = np.unique(list(all_MST_images.values()))
-    
-    MST_ID = np.array([], dtype=int)
-    if remove_close_to_MST:
-        close_to_MST_idx = np.array([], dtype=int)
-    if remove_random_n:
-        random_n_idx = np.array([], dtype=int)
-    
-    vox_idx = np.array([], dtype=int)
-    j = 0  # Counter for indexing vox based on removed images
-    
-    for i, im in enumerate(image_names):
-        if im == "blank.jpg" or str(im) == "nan":
-            continue
-        
-        if remove_close_to_MST and "closest_pairs" in im:
-            close_to_MST_idx = np.append(close_to_MST_idx, i)
-            continue
-        
-        if remove_random_n and im in imgs_to_remove:
-            vox_idx = np.append(vox_idx, j)
-            j += 1
-            continue
-        
-        j += 1
-        curr = np.where(im == unique_MST_images)
-        
-        if curr[0].size == 0:
-            MST_ID = np.append(MST_ID, len(unique_MST_images))  # Out of range index for filtering later
-        else:
-            MST_ID = np.append(MST_ID, curr)
-    
-    assert len(MST_ID) == len(image_idx)
-    
-    pairs = find_paired_indices(image_idx)
-    pairs = sorted(pairs, key=lambda x: x[0])
-    
-    return image_idx, vox_image_names, pairs
-
-def find_all_indices(list_, element):
-    return [index for index, value in enumerate(list_) if value == element]

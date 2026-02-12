@@ -3,7 +3,7 @@
 
 # # Import packages & functions
 
-# In[1]:
+# In[ ]:
 
 
 print("importing modules")
@@ -57,38 +57,19 @@ seed = utils.get_slurm_seed()
 
 # ## Load Data & Design
 
-# In[67]:
+# In[ ]:
 
 
-def get_flag(name, default, cast=int):
-    """Retrieve a flag from environment variables or return a default value."""
-    if utils.is_interactive():
-        return default
-    val = os.environ.get(name.upper(), str(default))
-    print(f"Retrieved {name.upper()} from environment: {val}")
-    
-    if cast == bool:
-        # Explicitly handle string conversion to boolean
-        if val.lower() in ['true', '1']:
-            return True
-        elif val.lower() in ['false', '0']:
-            return False
-        else:
-            return bool(val)  # Fallback to default casting behavior
-    
-    try:
-        return cast(val)
-    except Exception:
-        return val
-    
-if not utils.is_interactive():
-    print('running non-interactively')
-    
-# Define variables using get_flag
-sub = get_flag('SUB', 'sub-005', cast=str)
-session = get_flag('SESSION', 'ses-04', cast=str)  # 'ses-xx', 'all'
-task = get_flag('TASK', 'B', cast=str)  # 'study', 'A', or 'B'
-func_task_name = get_flag('FUNC_TASK_NAME', 'B', cast=str)
+if utils.is_interactive():
+    sub = "sub-005"
+    session = "ses-01"
+    task = 'C'  # 'study' or 'A'; used to search for functional run in bids format
+    train_test_split = 'MST' # 'MST', 'orig', 'unique', 'repeats_3'
+else:
+    sub = os.environ["sub"]
+    session = os.environ["session"]
+    task = os.environ["task"]
+    train_test_split = os.environ["split"]
 
 if session == "all":
     ses_list = ["ses-01", "ses-02"]  # list of actual session IDs
@@ -96,6 +77,14 @@ if session == "all":
 else:
     ses_list = [session]
     design_ses_list = [session]
+    
+task_name = f"_task-{task}" if task != 'study' else ''
+resample_voxel_size = False
+resample_post_glmsingle = False  # do you want to do voxel resampling here? if resample_voxel_size = True and resample_post_glmsingle = False, assume the resampling has been done prior to GLMsingle, so just use resampled directory but otherwise proceed as normal
+load_from_resampled_file = False  # do you want to load resampled data from file? if True, assume resampling was done in this notebook before, and that we're not using the GLMsingle resampled data
+    
+remove_close_to_MST = False
+remove_random_n = False
 
 task_name = f"_task-{task}" if task != 'study' else ''
 resample_voxel_size = get_flag('RESAMPLE_VOXEL_SIZE', True, cast=bool)
@@ -143,7 +132,7 @@ print('remove_random_n:', remove_random_n)
 print('n_to_remove:', n_to_remove)
 
 
-# In[7]:
+# In[ ]:
 
 
 session_label = preproc.get_session_label(ses_list)
@@ -151,7 +140,7 @@ print('session label:', session_label)
 n_runs, _ = preproc.get_runs_per_session(sub, session, ses_list)
 
 
-# In[8]:
+# In[ ]:
 
 
 if utils.is_interactive():
@@ -185,7 +174,7 @@ assert os.path.exists(glmsingle_path)
 print("glmsingle path exists!")
 
 
-# In[9]:
+# In[ ]:
 
 
 data, starts, images, is_new_run, image_names, unique_images, len_unique_images = preproc.load_design_files(
@@ -208,8 +197,10 @@ if sub == 'sub-001':
 elif sub == 'sub-003':
     assert image_names[0] == 'all_stimuli/rtmindeye_stimuli/image_686_seed_1.png'
 
-unique_images = np.unique(image_names.astype(str))
-unique_images = unique_images[(unique_images!="nan")]
+unique_images, unique_image_counts = np.unique(image_names.astype(str), return_counts=True)
+mask = unique_images != "nan"
+unique_images = unique_images[mask]
+unique_image_counts = unique_image_counts[mask]
 len_unique_images = len(unique_images)
 print("n_runs",n_runs)
 
@@ -319,7 +310,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 
 # ## Load images
 
-# In[10]:
+# In[ ]:
 
 
 import imageio.v2 as imageio
@@ -357,7 +348,7 @@ if (sub == 'sub-001' and session == 'ses-04') or (sub == 'sub-003' and session =
 print("MST_images==True", len(MST_images[MST_images==True]))
 
 
-# In[11]:
+# In[ ]:
 
 
 # want IDs of pairmates based on MST_images
@@ -375,7 +366,7 @@ for p, pair in enumerate(MST_pairmate_names):
 print(MST_pairmate_indices.shape, MST_pairmate_indices)
 
 
-# In[12]:
+# In[ ]:
 
 
 if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
@@ -403,7 +394,7 @@ if (sub == 'sub-001' and session in ('ses-02', 'ses-03', 'all')):
     plt.show()
 
 
-# In[13]:
+# In[ ]:
 
 
 # pairs has the indices of all repeated images
@@ -422,7 +413,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[14]:
+# In[ ]:
 
 
 p=0
@@ -441,94 +432,7 @@ plt.tight_layout()
 plt.show()
 
 
-# In[15]:
-
-
-def get_image_pairs(sub, session, func_task_name, designdir):
-    """Loads design files and processes image pairs for a given session."""
-    _, _, _, _, image_names, unique_images, _ = preproc.load_design_files(
-        sub=sub,
-        session=session,
-        func_task_name=func_task_name,
-        designdir=designdir,
-        design_ses_list=[session]  # Ensure it's a list
-    )
-    return utils.process_images(image_names, unique_images)
-
-
-# In[16]:
-
-
-from collections import defaultdict
-
-all_dicts = []
-for s_idx, s in enumerate(ses_list):
-    im, vo, _ = get_image_pairs(sub, s, func_task_name, designdir)
-    assert len(im) == len(vo)
-    all_dicts.append({k:v for k,v in enumerate(vo)})
-
-# for the train set (ses-01-02 non-MST)
-image_to_indices = defaultdict(lambda: [[] for _ in range(len(ses_list))])
-for ses_idx, idx_to_name in enumerate(all_dicts):
-    for idx, name in idx_to_name.items():
-        image_to_indices[name][ses_idx].append(idx)
-        
-image_to_indices = dict(image_to_indices)
-
-# for the test set (ses-03)
-# test_image_to_indices = defaultdict(lambda: [[] for _ in range(len([ses_list[-1]]))])
-# for ses_idx, idx_to_name in enumerate([all_dicts[-1]]):
-#     for idx, name in idx_to_name.items():
-#         test_image_to_indices[name][ses_idx].append(idx)
-        
-# test_image_to_indices = dict(test_image_to_indices)
-
-
-# In[17]:
-
-
-# train_pairs_list = []
-# test_pairs_list = []
-
-if sub == 'sub-005' and ses_list == ["ses-01", "ses-02"]:
-    for image, (ses0_indices, ses1_indices) in image_to_indices.items():
-        # Offset session 1 indices by 693
-        image_to_indices[image] = [ses0_indices, [i + 693 for i in ses1_indices]]
-
-#         # Combine all repeat indices (across both sessions)
-#         all_indices = ses0_indices + ses1_indices_offset
-
-#         # Only include if there are at least 2 repeats
-#         if len(all_indices) >= 2:
-#             train_pairs_list.append(all_indices)
-        
-#     for i in test_image_to_indices.values():
-#         # print(i[0])
-#         # Only include if there are at least 2 repeats
-#         if len(i[0]) >= 2:
-#             test_pairs_list.append(i[0])
-            
-#     train_test_pairs = [train_pairs_list, test_pairs_list]
-            
-# elif sub == 'sub-005' and ses_list == ["ses-01", "ses-03"]:
-#     pairs_list = []
-
-#     if len(ses_list) > 2:
-#         # Case 1: Aggregate results from multiple sessions (ses_list[:-1]), concatenating into a single list
-#         combined_pairs = sum([get_image_pairs(sub, s, func_task_name, designdir) for s in ses_list[:-1]], [])
-#         pairs_list.append(combined_pairs)
-
-#         # Case 2: Process last session separately
-#         pairs_list.append(get_image_pairs(sub, ses_list[-1], func_task_name, designdir))
-
-#     else:
-#         # Case 3: Process both sessions individually if ses_list has only 2 entries
-#         pairs_list.extend([get_image_pairs(sub, s, func_task_name, designdir) for s in ses_list])
-
-#     assert len(pairs_list) == 2
-
-
-# In[18]:
+# In[ ]:
 
 
 if resample_voxel_size:
@@ -537,12 +441,12 @@ if resample_voxel_size:
     omat_name = f'{glmsingle_path}/boldref_omat'
 
 
-# In[19]:
+# In[ ]:
 
 
 from nilearn.plotting import plot_roi, plot_anat, plot_epi
 
-mask_name = f'{glmsingle_path}/{sub}_{session_label}{task_name}_brain'
+mask_name = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_{sub}_task-{task}/{sub}_final_brain'
 if resample_voxel_size:
     if resample_post_glmsingle is True:
         # use original mask directory
@@ -572,7 +476,7 @@ print(f'There are {int(np.sum(brain))} voxels in the included brain mask\n')
 
 # ## Load GLMSingle voxel data
 
-# In[20]:
+# In[ ]:
 
 
 vox = None
@@ -600,29 +504,44 @@ if needs_postprocessing == True:
     vox = vox.reshape(-1, vox.shape[-1])  # flatten the 3D image into np array with shape (voxels, images)
     print(vox.shape)
 
+if vox.shape[1] != int(avg_mask.get_fdata().sum()):
+    # betas probably come from a session-specific mask that doesn't correspond to the intersection mask created during multi-session analysis
+    # if so, try reshaping vox based on the session-specific mask
+    print('vox doesn\'t match roi shape; reshaping to match multi-session final mask')
+    session_mask = nib.load(f'{glmsingle_path}/{sub}_{session_label}{task_name}_brain.nii.gz')
+    assert int(session_mask.get_fdata().sum()) == vox.shape[1], 'session mask doesn\'t correspond to glmsingle betas!'
+    unmasked_vox = nilearn.masking.unmask(vox, session_mask)  # shape will be (X x Y x Z x images)
+    vox = nilearn.masking.apply_mask(unmasked_vox, avg_mask)
+    print(vox.shape)
+    
+assert vox.shape[1] == int(avg_mask.get_fdata().sum())
 assert len(vox) == len(image_idx)
 
 
 # ### Load nsdgeneral ROI
 
-# In[28]:
+# In[ ]:
 
 
-if resample_voxel_size:
-    nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}_task-{task}_nsdgeneral_{resampled_suffix}.nii.gz'  
-    if resample_post_glmsingle:
-        assert os.path.exists(orig_glmsingle_path)
-        roi_in_path = f"{orig_glmsingle_path}/{sub}_{session_label}_task-{task}_nsdgeneral.nii.gz"  # the input file is the original nsdgeneral mask (without resampling), from the original glmsingle directory
-        applyxfm(roi_in_path, ref_name, omat_name, resample_method, output=nsdgeneral_path)
-else:
-    nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_nsdgeneral.nii.gz'  
-    
+# nsdgeneral_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_nsdgeneral.nii.gz' 
+nsdgeneral_path = f'/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/glmsingle_{sub}_task-{task}/{sub}_final_nsdgeneral.nii.gz'
 print(nsdgeneral_path)
 assert os.path.exists(nsdgeneral_path)
 print(f"nsdgeneral path exists!")
 
 
-# In[29]:
+# In[ ]:
+
+
+if resample_voxel_size:
+    nsdgeneral_path = f'{glmsingle_path}/{sub}_task-{task}_nsdgeneral_resampled.nii.gz'  
+    if resample_post_glmsingle:
+        assert os.path.exists(orig_glmsingle_path)
+        roi_in_path = f"{orig_glmsingle_path}/{sub}_task-{task}_nsdgeneral.nii.gz"  # the input file is the original nsdgeneral mask (without resampling), from the original glmsingle directory
+        applyxfm(roi_in_path, ref_name, omat_name, resample_method, output=nsdgeneral_path)
+
+
+# In[ ]:
 
 
 roi = nib.load(nsdgeneral_path)
@@ -631,7 +550,7 @@ plot_roi(roi, bg_img=avg_mask)
 plt.show()
 
 
-# In[30]:
+# In[ ]:
 
 
 avg_mask = avg_mask.get_fdata().flatten()
@@ -647,7 +566,7 @@ print(f"nsdgeneral voxels = {roi.sum()}")
 
 # ### ROI voxel exclusion
 
-# In[31]:
+# In[ ]:
 
 
 # ROI masking?
@@ -665,13 +584,21 @@ if np.any(np.isnan(vox)):
 
 # ### Calculate reliability (corr between first and second presentation of same image) for every voxel
 
-# In[32]:
+# In[ ]:
+
+
+# results = []
+# for i in pairs:
+#     results.append(vox[i])
+
+
+# In[ ]:
 
 
 pairs_homog = np.array([[p[0], p[1]] for p in pairs])
 
 
-# In[33]:
+# In[ ]:
 
 
 # vox_pairs = []
@@ -698,7 +625,7 @@ assert np.sum(np.all(np.isnan(rels))) == 0
 
 # ### Create representational similarity matrix
 
-# In[34]:
+# In[ ]:
 
 
 # creating img x vox x repetitions matrix | shape=(150, 18419, 2)
@@ -711,7 +638,7 @@ for ipair, pair in enumerate(tqdm(pairs_homog)):
 vox_avg = vox0.mean(-1) # average across the repetitions
 
 
-# In[35]:
+# In[ ]:
 
 
 # Masking RDM for each reliability threshold
@@ -726,7 +653,7 @@ for ir_thresh, r_thresh in enumerate(r_thresholds):
 # rdm is shape (4, 150, 150)
 
 
-# In[36]:
+# In[ ]:
 
 
 thresh = .2
@@ -737,30 +664,39 @@ plt.title(f"{sub}_{session}\nreliability threshold={thresh}\n")
 plt.show()
 
 
-# In[37]:
+# In[ ]:
 
 
-for thresh in range(rdm.shape[0]):
+for t in range(rdm.shape[0]):
     for img in range(rdm.shape[1]):
-        assert np.isclose(rdm[thresh, img, img], 1)
+        assert np.isclose(rdm[t, img, img], 1)
 
 
-# In[38]:
+# In[ ]:
 
 
 vox.shape
 
 
-# In[39]:
+# In[ ]:
 
 
 # Reliability thresholding?
 print(f"\nvox before reliability thresholding: {vox.shape}")
-vox = vox[:,rels>.2]
+vox = vox[:,rels>thresh]
 print(f"\nvox after reliability thresholding: {vox.shape}")
 
+relmask_path = f'{glmsingle_path}/{sub}_{session_label}{task_name}_relmask.npy'
+print(relmask_path)
+if os.path.exists(relmask_path):
+    orig_relmask = np.load(relmask_path)
+    if not np.allclose(orig_relmask, rels>thresh):
+        print('saved reliability mask is different from the current one; overwriting!')
 
-# In[40]:
+np.save(relmask_path, rels>thresh)
+
+
+# In[ ]:
 
 
 print(images.shape)
@@ -768,7 +704,13 @@ print(vox.shape)
 assert len(images) == len(vox)
 
 
-# In[41]:
+# In[ ]:
+
+
+
+
+
+# In[ ]:
 
 
 same_corrs = []
@@ -810,7 +752,7 @@ plt.ylabel("Pearson R")
 plt.show()
 
 
-# In[42]:
+# In[ ]:
 
 
 vox_pairs = utils.zscore(vox[pairs_homog])
@@ -826,7 +768,7 @@ plt.show()
 
 # # Training MindEye
 
-# In[43]:
+# In[ ]:
 
 
 utils.seed_everything(seed)
@@ -855,6 +797,22 @@ elif train_test_split == 'unique':
     test_image_indices = np.array([item for item in imageTest if item not in pairs.flatten()])
     print(len(train_image_indices), len(test_image_indices))
     assert len(train_image_indices) + len(test_image_indices) == len(image_idx)
+elif train_test_split == 'repeats_3':
+    # test on images with 3 repeats, train on all others
+    from collections import Counter
+    vox, kept_indices = utils.filter_and_average_repeats(vox, vox_image_names)
+    filtered_image_names = vox_image_names[kept_indices]
+
+    image_counts = Counter(vox_image_names)
+    test_image_indices = np.array([i for i, image in enumerate(filtered_image_names) if image_counts[image] == 3])
+    train_image_indices = np.array([i for i, image in enumerate(filtered_image_names) if image_counts[image] != 3])
+    
+    print(len(train_image_indices), len(test_image_indices))
+    assert len(test_image_indices) == 50  # there are 50 special515 in this session with 3 repeats
+    assert all('special515' in i for i in vox_image_names[kept_indices][test_image_indices]), \
+    f"Not all test images contain 'special515'. Image names: {vox_image_names[kept_indices][test_image_indices]}"
+    assert len(train_image_indices) + len(test_image_indices) == len(vox)
+
 else:
     raise Exception("invalid train_test_split")
 
@@ -864,7 +822,7 @@ for i in train_image_indices:
     assert i not in test_image_indices
 
 
-# In[44]:
+# In[ ]:
 
 
 train_mean = np.mean(vox[train_image_indices],axis=0)
@@ -879,23 +837,7 @@ print("vox", vox.shape)
 # In[45]:
 
 
-# for idx in deleted_indices:
-#     # check image names to be deleted match
-#     original_name = vox_image_dict[idx]
-#     matching_indices = [i for i in deleted_indices if vox_image_dict[i] == original_name]
-#     assert all(vox_image_dict[i] == original_name for i in matching_indices), \
-#         f"Mismatch in image names for deleted indices {matching_indices}"
-
-#     # check image data to be deleted match
-#     base_image = images[matching_indices[0]]  # Reference image
-#     for i in matching_indices[1:]:
-#         assert np.array_equal(base_image, images[i]), \
-#             f"Mismatch in image data for {vox_image_dict[i]} at index {i}"
-
-# images = images[kept_indices]
-
-
-# In[46]:
+# In[ ]:
 
 
 images = torch.Tensor(images)
@@ -903,7 +845,7 @@ vox = torch.Tensor(vox)
 assert len(images) == len(vox)
 
 
-# In[47]:
+# In[ ]:
 
 
 ### Multi-GPU config ###
@@ -922,7 +864,7 @@ accelerator = Accelerator(split_batches=False)
 batch_size = 8 
 
 
-# In[48]:
+# In[ ]:
 
 
 print("PID of this process =",os.getpid())
@@ -951,7 +893,7 @@ print = accelerator.print # only print if local_rank=0
 
 # ## Configurations
 
-# In[49]:
+# In[ ]:
 
 
 # if running this interactively, can specify jupyter_args here for argparser to use
@@ -968,7 +910,7 @@ if utils.is_interactive():
                     --no-multi_subject --subj=1 --batch_size={batch_size} \
                     --hidden_dim=1024 --clip_scale=1. \
                     --no-blurry_recon --blur_scale=.5 \
-                    --no-use_prior --prior_scale=30 \
+                    --use_prior --prior_scale=30 --prior_lr=3e-5 \
                     --n_blocks=4 --max_lr=3e-4 --mixup_pct=.33 --num_epochs=30 --no-use_image_aug \
                     --ckpt_interval=999 --no-ckpt_saving --new_test \
                     --multisubject_ckpt=/scratch/gpfs/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep"
@@ -976,7 +918,7 @@ if utils.is_interactive():
     jupyter_args = jupyter_args.split()
 
 
-# In[50]:
+# In[ ]:
 
 
 parser = argparse.ArgumentParser(description="Model Training Configuration")
@@ -1086,6 +1028,10 @@ parser.add_argument(
 parser.add_argument(
     "--max_lr",type=float,default=3e-4,
 )
+parser.add_argument(
+    "--prior_lr", type=float, default=None,
+    help="Optional specific learning rate for the diffusion prior. If not set, it defaults to the value of --max_lr.",
+)
 
 if utils.is_interactive():
     args = parser.parse_args(jupyter_args)
@@ -1124,7 +1070,7 @@ print("subj_list", subj_list, "num_sessions", num_sessions)
 
 # ## Prep data, models, and dataloaders
 
-# In[51]:
+# In[ ]:
 
 
 if ckpt_saving:
@@ -1150,7 +1096,7 @@ if ckpt_saving:
 
 # ### Creating wds dataloader, preload betas and all 73k possible images
 
-# In[52]:
+# In[ ]:
 
 
 def my_split_by_node(urls): return urls
@@ -1171,7 +1117,7 @@ num_iterations_per_epoch = num_samples_per_epoch // (batch_size*len(subj_list))
 print("batch_size =", batch_size, "num_iterations_per_epoch =",num_iterations_per_epoch, "num_samples_per_epoch =",num_samples_per_epoch)
 
 
-# In[53]:
+# In[ ]:
 
 
 train_data = {}
@@ -1181,7 +1127,7 @@ train_data[f'subj0{subj}'] = torch.utils.data.TensorDataset(torch.tensor(train_i
 test_data = torch.utils.data.TensorDataset(torch.tensor(test_image_indices))
 
 
-# In[54]:
+# In[ ]:
 
 
 num_voxels = {}
@@ -1209,7 +1155,7 @@ print(f"Loaded test dl for subj{subj}!\n")
 
 # ### CLIP image embeddings  model
 
-# In[55]:
+# In[ ]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -1232,27 +1178,10 @@ except:
 clip_seq_dim = 256
 clip_emb_dim = 1664
 
-# ## USING OPEN AI CLIP ViT-L ###
-# import clip
-# try:
-#     print(clip_model)
-# except:
-#     clip_model, preprocess = clip.load("ViT-L/14", device=device)
-#     preprocess = transforms.Compose([
-#         transforms.Resize(224, interpolation=transforms.InterpolationMode.BILINEAR),
-#         transforms.Normalize(mean=[0.48145466, 0.4578275, 0.40821073],
-#                              std=[0.26862954, 0.26130258, 0.27577711]),
-#     ])
-# def clip_img_embedder(image):
-#     preproc_img = preprocess(image)
-#     return clip_model.encode_image(preproc_img)
-# clip_seq_dim = 1
-# clip_emb_dim = 768
-
 
 # ### MindEye modules
 
-# In[56]:
+# In[ ]:
 
 
 model = utils.prepare_model_and_training(
@@ -1266,7 +1195,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[57]:
+# In[ ]:
 
 
 # test on subject 1 with fake data
@@ -1274,7 +1203,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[58]:
+# In[ ]:
 
 
 # test that the model works on some fake data
@@ -1287,45 +1216,45 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ### Adding diffusion prior + unCLIP if use_prior=True
 
-# In[59]:
+# In[ ]:
 
 
-if use_prior:
-    from models import *
+# if use_prior:
+#     from models import *
 
-    # setup diffusion prior network
-    out_dim = clip_emb_dim
-    depth = 6
-    dim_head = 52
-    heads = clip_emb_dim//52 # heads * dim_head = clip_emb_dim
-    timesteps = 100
+#     # setup diffusion prior network
+#     out_dim = clip_emb_dim
+#     depth = 6
+#     dim_head = 52
+#     heads = clip_emb_dim//52 # heads * dim_head = clip_emb_dim
+#     timesteps = 100
 
-    prior_network = VersatileDiffusionPriorNetwork(
-            dim=out_dim,
-            depth=depth,
-            dim_head=dim_head,
-            heads=heads,
-            causal=False,
-            num_tokens = clip_seq_dim,
-            learned_query_mode="pos_emb"
-        )
+#     prior_network = VersatileDiffusionPriorNetwork(
+#             dim=out_dim,
+#             depth=depth,
+#             dim_head=dim_head,
+#             heads=heads,
+#             causal=False,
+#             num_tokens = clip_seq_dim,
+#             learned_query_mode="pos_emb"
+#         )
 
-    model.diffusion_prior = BrainDiffusionPrior(
-        net=prior_network,
-        image_embed_dim=out_dim,
-        condition_on_text_encodings=False,
-        timesteps=timesteps,
-        cond_drop_prob=0.2,
-        image_embed_scale=None,
-    )
+#     model.diffusion_prior = BrainDiffusionPrior(
+#         net=prior_network,
+#         image_embed_dim=out_dim,
+#         condition_on_text_encodings=False,
+#         timesteps=timesteps,
+#         cond_drop_prob=0.2,
+#         image_embed_scale=None,
+#     )
     
-    utils.count_params(model.diffusion_prior)
-    utils.count_params(model)
+#     utils.count_params(model.diffusion_prior)
+#     utils.count_params(model)
 
 
 # ### Setup optimizer / lr / ckpt saving
 
-# In[60]:
+# In[ ]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -1338,9 +1267,15 @@ opt_grouped_parameters = [
 # model.backbone.requires_grad_(False)
 
 if use_prior:
+    effective_prior_lr = prior_lr if prior_lr is not None else max_lr
+    print(f"--- Setting learning rate for diffusion_prior: {effective_prior_lr} ---")
+
+    if prior_lr is not None:
+        assert lr_scheduler_type == 'cycle'  # if prior_lr exists, ensure lr scheduler is cycle because we want to set custom lr for the prior. custom lr for prior is not implemented in the linear scheduler code.
+
     opt_grouped_parameters.extend([
-        {'params': [p for n, p in model.diffusion_prior.named_parameters() if not any(nd in n for nd in no_decay)], 'weight_decay': 1e-2},
-        {'params': [p for n, p in model.diffusion_prior.named_parameters() if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
+        {'params': [p for n, p in model.diffusion_prior.named_parameters() if not any(nd in n for nd in no_decay)], 'weight_decay': 1e-2, 'lr': effective_prior_lr},
+        {'params': [p for n, p in model.diffusion_prior.named_parameters() if any(nd in n for nd in no_decay)], 'weight_decay': 0.0, 'lr': effective_prior_lr}
     ])
 
 optimizer = torch.optim.AdamW(opt_grouped_parameters, lr=max_lr)
@@ -1356,9 +1291,13 @@ elif lr_scheduler_type == 'cycle':
         num_iterations_per_epoch=1
     total_steps=int(np.floor(num_epochs*num_iterations_per_epoch))
     print("total_steps", total_steps)
+    max_lrs = [max_lr] * 3  # for ridge and backbone
+    if use_prior:
+        max_lrs.extend([effective_prior_lr] * 2) # for prior
+
     lr_scheduler = torch.optim.lr_scheduler.OneCycleLR(
         optimizer, 
-        max_lr=max_lr,
+        max_lr=max_lrs,
         total_steps=total_steps,
         final_div_factor=1000,
         last_epoch=-1, pct_start=2/num_epochs
@@ -1401,7 +1340,7 @@ num_params = utils.count_params(model)
 
 # # Wandb
 
-# In[61]:
+# In[ ]:
 
 
 if local_rank==0 and wandb_log: # only use main process for wandb logging
@@ -1445,6 +1384,8 @@ if local_rank==0 and wandb_log: # only use main process for wandb logging
         resume="allow",
         save_code=True,
     )
+    
+    wandb.save("run_all_batch.slurm")
 
     # Get SLURM job & array ID
     slurm_job_id = utils.get_slurm_job()
@@ -1477,7 +1418,7 @@ else:
 
 # # Train the model
 
-# In[62]:
+# In[ ]:
 
 
 epoch = 0
@@ -1486,7 +1427,7 @@ best_test_loss = 1e9
 torch.cuda.empty_cache()
 
 
-# In[63]:
+# In[ ]:
 
 
 # load multisubject stage1 ckpt if set
@@ -1494,7 +1435,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
     load_ckpt("last",outdir=multisubject_ckpt,load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[64]:
+# In[ ]:
 
 
 # checkpoint = torch.load(multisubject_ckpt+'/last.pth', map_location='cpu')
@@ -1502,7 +1443,7 @@ if multisubject_ckpt is not None and not resume_from_ckpt:
 # model.load_state_dict(state_dict, strict=False)
 
 
-# In[65]:
+# In[ ]:
 
 
 # train_dls = [train_dl[f'subj0{s}'] for s in subj_list]
@@ -1963,30 +1904,18 @@ if local_rank == 0:
 # In[ ]:
 
 
-top_k = 5
+# for i in range(len(pairs)):
+#     fig, ax = plt.subplots(1, 2, figsize=(10,8))
 
-for x in range(len(MST_idx)):
-    # Get top-k indices
-    y = torch.topk(utils.batchwise_cosine_similarity(clip_voxels_norm, clip_target_norm)[x], k=top_k).indices.to('cpu').tolist()
+#     ax[0].imshow(images[pairs[i][0]].permute(1,2,0).numpy())
+#     ax[0].set_title(f"Repeat 1")
 
-    # Set up the plot with original + top_k images in one row
-    fig, axs = plt.subplots(1, top_k + 1, figsize=(3 * (top_k + 1), 3))
-    
-    # Plot the original image
-    orig_img = utils.torch_to_Image(images[MST_idx[x]])
-    axs[0].imshow(orig_img)
-    axs[0].set_title("Original")
-    axs[0].axis("off")
+#     ax[1].imshow(images[pairs[i][1]].permute(1,2,0).numpy())
+#     ax[1].set_title(f"Repeat 2")
 
-    # Plot the top-k retrieved images
-    for idx, i in enumerate(y):
-        pred_img = utils.torch_to_Image(images[MST_idx[i]])
-        axs[idx + 1].imshow(pred_img)
-        axs[idx + 1].set_title(f"Top {idx+1}")
-        axs[idx + 1].axis("off")
-    
-    plt.tight_layout()
-    plt.show()
+#     plt.setp(ax, xticks=[], yticks=[])
+#     plt.tight_layout()
+#     plt.show()
 
 
 # In[76]:
