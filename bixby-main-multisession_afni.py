@@ -720,9 +720,6 @@ model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer,
 # In[64]:
 
 
-model_name = 'training_mindeye' 
-
-
 import torch.nn as nn
 
 
