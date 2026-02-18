@@ -10,7 +10,7 @@
 #SBATCH -e bixby_data/slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o bixby_data/slurms/%A_%a.out
 #SBATCH --no-requeue
-#SBATCH --array=02               
+#SBATCH --array=04               
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=wg7536@princeton.edu
 

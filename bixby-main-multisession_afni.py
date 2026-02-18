@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[24]:
+# In[1]:
 
 
 import os
@@ -21,7 +21,7 @@ import utils
 sessions = ['01', '02', '03', 'study', 'test', 'snap']
 
 
-# In[25]:
+# In[2]:
 
 
 ### Set up
@@ -39,7 +39,7 @@ def is_interactive():
         return False  # Not running in an IPython environment
 
 
-# In[26]:
+# In[3]:
 
 
 if is_interactive():
@@ -160,7 +160,7 @@ else:
     seed = args.seed
 
 
-# In[27]:
+# In[4]:
 
 
 utils.seed_everything(seed)
@@ -260,7 +260,7 @@ else:
 print("images", images.shape)
 
 
-# In[12]:
+# In[9]:
 
 
 test_img = None
@@ -302,7 +302,7 @@ else:
 print("testing images", test_img.shape)
 
 
-# In[13]:
+# In[10]:
 
 
 def find_repeated_strings(string_list):
@@ -353,7 +353,7 @@ def locate_repeat_index_per_run(sub_dict, unique_idx):
     return repeated_trial, sorted_vox
 
 
-# In[14]:
+# In[11]:
 
 
 def average_repeats(vox, mindeye_trial, unique_images):
@@ -403,7 +403,7 @@ def average_repeats_snap(vox, repeated_trial, unique_images):
     return sorted_vox
 
 
-# In[15]:
+# In[12]:
 
 
 # Stacking multi-session data:
@@ -415,7 +415,7 @@ mindeye_vox = average_repeats(mindeye_vox, mindeye_trial, unique_images)
 vox_data[sub] = mindeye_vox
 
 
-# In[16]:
+# In[13]:
 
 
 # Loading Snap data
@@ -436,7 +436,7 @@ for task in tasks:
 
 # ### Testing single subject
 
-# In[17]:
+# In[14]:
 
 
 train_images = torch.Tensor(images)
@@ -444,7 +444,7 @@ train_vox = torch.Tensor(vox_data[sub])
 assert len(train_images) == len(train_vox)
 
 
-# In[18]:
+# In[15]:
 
 
 test_images = torch.Tensor(test_img)
@@ -455,7 +455,7 @@ test_vox_snap = torch.Tensor(test_data[sub]['snap'])
 assert len(test_images) == len(test_vox)
 
 
-# In[19]:
+# In[16]:
 
 
 assert train_vox.shape[1] == test_vox.shape[1]
@@ -463,7 +463,7 @@ assert train_vox.shape[1] == test_vox.shape[1]
 
 # ## Finished loading data. Setting up GPU
 
-# In[20]:
+# In[17]:
 
 
 ### Multi-GPU config ###
@@ -481,7 +481,7 @@ data_type = torch.float32 # change depending on your mixed_precision
 accelerator = Accelerator(split_batches=False)
 
 
-# In[15]:
+# In[18]:
 
 
 print("PID of this process =",os.getpid())
@@ -508,7 +508,7 @@ print("distributed =",distributed, "num_devices =", num_devices, "local rank =",
 print = accelerator.print # only print if local_rank=0
 
 
-# In[16]:
+# In[19]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -519,7 +519,7 @@ from generative_models.sgm.modules.encoders.modules import FrozenOpenCLIPImageEm
 # from omegaconf import OmegaConf
 
 
-# In[17]:
+# In[20]:
 
 
 try:
@@ -537,19 +537,19 @@ clip_seq_dim = 256
 clip_emb_dim = 1664
 
 
-# In[18]:
+# In[21]:
 
 
 num_voxels_list=[train_vox[0].shape[-1]]
 
 
-# In[19]:
+# In[22]:
 
 
 from models import PriorNetwork, BrainDiffusionPrior
 
 
-# In[20]:
+# In[23]:
 
 
 model = utils.prepare_model_and_training(
@@ -563,7 +563,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[21]:
+# In[24]:
 
 
 # test on subject 1 with fake data
@@ -571,7 +571,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[22]:
+# In[25]:
 
 
 # test that the model works on some fake data
@@ -584,7 +584,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ## Setup optimizer / lr / ckpt saving
 
-# In[58]:
+# In[26]:
 
 
 prior_lr=3e-4
@@ -598,13 +598,13 @@ if not os.path.exists(outdir) and ckpt_saving:
     os.makedirs(outdir,exist_ok=True)
 
 
-# In[59]:
+# In[27]:
 
 
 num_iterations_per_epoch
 
 
-# In[ ]:
+# In[28]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -688,7 +688,7 @@ print("\nDone with model preparations!")
 num_params = utils.count_params(model)
 
 
-# In[61]:
+# In[29]:
 
 
 epoch = 0
@@ -699,14 +699,14 @@ torch.cuda.empty_cache()
 torch.backends.cuda.matmul.allow_tf32 = True
 
 
-# In[ ]:
+# In[30]:
 
 
 # load multisubject stage1 ckpt if set
 load_ckpt("last",outdir='/scratch/gpfs/KNORMAN/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep',load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[62]:
+# In[31]:
 
 
 train_data = torch.utils.data.TensorDataset(torch.tensor(range(len(train_vox))))
@@ -716,19 +716,19 @@ test_data = torch.utils.data.TensorDataset(torch.tensor(range(len(test_vox))))
 test_dl = torch.utils.data.DataLoader(test_data, batch_size=36, shuffle=False, drop_last=True, pin_memory=True)
 
 
-# In[63]:
+# In[32]:
 
 
 model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer, train_dl, lr_scheduler)
 
 
-# In[64]:
+# In[33]:
 
 
 import torch.nn as nn
 
 
-# In[ ]:
+# In[34]:
 
 
 for train_i, behav in enumerate(train_dl):  
@@ -738,7 +738,7 @@ for train_i, behav in enumerate(train_dl):
     break
 
 
-# In[66]:
+# In[35]:
 
 
 for test_i, behav in enumerate(test_dl):  
@@ -747,19 +747,13 @@ for test_i, behav in enumerate(test_dl):
     break
 
 
-# In[67]:
+# In[36]:
 
 
 wandb_log = False
 
 
-# In[68]:
-
-
-epoch
-
-
-# In[69]:
+# In[38]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
