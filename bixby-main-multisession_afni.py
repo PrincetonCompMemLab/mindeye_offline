@@ -591,8 +591,6 @@ prior_lr=3e-4
 lr_scheduler_type='cycle'
 num_iterations_per_epoch=len(train_images)//batch_size
 
-
-
 import time
 ts = time.time()
 outdir = os.path.join(data_folder, f'output_{ts}')
@@ -606,7 +604,7 @@ if not os.path.exists(outdir) and ckpt_saving:
 num_iterations_per_epoch
 
 
-# In[60]:
+# In[ ]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -669,7 +667,7 @@ def save_ckpt(tag):
             'lrs': lrs,
             }, ckpt_path)
     print(f"\n---saved {outdir}/{tag} ckpt!---\n")
-
+    
 def load_ckpt(tag,load_lr=True,load_optimizer=True,load_epoch=True,strict=True,outdir=outdir,multisubj_loading=False): 
     print(f"\n---loading {outdir}/{tag}.pth ckpt---\n")
     checkpoint = torch.load(outdir+'/last.pth', map_location='cpu')
@@ -700,12 +698,19 @@ torch.cuda.empty_cache()
 # tf32 data type is faster than standard float32
 torch.backends.cuda.matmul.allow_tf32 = True
 
-train_data = torch.utils.data.TensorDataset(torch.tensor(range(len(train_vox))))
-train_dl = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True, drop_last=True, pin_memory=True)
+
+# In[ ]:
+
+
+# load multisubject stage1 ckpt if set
+load_ckpt("last",outdir='/scratch/gpfs/KNORMAN/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep',load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
 # In[62]:
 
+
+train_data = torch.utils.data.TensorDataset(torch.tensor(range(len(train_vox))))
+train_dl = torch.utils.data.DataLoader(train_data, batch_size=batch_size, shuffle=True, drop_last=True, pin_memory=True)
 
 test_data = torch.utils.data.TensorDataset(torch.tensor(range(len(test_vox))))
 test_dl = torch.utils.data.DataLoader(test_data, batch_size=36, shuffle=False, drop_last=True, pin_memory=True)
@@ -941,11 +946,11 @@ for epoch in progress_bar:
                 "test/test_fwd_pct_correct": test_fwd_percent_correct / (test_i + 1),
                 "test/test_bwd_pct_correct": test_bwd_percent_correct / (test_i + 1),
                 "train/loss_clip_total": loss_clip_total / (train_i + 1),
-                "train/loss_blurry_total": loss_blurry_total / (train_i + 1),
-                "train/loss_blurry_cont_total": loss_blurry_cont_total / (train_i + 1),
+                #"train/loss_blurry_total": loss_blurry_total / (train_i + 1),
+                #"train/loss_blurry_cont_total": loss_blurry_cont_total / (train_i + 1),
                 "test/loss_clip_total": test_loss_clip_total / (test_i + 1),
-                "train/blurry_pixcorr": blurry_pixcorr / (train_i + 1),
-                "test/blurry_pixcorr": test_blurry_pixcorr / (test_i + 1),
+                #"train/blurry_pixcorr": blurry_pixcorr / (train_i + 1),
+                #"test/blurry_pixcorr": test_blurry_pixcorr / (test_i + 1),
                 "train/recon_cossim": recon_cossim / (train_i + 1),
                 "test/recon_cossim": test_recon_cossim / (test_i + 1),
                 "train/recon_mse": recon_mse / (train_i + 1),
