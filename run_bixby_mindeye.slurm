@@ -10,7 +10,7 @@
 #SBATCH -e bixby_data/slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o bixby_data/slurms/%A_%a.out
 #SBATCH --no-requeue
-#SBATCH --array=04               
+#SBATCH --array=01               
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=wg7536@princeton.edu
 
@@ -73,7 +73,7 @@ echo "  Eval dir: ${eval_dir}"
 if [ "${run_training}" = "True" ]; then
 
     jupyter nbconvert "${main_script}.ipynb" --to python && \
-    accelerate launch --num_processes=$(($NUM_GPUS * $COUNT_NODE)) --num_machines=$COUNT_NODE --main_process_ip=$MASTER_ADDR --main_process_port=$MASTER_PORT "${main_script}.py" --model_name=${model_name} --subj=${sub} --batch_size=${BATCH_SIZE} --max_lr=3e-4 --mixup_pct=.33 --num_epochs=150 --use_prior --prior_scale=30 --clip_scale=1 --no-use_image_aug --n_blocks=4 --hidden_dim=1024 --ckpt_interval=999 --ckpt_saving --seed="${SLURM_ARRAY_TASK_ID}" && \
+    accelerate launch --num_processes=$(($NUM_GPUS * $COUNT_NODE)) --num_machines=$COUNT_NODE --main_process_ip=$MASTER_ADDR --main_process_port=$MASTER_PORT "${main_script}.py" --model_name=${model_name} --subj=${sub} --batch_size=${BATCH_SIZE} --max_lr=3e-4 --mixup_pct=.33 --num_epochs=150 --use_prior --prior_scale=30 --clip_scale=1 --no-use_image_aug --n_blocks=4 --hidden_dim=1024 --ckpt_interval=30 --ckpt_saving --seed="${SLURM_ARRAY_TASK_ID}" && \
     echo "Training completed successfully"
 else
     echo "Skipping training, using existing checkpoint for ${model_name}"

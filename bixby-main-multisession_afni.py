@@ -753,9 +753,7 @@ for test_i, behav in enumerate(test_dl):
 wandb_log = False
 
 
-# In[38]:
-
-
+# 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
 progress_bar = tqdm(range(epoch,num_epochs), ncols=1200, disable=(local_rank!=0))
 test_image, test_voxel = None, None
@@ -968,8 +966,6 @@ for epoch in progress_bar:
 print("\n===Finished!===\n")
 if ckpt_saving:
     save_ckpt(f'last')
-
-
 # In[ ]:
 
 
