@@ -50,7 +50,7 @@ if is_interactive():
     sub = sub_list[0]
     
     suffix="_avgrepeats_unionmask_150epochs" 
-    model_name = f"{sub}_3-session_task-mindeye_jupyter_${suffix}"
+    model_name = f"{sub}_3-session_task-mindeye_jupyter_{suffix}"
 
     batch_size = 8
     max_lr=3e-4
@@ -197,8 +197,8 @@ for ses in sessions:
 
 
 # 455 * 3 + 26 (13 pairs; 3 repeats) + 80 (2 repeats per session_
-unique_images = set(dic[sub]['01']['trial'] + dic[sub]['02']['trial'] + dic[sub]['03']['trial'])
-test_images = [f'A_{i}' for i in range(1,19)] + [f'B_{i}' for i in range(1,19)]
+unique_images = list(set(dic[sub]['01']['trial'] + dic[sub]['02']['trial'] + dic[sub]['03']['trial']))
+test_unique_images = [f'A_{i}' for i in range(1,19)] + [f'B_{i}' for i in range(1,19)]
 
 
 # In[8]:
@@ -209,53 +209,52 @@ resize_transform = transforms.Resize((224, 224))
 
 images = None
 
-img_path = f'{folder_path}/{sub}_loaded_mindeye_imgs.pkl'
-idx_path = f'{folder_path}/{sub}_loaded_mindeye_idxs.pkl'
+img_path = f'{folder_path}/loaded_mindeye_imgs.pkl'
+idx_path = f'{folder_path}/loaded_mindeye_idxs.pkl'
 
-if os.path.exists(img_path):
-    with open(img_path, 'rb') as file:
-        images = pickle.load(file)
-        print('Loading image saved at: ', file)
-    with open(idx_path, 'rb') as file:
-        unique_images = pickle.load(file)
-        print('Loading image saved at: ', file)
-else:
-    for img in tqdm(unique_images):
+# if os.path.exists(img_path):
+#     with open(img_path, 'rb') as file:
+#         images = pickle.load(file)
+#         print('Loading image saved at: ', file)
+#     with open(idx_path, 'rb') as file:
+#         unique_images = pickle.load(file)
+#         print('Loading image saved at: ', file)
+# else:
+for img in tqdm(unique_images):
 
-        root_dir = os.path.join(data_folder, 'stimuli')
-        if 'unchosen' in img:
-            image_file = f'{root_dir}/unchosen_nsd_1000_images/{img}.png'
-        elif 'special' in img and 'notspecial' not in img:
-            image_file = f'{root_dir}/special515/{img}.jpg'
-        elif 'notspecial' in img:
-            image_file = f'{root_dir}/shared1000_notspecial/{img}.png'
-        elif 'pair_' and '_w_' in img:
-            image_file = f'{root_dir}/MST_pairs/{img}.jpg'
-        else:
-            print(img)
+    root_dir = os.path.join(data_folder, 'stimuli')
+    if 'unchosen' in img:
+        image_file = f'{root_dir}/unchosen_nsd_1000_images/{img}.png'
+    elif 'special' in img and 'notspecial' not in img:
+        image_file = f'{root_dir}/special515/{img}.jpg'
+    elif 'notspecial' in img:
+        image_file = f'{root_dir}/shared1000_notspecial/{img}.png'
+    elif 'pair_' and '_w_' in img:
+        image_file = f'{root_dir}/MST_pairs/{img}.jpg'
+    else:
+        print(img)
 
-        if image_file and not os.path.exists(image_file):
-            print('Cannot find the image at this path',image_file)
-            break
+    if image_file and not os.path.exists(image_file):
+        print('Cannot find the image at this path',image_file)
+        break
 
-        im = imageio.imread(image_file)
-        im = torch.Tensor(im / 255).permute(2,0,1)
-        im = resize_transform(im.unsqueeze(0))
+    im = imageio.imread(image_file)
+    im = torch.Tensor(im / 255).permute(2,0,1)
+    im = resize_transform(im.unsqueeze(0))
 
-        if images is None:
-            images = im
-        else:
-            images = torch.vstack((images, im))
-
+    if images is None:
+        images = im
+    else:
+        images = torch.vstack((images, im))
     
-    print(folder_path)
-    with open(img_path, 'wb') as file:
-        pickle.dump(images, file)
-        print('image saved at: ', file)
+#     print(folder_path)
+#     with open(img_path, 'wb') as file:
+#         pickle.dump(images, file)
+#         print('image saved at: ', file)
         
-    with open(idx_path, 'wb') as file:
-        pickle.dump(unique_images, file)
-        print('image idx saved at: ', file)
+#     with open(idx_path, 'wb') as file:
+#         pickle.dump(unique_images, file)
+#         print('image idx saved at: ', file)
         
 print("images", images.shape)
 
@@ -267,39 +266,39 @@ test_img = None
 
 img_path = f'{folder_path}/loaded_test_imgs.pkl'
 
-if os.path.exists(img_path):
-    with open(img_path, 'rb') as file:
-        test_img = pickle.load(file)
-        print('Loading image saved at: ', file)
-else:
-    for img in test_images:
+# if os.path.exists(img_path):
+#     with open(img_path, 'rb') as file:
+#         test_img = pickle.load(file)
+#         print('Loading image saved at: ', file)
+# else:
+for img in test_unique_images:
 
-        root_dir = os.path.join(data_folder, 'stimuli', 'scenes')
-        img_list = img.split('_')[0]
-        img_id = int(img.split('_')[1])
-        
-        image_file = f'{root_dir}/list{img_list}/{img_id:02d}.png'
+    root_dir = os.path.join(data_folder, 'stimuli', 'scenes')
+    img_list = img.split('_')[0]
+    img_id = int(img.split('_')[1])
 
-        if image_file and not os.path.exists(image_file):
-            print('Cannot find the image at this path',image_file)
-            break
+    image_file = f'{root_dir}/list{img_list}/{img_id:02d}.png'
 
-        im = imageio.imread(image_file)
-        im = torch.Tensor(im / 255).permute(2,0,1)
-        im = resize_transform(im.unsqueeze(0))
+    if image_file and not os.path.exists(image_file):
+        print('Cannot find the image at this path',image_file)
+        break
 
-        if test_img is None:
-            test_img = im
-        else:
-            test_img = torch.vstack((test_img, im))
+    im = imageio.imread(image_file)
+    im = torch.Tensor(im / 255).permute(2,0,1)
+    im = resize_transform(im.unsqueeze(0))
+
+    if test_img is None:
+        test_img = im
+    else:
+        test_img = torch.vstack((test_img, im))
 
     
-    print(folder_path)
-    with open(img_path, 'wb') as file:
-        pickle.dump(test_img, file)
-        print('image saved at: ', file)
+#     print(folder_path)
+#     with open(img_path, 'wb') as file:
+#         pickle.dump(test_img, file)
+#         print('image saved at: ', file)
         
-print("testing images", test_img.shape)
+# print("testing images", test_img.shape)
 
 
 # In[10]:
@@ -344,7 +343,7 @@ def locate_repeat_index_per_run(sub_dict, unique_idx):
     for k in sorted_vox.keys():
         sorted_vox[k] = defaultdict(list)
         
-    for trial in test_images:
+    for trial in test_unique_images:
         idx_list = repeated_trial[trial]
         for i in idx_list:
             curr_run = runs[i]
@@ -429,9 +428,9 @@ for task in tasks:
 
     sub_dict = dic[sub][task]
 
-    repeat_idx, per_run_repeat_idx = locate_repeat_index_per_run(sub_dict, test_images)
+    repeat_idx, per_run_repeat_idx = locate_repeat_index_per_run(sub_dict, test_unique_images)
 
-    test_data[sub][task] = average_repeats_snap(sub_dict['roi'], repeat_idx, test_images)
+    test_data[sub][task] = average_repeats_snap(sub_dict['roi'], repeat_idx, test_unique_images)
 
 
 # ### Testing single subject
@@ -447,6 +446,13 @@ assert len(train_images) == len(train_vox)
 # In[15]:
 
 
+print('train images shape:', train_images.shape)
+print('train vox shape:', train_vox.shape)
+
+
+# In[16]:
+
+
 test_images = torch.Tensor(test_img)
 test_vox = torch.Tensor(np.mean([test_data[sub]['study'], test_data[sub]['test'], test_data[sub]['snap']], axis=0))
 test_vox_study = torch.Tensor(test_data[sub]['study'])
@@ -455,7 +461,14 @@ test_vox_snap = torch.Tensor(test_data[sub]['snap'])
 assert len(test_images) == len(test_vox)
 
 
-# In[16]:
+# In[17]:
+
+
+print('test images shape:', test_images.shape)
+print('test vox shape:', test_vox.shape)
+
+
+# In[18]:
 
 
 assert train_vox.shape[1] == test_vox.shape[1]
@@ -463,7 +476,7 @@ assert train_vox.shape[1] == test_vox.shape[1]
 
 # ## Finished loading data. Setting up GPU
 
-# In[17]:
+# In[19]:
 
 
 ### Multi-GPU config ###
@@ -481,7 +494,7 @@ data_type = torch.float32 # change depending on your mixed_precision
 accelerator = Accelerator(split_batches=False)
 
 
-# In[18]:
+# In[20]:
 
 
 print("PID of this process =",os.getpid())
@@ -508,7 +521,7 @@ print("distributed =",distributed, "num_devices =", num_devices, "local rank =",
 print = accelerator.print # only print if local_rank=0
 
 
-# In[19]:
+# In[21]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -519,7 +532,7 @@ from generative_models.sgm.modules.encoders.modules import FrozenOpenCLIPImageEm
 # from omegaconf import OmegaConf
 
 
-# In[20]:
+# In[22]:
 
 
 try:
@@ -537,19 +550,19 @@ clip_seq_dim = 256
 clip_emb_dim = 1664
 
 
-# In[21]:
+# In[23]:
 
 
 num_voxels_list=[train_vox[0].shape[-1]]
 
 
-# In[22]:
+# In[24]:
 
 
 from models import PriorNetwork, BrainDiffusionPrior
 
 
-# In[23]:
+# In[25]:
 
 
 model = utils.prepare_model_and_training(
@@ -563,7 +576,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[24]:
+# In[26]:
 
 
 # test on subject 1 with fake data
@@ -571,7 +584,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[25]:
+# In[27]:
 
 
 # test that the model works on some fake data
@@ -584,7 +597,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ## Setup optimizer / lr / ckpt saving
 
-# In[26]:
+# In[28]:
 
 
 prior_lr=3e-4
@@ -593,18 +606,12 @@ num_iterations_per_epoch=len(train_images)//batch_size
 
 import time
 ts = time.time()
-outdir = os.path.join(data_folder, f'output_{ts}')
+outdir = os.path.join(data_folder, f'output_{sub}_{model_name}_{ts}')
 if not os.path.exists(outdir) and ckpt_saving:
     os.makedirs(outdir,exist_ok=True)
 
 
-# In[27]:
-
-
-num_iterations_per_epoch
-
-
-# In[28]:
+# In[29]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -688,7 +695,7 @@ print("\nDone with model preparations!")
 num_params = utils.count_params(model)
 
 
-# In[29]:
+# In[30]:
 
 
 epoch = 0
@@ -699,14 +706,14 @@ torch.cuda.empty_cache()
 torch.backends.cuda.matmul.allow_tf32 = True
 
 
-# In[30]:
+# In[31]:
 
 
 # load multisubject stage1 ckpt if set
 load_ckpt("last",outdir='/scratch/gpfs/KNORMAN/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep',load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[31]:
+# In[32]:
 
 
 train_data = torch.utils.data.TensorDataset(torch.tensor(range(len(train_vox))))
@@ -716,19 +723,19 @@ test_data = torch.utils.data.TensorDataset(torch.tensor(range(len(test_vox))))
 test_dl = torch.utils.data.DataLoader(test_data, batch_size=36, shuffle=False, drop_last=True, pin_memory=True)
 
 
-# In[32]:
+# In[33]:
 
 
 model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer, train_dl, lr_scheduler)
 
 
-# In[33]:
+# In[34]:
 
 
 import torch.nn as nn
 
 
-# In[34]:
+# In[35]:
 
 
 for train_i, behav in enumerate(train_dl):  
@@ -738,7 +745,7 @@ for train_i, behav in enumerate(train_dl):
     break
 
 
-# In[35]:
+# In[36]:
 
 
 for test_i, behav in enumerate(test_dl):  
@@ -747,13 +754,21 @@ for test_i, behav in enumerate(test_dl):
     break
 
 
-# In[36]:
+# In[37]:
 
 
 wandb_log = False
 
 
-# 
+# In[38]:
+
+
+clip_scale
+
+
+# In[39]:
+
+
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
 progress_bar = tqdm(range(epoch,num_epochs), ncols=1200, disable=(local_rank!=0))
 test_image, test_voxel = None, None
@@ -762,16 +777,19 @@ l1 = nn.L1Loss()
 soft_loss_temps = utils.cosine_anneal(0.004, 0.0075, num_epochs - int(mixup_pct * num_epochs))
 skip_train = True if epoch>=(num_epochs-1) else False # skip training if you are resuming from a fully trained model
 
-images = train_images
-vox = train_vox
-
 for epoch in progress_bar:
     model.train()
 
     fwd_percent_correct = 0.
     bwd_percent_correct = 0.
-    test_fwd_percent_correct = 0.
-    test_bwd_percent_correct = 0.
+    test_fwd_percent_correct1 = 0.
+    test_bwd_percent_correct1 = 0.
+    test_fwd_percent_correct2 = 0.
+    test_bwd_percent_correct2 = 0.
+    test_fwd_percent_correct3 = 0.
+    test_bwd_percent_correct3 = 0.
+    test_fwd_percent_correct4 = 0.
+    test_bwd_percent_correct4 = 0.
     
     recon_cossim = 0.
     test_recon_cossim = 0.
@@ -797,8 +815,8 @@ for epoch in progress_bar:
             
             behav = behav[0]
 
-            image = images[behav.long().cpu()].to(device)
-            voxel = vox[behav.long().cpu()]
+            image = train_images[behav.long().cpu()].to(device)
+            voxel = train_vox[behav.long().cpu()]
 
             # voxel = (voxel - train_mean) / train_std
             voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
@@ -876,23 +894,40 @@ for epoch in progress_bar:
                 loss=0.
 
                 if behav.ndim>1:
-                    image = images[behav[:,0].long().cpu()].to(device)
-                    voxel = vox[behav.long().cpu()].mean(1)
+                    image = test_images[behav[:,0].long().cpu()].to(device)
+                    voxel = test_vox[behav.long().cpu()].mean(1)
                 else:
-                    image = images[behav.long().cpu()].to(device)
-                    voxel = vox[behav.long().cpu()]
+                    image = test_images[behav.long().cpu()].to(device)
+                    voxel1 = test_vox[behav.long().cpu()]
+                    voxel2 = test_vox_study[behav.long().cpu()]
+                    voxel3 = test_vox_test[behav.long().cpu()]
+                    voxel4 = test_vox_snap[behav.long().cpu()]
                     
-                voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
+                voxel1 = torch.Tensor(voxel1).unsqueeze(1).to(device)
+                voxel2 = torch.Tensor(voxel2).unsqueeze(1).to(device)
+                voxel3 = torch.Tensor(voxel3).unsqueeze(1).to(device)
+                voxel4 = torch.Tensor(voxel4).unsqueeze(1).to(device)
+
 
                 clip_img_embedder = clip_img_embedder.to(device)
                 clip_target = clip_img_embedder(image.float())
                 
-                voxel_ridge = model.ridge(voxel,0)
-
-                backbone, clip_voxels, blurry_image_enc_ = model.backbone(voxel_ridge)
+                voxel_ridge1 = model.ridge(voxel1,0)
+                voxel_ridge2 = model.ridge(voxel2,0)
+                voxel_ridge3 = model.ridge(voxel3,0)
+                voxel_ridge4 = model.ridge(voxel4,0)
+                
+                backbone, clip_voxels1, blurry_image_enc_ = model.backbone(voxel_ridge1)                
+                backbone, clip_voxels2, blurry_image_enc_ = model.backbone(voxel_ridge2)                
+                backbone, clip_voxels3, blurry_image_enc_ = model.backbone(voxel_ridge3)               
+                backbone, clip_voxels4, blurry_image_enc_ = model.backbone(voxel_ridge4)
 
                 if clip_scale>0:
-                    clip_voxels_norm = nn.functional.normalize(clip_voxels.flatten(1), dim=-1)
+                    clip_voxels_norm1 = nn.functional.normalize(clip_voxels1.flatten(1), dim=-1)
+                    clip_voxels_norm2 = nn.functional.normalize(clip_voxels2.flatten(1), dim=-1)
+                    clip_voxels_norm3 = nn.functional.normalize(clip_voxels3.flatten(1), dim=-1)
+                    clip_voxels_norm4 = nn.functional.normalize(clip_voxels4.flatten(1), dim=-1)
+                    
                     clip_target_norm = nn.functional.normalize(clip_target.flatten(1), dim=-1)
                 
                 # for some evals, only doing a subset of the samples per batch because of computational cost
@@ -906,7 +941,7 @@ for epoch in progress_bar:
                         
                 if clip_scale>0:
                     loss_clip = utils.soft_clip_loss(
-                        clip_voxels_norm,
+                        clip_voxels_norm1,
                         clip_target_norm,
                         temp=.006)
 
@@ -916,9 +951,21 @@ for epoch in progress_bar:
 
                 if clip_scale>0:
                     # forward and backward top 1 accuracy        
-                    labels = torch.arange(len(clip_voxels_norm)).to(clip_voxels_norm.device) 
-                    test_fwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm, clip_target_norm), labels, k=1).item()
-                    test_bwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm), labels, k=1).item()
+                    labels1 = torch.arange(len(clip_voxels_norm1)).to(clip_voxels_norm1.device) 
+                    test_fwd_percent_correct1 += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm1, clip_target_norm), labels1, k=1).item()
+                    test_bwd_percent_correct1 += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm1), labels1, k=1).item()
+                    # forward and backward top 1 accuracy        
+                    labels2 = torch.arange(len(clip_voxels_norm2)).to(clip_voxels_norm2.device) 
+                    test_fwd_percent_correct2 += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm2, clip_target_norm), labels2, k=1).item()
+                    test_bwd_percent_correct2 += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm2), labels2, k=1).item()
+                    # forward and backward top 1 accuracy        
+                    labels3 = torch.arange(len(clip_voxels_norm3)).to(clip_voxels_norm3.device) 
+                    test_fwd_percent_correct3 += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm3, clip_target_norm), labels3, k=1).item()
+                    test_bwd_percent_correct3 += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm3), labels3, k=1).item()
+                    # forward and backward top 1 accuracy        
+                    labels4 = torch.arange(len(clip_voxels_norm4)).to(clip_voxels_norm4.device) 
+                    test_fwd_percent_correct4 += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm4, clip_target_norm), labels4, k=1).item()
+                    test_bwd_percent_correct4 += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm4), labels4, k=1).item()
                 
                 utils.check_loss(loss)                
                 test_losses.append(loss.item())
@@ -935,18 +982,24 @@ for epoch in progress_bar:
                 "test/num_steps": len(test_losses),
                 "train/fwd_pct_correct": fwd_percent_correct / (train_i + 1),
                 "train/bwd_pct_correct": bwd_percent_correct / (train_i + 1),
-                "test/test_fwd_pct_correct": test_fwd_percent_correct / (test_i + 1),
-                "test/test_bwd_pct_correct": test_bwd_percent_correct / (test_i + 1),
+                "test/test_fwd_pct_correct overall": test_fwd_percent_correct1 / (test_i + 1),
+                "test/test_bwd_pct_correct overall": test_bwd_percent_correct1 / (test_i + 1),
+                "test/test_fwd_pct_correct study": test_fwd_percent_correct2 / (test_i + 1),
+                "test/test_bwd_pct_correct study": test_bwd_percent_correct2 / (test_i + 1),
+                "test/test_fwd_pct_correct test": test_fwd_percent_correct3 / (test_i + 1),
+                "test/test_bwd_pct_correct test": test_bwd_percent_correct3 / (test_i + 1),
+                "test/test_fwd_pct_correct snap": test_fwd_percent_correct4 / (test_i + 1),
+                "test/test_bwd_pct_correct snap": test_bwd_percent_correct4 / (test_i + 1),
                 "train/loss_clip_total": loss_clip_total / (train_i + 1),
                 #"train/loss_blurry_total": loss_blurry_total / (train_i + 1),
                 #"train/loss_blurry_cont_total": loss_blurry_cont_total / (train_i + 1),
                 "test/loss_clip_total": test_loss_clip_total / (test_i + 1),
                 #"train/blurry_pixcorr": blurry_pixcorr / (train_i + 1),
                 #"test/blurry_pixcorr": test_blurry_pixcorr / (test_i + 1),
-                "train/recon_cossim": recon_cossim / (train_i + 1),
-                "test/recon_cossim": test_recon_cossim / (test_i + 1),
-                "train/recon_mse": recon_mse / (train_i + 1),
-                "test/recon_mse": test_recon_mse / (test_i + 1),
+                # "train/recon_cossim": recon_cossim / (train_i + 1),
+                # "test/recon_cossim": test_recon_cossim / (test_i + 1),
+                # "train/recon_mse": recon_mse / (train_i + 1),
+                # "test/recon_mse": test_recon_mse / (test_i + 1),
                 "train/loss_prior": loss_prior_total / (train_i + 1),
                 "test/loss_prior": test_loss_prior_total / (test_i + 1),
                 }
@@ -966,6 +1019,228 @@ for epoch in progress_bar:
 print("\n===Finished!===\n")
 if ckpt_saving:
     save_ckpt(f'last')
+
+
+# In[ ]:
+
+
+
+
+
+# In[39]:
+
+
+# print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
+# progress_bar = tqdm(range(epoch,num_epochs), ncols=1200, disable=(local_rank!=0))
+# test_image, test_voxel = None, None
+# mse = nn.MSELoss()
+# l1 = nn.L1Loss()
+# soft_loss_temps = utils.cosine_anneal(0.004, 0.0075, num_epochs - int(mixup_pct * num_epochs))
+# skip_train = True if epoch>=(num_epochs-1) else False # skip training if you are resuming from a fully trained model
+
+# for epoch in progress_bar:
+#     model.train()
+
+#     fwd_percent_correct = 0.
+#     bwd_percent_correct = 0.
+#     test_fwd_percent_correct = 0.
+#     test_bwd_percent_correct = 0.
+    
+#     recon_cossim = 0.
+#     test_recon_cossim = 0.
+#     recon_mse = 0.
+#     test_recon_mse = 0.
+
+#     loss_clip_total = 0.
+#     loss_blurry_total = 0.
+#     loss_blurry_cont_total = 0.
+#     test_loss_clip_total = 0.
+    
+#     loss_prior_total = 0.
+#     test_loss_prior_total = 0.
+
+#     blurry_pixcorr = 0.
+#     test_blurry_pixcorr = 0. 
+
+#     # you now have voxel_iters and image_iters with num_iterations_per_epoch batches each
+#     for train_i, behav in enumerate(train_dl):  
+#         with torch.cuda.amp.autocast(dtype=data_type):
+#             optimizer.zero_grad()
+#             loss = 0.
+            
+#             behav = behav[0]
+
+#             image = train_images[behav.long().cpu()].to(device)
+#             voxel = train_vox[behav.long().cpu()]
+
+#             # voxel = (voxel - train_mean) / train_std
+#             voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
+
+#             if use_image_aug: 
+#                 image = img_augment(image)
+
+#             clip_target = clip_img_embedder(image)
+#             assert not torch.any(torch.isnan(clip_target))
+
+#             if epoch < int(mixup_pct * num_epochs):
+#                 voxel, perm, betas, select = utils.mixco(voxel)
+
+#             voxel_ridge = model.ridge(voxel,0) #[model.ridge(voxel_list[si],si) for si,s in enumerate(subj_list)]
+#             # voxel_ridge = torch.cat(voxel_ridge_list, dim=0)
+
+#             backbone, clip_voxels, blurry_image_enc_ = model.backbone(voxel_ridge)
+
+#             if clip_scale>0:
+#                 clip_voxels_norm = nn.functional.normalize(clip_voxels.flatten(1), dim=-1)
+#                 clip_target_norm = nn.functional.normalize(clip_target.flatten(1), dim=-1)
+
+#             if use_prior:
+#                 loss_prior, prior_out = model.diffusion_prior(text_embed=backbone, image_embed=clip_target)
+#                 loss_prior_total += loss_prior.item()
+#                 loss_prior *= prior_scale
+#                 loss += loss_prior
+
+#                 recon_cossim += nn.functional.cosine_similarity(prior_out, clip_target).mean().item()
+#                 recon_mse += mse(prior_out, clip_target).item()
+
+#             if clip_scale>0:
+#                 if epoch < int(mixup_pct * num_epochs):                
+#                     loss_clip = utils.mixco_nce(
+#                         clip_voxels_norm,
+#                         clip_target_norm,
+#                         temp=.006,
+#                         perm=perm, betas=betas, select=select)
+#                 else:
+#                     epoch_temp = soft_loss_temps[epoch-int(mixup_pct*num_epochs)]
+#                     loss_clip = utils.soft_clip_loss(
+#                         clip_voxels_norm,
+#                         clip_target_norm,
+#                         temp=epoch_temp)
+
+#                 loss_clip_total += loss_clip.item()
+#                 loss_clip *= clip_scale
+#                 loss += loss_clip
+
+#             if clip_scale>0:
+#                 # forward and backward top 1 accuracy        
+#                 labels = torch.arange(len(clip_voxels_norm)).to(clip_voxels_norm.device) 
+#                 fwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm, clip_target_norm), labels, k=1).item()
+#                 bwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm), labels, k=1).item()
+            
+#             utils.check_loss(loss)
+#             accelerator.backward(loss)
+#             optimizer.step()
+
+#             losses.append(loss.item())
+#             lrs.append(optimizer.param_groups[0]['lr'])
+
+#             if lr_scheduler_type is not None:
+#                 lr_scheduler.step()
+                
+#             if train_i >= num_iterations_per_epoch-1:
+#                 break
+                
+#     model.eval()
+#     if local_rank==0:
+#         with torch.no_grad(), torch.cuda.amp.autocast(dtype=data_type): 
+#             for test_i, behav in enumerate(test_dl):  
+#                 behav = behav[0]
+
+#                 loss=0.
+
+#                 if behav.ndim>1:
+#                     image = test_images[behav[:,0].long().cpu()].to(device)
+#                     voxel = test_vox[behav.long().cpu()].mean(1)
+#                 else:
+#                     image = test_images[behav.long().cpu()].to(device)
+#                     voxel = test_vox[behav.long().cpu()]
+                    
+#                 voxel = torch.Tensor(voxel).unsqueeze(1).to(device)
+
+#                 clip_img_embedder = clip_img_embedder.to(device)
+#                 clip_target = clip_img_embedder(image.float())
+                
+#                 voxel_ridge = model.ridge(voxel,0)
+
+#                 backbone, clip_voxels, blurry_image_enc_ = model.backbone(voxel_ridge)
+
+#                 if clip_scale>0:
+#                     clip_voxels_norm = nn.functional.normalize(clip_voxels.flatten(1), dim=-1)
+#                     clip_target_norm = nn.functional.normalize(clip_target.flatten(1), dim=-1)
+                
+#                 # for some evals, only doing a subset of the samples per batch because of computational cost
+#                 random_samps = np.random.choice(np.arange(len(image)), size=len(image)//5, replace=False)
+                
+#                 if use_prior:
+#                     loss_prior, contaminated_prior_out = model.diffusion_prior(text_embed=backbone[random_samps], image_embed=clip_target[random_samps])
+#                     test_loss_prior_total += loss_prior.item()
+#                     loss_prior *= prior_scale
+#                     loss += loss_prior
+                        
+#                 if clip_scale>0:
+#                     loss_clip = utils.soft_clip_loss(
+#                         clip_voxels_norm,
+#                         clip_target_norm,
+#                         temp=.006)
+
+#                     test_loss_clip_total += loss_clip.item()
+#                     loss_clip = loss_clip * clip_scale
+#                     loss += loss_clip
+
+#                 if clip_scale>0:
+#                     # forward and backward top 1 accuracy        
+#                     labels = torch.arange(len(clip_voxels_norm)).to(clip_voxels_norm.device) 
+#                     test_fwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm, clip_target_norm), labels, k=1).item()
+#                     test_bwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm), labels, k=1).item()
+                
+#                 utils.check_loss(loss)                
+#                 test_losses.append(loss.item())
+
+#             # if utils.is_interactive(): clear_output(wait=True)
+#             if skip_train: break
+#             print("---")
+
+#             # assert (test_i+1) == 1
+#             logs = {"train/loss": np.mean(losses[-(train_i+1):]),
+#                 "test/loss": np.mean(test_losses[-(test_i+1):]),
+#                 "train/lr": lrs[-1],
+#                 "train/num_steps": len(losses),
+#                 "test/num_steps": len(test_losses),
+#                 "train/fwd_pct_correct": fwd_percent_correct / (train_i + 1),
+#                 "train/bwd_pct_correct": bwd_percent_correct / (train_i + 1),
+#                 "test/test_fwd_pct_correct": test_fwd_percent_correct / (test_i + 1),
+#                 "test/test_bwd_pct_correct": test_bwd_percent_correct / (test_i + 1),
+#                 "train/loss_clip_total": loss_clip_total / (train_i + 1),
+#                 #"train/loss_blurry_total": loss_blurry_total / (train_i + 1),
+#                 #"train/loss_blurry_cont_total": loss_blurry_cont_total / (train_i + 1),
+#                 "test/loss_clip_total": test_loss_clip_total / (test_i + 1),
+#                 #"train/blurry_pixcorr": blurry_pixcorr / (train_i + 1),
+#                 #"test/blurry_pixcorr": test_blurry_pixcorr / (test_i + 1),
+#                 "train/recon_cossim": recon_cossim / (train_i + 1),
+#                 "test/recon_cossim": test_recon_cossim / (test_i + 1),
+#                 "train/recon_mse": recon_mse / (train_i + 1),
+#                 "test/recon_mse": test_recon_mse / (test_i + 1),
+#                 "train/loss_prior": loss_prior_total / (train_i + 1),
+#                 "test/loss_prior": test_loss_prior_total / (test_i + 1),
+#                 }
+
+#             progress_bar.set_postfix(**logs)
+
+#             if wandb_log: wandb.log(logs)
+            
+#     # Save model checkpoint and reconstruct
+#     if (ckpt_saving) and (epoch % ckpt_interval == 0):
+#         save_ckpt(f'last')
+
+#     # wait for other GPUs to catch up if needed
+#     accelerator.wait_for_everyone()
+#     torch.cuda.empty_cache()
+
+# print("\n===Finished!===\n")
+# if ckpt_saving:
+#     save_ckpt(f'last')
+
+
 # In[ ]:
 
 

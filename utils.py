@@ -685,6 +685,7 @@ def prepare_model_and_training(
     clip_seq_dim, 
     clip_scale,
     use_prior=False, 
+    seed=315,
 ):
     """
     Prepare MindEye model, optimizer, and learning rate scheduler.
@@ -706,6 +707,8 @@ def prepare_model_and_training(
     from MindEye2 import MindEyeModule, RidgeRegression, BrainNetwork
     import utils
 
+    seed_everything(seed)
+    
     model = MindEyeModule()
     print(model)
 
