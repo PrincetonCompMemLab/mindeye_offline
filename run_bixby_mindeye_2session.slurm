@@ -7,7 +7,7 @@
 #SBATCH --gpus-per-task=1       # Set to equal gres=gpu:#!
 #SBATCH --cpus-per-task=40      # 40 / 80 / 176 distributed across node
 #SBATCH --mem-per-cpu=1G
-#SBATCH --time=05:00:00         # total run time limit (HH:MM:SS)
+#SBATCH --time=03:00:00         # total run time limit (HH:MM:SS)
 #SBATCH -e bixby_data/slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o bixby_data/slurms/%A_%a.out
 #SBATCH --no-requeue
@@ -33,14 +33,14 @@ sub="sub-${sub}"
 
 echo "Subject ID: ${sub}"
 
-suffix="_avgrepeats_unionmask_150epochs"          # appended to model_name
+suffix="_avgrepeats_2session-mask_150epochs"          # appended to model_name
 
 run_training="True"                   
 run_final_evals="False"
 
-main_script="bixby-main-multisession_afni"
+main_script="bixby-main_use-two-session_afni"
 
-model_name="${sub}_3-session_task-mindeye_${SLURM_ARRAY_TASK_ID}${main_script}${suffix}"  # model should always be based on train_session
+model_name="${sub}_2-session_task-mindeye_${SLURM_ARRAY_TASK_ID}${main_script}${suffix}"  # model should always be based on train_session
 eval_dir_template="${model_name}"
 eval_dir="/scratch/gpfs/KNORMAN/wanjia/mindeye_testing/real_time_mindEye2/bixby_data/evals/${eval_dir_template}"
 # ---
