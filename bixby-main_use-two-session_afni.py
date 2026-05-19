@@ -809,7 +809,7 @@ wandb_log = False
 clip_scale
 
 
-# In[ ]:
+# In[53]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")
