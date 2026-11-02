@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[10]:
 
 
 import os
@@ -18,13 +18,11 @@ from torchvision import transforms
 
 import utils
 
-#sessions = ['01', '02', 'ses-04_study', 'ses-04_test', 'ses-04_snap']
-           #'ses-05_study', 'ses-05_test', 'ses-05_snap']
-
-sessions = ['01', '02', 'snap', 'study', 'test']
+sessions = ['01', '02', 'ses-03', 'ses-04']
+task_types = ['snap', 'study', 'test']
 
 
-# In[12]:
+# In[11]:
 
 
 ### Set up
@@ -42,14 +40,14 @@ def is_interactive():
         return False  # Not running in an IPython environment
 
 
-# In[13]:
+# In[12]:
 
 
 if is_interactive():
     print("Code is running in a Jupyter Notebook. Using the following variables")
     
     
-    sub_list = ['sub-01']
+    sub_list = ['sub-03']
     sub = sub_list[0]
     
     suffix="_avgrepeats_unionmask_150epochs" 
@@ -163,49 +161,54 @@ else:
     seed = args.seed
 
 
-# In[14]:
+# In[13]:
 
 
 utils.seed_everything(seed)
 
 
-# In[15]:
+# In[18]:
 
 
 dic = {}
 
-data_folder = '/scratch/gpfs/KNORMAN/wanjia/mindeye_testing/real_time_mindEye2/bixby_data/'
+data_folder = '/scratch/gpfs/KNORMAN/'
 
-folder_path = os.path.join(data_folder, 'afni')
+folder_path = os.path.join(data_folder, 'bixby_beta_outputs')
 
 with open(f'{folder_path}/{sub}_roi_vox_all_sessions.pkl', 'rb') as file:
     dic[sub] = pickle.load(file)
 
 
-# In[16]:
+# In[19]:
 
 
 print(dic[sub].keys())
-del dic[sub]['03']
-del dic[sub]['union_mask']
-print(dic[sub].keys())
 
 
-# In[17]:
+# In[20]:
 
 
-union_mask = dic[sub]['union_mask_2sess']
+union_mask = dic[sub]['union_mask']
 print('NSD mask size:', union_mask.shape)
 print('union mask size:', sum(union_mask))
 for ses in sessions:
-    dic[sub][ses]['roi'] = dic[sub][ses]['roi'][:, union_mask]
-    # z-score each session
-    dic[sub][ses]['roi'] = np.nan_to_num(zscore(dic[sub][ses]['roi'], axis=0))
-    s = dic[sub][ses]['roi'].shape
-    print(f'{ses}: {s}')
+    if ses in ['01', '02']:
+        dic[sub][ses]['roi'] = dic[sub][ses]['roi'][:, union_mask]
+        # z-score each session
+        dic[sub][ses]['roi'] = np.nan_to_num(zscore(dic[sub][ses]['roi'], axis=0))
+        s = dic[sub][ses]['roi'].shape
+        print(f'{ses}: {s}')
+    else:
+        for task in task_types:
+            dic[sub][ses][task]['roi'] = dic[sub][ses][task]['roi'][:, union_mask]
+            # z-score each session
+            dic[sub][ses][task]['roi'] = np.nan_to_num(zscore(dic[sub][ses][task]['roi'], axis=0))
+            s = dic[sub][ses][task]['roi'].shape
+            print(f'{ses}{task}: {s}')
 
 
-# In[18]:
+# In[21]:
 
 
 # 455 * 3 + 26 (13 pairs; 3 repeats) + 80 (2 repeats per session_
@@ -214,7 +217,13 @@ print(len(unique_images))
 test_unique_images = [f'A_{i}' for i in range(1,19)] + [f'B_{i}' for i in range(1,19)]
 
 
-# In[19]:
+# In[36]:
+
+
+images_root = '/scratch/gpfs/KNORMAN/wanjia/mindeye_testing/real_time_mindEye2/'
+
+
+# In[37]:
 
 
 import imageio.v2 as imageio
@@ -235,15 +244,15 @@ idx_path = f'{folder_path}/loaded_mindeye_idxs.pkl'
 # else:
 for img in tqdm(unique_images):
 
-    root_dir = os.path.join(data_folder, 'stimuli')
+    images_folder = os.path.join(images_root, 'all_stimuli')
     if 'unchosen' in img:
-        image_file = f'{root_dir}/unchosen_nsd_1000_images/{img}.png'
+        image_file = f'{images_folder}/unchosen_nsd_1000_images/{img}.png'
     elif 'special' in img and 'notspecial' not in img:
-        image_file = f'{root_dir}/special515/{img}.jpg'
+        image_file = f'{images_folder}/special515/{img}.jpg'
     elif 'notspecial' in img:
-        image_file = f'{root_dir}/shared1000_notspecial/{img}.png'
+        image_file = f'{images_folder}/shared1000_notspecial/{img}.png'
     elif 'pair_' and '_w_' in img:
-        image_file = f'{root_dir}/MST_pairs/{img}.jpg'
+        image_file = f'{images_folder}/MST_pairs/{img}.jpg'
     else:
         print(img)
 
@@ -272,7 +281,7 @@ for img in tqdm(unique_images):
 print("images", images.shape)
 
 
-# In[20]:
+# In[93]:
 
 
 test_img = None
@@ -284,13 +293,13 @@ img_path = f'{folder_path}/loaded_test_imgs.pkl'
 #         test_img = pickle.load(file)
 #         print('Loading image saved at: ', file)
 # else:
-for img in test_unique_images:
+for img in tqdm(test_unique_images):
 
-    root_dir = os.path.join(data_folder, 'stimuli', 'scenes')
+    images_folder = os.path.join(images_root, 'pilot_bixby_data', 'stimuli', 'scenes')
     img_list = img.split('_')[0]
     img_id = int(img.split('_')[1])
 
-    image_file = f'{root_dir}/list{img_list}/{img_id:02d}.png'
+    image_file = f'{images_folder}/list{img_list}/{img_id:02d}.png'
 
     if image_file and not os.path.exists(image_file):
         print('Cannot find the image at this path',image_file)
@@ -314,7 +323,7 @@ for img in test_unique_images:
 # print("testing images", test_img.shape)
 
 
-# In[21]:
+# In[47]:
 
 
 def find_repeated_strings(string_list):
@@ -365,7 +374,7 @@ def locate_repeat_index_per_run(sub_dict, unique_idx):
     return repeated_trial, sorted_vox
 
 
-# In[22]:
+# In[48]:
 
 
 def average_repeats(vox, mindeye_trial, unique_images):
@@ -415,7 +424,7 @@ def average_repeats_snap(vox, repeated_trial, unique_images):
     return sorted_vox
 
 
-# In[23]:
+# In[49]:
 
 
 # Stacking multi-session data:
@@ -427,7 +436,7 @@ mindeye_vox = average_repeats(mindeye_vox, mindeye_trial, unique_images)
 vox_data[sub] = mindeye_vox
 
 
-# In[24]:
+# In[57]:
 
 
 # Loading Snap data
@@ -438,18 +447,20 @@ test_data = {}
 
 test_data[sub] = {}
 
-for task in tasks:
+for ses in ['ses-03', 'ses-04']:
+    test_data[sub][ses] = {}
+    for task in task_types:
+        
+        sub_dict = dic[sub][ses][task]
 
-    sub_dict = dic[sub][task]
+        repeat_idx, per_run_repeat_idx = locate_repeat_index_per_run(sub_dict, test_unique_images)
 
-    repeat_idx, per_run_repeat_idx = locate_repeat_index_per_run(sub_dict, test_unique_images)
-
-    test_data[sub][task] = average_repeats_snap(sub_dict['roi'], repeat_idx, test_unique_images)
+        test_data[sub][ses][task] = average_repeats_snap(sub_dict['roi'], repeat_idx, test_unique_images)
 
 
 # ### Testing single subject
 
-# In[27]:
+# In[65]:
 
 
 train_images = torch.Tensor(images)
@@ -457,7 +468,7 @@ train_vox = torch.Tensor(vox_data[sub])
 assert len(train_images) == len(train_vox)
 
 
-# In[28]:
+# In[66]:
 
 
 print('train images shape:', train_images.shape)
@@ -465,14 +476,14 @@ print('train vox shape:', train_vox.shape)
 #tasks = ['ses-04_study', 'ses-04_test', 'ses-04_snap', 'ses-05_study', 'ses-05_test', 'ses-05_snap']
 
 
-# In[29]:
+# In[67]:
 
 
 test_images = torch.Tensor(test_img)
-test_vox = torch.Tensor(np.mean([test_data[sub]['study'], test_data[sub]['test'], test_data[sub]['snap']], axis=0))
-test_vox_study = torch.Tensor(test_data[sub]['study'])
-test_vox_test = torch.Tensor(test_data[sub]['test'])
-test_vox_snap = torch.Tensor(test_data[sub]['snap'])
+test_vox = torch.Tensor(np.mean([test_data[sub]['ses-03']['study'], test_data[sub]['ses-03']['test'], test_data[sub]['ses-03']['snap']], axis=0))
+test_vox_study = torch.Tensor(test_data[sub]['ses-03']['study'])
+test_vox_test = torch.Tensor(test_data[sub]['ses-03']['test'])
+test_vox_snap = torch.Tensor(test_data[sub]['ses-03']['snap'])
 assert len(test_images) == len(test_vox)
 
 
@@ -497,7 +508,7 @@ assert len(test_images) == len(test_vox)
 # assert len(test_images) == len(test_vox_2)
 
 
-# In[30]:
+# In[68]:
 
 
 print('test images shape:', test_images.shape)
@@ -505,7 +516,7 @@ print('test vox shape ses04:', test_vox.shape)
 #print('test vox shape ses05:', test_vox_2.shape)
 
 
-# In[31]:
+# In[69]:
 
 
 assert train_vox.shape[1] == test_vox.shape[1] #== test_vox_2.shape[1]
@@ -513,7 +524,7 @@ assert train_vox.shape[1] == test_vox.shape[1] #== test_vox_2.shape[1]
 
 # ## Finished loading data. Setting up GPU
 
-# In[32]:
+# In[70]:
 
 
 ### Multi-GPU config ###
@@ -531,7 +542,7 @@ data_type = torch.float32 # change depending on your mixed_precision
 accelerator = Accelerator(split_batches=False)
 
 
-# In[33]:
+# In[71]:
 
 
 print("PID of this process =",os.getpid())
@@ -558,7 +569,7 @@ print("distributed =",distributed, "num_devices =", num_devices, "local rank =",
 print = accelerator.print # only print if local_rank=0
 
 
-# In[34]:
+# In[72]:
 
 
 ## USING OpenCLIP ViT-bigG ###
@@ -569,7 +580,7 @@ from generative_models.sgm.modules.encoders.modules import FrozenOpenCLIPImageEm
 # from omegaconf import OmegaConf
 
 
-# In[35]:
+# In[73]:
 
 
 try:
@@ -587,25 +598,25 @@ clip_seq_dim = 256
 clip_emb_dim = 1664
 
 
-# In[36]:
+# In[74]:
 
 
 num_voxels_list=[train_vox[0].shape[-1]]
 
 
-# In[37]:
+# In[75]:
 
 
 num_voxels_list
 
 
-# In[38]:
+# In[76]:
 
 
 from models import PriorNetwork, BrainDiffusionPrior
 
 
-# In[39]:
+# In[77]:
 
 
 model = utils.prepare_model_and_training(
@@ -619,7 +630,7 @@ model = utils.prepare_model_and_training(
 )
 
 
-# In[40]:
+# In[78]:
 
 
 # test on subject 1 with fake data
@@ -627,7 +638,7 @@ b = torch.randn((2,1,num_voxels_list[0]))
 print(b.shape, model.ridge(b,0).shape)
 
 
-# In[41]:
+# In[79]:
 
 
 # test that the model works on some fake data
@@ -640,7 +651,7 @@ print(backbone_.shape, clip_.shape, blur_[0].shape, blur_[1].shape)
 
 # ## Setup optimizer / lr / ckpt saving
 
-# In[42]:
+# In[80]:
 
 
 prior_lr=3e-4
@@ -649,12 +660,12 @@ num_iterations_per_epoch=len(train_images)//batch_size
 
 import time
 ts = time.time()
-outdir = os.path.join(data_folder, f'output_{sub}_{model_name}_{ts}')
+outdir = os.path.join(folder_path, 'mindeye_outputs', f'output_{sub}_{model_name}_{ts}')
 if not os.path.exists(outdir) and ckpt_saving:
     os.makedirs(outdir,exist_ok=True)
 
 
-# In[43]:
+# In[81]:
 
 
 no_decay = ['bias', 'LayerNorm.bias', 'LayerNorm.weight']
@@ -738,7 +749,7 @@ print("\nDone with model preparations!")
 num_params = utils.count_params(model)
 
 
-# In[44]:
+# In[82]:
 
 
 epoch = 0
@@ -749,14 +760,14 @@ torch.cuda.empty_cache()
 torch.backends.cuda.matmul.allow_tf32 = True
 
 
-# In[45]:
+# In[83]:
 
 
 # load multisubject stage1 ckpt if set
 load_ckpt("last",outdir='/scratch/gpfs/KNORMAN/ri4541/MindEyeV2/src/mindeyev2/train_logs/multisubject_subj01_1024hid_nolow_300ep',load_lr=False,load_optimizer=False,load_epoch=False,strict=False,multisubj_loading=True)
 
 
-# In[46]:
+# In[84]:
 
 
 train_data = torch.utils.data.TensorDataset(torch.tensor(range(len(train_vox))))
@@ -766,19 +777,19 @@ test_data = torch.utils.data.TensorDataset(torch.tensor(range(len(test_vox))))
 test_dl = torch.utils.data.DataLoader(test_data, batch_size=36, shuffle=False, drop_last=True, pin_memory=True)
 
 
-# In[47]:
+# In[85]:
 
 
 model, optimizer, train_dl, lr_scheduler = accelerator.prepare(model, optimizer, train_dl, lr_scheduler)
 
 
-# In[48]:
+# In[86]:
 
 
 import torch.nn as nn
 
 
-# In[49]:
+# In[87]:
 
 
 for train_i, behav in enumerate(train_dl):  
@@ -788,7 +799,7 @@ for train_i, behav in enumerate(train_dl):
     break
 
 
-# In[50]:
+# In[88]:
 
 
 for test_i, behav in enumerate(test_dl):  
@@ -797,19 +808,19 @@ for test_i, behav in enumerate(test_dl):
     break
 
 
-# In[51]:
+# In[89]:
 
 
 wandb_log = False
 
 
-# In[52]:
+# In[90]:
 
 
 clip_scale
 
 
-# In[53]:
+# In[91]:
 
 
 print(f"{model_name} starting with epoch {epoch} / {num_epochs}")

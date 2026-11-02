@@ -7,11 +7,11 @@
 #SBATCH --gpus-per-task=1       # Set to equal gres=gpu:#!
 #SBATCH --cpus-per-task=20      # 40 / 80 / 176 distributed across node
 #SBATCH --mem-per-cpu=1G
-#SBATCH --time=03:00:00         # total run time limit (HH:MM:SS)
+#SBATCH --time=05:00:00         # total run time limit (HH:MM:SS)
 #SBATCH -e bixby_data/slurms/%A_%a.err     # first create a "slurms" folder in current directory to store logs
 #SBATCH -o bixby_data/slurms/%A_%a.out
 #SBATCH --no-requeue
-#SBATCH --array=01,02,04,05
+#SBATCH --array=03,04
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=wg7536@princeton.edu
 
