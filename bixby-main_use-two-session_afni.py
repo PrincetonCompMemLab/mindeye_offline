@@ -926,10 +926,22 @@ for epoch in progress_bar:
                 fwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_voxels_norm, clip_target_norm), labels, k=1).item()
                 bwd_percent_correct += utils.topk(utils.batchwise_cosine_similarity(clip_target_norm, clip_voxels_norm), labels, k=1).item()
             
+            # utils.check_loss(loss)
+            # accelerator.backward(loss)
+            # optimizer.step()
+            
+            # new clipping to avoid overflow
+            if not torch.isfinite(loss):
+                print(f"[NaN] epoch {epoch} iter {train_i} | "
+                      f"clip={float(loss_clip) if clip_scale>0 else 'n/a'} "
+                      f"prior={float(loss_prior) if use_prior else 'n/a'} | "
+                      f"voxel_nan={torch.isnan(voxel).any().item()} "
+                      f"clip_voxels_nan={torch.isnan(clip_voxels).any().item()}")
             utils.check_loss(loss)
             accelerator.backward(loss)
+            accelerator.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
-
+            
             losses.append(loss.item())
             lrs.append(optimizer.param_groups[0]['lr'])
 
@@ -1064,7 +1076,7 @@ for epoch in progress_bar:
             
     # Save model checkpoint and reconstruct
     if (ckpt_saving) and (epoch % ckpt_interval == 0):
-        save_ckpt(f'last')
+        save_ckpt(f'last_clipped')
 
     # wait for other GPUs to catch up if needed
     accelerator.wait_for_everyone()
@@ -1072,7 +1084,7 @@ for epoch in progress_bar:
 
 print("\n===Finished!===\n")
 if ckpt_saving:
-    save_ckpt(f'last')
+    save_ckpt(f'last_clipped')
 
 
 # In[ ]:
